@@ -21,6 +21,7 @@ import {
   Search,
 } from 'lucide-react';
 import { FeedbackSubmission, Client, ShootBooking, UserAccount } from '@/types';
+import { supabase, isSupabaseConfigured } from '@/lib/supabaseClient';
 
 interface FeedbackViewProps {
   clients: Client[];
@@ -81,22 +82,89 @@ export const FeedbackView: React.FC<FeedbackViewProps> = ({
   const [starFilter, setStarFilter] = useState<number | 'ALL'>('ALL');
   const [activeDeckModal, setActiveDeckModal] = useState<FeedbackSubmission | null>(null);
 
-  // Load any feedback submitted from client portal stored in localStorage
+  // Load feedback from Supabase Realtime & LocalStorage
   useEffect(() => {
+    // 1. Load from local storage for instant offline display
+    let localSubmissions: FeedbackSubmission[] = [];
     try {
       const stored = localStorage.getItem('vows_client_feedback');
       if (stored) {
         const parsed: FeedbackSubmission[] = JSON.parse(stored);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          setFeedbackList((prev) => {
-            const ids = new Set(prev.map((f) => f.id));
-            const newEntries = parsed.filter((p) => !ids.has(p.id));
-            return [...newEntries, ...prev];
-          });
+        if (Array.isArray(parsed)) {
+          localSubmissions = parsed;
         }
       }
     } catch (e) {
       console.error(e);
+    }
+
+    // 2. Load from Supabase Cloud
+    const loadCloudFeedback = async () => {
+      if (supabase && isSupabaseConfigured()) {
+        try {
+          const { data, error } = await supabase
+            .from('lumina_feedback')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+          if (!error && data && data.length > 0) {
+            const mapped: FeedbackSubmission[] = data.map((row) => ({
+              id: row.id,
+              clientId: row.client_id,
+              clientName: row.client_name,
+              shootId: row.shoot_id,
+              eventDate: row.event_date,
+              eventType: row.event_type,
+              rating: row.rating,
+              serviceRatings: row.service_ratings || {},
+              review: row.review,
+              highlights: row.highlights,
+              allowSocialSharing: row.allow_social_sharing,
+              createdAt: row.created_at,
+            }));
+
+            setFeedbackList((prev) => {
+              const ids = new Set(mapped.map((m) => m.id));
+              const remainingDefaults = prev.filter((d) => !ids.has(d.id));
+              return [...mapped, ...remainingDefaults];
+            });
+            return;
+          }
+        } catch (err) {
+          console.warn('[FeedbackView] Cloud fetch note:', err);
+        }
+      }
+
+      // Fallback: merge local storage with defaults
+      if (localSubmissions.length > 0) {
+        setFeedbackList((prev) => {
+          const ids = new Set(prev.map((f) => f.id));
+          const newEntries = localSubmissions.filter((p) => !ids.has(p.id));
+          return [...newEntries, ...prev];
+        });
+      }
+    };
+
+    loadCloudFeedback();
+
+    // 3. Supabase Realtime WebSocket subscription (< 1 sec live sync)
+    if (supabase && isSupabaseConfigured()) {
+      const channel = supabase
+        .channel('vows_feedback_realtime')
+        .on(
+          'postgres_changes',
+          { event: '*', schema: 'public', table: 'lumina_feedback' },
+          () => {
+            loadCloudFeedback();
+          }
+        )
+        .subscribe();
+
+      return () => {
+        if (supabase) {
+          supabase.removeChannel(channel);
+        }
+      };
     }
   }, []);
 

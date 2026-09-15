@@ -20,7 +20,7 @@ export default function ClientFeedbackPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!review.trim()) return;
 
@@ -30,6 +30,8 @@ export default function ClientFeedbackPage() {
       id: `fb-${Date.now()}`,
       clientId,
       clientName: clientName.trim() || 'Valued Couple',
+      eventDate: eventDate || new Date().toISOString().split('T')[0],
+      eventType: 'Wedding Cinemastory & Stills',
       rating,
       serviceRatings: {
         photography: photoRating,
@@ -42,7 +44,18 @@ export default function ClientFeedbackPage() {
       createdAt: new Date().toISOString(),
     };
 
-    // Store in localStorage for instant synchronization into studio dashboard
+    // 1. Post to Cloud API (instantly syncs to Supabase & notifies Gmail)
+    try {
+      await fetch('/api/feedback/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(submission),
+      });
+    } catch (apiErr) {
+      console.warn('Network sync notice:', apiErr);
+    }
+
+    // 2. Store in local storage for instant offline viewing
     try {
       const existing = JSON.parse(localStorage.getItem('vows_client_feedback') || '[]');
       existing.unshift(submission);
@@ -51,10 +64,8 @@ export default function ClientFeedbackPage() {
       console.warn('Local storage write warning:', err);
     }
 
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSubmitted(true);
-    }, 600);
+    setIsSubmitting(false);
+    setIsSubmitted(true);
   };
 
   return (
