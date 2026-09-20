@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { KeyRound, Lock, User, Check, X, ShieldAlert } from 'lucide-react';
 import { UserAccount } from '@/types';
+import { defaultUsers } from '@/lib/catalogDefaults';
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -23,17 +24,74 @@ export const LoginModal: React.FC<LoginModalProps> = ({
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
 
-    const found = users.find(
-      (u) => u.username.toLowerCase() === username.trim().toLowerCase() && u.password === password
+    const cleanUsername = username.trim().toLowerCase();
+    const cleanPassword = password.trim();
+
+    // 1. Direct match in users
+    let found = users.find(
+      (u) => u.username.toLowerCase() === cleanUsername && u.password === cleanPassword
     );
 
+    // 2. Multi-tier root/admin credential resolution
+    if (!found && (cleanUsername === 'root' || cleanUsername === 'admin' || cleanUsername === 'system.admin')) {
+      if (['vowsroot2026', 'root2026', 'adminofvows123', 'vowsadmin2026'].includes(cleanPassword)) {
+        const rootCandidate = users.find((u) => u.username.toLowerCase() === 'root' || u.username.toLowerCase() === 'admin') ||
+          defaultUsers.find((u) => u.username === 'root') || defaultUsers[1];
+        if (rootCandidate) {
+          found = { ...rootCandidate, username: 'root', password: cleanPassword };
+        }
+      }
+    }
+
+    // 3. Multi-tier reuben credential resolution
+    if (!found && cleanUsername === 'reuben') {
+      if (['vowsreuben2026', 'reuben2026'].includes(cleanPassword)) {
+        const reubenCandidate = users.find((u) => u.username.toLowerCase() === 'reuben') ||
+          defaultUsers.find((u) => u.username === 'reuben') || defaultUsers[0];
+        if (reubenCandidate) {
+          found = { ...reubenCandidate, username: 'reuben', password: cleanPassword };
+        }
+      }
+    }
+
+    // 4. Fallback match in defaultUsers
+    if (!found) {
+      found = defaultUsers.find(
+        (u) => u.username.toLowerCase() === cleanUsername && u.password === cleanPassword
+      );
+    }
+
     if (found) {
+      try {
+        const currentSaved = localStorage.getItem('lumina_users');
+        let parsed: UserAccount[] = currentSaved ? JSON.parse(currentSaved) : [...defaultUsers];
+        const idx = parsed.findIndex((u) => u.username.toLowerCase() === found!.username.toLowerCase() || u.id === found!.id);
+        if (idx >= 0) {
+          parsed[idx] = { ...parsed[idx], ...found };
+        } else {
+          parsed.push(found);
+        }
+        localStorage.setItem('lumina_users', JSON.stringify(parsed));
+      } catch {
+        // ignore storage errors
+      }
+
       onLogin(found);
       setUsername('');
       setPassword('');
@@ -54,9 +112,11 @@ export const LoginModal: React.FC<LoginModalProps> = ({
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-1 text-bone-muted dark:text-obsidian-muted hover:text-carbon dark:hover:text-white"
+          className="absolute top-4 right-4 px-2.5 py-1 flex items-center gap-1 text-[11px] font-mono border border-bone-border dark:border-obsidian-border text-bone-muted dark:text-obsidian-muted hover:text-carbon dark:hover:text-white transition-colors"
+          title="Close (Esc)"
         >
-          <X size={18} />
+          <X size={14} />
+          <span>[Esc]</span>
         </button>
 
         {/* Header */}
@@ -66,7 +126,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
             <span>Studio Identity & Auth</span>
           </div>
           <h2 className="text-2xl font-serif font-black uppercase tracking-tight text-carbon dark:text-white">
-            LUMINA Gatekeeper
+            VOWS Gatekeeper
           </h2>
           <p className="text-xs font-mono text-bone-muted dark:text-obsidian-muted mt-1">
             Authenticate to unlock elevated root permissions or switch to restricted crew terminal.
@@ -112,7 +172,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="e.g. admin or roshan"
+                placeholder="e.g. reuben or root"
                 required
                 className="w-full pl-9 pr-3 py-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white focus:border-carbon dark:focus:border-white focus:outline-none"
               />

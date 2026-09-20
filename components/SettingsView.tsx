@@ -1022,7 +1022,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                   >
                     <div className="flex items-center justify-between">
                       <span className="font-serif font-black uppercase text-xs" style={{ color: customPrimaryColor }}>
-                        LUMINA // Preview
+                        VOWS // Preview
                       </span>
                       <span className="text-[9px] font-mono px-1.5 py-0.2 rounded font-bold" style={{ backgroundColor: customPrimaryColor, color: '#ffffff' }}>
                         SAMPLE
@@ -2042,7 +2042,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
           </div>
 
           {/* Root & Developer Granular Access Manipulation Matrix */}
-          {(currentUser.username === 'root' || currentUser.username === 'dan') && (
+          {(currentUser.username === 'root' || currentUser.username === 'admin') && (
             <div className="p-5 sm:p-6 bg-bone-card dark:bg-obsidian-card border-2 border-vermillion space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-bone-border dark:border-obsidian-border pb-3">
                 <div>

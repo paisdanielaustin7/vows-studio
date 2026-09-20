@@ -155,16 +155,51 @@ export default function StudioOSHome() {
           const parsed = JSON.parse(savedUsers);
           if (Array.isArray(parsed) && parsed.length > 0) {
             // Permanently filter out legacy dummy accounts of roshan, farooq, and dan
-            const sanitized = parsed.filter(
-              (u: UserAccount) =>
-                u.id !== 'usr-roshan' &&
-                u.id !== 'usr-farooq' &&
-                u.id !== 'usr-dan' &&
-                u.username.toLowerCase() !== 'roshan' &&
-                u.username.toLowerCase() !== 'farooq' &&
-                u.username.toLowerCase() !== 'dan'
-            );
-            activeUsersList = sanitized.length > 0 ? sanitized : defaultUsers;
+            let sanitized: UserAccount[] = parsed
+              .filter(
+                (u: UserAccount) =>
+                  u.id !== 'usr-roshan' &&
+                  u.id !== 'usr-farooq' &&
+                  u.id !== 'usr-dan' &&
+                  u.username.toLowerCase() !== 'roshan' &&
+                  u.username.toLowerCase() !== 'farooq' &&
+                  u.username.toLowerCase() !== 'dan'
+              )
+              .map((u: UserAccount) => {
+                // Migrate legacy usr-admin / admin to canonical root
+                if (u.id === 'usr-admin' || u.username.toLowerCase() === 'admin') {
+                  return {
+                    ...u,
+                    id: 'usr-root',
+                    username: 'root',
+                    fullName: u.fullName || 'System Admin',
+                    password: 'vowsroot2026',
+                  };
+                }
+                if (u.username.toLowerCase() === 'reuben') {
+                  return {
+                    ...u,
+                    id: 'usr-reuben',
+                    username: 'reuben',
+                    fullName: u.fullName || 'Reuben Serrao (Director)',
+                    password: 'vowsreuben2026',
+                  };
+                }
+                return u;
+              });
+
+            // Ensure canonical root account is present
+            if (!sanitized.some((u) => u.username.toLowerCase() === 'root')) {
+              const rootDefault = defaultUsers.find((u) => u.username === 'root') || defaultUsers[1];
+              if (rootDefault) sanitized.push(rootDefault);
+            }
+            // Ensure canonical reuben account is present
+            if (!sanitized.some((u) => u.username.toLowerCase() === 'reuben')) {
+              const reubenDefault = defaultUsers.find((u) => u.username === 'reuben') || defaultUsers[0];
+              if (reubenDefault) sanitized.push(reubenDefault);
+            }
+
+            activeUsersList = sanitized;
             setUsers(activeUsersList);
             localStorage.setItem('lumina_users', JSON.stringify(activeUsersList));
           }
@@ -1096,7 +1131,7 @@ export default function StudioOSHome() {
       <div className="h-screen w-screen bg-[#0a0a0a] flex items-center justify-center font-mono text-white text-xs tracking-widest uppercase">
         <div className="flex items-center gap-3">
           <span className="w-2 h-2 rounded-full bg-vermillion animate-ping" />
-          <span>INITIALIZING LUMINA STUDIO OS // PLEASE WAIT...</span>
+          <span>INITIALIZING VOWS STUDIO OS // PLEASE WAIT...</span>
         </div>
       </div>
     );

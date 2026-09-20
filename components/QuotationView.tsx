@@ -702,7 +702,7 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
             </div>
           </div>
 
-          {/* Right Column: Visual Preview Deck with Independent Scroll (Strictly LUMINA Branding with Active Theme Palette) */}
+          {/* Right Column: Visual Preview Deck with Independent Scroll (Strictly VOWS Branding with Active Theme Palette) */}
           {(() => {
             if (!selectedQuote) {
               return (
@@ -739,7 +739,7 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
                 className="lg:col-span-7 border-2 border-carbon dark:border-white p-3.5 sm:p-5 lg:p-7 shadow-xl space-y-4 max-h-none lg:max-h-[calc(100vh-140px)] overflow-visible lg:overflow-y-auto"
                 style={{ backgroundColor: previewBg, color: previewText }}
               >
-                {/* Header: Pure LUMINA Branding */}
+                {/* Header: Pure VOWS Branding */}
                 <div
                   className="flex items-start justify-between pb-3 border-b"
                   style={{ borderColor: previewStrip }}

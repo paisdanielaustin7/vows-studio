@@ -619,7 +619,7 @@ export const mockQuotations: Quotation[] = [
     advancePercentage: 50,
     status: 'SENT',
     enquiryId: 'enq-101',
-    contactPerson: 'DAN AUREL',
+    contactPerson: 'REUBEN SERRAO',
     contactPhone: '+91 9380057445',
   },
   {
@@ -657,7 +657,7 @@ export const mockQuotations: Quotation[] = [
     advancePercentage: 50,
     status: 'ACCEPTED',
     enquiryId: 'enq-102',
-    contactPerson: 'DAN AUREL',
+    contactPerson: 'REUBEN SERRAO',
     contactPhone: '+91 9380057445',
   },
   {
@@ -692,7 +692,7 @@ export const mockQuotations: Quotation[] = [
     advancePercentage: 50,
     status: 'CONVERTED',
     enquiryId: 'enq-103',
-    contactPerson: 'DAN AUREL',
+    contactPerson: 'REUBEN SERRAO',
     contactPhone: '+91 9380057445',
   },
   {
@@ -724,7 +724,7 @@ export const mockQuotations: Quotation[] = [
     advancePercentage: 50,
     status: 'SENT',
     enquiryId: 'enq-104',
-    contactPerson: 'DAN AUREL',
+    contactPerson: 'REUBEN SERRAO',
     contactPhone: '+91 9380057445',
   },
 ];

@@ -90,10 +90,10 @@ export default function PublicEditorialAbout() {
           <div className="flex items-center gap-6">
             <Link href="/" className="flex items-center gap-3 group">
               <div className="w-8 h-8 flex items-center justify-center bg-carbon text-bone dark:bg-white dark:text-obsidian font-serif font-black text-base tracking-widest transition-transform group-hover:scale-105">
-                L
+                V
               </div>
               <span className="font-serif font-black tracking-[0.3em] uppercase text-sm">
-                LUMINA
+                VOWS
               </span>
             </Link>
             <span className="hidden md:inline-block text-[11px] font-mono text-bone-muted dark:text-obsidian-muted uppercase tracking-[0.2em] border-l border-bone-border dark:border-obsidian-border pl-6">
@@ -152,7 +152,7 @@ export default function PublicEditorialAbout() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-8 items-end">
             <div className="lg:col-span-7">
               <p className="text-lg md:text-2xl font-serif text-carbon/90 dark:text-bone/90 leading-relaxed font-light">
-                LUMINA is an independent photographic atelier and digital art direction house rooted in Mangalore, Karnataka. We orchestrate architectural features, heirloom bridal couture campaigns, and commercial series across the Arabian Sea coastline and Western Ghats with medium-format precision and brutalist restraint.
+                VOWS is an independent photographic atelier and digital art direction house rooted in Mangalore, Karnataka. We orchestrate architectural features, heirloom bridal couture campaigns, and commercial series across the Arabian Sea coastline and Western Ghats with medium-format precision and brutalist restraint.
               </p>
             </div>
 
@@ -332,7 +332,7 @@ export default function PublicEditorialAbout() {
         </div>
 
         <div className="pt-16 border-t border-bone-border dark:border-obsidian-border flex flex-col sm:flex-row items-center justify-between text-xs font-mono text-bone-muted dark:text-obsidian-muted">
-          <span>© 2026 LUMINA ATELIER & STUDIO OS. ALL RIGHTS RESERVED.</span>
+          <span>© 2026 VOWS // WEDDING CINEMATICS & STILLS. ALL RIGHTS RESERVED.</span>
           <span>MANGALORE // UDUPI // WESTERN GHATS // BANGALORE</span>
         </div>
       </footer>
@@ -358,7 +358,7 @@ export default function PublicEditorialAbout() {
               <div className="flex items-center justify-between pb-4 border-b border-bone-border dark:border-obsidian-border mb-6">
                 <div>
                   <span className="text-[10px] font-mono uppercase tracking-widest text-vermillion font-bold block mb-0.5">
-                    LUMINA STUDIO // CLIENT COMMISSION INTAKE
+                    VOWS STUDIO // CLIENT COMMISSION INTAKE
                   </span>
                   <h3 className="font-serif text-2xl font-bold uppercase text-carbon dark:text-white">
                     Book a Production Session
@@ -382,7 +382,7 @@ export default function PublicEditorialAbout() {
                     Brief Transmitted
                   </h4>
                   <p className="text-xs text-bone-muted dark:text-obsidian-muted max-w-sm mx-auto">
-                    Your production brief has reached Studio Director Dan Aurel at our Mangalore headquarters. Our team will verify date availability and revert within 24 hours.
+                    Your production brief has reached Studio Director Reuben Serrao at our Mangalore headquarters. Our team will verify date availability and revert within 24 hours.
                   </p>
                   <button
                     onClick={() => setIsInquiryOpen(false)}

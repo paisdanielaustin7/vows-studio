@@ -247,7 +247,7 @@ export const InvoicesView: React.FC<InvoicesViewProps> = ({ invoices, settings, 
             className="lg:col-span-7 border-2 border-carbon dark:border-white p-4 sm:p-6 lg:p-8 shadow-xl space-y-5 sm:space-y-6 max-h-none lg:max-h-[calc(100vh-140px)] overflow-visible lg:overflow-y-auto"
             style={{ backgroundColor: previewBg, color: previewText }}
           >
-            {/* Header: Pure LUMINA Branding */}
+            {/* Header: Pure VOWS Branding */}
             <div
               className="flex items-start justify-between pb-3 border-b"
               style={{ borderColor: previewStrip }}
