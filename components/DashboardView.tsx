@@ -227,119 +227,139 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                 Next Up On Set // Call Sheet
               </h2>
             </div>
-            <span className="text-[10px] font-mono uppercase tracking-widest text-bone-muted dark:text-obsidian-muted">
-              CODE: {nextShoot.shootCode}
-            </span>
+            {nextShoot && (
+              <span className="text-[10px] font-mono uppercase tracking-widest text-bone-muted dark:text-obsidian-muted">
+                CODE: {nextShoot.shootCode}
+              </span>
+            )}
           </div>
 
-          <motion.div
-            whileHover={{ y: -2 }}
-            transition={{ duration: 0.2 }}
-            onClick={() => onSelectShoot(nextShoot)}
-            className="cursor-pointer bg-bone-card dark:bg-obsidian-card border-2 border-carbon dark:border-white p-6 relative overflow-hidden shadow-brutalist-light dark:shadow-brutalist-dark"
-          >
-            {/* Stamp Tag */}
-            <div className="inline-block px-2.5 py-1 mb-4 text-[10px] font-mono font-bold uppercase tracking-widest bg-carbon text-bone dark:bg-white dark:text-carbon">
-              {nextShoot.type}
-            </div>
-
-            <h3 className="text-2xl font-serif font-bold text-carbon dark:text-white leading-snug">
-              {nextShoot.title}
-            </h3>
-
-            <p className="mt-1 text-xs font-mono uppercase tracking-wider text-bone-muted dark:text-obsidian-muted">
-              Client: {nextShoot.client.name} — {nextShoot.client.company}
-            </p>
-
-            {/* Shoot Countdown & Call Time */}
-            <div className="mt-6 pt-5 border-t border-bone-border dark:border-obsidian-border grid grid-cols-2 gap-4">
-              <div>
-                <span className="block text-[10px] font-mono uppercase tracking-widest text-bone-muted dark:text-obsidian-muted">
-                  Call Time
-                </span>
-                <span className="text-sm font-mono font-bold text-vermillion mt-0.5 flex items-center gap-1.5">
-                  <Clock size={12} />
-                  {nextShoot.callTime}
-                </span>
+          {nextShoot ? (
+            <motion.div
+              whileHover={{ y: -2 }}
+              transition={{ duration: 0.2 }}
+              onClick={() => onSelectShoot(nextShoot)}
+              className="cursor-pointer bg-bone-card dark:bg-obsidian-card border-2 border-carbon dark:border-white p-6 relative overflow-hidden shadow-brutalist-light dark:shadow-brutalist-dark"
+            >
+              {/* Stamp Tag */}
+              <div className="inline-block px-2.5 py-1 mb-4 text-[10px] font-mono font-bold uppercase tracking-widest bg-carbon text-bone dark:bg-white dark:text-carbon">
+                {nextShoot.type}
               </div>
-              <div>
-                <span className="block text-[10px] font-mono uppercase tracking-widest text-bone-muted dark:text-obsidian-muted">
-                  Date of Production
-                </span>
-                <span className="text-sm font-mono font-bold text-carbon dark:text-white mt-0.5">
-                  {nextShoot.date}
-                </span>
-              </div>
-            </div>
 
-            {/* Coordinates & Location */}
-            <div className="mt-4 p-3 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border space-y-1">
-              <div className="flex items-center gap-2 text-xs font-mono font-semibold text-carbon dark:text-white">
-                <MapPin size={13} className="text-vermillion shrink-0" />
-                <span className="truncate">{nextShoot.location.name}</span>
-              </div>
-              <div className="text-[11px] font-mono text-bone-muted dark:text-obsidian-muted pl-5 flex items-center justify-between">
-                <span>{nextShoot.location.city}</span>
-                <span className="font-mono text-[10px] bg-carbon/10 dark:bg-white/10 px-1.5 py-0.5">
-                  {nextShoot.location.coordinates}
-                </span>
-              </div>
-            </div>
+              <h3 className="text-2xl font-serif font-bold text-carbon dark:text-white leading-snug">
+                {nextShoot.title}
+              </h3>
 
-            {/* Production Crew Tags */}
-            <div className="mt-5">
-              <span className="block text-[10px] font-mono uppercase tracking-widest text-bone-muted dark:text-obsidian-muted mb-2">
-                Confirmed Crew Roster ({nextShoot.productionTeam.length})
-              </span>
-              <div className="flex flex-wrap gap-1.5">
-                {nextShoot.productionTeam.map((member, i) => (
-                  <span
-                    key={i}
-                    className="inline-flex items-center gap-1 px-2 py-1 text-[10px] font-mono bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border"
-                  >
-                    <span className="w-1.5 h-1.5 rounded-full bg-vermillion" />
-                    <strong className="text-carbon dark:text-white">{member.initials}</strong>
-                    <span className="text-bone-muted dark:text-obsidian-muted truncate max-w-[120px]">
-                      {member.role.split('&')[0]}
-                    </span>
+              <p className="mt-1 text-xs font-mono uppercase tracking-wider text-bone-muted dark:text-obsidian-muted">
+                Client: {nextShoot.client.name} — {nextShoot.client.company}
+              </p>
+
+              {/* Shoot Countdown & Call Time */}
+              <div className="mt-6 pt-5 border-t border-bone-border dark:border-obsidian-border grid grid-cols-2 gap-4">
+                <div>
+                  <span className="block text-[10px] font-mono uppercase tracking-widest text-bone-muted dark:text-obsidian-muted">
+                    Call Time
                   </span>
-                ))}
+                  <span className="text-sm font-mono font-bold text-vermillion mt-0.5 flex items-center gap-1.5">
+                    <Clock size={12} />
+                    {nextShoot.callTime}
+                  </span>
+                </div>
+                <div>
+                  <span className="block text-[10px] font-mono uppercase tracking-widest text-bone-muted dark:text-obsidian-muted">
+                    Date of Production
+                  </span>
+                  <span className="text-sm font-mono font-bold text-carbon dark:text-white mt-0.5">
+                    {nextShoot.date}
+                  </span>
+                </div>
               </div>
-            </div>
 
-            {/* Balance & Shot Count Metrics */}
-            <div className="mt-6 pt-4 border-t border-bone-border dark:border-obsidian-border flex items-center justify-between text-xs font-mono">
-              <div>
-                <span className="text-bone-muted dark:text-obsidian-muted block text-[10px] uppercase tracking-wider">
-                  Shot List Target
-                </span>
-                <span className="font-bold text-carbon dark:text-white">
-                  {nextShoot.shotListTotal} Editorial Plates
-                </span>
+              {/* Coordinates & Location */}
+              <div className="mt-4 p-3 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border space-y-1">
+                <div className="flex items-center gap-2 text-xs font-mono font-semibold text-carbon dark:text-white">
+                  <MapPin size={13} className="text-vermillion shrink-0" />
+                  <span className="truncate">{nextShoot.location.name}</span>
+                </div>
+                <div className="text-[11px] font-mono text-bone-muted dark:text-obsidian-muted pl-5 flex items-center justify-between">
+                  <span>{nextShoot.location.city}</span>
+                  <span className="font-mono text-[10px] bg-carbon/10 dark:bg-white/10 px-1.5 py-0.5">
+                    {nextShoot.location.coordinates}
+                  </span>
+                </div>
               </div>
-              <div className="text-right">
-                <span className="text-bone-muted dark:text-obsidian-muted block text-[10px] uppercase tracking-wider">
-                  Outstanding Balance
-                </span>
-                <span className="font-bold text-vermillion">
-                  {formatCurrency(nextShoot.financialSummary.balanceDue, nextShoot.financialSummary.currency)}
-                </span>
-              </div>
-            </div>
 
-            <div className="mt-5 text-center">
+              {/* Production Crew Tags */}
+              <div className="mt-5">
+                <span className="block text-[10px] font-mono uppercase tracking-widest text-bone-muted dark:text-obsidian-muted mb-2">
+                  Confirmed Crew Roster ({nextShoot.productionTeam.length})
+                </span>
+                <div className="flex flex-wrap gap-1.5">
+                  {nextShoot.productionTeam.map((member, i) => (
+                    <span
+                      key={i}
+                      className="inline-flex items-center gap-1 px-2 py-1 text-[10px] font-mono bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border"
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full bg-vermillion" />
+                      <strong className="text-carbon dark:text-white">{member.initials}</strong>
+                      <span className="text-bone-muted dark:text-obsidian-muted truncate max-w-[120px]">
+                        {member.role.split('&')[0]}
+                      </span>
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Balance & Shot Count Metrics */}
+              <div className="mt-6 pt-4 border-t border-bone-border dark:border-obsidian-border flex items-center justify-between text-xs font-mono">
+                <div>
+                  <span className="text-bone-muted dark:text-obsidian-muted block text-[10px] uppercase tracking-wider">
+                    Shot List Target
+                  </span>
+                  <span className="font-bold text-carbon dark:text-white">
+                    {nextShoot.shotListTotal} Editorial Plates
+                  </span>
+                </div>
+                <div className="text-right">
+                  <span className="text-bone-muted dark:text-obsidian-muted block text-[10px] uppercase tracking-wider">
+                    Outstanding Balance
+                  </span>
+                  <span className="font-bold text-vermillion">
+                    {formatCurrency(nextShoot.financialSummary.balanceDue, nextShoot.financialSummary.currency)}
+                  </span>
+                </div>
+              </div>
+
+              <div className="mt-5 text-center">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onSelectShoot(nextShoot);
+                  }}
+                  className="w-full py-2 text-xs font-mono uppercase tracking-widest bg-carbon text-bone dark:bg-white dark:text-carbon hover:bg-vermillion dark:hover:bg-vermillion dark:hover:text-white transition-all flex items-center justify-center gap-1"
+                >
+                  <span>Inspect Full Call Sheet</span>
+                  <ChevronRight size={14} />
+                </button>
+              </div>
+            </motion.div>
+          ) : (
+            <div className="bg-bone-card dark:bg-obsidian-card border-2 border-dashed border-bone-border dark:border-obsidian-border p-8 text-center space-y-3">
+              <Camera size={28} className="mx-auto text-bone-muted dark:text-obsidian-muted opacity-40" />
+              <h3 className="font-serif font-bold text-base uppercase text-carbon dark:text-white">
+                Studio Calendar Clear
+              </h3>
+              <p className="text-xs text-bone-muted dark:text-obsidian-muted max-w-xs mx-auto leading-relaxed">
+                No active shoots or call sheets currently scheduled. Convert a quotation or book a new session.
+              </p>
               <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onSelectShoot(nextShoot);
-                }}
-                className="w-full py-2 text-xs font-mono uppercase tracking-widest bg-carbon text-bone dark:bg-white dark:text-carbon hover:bg-vermillion dark:hover:bg-vermillion dark:hover:text-white transition-all flex items-center justify-center gap-1"
+                onClick={() => onNavigate('quotations')}
+                className="px-3.5 py-1.5 bg-carbon text-bone dark:bg-white dark:text-carbon text-xs uppercase font-mono tracking-wider font-bold hover:bg-vermillion dark:hover:bg-vermillion dark:hover:text-white transition-all"
               >
-                <span>Inspect Full Call Sheet</span>
-                <ChevronRight size={14} />
+                Open Quotations
               </button>
             </div>
-          </motion.div>
+          )}
         </section>
 
         {/* Right Column: Live Dual Ledger Feed (7 cols) */}
@@ -403,13 +423,20 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-bone-border dark:divide-obsidian-border text-xs font-mono">
-                  {filteredLedger.slice(0, 6).map((entry) => {
-                    const isIncome = entry.type === 'INCOME';
-                    return (
-                      <tr
-                        key={entry.id}
-                        className="hover:bg-bone-surface/50 dark:hover:bg-obsidian-surface/50 transition-colors group"
-                      >
+                  {filteredLedger.length === 0 ? (
+                    <tr>
+                      <td colSpan={5} className="py-8 text-center text-bone-muted dark:text-obsidian-muted text-xs font-mono">
+                        No transactions recorded. Operational ledger is currently clean.
+                      </td>
+                    </tr>
+                  ) : (
+                    filteredLedger.slice(0, 6).map((entry) => {
+                      const isIncome = entry.type === 'INCOME';
+                      return (
+                        <tr
+                          key={entry.id}
+                          className="hover:bg-bone-surface/50 dark:hover:bg-obsidian-surface/50 transition-colors group"
+                        >
                         {/* Ref & Date */}
                         <td className="py-3.5 px-4 whitespace-nowrap">
                           <span className="block font-bold text-carbon dark:text-white">
@@ -475,7 +502,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                         </td>
                       </tr>
                     );
-                  })}
+                  }))}
                 </tbody>
               </table>
             </div>

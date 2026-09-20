@@ -305,6 +305,7 @@ export interface UserAccount {
   canAccessSettings: boolean; // Selective access: hides studio parameters if false
   canEditQuotesAndOrders: boolean; // Selective access: read-only quote/order access if false
   canEditLedger: boolean; // Selective access: can edit/modify dual ledger transactions
+  isLocked?: boolean; // Account lockout flag: triggers covert 503 handshake rejection at login
 }
 
 export interface FeedbackSubmission {

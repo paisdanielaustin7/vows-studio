@@ -30,6 +30,7 @@ export async function fetchUsersFromCloud(): Promise<UserAccount[] | null> {
       canAccessSettings: row.can_access_settings,
       canEditQuotesAndOrders: row.can_edit_quotes_and_orders,
       canEditLedger: row.can_edit_ledger,
+      isLocked: row.is_locked ?? false,
     }));
   } catch (err) {
     console.warn('[Supabase] Failed to fetch users:', err);
@@ -79,7 +80,8 @@ export async function fetchQuotationsFromCloud(): Promise<Quotation[] | null> {
       .select('*')
       .order('created_at', { ascending: false });
     if (error) throw error;
-    if (!data || data.length === 0) return null;
+    if (!data) return null;
+    if (data.length === 0) return [];
 
     return data.map((row) => ({
       id: row.id,
@@ -116,7 +118,8 @@ export async function fetchEnquiriesFromCloud(): Promise<Enquiry[] | null> {
       .select('*')
       .order('created_at', { ascending: false });
     if (error) throw error;
-    if (!data || data.length === 0) return null;
+    if (!data) return null;
+    if (data.length === 0) return [];
 
     return data.map((row) => ({
       id: row.id,
@@ -147,7 +150,8 @@ export async function fetchBookingsFromCloud(): Promise<ShootBooking[] | null> {
       .select('*')
       .order('created_at', { ascending: false });
     if (error) throw error;
-    if (!data || data.length === 0) return null;
+    if (!data) return null;
+    if (data.length === 0) return [];
 
     return data.map((row) => ({
       id: row.id,
@@ -188,7 +192,8 @@ export async function fetchLedgerFromCloud(): Promise<LedgerEntry[] | null> {
       .select('*')
       .order('created_at', { ascending: false });
     if (error) throw error;
-    if (!data || data.length === 0) return null;
+    if (!data) return null;
+    if (data.length === 0) return [];
 
     return data.map((row) => ({
       id: row.id,
@@ -217,7 +222,8 @@ export async function fetchInvoicesFromCloud(): Promise<Invoice[] | null> {
       .select('*')
       .order('created_at', { ascending: false });
     if (error) throw error;
-    if (!data || data.length === 0) return null;
+    if (!data) return null;
+    if (data.length === 0) return [];
 
     return data.map((row) => ({
       id: row.id,
@@ -259,6 +265,7 @@ export async function syncUserToCloud(user: UserAccount): Promise<void> {
         can_access_settings: user.canAccessSettings,
         can_edit_quotes_and_orders: user.canEditQuotesAndOrders,
         can_edit_ledger: user.canEditLedger,
+        is_locked: user.isLocked ?? false,
       },
       { onConflict: 'username' }
     );
@@ -470,11 +477,11 @@ export async function syncInvoiceToCloud(inv: Invoice): Promise<void> {
 export async function seedCloudIfEmpty(data: {
   users: UserAccount[];
   settings: StudioSettings;
-  quotations: Quotation[];
-  enquiries: Enquiry[];
-  bookings: ShootBooking[];
-  ledger: LedgerEntry[];
-  invoices: Invoice[];
+  quotations?: Quotation[];
+  enquiries?: Enquiry[];
+  bookings?: ShootBooking[];
+  ledger?: LedgerEntry[];
+  invoices?: Invoice[];
 }) {
   if (!supabase || !isSupabaseConfigured()) return;
 
@@ -490,43 +497,26 @@ export async function seedCloudIfEmpty(data: {
     if (settingsCount === 0 || settingsCount === null) {
       await syncSettingsToCloud(data.settings);
     }
-
-    const { count: quoteCount } = await supabase.from('lumina_quotations').select('*', { count: 'exact', head: true });
-    if (quoteCount === 0 || quoteCount === null) {
-      for (const q of data.quotations) {
-        await syncQuotationToCloud(q);
-      }
-    }
-
-    const { count: enqCount } = await supabase.from('lumina_enquiries').select('*', { count: 'exact', head: true });
-    if (enqCount === 0 || enqCount === null) {
-      for (const e of data.enquiries) {
-        await syncEnquiryToCloud(e);
-      }
-    }
-
-    const { count: bookingCount } = await supabase.from('lumina_bookings').select('*', { count: 'exact', head: true });
-    if (bookingCount === 0 || bookingCount === null) {
-      for (const b of data.bookings) {
-        await syncBookingToCloud(b);
-      }
-    }
-
-    const { count: ledgerCount } = await supabase.from('lumina_ledger').select('*', { count: 'exact', head: true });
-    if (ledgerCount === 0 || ledgerCount === null) {
-      for (const l of data.ledger) {
-        await syncLedgerEntryToCloud(l);
-      }
-    }
-
-    const { count: invCount } = await supabase.from('lumina_invoices').select('*', { count: 'exact', head: true });
-    if (invCount === 0 || invCount === null) {
-      for (const i of data.invoices) {
-        await syncInvoiceToCloud(i);
-      }
-    }
   } catch (err) {
     console.warn('[Supabase] Initial seed skipped or already populated:', err);
+  }
+}
+
+export async function clearAllOperationalDataFromCloud(): Promise<{ success: boolean; error?: string }> {
+  if (!supabase || !isSupabaseConfigured()) return { success: true };
+  try {
+    await Promise.allSettled([
+      supabase.from('lumina_quotations').delete().neq('id', '___keep_none___'),
+      supabase.from('lumina_enquiries').delete().neq('id', '___keep_none___'),
+      supabase.from('lumina_bookings').delete().neq('id', '___keep_none___'),
+      supabase.from('lumina_ledger').delete().neq('id', '___keep_none___'),
+      supabase.from('lumina_invoices').delete().neq('id', '___keep_none___'),
+      supabase.from('lumina_feedback').delete().neq('id', '___keep_none___'),
+    ]);
+    return { success: true };
+  } catch (err: any) {
+    console.error('[Supabase] Failed to clear operational data:', err);
+    return { success: false, error: err?.message || 'Database wipe error' };
   }
 }
 
@@ -588,7 +578,7 @@ export function subscribeToLuminaRealtime(handlers: RealtimeSyncHandlers): () =>
       { event: '*', schema: 'public', table: 'lumina_quotations' },
       async () => {
         const refreshed = await fetchQuotationsFromCloud();
-        if (refreshed) handlers.onQuotationsChange(refreshed);
+        if (refreshed !== null) handlers.onQuotationsChange(refreshed);
       }
     )
     // 2. Enquiries
@@ -597,7 +587,7 @@ export function subscribeToLuminaRealtime(handlers: RealtimeSyncHandlers): () =>
       { event: '*', schema: 'public', table: 'lumina_enquiries' },
       async () => {
         const refreshed = await fetchEnquiriesFromCloud();
-        if (refreshed) handlers.onEnquiriesChange(refreshed);
+        if (refreshed !== null) handlers.onEnquiriesChange(refreshed);
       }
     )
     // 3. Bookings / Orders
@@ -606,7 +596,7 @@ export function subscribeToLuminaRealtime(handlers: RealtimeSyncHandlers): () =>
       { event: '*', schema: 'public', table: 'lumina_bookings' },
       async () => {
         const refreshed = await fetchBookingsFromCloud();
-        if (refreshed) handlers.onBookingsChange(refreshed);
+        if (refreshed !== null) handlers.onBookingsChange(refreshed);
       }
     )
     // 4. Ledger
@@ -615,7 +605,7 @@ export function subscribeToLuminaRealtime(handlers: RealtimeSyncHandlers): () =>
       { event: '*', schema: 'public', table: 'lumina_ledger' },
       async () => {
         const refreshed = await fetchLedgerFromCloud();
-        if (refreshed) handlers.onLedgerChange(refreshed);
+        if (refreshed !== null) handlers.onLedgerChange(refreshed);
       }
     )
     // 5. Invoices
@@ -624,7 +614,7 @@ export function subscribeToLuminaRealtime(handlers: RealtimeSyncHandlers): () =>
       { event: '*', schema: 'public', table: 'lumina_invoices' },
       async () => {
         const refreshed = await fetchInvoicesFromCloud();
-        if (refreshed) handlers.onInvoicesChange(refreshed);
+        if (refreshed !== null) handlers.onInvoicesChange(refreshed);
       }
     )
     // 6. Users
@@ -633,7 +623,7 @@ export function subscribeToLuminaRealtime(handlers: RealtimeSyncHandlers): () =>
       { event: '*', schema: 'public', table: 'lumina_users' },
       async () => {
         const refreshed = await fetchUsersFromCloud();
-        if (refreshed) handlers.onUsersChange(refreshed);
+        if (refreshed !== null) handlers.onUsersChange(refreshed);
       }
     )
     // 7. Settings
@@ -642,7 +632,7 @@ export function subscribeToLuminaRealtime(handlers: RealtimeSyncHandlers): () =>
       { event: '*', schema: 'public', table: 'lumina_settings' },
       async () => {
         const refreshed = await fetchSettingsFromCloud();
-        if (refreshed) handlers.onSettingsChange(refreshed);
+        if (refreshed !== null) handlers.onSettingsChange(refreshed);
       }
     )
     .subscribe((status) => {

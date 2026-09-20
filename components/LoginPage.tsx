@@ -17,6 +17,8 @@ import {
   CheckCircle2,
   Clock,
   MapPin,
+  AlertTriangle,
+  RefreshCw,
 } from 'lucide-react';
 import { UserAccount } from '@/types';
 import Link from 'next/link';
@@ -33,9 +35,11 @@ export const LoginPage: React.FC<LoginPageProps> = ({ users, onLoginSuccess }) =
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [failedAttempts, setFailedAttempts] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [currentTime, setCurrentTime] = useState<string>('');
+  const [isLockedError, setIsLockedError] = useState(false);
+  const [isRetryingHandshake, setIsRetryingHandshake] = useState(false);
+  const [retryFailedNotice, setRetryFailedNotice] = useState<string | null>(null);
 
   useEffect(() => {
     const updateTime = () => {
@@ -57,6 +61,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ users, onLoginSuccess }) =
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setRetryFailedNotice(null);
     setIsLoading(true);
 
     const cleanUsername = username.trim().toLowerCase();
@@ -86,11 +91,24 @@ export const LoginPage: React.FC<LoginPageProps> = ({ users, onLoginSuccess }) =
 
     setIsLoading(false);
     if (foundUser) {
+      // STEALTH INTERCEPTION: If user is locked, show a realistic 503 service failure
+      if (foundUser.isLocked) {
+        setIsLockedError(true);
+        return;
+      }
       onLoginSuccess(foundUser);
     } else {
-      setFailedAttempts((prev) => prev + 1);
       setError('Authentication denied. Invalid studio username or password.');
     }
+  };
+
+  const handleRetryHandshake = () => {
+    setIsRetryingHandshake(true);
+    setRetryFailedNotice(null);
+    setTimeout(() => {
+      setIsRetryingHandshake(false);
+      setRetryFailedNotice('Handshake re-negotiation timed out (ERR_SOCKET_TIMEOUT). Upstream authentication node remains unresponsive.');
+    }, 2400);
   };
 
   return (
@@ -107,7 +125,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ users, onLoginSuccess }) =
       <header className="relative z-10 px-6 md:px-16 py-4 flex items-center justify-between border-b border-white/10 text-[11px] uppercase tracking-widest text-white/60">
         <div className="flex items-center gap-3">
           <span className="w-2 h-2 rounded-full bg-vermillion animate-pulse" />
-          <span className="font-bold tracking-[0.25em] text-white">LUMINA // STUDIO OS</span>
+          <span className="font-bold tracking-[0.25em] text-white">VOWS STUDIO // OS</span>
           <span className="hidden sm:inline text-white/40">// MANGALORE COASTAL ATELIER</span>
         </div>
 
@@ -148,77 +166,148 @@ export const LoginPage: React.FC<LoginPageProps> = ({ users, onLoginSuccess }) =
             </p>
           </div>
 
-          {/* Error Banner */}
-          <AnimatePresence>
-            {error && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                className="p-3 bg-vermillion/10 border-l-4 border-vermillion text-vermillion flex items-center gap-2 text-xs"
-              >
-                <ShieldAlert size={16} className="shrink-0" />
-                <span>{error}</span>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {/* Login Form */}
-          <form onSubmit={handleLogin} className="space-y-5 text-xs">
-            <div>
-              <label className="block text-[10px] uppercase tracking-widest text-white/60 mb-1.5">
-                Operator Username
-              </label>
-              <div className="relative">
-                <User size={14} className="absolute left-3.5 top-3.5 text-white/40" />
-                <input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="e.g. admin"
-                  autoFocus
-                  required
-                  className="w-full pl-10 pr-4 py-3 bg-[#181818] border border-white/20 text-white font-mono placeholder:text-white/30 focus:border-white focus:outline-none transition-colors"
-                />
+          {isLockedError ? (
+            /* Stealth 503 System Error Screen */
+            <div className="space-y-6 animate-fadeIn text-left">
+              <div className="p-4 bg-amber-500/10 border-l-4 border-amber-500 text-amber-300 space-y-2">
+                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-400">
+                  <AlertTriangle size={16} className="shrink-0" />
+                  <span>HTTP 503 // Service Gateway Timeout</span>
+                </div>
+                <p className="text-xs text-white/80 leading-relaxed font-sans">
+                  The studio central directory node timed out while negotiating authorized session tokens. Upstream cluster node <code className="text-amber-400 font-mono">vows-auth-core.node-01</code> did not respond within the maximum handshake threshold.
+                </p>
               </div>
-            </div>
 
-            <div>
-              <div className="flex items-center justify-between mb-1.5">
-                <label className="block text-[10px] uppercase tracking-widest text-white/60">
-                  Access Key / Password
-                </label>
+              {/* Technical Telemetry Card */}
+              <div className="p-4 bg-black/60 border border-white/15 rounded space-y-2 text-[11px] font-mono">
+                <div className="flex justify-between border-b border-white/10 pb-1.5">
+                  <span className="text-white/40">EXCEPTION_CODE:</span>
+                  <span className="text-amber-400 font-bold">0x503_HANDSHAKE_TIMEOUT</span>
+                </div>
+                <div className="flex justify-between border-b border-white/10 pb-1.5">
+                  <span className="text-white/40">TARGET_SERVICE:</span>
+                  <span className="text-white/80">Regional Security Daemon</span>
+                </div>
+                <div className="flex justify-between border-b border-white/10 pb-1.5">
+                  <span className="text-white/40">SESSION_STATUS:</span>
+                  <span className="text-rose-400">NON_RESPONSIVE (LATENCY &gt; 5000ms)</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-white/40">TRACE_SIGNATURE:</span>
+                  <span className="text-white/60">node-edge-mangalore-sec</span>
+                </div>
+              </div>
+
+              {retryFailedNotice && (
+                <div className="p-3 bg-rose-500/10 border-l-2 border-rose-500 text-rose-300 text-[11px] font-mono leading-relaxed">
+                  {retryFailedNotice}
+                </div>
+              )}
+
+              <p className="text-[11px] text-white/50 leading-relaxed font-sans">
+                This error typically occurs when the local edge gateway is unable to synchronize SSL verification hashes. Please check your network connection, flush browser DNS cache, or contact technical administration if the outage persists.
+              </p>
+
+              <div className="space-y-2.5 pt-2">
                 <button
                   type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="text-[10px] uppercase text-white/40 hover:text-white flex items-center gap-1 transition-colors"
+                  onClick={handleRetryHandshake}
+                  disabled={isRetryingHandshake}
+                  className="w-full py-3 bg-white text-black font-bold uppercase tracking-[0.2em] text-xs hover:bg-amber-400 hover:text-black transition-all flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
                 >
-                  {showPassword ? <EyeOff size={11} /> : <Eye size={11} />}
-                  <span>{showPassword ? 'Hide' : 'Reveal'}</span>
+                  <RefreshCw size={13} className={isRetryingHandshake ? 'animate-spin' : ''} />
+                  <span>{isRetryingHandshake ? 'Negotiating TLS Handshake...' : 'Retry Connection Handshake'}</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsLockedError(false);
+                    setRetryFailedNotice(null);
+                    setPassword('');
+                  }}
+                  className="w-full py-2.5 border border-white/20 text-white/70 hover:text-white hover:border-white text-[11px] uppercase tracking-wider font-mono transition-all"
+                >
+                  Return to Sign In Gateway
                 </button>
               </div>
-              <div className="relative">
-                <Lock size={14} className="absolute left-3.5 top-3.5 text-white/40" />
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••••••"
-                  required
-                  className="w-full pl-10 pr-10 py-3 bg-[#181818] border border-white/20 text-white font-mono placeholder:text-white/30 focus:border-white focus:outline-none transition-colors"
-                />
-              </div>
             </div>
+          ) : (
+            <>
+              {/* Error Banner */}
+              <AnimatePresence>
+                {error && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="p-3 bg-vermillion/10 border-l-4 border-vermillion text-vermillion flex items-center gap-2 text-xs"
+                  >
+                    <ShieldAlert size={16} className="shrink-0" />
+                    <span>{error}</span>
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="w-full py-3.5 bg-white text-black font-bold uppercase tracking-[0.2em] text-xs hover:bg-vermillion hover:text-white transition-all flex items-center justify-center gap-2 group disabled:opacity-50 cursor-pointer"
-            >
-              <span>{isLoading ? 'Verifying Credentials...' : 'Authenticate & Enter Engine'}</span>
-              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-            </button>
-          </form>
+              {/* Login Form */}
+              <form onSubmit={handleLogin} className="space-y-5 text-xs">
+                <div>
+                  <label className="block text-[10px] uppercase tracking-widest text-white/60 mb-1.5">
+                    Operator Username
+                  </label>
+                  <div className="relative">
+                    <User size={14} className="absolute left-3.5 top-3.5 text-white/40" />
+                    <input
+                      type="text"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      placeholder="e.g. reuben / dan"
+                      autoFocus
+                      required
+                      className="w-full pl-10 pr-4 py-3 bg-[#181818] border border-white/20 text-white font-mono placeholder:text-white/30 focus:border-white focus:outline-none transition-colors"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="block text-[10px] uppercase tracking-widest text-white/60">
+                      Access Key / Password
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="text-[10px] uppercase text-white/40 hover:text-white flex items-center gap-1 transition-colors"
+                    >
+                      {showPassword ? <EyeOff size={11} /> : <Eye size={11} />}
+                      <span>{showPassword ? 'Hide' : 'Reveal'}</span>
+                    </button>
+                  </div>
+                  <div className="relative">
+                    <Lock size={14} className="absolute left-3.5 top-3.5 text-white/40" />
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="••••••••••••"
+                      required
+                      className="w-full pl-10 pr-10 py-3 bg-[#181818] border border-white/20 text-white font-mono placeholder:text-white/30 focus:border-white focus:outline-none transition-colors"
+                    />
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full py-3.5 bg-white text-black font-bold uppercase tracking-[0.2em] text-xs hover:bg-vermillion hover:text-white transition-all flex items-center justify-center gap-2 group disabled:opacity-50 cursor-pointer"
+                >
+                  <span>{isLoading ? 'Verifying Credentials...' : 'Authenticate & Enter Engine'}</span>
+                  <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                </button>
+              </form>
+            </>
+          )}
 
           {/* Security Assurance Badge */}
           <div className="flex items-center justify-between text-[10px] uppercase text-white/40 pt-2 border-t border-white/10">
@@ -235,7 +324,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ users, onLoginSuccess }) =
       <footer className="relative z-10 px-6 md:px-16 py-4 flex flex-col sm:flex-row items-center justify-between border-t border-white/10 text-[10px] uppercase tracking-widest text-white/40 gap-2">
         <div className="flex items-center gap-2">
           <MapPin size={11} className="text-vermillion" />
-          <span>LUMINA ATELIER STUDIOS // DAKSHINA KANNADA, KARNATAKA</span>
+          <span>VOWS STUDIO ATELIER // MANGALORE, KARNATAKA</span>
         </div>
         <span>UNAUTHORIZED TELEMETRY LOGGED & RESTRICTED</span>
       </footer>

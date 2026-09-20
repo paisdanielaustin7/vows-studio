@@ -14,7 +14,7 @@ interface InvoicesViewProps {
 }
 
 export const InvoicesView: React.FC<InvoicesViewProps> = ({ invoices, settings, currentUser, onUpdateInvoice }) => {
-  const [selectedInvoice, setSelectedInvoice] = useState<Invoice>(invoices[0]);
+  const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(invoices[0] || null);
   const [isUploadingToDrive, setIsUploadingToDrive] = useState(false);
   const [driveSuccessMsg, setDriveSuccessMsg] = useState<string | null>(null);
 
@@ -29,6 +29,8 @@ export const InvoicesView: React.FC<InvoicesViewProps> = ({ invoices, settings, 
         const refreshed = invoices.find((i) => i.id === selectedInvoice.id);
         if (refreshed) setSelectedInvoice(refreshed);
       }
+    } else {
+      setSelectedInvoice(null);
     }
   }, [invoices, selectedInvoice]);
 
@@ -119,8 +121,13 @@ export const InvoicesView: React.FC<InvoicesViewProps> = ({ invoices, settings, 
             Archived & Active Invoices ({invoices.length})
           </span>
           <div className="space-y-2">
+            {invoices.length === 0 && (
+              <div className="p-6 border border-dashed border-bone-border dark:border-obsidian-border text-center text-xs font-mono text-bone-muted dark:text-obsidian-muted">
+                No invoices issued yet. Invoices generated from shoot orders will appear here.
+              </div>
+            )}
             {invoices.map((inv) => {
-              const isSelected = selectedInvoice.id === inv.id;
+              const isSelected = selectedInvoice?.id === inv.id;
               return (
                 <div
                   key={inv.id}

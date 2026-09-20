@@ -15,6 +15,7 @@ import { LoginPage } from '@/components/LoginPage';
 import { MasterSearchModal } from '@/components/MasterSearchModal';
 import {
   mockKPISummary,
+  emptyKPISummary,
   mockShoots,
   mockLedger,
   mockInvoices,
@@ -76,6 +77,7 @@ import {
   syncSettingsToCloud,
   seedCloudIfEmpty,
   reseedCloudData,
+  clearAllOperationalDataFromCloud,
   subscribeToLuminaRealtime,
 } from '@/lib/supabaseService';
 
@@ -130,13 +132,13 @@ export default function StudioOSHome() {
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [isAuthChecking, setIsAuthChecking] = useState(true);
 
-  // Synced Live State across all modules
-  const [quotations, setQuotations] = useState<Quotation[]>(mockQuotations);
-  const [enquiries, setEnquiries] = useState<Enquiry[]>(mockEnquiries);
-  const [bookings, setBookings] = useState<ShootBooking[]>(mockShoots);
-  const [ledger, setLedger] = useState<LedgerEntry[]>(mockLedger);
-  const [invoices, setInvoices] = useState<Invoice[]>(mockInvoices);
-  const [kpi, setKpi] = useState<KPISummary>(mockKPISummary);
+  // Synced Live State across all modules (Initialized clean/empty per studio specification)
+  const [quotations, setQuotations] = useState<Quotation[]>([]);
+  const [enquiries, setEnquiries] = useState<Enquiry[]>([]);
+  const [bookings, setBookings] = useState<ShootBooking[]>([]);
+  const [ledger, setLedger] = useState<LedgerEntry[]>([]);
+  const [invoices, setInvoices] = useState<Invoice[]>([]);
+  const [kpi, setKpi] = useState<KPISummary>(emptyKPISummary);
 
   // Restore saved users & active session from browser storage on mount
   useEffect(() => {
@@ -179,6 +181,43 @@ export default function StudioOSHome() {
         } catch (e) {
           console.error('Failed to parse saved settings', e);
         }
+      }
+
+      // Restore operational data from local storage if saved
+      const savedQuotes = localStorage.getItem('lumina_quotations');
+      if (savedQuotes) {
+        try {
+          const parsed = JSON.parse(savedQuotes);
+          if (Array.isArray(parsed)) setQuotations(parsed);
+        } catch (e) {}
+      }
+      const savedEnquiries = localStorage.getItem('lumina_enquiries');
+      if (savedEnquiries) {
+        try {
+          const parsed = JSON.parse(savedEnquiries);
+          if (Array.isArray(parsed)) setEnquiries(parsed);
+        } catch (e) {}
+      }
+      const savedBookings = localStorage.getItem('lumina_bookings');
+      if (savedBookings) {
+        try {
+          const parsed = JSON.parse(savedBookings);
+          if (Array.isArray(parsed)) setBookings(parsed);
+        } catch (e) {}
+      }
+      const savedLedger = localStorage.getItem('lumina_ledger');
+      if (savedLedger) {
+        try {
+          const parsed = JSON.parse(savedLedger);
+          if (Array.isArray(parsed)) setLedger(parsed);
+        } catch (e) {}
+      }
+      const savedInvoices = localStorage.getItem('lumina_invoices');
+      if (savedInvoices) {
+        try {
+          const parsed = JSON.parse(savedInvoices);
+          if (Array.isArray(parsed)) setInvoices(parsed);
+        } catch (e) {}
       }
 
       // Check active session from sessionStorage OR browser session cookie
@@ -331,25 +370,17 @@ export default function StudioOSHome() {
             });
           }
 
-          if (cloudQuotes && cloudQuotes.length > 0) setQuotations(cloudQuotes);
-          if (cloudEnquiries && cloudEnquiries.length > 0) setEnquiries(cloudEnquiries);
-          if (cloudBookings && cloudBookings.length > 0) setBookings(cloudBookings);
-          if (cloudLedger && cloudLedger.length > 0) setLedger(cloudLedger);
-          if (cloudInvoices && cloudInvoices.length > 0) setInvoices(cloudInvoices);
+          if (cloudQuotes !== null) setQuotations(cloudQuotes);
+          if (cloudEnquiries !== null) setEnquiries(cloudEnquiries);
+          if (cloudBookings !== null) setBookings(cloudBookings);
+          if (cloudLedger !== null) setLedger(cloudLedger);
+          if (cloudInvoices !== null) setInvoices(cloudInvoices);
 
-          // Seed default database data if freshly deployed and completely empty
-          if (
-            (!cloudUsers || cloudUsers.length === 0) &&
-            (!cloudQuotes || cloudQuotes.length === 0)
-          ) {
+          // Seed initial director & studio configurations if cloud is freshly deployed and empty
+          if (!cloudUsers || cloudUsers.length === 0) {
             await seedCloudIfEmpty({
               users: defaultUsers,
               settings: defaultStudioSettings,
-              quotations: mockQuotations,
-              enquiries: mockEnquiries,
-              bookings: mockShoots,
-              ledger: mockLedger,
-              invoices: mockInvoices,
             });
           }
 
@@ -436,11 +467,11 @@ export default function StudioOSHome() {
               fetchUsersFromCloud(),
               fetchSettingsFromCloud(),
             ]);
-            if (q && q.length > 0) setQuotations(q);
-            if (e && e.length > 0) setEnquiries(e);
-            if (b && b.length > 0) setBookings(b);
-            if (l && l.length > 0) setLedger(l);
-            if (i && i.length > 0) setInvoices(i);
+            if (q !== null) setQuotations(q);
+            if (e !== null) setEnquiries(e);
+            if (b !== null) setBookings(b);
+            if (l !== null) setLedger(l);
+            if (i !== null) setInvoices(i);
             if (u && u.length > 0) setUsers(u);
             if (s) {
               setStudioSettings((prevSettings) => {
@@ -555,6 +586,36 @@ export default function StudioOSHome() {
         ledger: mockLedger,
         invoices: mockInvoices,
       });
+    }
+  };
+
+  const handleClearAllData = async () => {
+    // 1. Clear state in React
+    setQuotations([]);
+    setEnquiries([]);
+    setBookings([]);
+    setLedger([]);
+    setInvoices([]);
+    setKpi(emptyKPISummary);
+
+    // 2. Clear browser localStorage for operational tables
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('lumina_quotations');
+      localStorage.removeItem('lumina_enquiries');
+      localStorage.removeItem('lumina_bookings');
+      localStorage.removeItem('lumina_ledger');
+      localStorage.removeItem('lumina_invoices');
+      localStorage.removeItem('vows_client_feedback');
+      localStorage.setItem('lumina_quotations', JSON.stringify([]));
+      localStorage.setItem('lumina_enquiries', JSON.stringify([]));
+      localStorage.setItem('lumina_bookings', JSON.stringify([]));
+      localStorage.setItem('lumina_ledger', JSON.stringify([]));
+      localStorage.setItem('lumina_invoices', JSON.stringify([]));
+    }
+
+    // 3. Clear cloud database tables if configured
+    if (isSupabaseConfigured()) {
+      await clearAllOperationalDataFromCloud();
     }
   };
 
@@ -1232,6 +1293,7 @@ export default function StudioOSHome() {
               onUpdateUsers={handleUpdateUsers}
               onOpenLoginModal={() => setIsLoginModalOpen(true)}
               onResetSampleData={handleResetSampleData}
+              onClearAllData={handleClearAllData}
             />
           )}
         </div>

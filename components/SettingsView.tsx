@@ -31,6 +31,7 @@ import {
   Sparkles,
   Cloud,
   Code2,
+  Unlock,
 } from 'lucide-react';
 import {
   StudioSettings,
@@ -49,6 +50,7 @@ interface SettingsViewProps {
   onUpdateUsers: (newUsers: UserAccount[]) => void;
   onOpenLoginModal: () => void;
   onResetSampleData?: () => void;
+  onClearAllData?: () => Promise<void>;
 }
 
 export const SettingsView: React.FC<SettingsViewProps> = ({
@@ -59,6 +61,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
   onUpdateUsers,
   onOpenLoginModal,
   onResetSampleData,
+  onClearAllData,
 }) => {
   const [activeTab, setActiveTab] = useState<'pdf' | 'banking' | 'terms' | 'users' | 'access' | 'integrations'>('pdf');
 
@@ -118,10 +121,11 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [passwordSuccess, setPasswordSuccess] = useState<string | null>(null);
 
-  // Admin Reset Password State (for any user)
-  const [resetPasswordTarget, setResetPasswordTarget] = useState<UserAccount | null>(null);
-  const [adminNewPassword, setAdminNewPassword] = useState('');
-  const [adminResetSuccess, setAdminResetSuccess] = useState<string | null>(null);
+  // Operational Data Wipe Modal State
+  const [showClearAllDataModal, setShowClearAllDataModal] = useState(false);
+  const [clearDataInput, setClearDataInput] = useState('');
+  const [isWipingData, setIsWipingData] = useState(false);
+  const [wipeSuccessNotice, setWipeSuccessNotice] = useState<string | null>(null);
 
   // Automations & Integrations Copy Feedback
   const [copiedScript, setCopiedScript] = useState(false);
@@ -140,14 +144,14 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
           setShowResetModal(false);
         } else if (showChangePasswordModal) {
           setShowChangePasswordModal(false);
-        } else if (resetPasswordTarget) {
-          setResetPasswordTarget(null);
+        } else if (showClearAllDataModal) {
+          setShowClearAllDataModal(false);
         }
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [showAddColorModal, isUserModalOpen, showResetModal, showChangePasswordModal, resetPasswordTarget]);
+  }, [showAddColorModal, isUserModalOpen, showResetModal, showChangePasswordModal, showClearAllDataModal]);
 
   // Sync internal form when settings update from cloud realtime
   useEffect(() => {
@@ -343,8 +347,8 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
   const handleDeleteUser = (userId: string) => {
     if (!canEdit) return;
     const target = users.find((u) => u.id === userId);
-    if (target?.username === 'admin') {
-      alert('The root "admin" account cannot be deleted.');
+    if (target?.username === 'admin' || target?.username === 'root') {
+      alert('The root system account cannot be deleted.');
       return;
     }
     if (confirm(`Are you sure you want to remove user "${target?.username}"?`)) {
@@ -387,36 +391,67 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
     }, 1400);
   };
 
-  // Admin Reset Password for any staff/user
-  const handleAdminResetPasswordSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!canEdit || !resetPasswordTarget || !adminNewPassword.trim()) return;
-
-    if (adminNewPassword.trim().length < 6) {
-      alert('Password must be at least 6 characters.');
+  // 1-Click User Lock / Unlock Toggle
+  const handleToggleUserLock = (targetUser: UserAccount) => {
+    if (targetUser.id === currentUser.id) {
+      alert('You cannot lock your own active identity.');
+      return;
+    }
+    const isAuthorized =
+      currentUser.username === 'root' ||
+      currentUser.username === 'dan' ||
+      currentUser.username === 'reuben';
+    if (!isAuthorized) {
+      alert('Unauthorized: Account locking privilege is reserved for Root, Dan, and Reuben.');
+      return;
+    }
+    if (currentUser.username === 'reuben' && (targetUser.username === 'root' || targetUser.username === 'dan')) {
+      alert('Access Denied: You cannot lock a higher system authority tier.');
       return;
     }
 
-    const updatedUsers = users.map((u) =>
-      u.id === resetPasswordTarget.id ? { ...u, password: adminNewPassword.trim() } : u
+    const updated = users.map((u) =>
+      u.id === targetUser.id ? { ...u, isLocked: !u.isLocked } : u
     );
-    onUpdateUsers(updatedUsers);
-    setAdminResetSuccess(`Password for @${resetPasswordTarget.username} updated!`);
-    setTimeout(() => {
-      setResetPasswordTarget(null);
-      setAdminNewPassword('');
-      setAdminResetSuccess(null);
-      showSuccessFeedback();
-    }, 1400);
+    onUpdateUsers(updated);
   };
 
-  const generateRandomPassword = () => {
-    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789!@#$%&*';
-    let pass = 'Vows@';
-    for (let i = 0; i < 6; i++) {
-      pass += chars.charAt(Math.floor(Math.random() * chars.length));
+  // Root Admin Dynamic Permission Override
+  const handleOverrideUserPermission = (targetUserId: string, field: keyof UserAccount, val: any) => {
+    const isRootAuthority = currentUser.username === 'root' || currentUser.username === 'dan';
+    if (!isRootAuthority) {
+      alert('Security Violation: Only Root Admin / Developer can override user access controls.');
+      return;
     }
-    setAdminNewPassword(pass);
+    const updated = users.map((u) =>
+      u.id === targetUserId ? { ...u, [field]: val } : u
+    );
+    onUpdateUsers(updated);
+  };
+
+  // Operational Data Wipe Execution
+  const handleExecuteDataWipe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (clearDataInput.trim() !== 'CLEAR ALL DATA') {
+      alert('Confirmation text mismatch. Please type "CLEAR ALL DATA" exactly to proceed.');
+      return;
+    }
+    if (!onClearAllData) return;
+
+    setIsWipingData(true);
+    try {
+      await onClearAllData();
+      setIsWipingData(false);
+      setWipeSuccessNotice('All operational studio records (quotes, enquiries, shoots, invoices, ledger, feedback) wiped clean successfully.');
+      setTimeout(() => {
+        setShowClearAllDataModal(false);
+        setClearDataInput('');
+        setWipeSuccessNotice(null);
+      }, 1800);
+    } catch (err) {
+      setIsWipingData(false);
+      alert('Failed to clear all operational data.');
+    }
   };
 
   return (
@@ -450,6 +485,16 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         </div>
 
         <div className="flex items-center gap-2">
+          {canEdit && onClearAllData && (
+            <button
+              onClick={() => setShowClearAllDataModal(true)}
+              className="px-3 py-1.5 border border-rose-500/40 text-[10px] font-mono uppercase tracking-wider text-rose-600 dark:text-rose-400 hover:bg-rose-500/10 hover:border-rose-500 transition-all flex items-center gap-1.5 font-bold"
+              title="Permanently wipe all operational data (quotes, enquiries, bookings, invoices, ledger, feedback)"
+            >
+              <Trash2 size={12} />
+              <span>Clear All Data</span>
+            </button>
+          )}
           {canEdit && onResetSampleData && (
             <button
               onClick={() => setShowResetModal(true)}
@@ -1362,22 +1407,40 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             {/* User Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 pt-1">
               {users.map((u) => {
-                const isRoot = u.username === 'admin';
+                const isRoot = u.username === 'root' || u.id === 'usr-root' || u.username === 'admin';
                 const isCurrent = currentUser.id === u.id;
+                const isViewerRootOrDan = currentUser.username === 'root' || currentUser.username === 'dan';
+                const canManageLock = currentUser.username === 'root' || currentUser.username === 'dan' || currentUser.username === 'reuben';
+                
+                // Root password is strictly concealed from Reuben and other crew
+                const displayedPassword = isRoot && !isViewerRootOrDan
+                  ? '••••••••••••'
+                  : (canEdit ? u.password : '••••••••••••');
+
                 return (
                   <div
                     key={u.id}
                     className={`p-4 bg-bone-surface dark:bg-obsidian-surface border ${
                       isCurrent
                         ? 'border-2 border-vermillion'
+                        : u.isLocked
+                        ? 'border-rose-500/50'
                         : 'border-bone-border dark:border-obsidian-border'
                     } flex flex-col justify-between space-y-3 relative`}
                   >
-                    {isCurrent && (
-                      <span className="absolute top-2 right-2 text-[8px] font-mono uppercase bg-vermillion text-white px-1.5 py-0.2 font-bold">
-                        Logged In
-                      </span>
-                    )}
+                    <div className="absolute top-2 right-2 flex items-center gap-1.5">
+                      {u.isLocked && (
+                        <span className="text-[8px] font-mono uppercase bg-rose-500/20 text-rose-500 px-1.5 py-0.5 font-bold border border-rose-500/30 flex items-center gap-1">
+                          <Lock size={9} />
+                          <span>Locked (503)</span>
+                        </span>
+                      )}
+                      {isCurrent && (
+                        <span className="text-[8px] font-mono uppercase bg-vermillion text-white px-1.5 py-0.5 font-bold">
+                          Logged In
+                        </span>
+                      )}
+                    </div>
 
                     <div>
                       <div className="flex items-center gap-2 mb-1">
@@ -1392,7 +1455,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                       <div className="text-bone-muted dark:text-obsidian-muted text-[10px]">
                         Password:{' '}
                         <code className="text-carbon dark:text-white font-mono">
-                          {canEdit ? u.password : '••••••••••••'}
+                          {displayedPassword}
                         </code>
                       </div>
                     </div>
@@ -1425,30 +1488,41 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                       </div>
                     </div>
 
-                    {/* Action buttons (Admin only) */}
+                    {/* Action buttons */}
                     {canEdit && (
                       <div className="pt-2 border-t border-bone-border dark:border-obsidian-border flex items-center justify-end gap-1.5">
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setResetPasswordTarget(u);
-                            setAdminNewPassword('');
-                            setAdminResetSuccess(null);
-                          }}
-                          className="px-2 py-0.5 text-[10px] border border-amber-500/40 text-amber-700 dark:text-amber-400 hover:bg-amber-500/10 transition-all flex items-center gap-1 font-mono font-bold"
-                          title="Admin Reset Password for this user"
-                        >
-                          <KeyRound size={10} />
-                          <span>Reset Key</span>
-                        </button>
+                        {canManageLock && (
+                          <button
+                            type="button"
+                            onClick={() => handleToggleUserLock(u)}
+                            disabled={isCurrent || (currentUser.username === 'reuben' && (isRoot || u.username === 'dan'))}
+                            className={`px-2 py-0.5 text-[10px] border font-mono font-bold transition-all flex items-center gap-1 ${
+                              u.isLocked
+                                ? 'border-rose-500/50 text-rose-600 dark:text-rose-400 bg-rose-500/10 hover:bg-rose-500/20'
+                                : 'border-emerald-500/40 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-500/10'
+                            } disabled:opacity-30 disabled:cursor-not-allowed`}
+                            title={
+                              isCurrent
+                                ? 'You cannot lock your own account'
+                                : u.isLocked
+                                ? 'Unlock account (permit login)'
+                                : 'Lock account (stealth 503 rejection)'
+                            }
+                          >
+                            {u.isLocked ? <Lock size={10} className="text-rose-500" /> : <Unlock size={10} className="text-emerald-500" />}
+                            <span>{u.isLocked ? 'Unlock' : 'Lock (503)'}</span>
+                          </button>
+                        )}
 
-                        <button
-                          onClick={() => handleOpenEditUser(u)}
-                          className="px-2 py-0.5 text-[10px] border border-bone-border dark:border-obsidian-border hover:border-carbon dark:hover:border-white transition-all flex items-center gap-1"
-                        >
-                          <Edit3 size={10} />
-                          <span>Edit</span>
-                        </button>
+                        {(!isRoot || isViewerRootOrDan) && (
+                          <button
+                            onClick={() => handleOpenEditUser(u)}
+                            className="px-2 py-0.5 text-[10px] border border-bone-border dark:border-obsidian-border hover:border-carbon dark:hover:border-white transition-all flex items-center gap-1"
+                          >
+                            <Edit3 size={10} />
+                            <span>Edit</span>
+                          </button>
+                        )}
 
                         {!isRoot && (
                           <button
@@ -1575,6 +1649,159 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               </div>
             </div>
           </div>
+
+          {/* Root & Developer Granular Access Manipulation Matrix */}
+          {(currentUser.username === 'root' || currentUser.username === 'dan') && (
+            <div className="p-5 sm:p-6 bg-bone-card dark:bg-obsidian-card border-2 border-vermillion space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-bone-border dark:border-obsidian-border pb-3">
+                <div>
+                  <div className="flex items-center gap-2 text-vermillion font-bold uppercase tracking-widest text-[10px]">
+                    <ShieldCheck size={14} />
+                    <span>Root Principal Security Command</span>
+                  </div>
+                  <h3 className="font-serif text-lg font-bold uppercase text-carbon dark:text-white">
+                    Master User Access & Permission Overrides
+                  </h3>
+                  <p className="text-[11px] text-bone-muted dark:text-obsidian-muted">
+                    Supreme directorship: Dynamically configure, restrict, or lock any studio user account (including Reuben Serrao) with immediate synchronization.
+                  </p>
+                </div>
+                <span className="text-[10px] font-mono px-2 py-0.5 bg-vermillion/10 text-vermillion border border-vermillion/30 font-bold self-start sm:self-auto">
+                  SUPERUSER LEVEL
+                </span>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse min-w-[720px] text-xs font-mono">
+                  <thead>
+                    <tr className="border-b border-bone-border dark:border-obsidian-border bg-bone-surface/70 dark:bg-obsidian-surface/80 text-[10px] uppercase tracking-wider text-bone-muted dark:text-obsidian-muted">
+                      <th className="py-2.5 px-3">Crew Identity</th>
+                      <th className="py-2.5 px-3">Role Elevation</th>
+                      <th className="py-2.5 px-3 text-center">Finances</th>
+                      <th className="py-2.5 px-3 text-center">Settings</th>
+                      <th className="py-2.5 px-3 text-center">Quotes & Orders</th>
+                      <th className="py-2.5 px-3 text-center">Ledger</th>
+                      <th className="py-2.5 px-3 text-center">Account Lock</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-bone-border dark:divide-obsidian-border">
+                    {users.map((u) => {
+                      const isTargetRoot = u.username === 'root' || u.id === 'usr-root';
+                      const isTargetCurrent = u.id === currentUser.id;
+                      return (
+                        <tr key={u.id} className="hover:bg-bone-surface/40 dark:hover:bg-obsidian-surface/40 transition-colors">
+                          <td className="py-3 px-3">
+                            <div className="font-bold text-carbon dark:text-white flex items-center gap-1.5">
+                              <span>{u.fullName}</span>
+                              {isTargetRoot && (
+                                <span className="text-[9px] px-1 py-0.2 bg-vermillion text-white font-bold">ROOT</span>
+                              )}
+                              {u.isLocked && (
+                                <span className="text-[9px] px-1 py-0.2 bg-rose-500/20 text-rose-500 font-bold border border-rose-500/40">503 LOCK</span>
+                              )}
+                            </div>
+                            <div className="text-[10px] text-bone-muted dark:text-obsidian-muted">
+                              @{u.username}
+                            </div>
+                          </td>
+
+                          <td className="py-3 px-3">
+                            <select
+                              value={u.role}
+                              disabled={isTargetRoot && !isTargetCurrent}
+                              onChange={(e) => handleOverrideUserPermission(u.id, 'role', e.target.value as UserRole)}
+                              className="bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white text-[11px] p-1 font-mono uppercase focus:outline-none"
+                            >
+                              <option value="ADMIN_DIRECTOR">Director (Admin)</option>
+                              <option value="PRODUCER">Producer</option>
+                              <option value="SECOND_SHOOTER">Second Shooter</option>
+                            </select>
+                          </td>
+
+                          {/* Finances Toggle */}
+                          <td className="py-3 px-3 text-center">
+                            <button
+                              type="button"
+                              onClick={() => handleOverrideUserPermission(u.id, 'canViewFinances', !u.canViewFinances)}
+                              className={`px-2 py-1 text-[10px] font-bold rounded transition-colors ${
+                                u.canViewFinances
+                                  ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30'
+                                  : 'bg-rose-500/10 text-rose-500 border border-rose-500/30'
+                              }`}
+                            >
+                              {u.canViewFinances ? 'ALLOWED' : 'REVOKED'}
+                            </button>
+                          </td>
+
+                          {/* Settings Toggle */}
+                          <td className="py-3 px-3 text-center">
+                            <button
+                              type="button"
+                              onClick={() => handleOverrideUserPermission(u.id, 'canAccessSettings', !u.canAccessSettings)}
+                              className={`px-2 py-1 text-[10px] font-bold rounded transition-colors ${
+                                u.canAccessSettings
+                                  ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30'
+                                  : 'bg-rose-500/10 text-rose-500 border border-rose-500/30'
+                              }`}
+                            >
+                              {u.canAccessSettings ? 'EDIT' : 'VIEW ONLY'}
+                            </button>
+                          </td>
+
+                          {/* Quotes & Orders Toggle */}
+                          <td className="py-3 px-3 text-center">
+                            <button
+                              type="button"
+                              onClick={() => handleOverrideUserPermission(u.id, 'canEditQuotesAndOrders', !u.canEditQuotesAndOrders)}
+                              className={`px-2 py-1 text-[10px] font-bold rounded transition-colors ${
+                                u.canEditQuotesAndOrders
+                                  ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30'
+                                  : 'bg-rose-500/10 text-rose-500 border border-rose-500/30'
+                              }`}
+                            >
+                              {u.canEditQuotesAndOrders ? 'EDIT' : 'VIEW ONLY'}
+                            </button>
+                          </td>
+
+                          {/* Ledger Toggle */}
+                          <td className="py-3 px-3 text-center">
+                            <button
+                              type="button"
+                              onClick={() => handleOverrideUserPermission(u.id, 'canEditLedger', !u.canEditLedger)}
+                              className={`px-2 py-1 text-[10px] font-bold rounded transition-colors ${
+                                u.canEditLedger
+                                  ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30'
+                                  : 'bg-rose-500/10 text-rose-500 border border-rose-500/30'
+                              }`}
+                            >
+                              {u.canEditLedger ? 'ALLOWED' : 'LOCKED'}
+                            </button>
+                          </td>
+
+                          {/* Account Lock Toggle */}
+                          <td className="py-3 px-3 text-center">
+                            <button
+                              type="button"
+                              onClick={() => handleToggleUserLock(u)}
+                              disabled={isTargetCurrent}
+                              className={`px-2 py-1 text-[10px] font-bold rounded transition-colors flex items-center justify-center gap-1 mx-auto ${
+                                u.isLocked
+                                  ? 'bg-rose-500/20 text-rose-500 border border-rose-500/40'
+                                  : 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30'
+                              } disabled:opacity-30 disabled:cursor-not-allowed`}
+                            >
+                              {u.isLocked ? <Lock size={11} /> : <Unlock size={11} />}
+                              <span>{u.isLocked ? 'LOCKED' : 'ACTIVE'}</span>
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
 
           <div className="p-4 bg-bone-card dark:bg-obsidian-card border border-bone-border dark:border-obsidian-border flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
@@ -1858,6 +2085,7 @@ CREATE TABLE IF NOT EXISTS public.lumina_users (
   can_access_settings BOOLEAN NOT NULL DEFAULT false,
   can_edit_quotes_and_orders BOOLEAN NOT NULL DEFAULT false,
   can_edit_ledger BOOLEAN NOT NULL DEFAULT false,
+  is_locked BOOLEAN NOT NULL DEFAULT false,
   created_at TIMESTAMPTZ DEFAULT timezone('utc'::text, now())
 );
 
@@ -2008,11 +2236,11 @@ EXCEPTION
 END $$;
 
 -- SEED ACCOUNTS
-INSERT INTO public.lumina_users (id, username, password, full_name, role, can_view_finances, can_access_settings, can_edit_quotes_and_orders, can_edit_ledger)
+INSERT INTO public.lumina_users (id, username, password, full_name, role, can_view_finances, can_access_settings, can_edit_quotes_and_orders, can_edit_ledger, is_locked)
 VALUES 
-  ('usr-reuben', 'reuben', 'reuben2026', 'Reuben Serrao (Director & Lead)', 'ADMIN_DIRECTOR', true, true, true, true),
-  ('usr-dan', 'dan', 'danvows2026', 'Dan (System Designer & Handler)', 'ADMIN_DIRECTOR', true, true, true, true),
-  ('usr-admin', 'admin', 'vowsadmin2026', 'Root Admin Director', 'ADMIN_DIRECTOR', true, true, true, true)
+  ('usr-root', 'root', 'vowsroot2026', 'Root', 'ADMIN_DIRECTOR', true, true, true, true, false),
+  ('usr-dan', 'dan', 'danvows2026', 'Dan (System Designer & Handler)', 'ADMIN_DIRECTOR', true, true, true, true, false),
+  ('usr-reuben', 'reuben', 'reuben2026', 'Reuben Serrao (Director & Lead)', 'ADMIN_DIRECTOR', true, true, true, true, false)
 ON CONFLICT (id) DO UPDATE SET password = EXCLUDED.password;`;
                   navigator.clipboard.writeText(schemaSQL);
                   setCopiedSchema(true);
@@ -2039,6 +2267,32 @@ ON CONFLICT (id) DO UPDATE SET password = EXCLUDED.password;`;
                 <div><code>SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsIn...</code></div>
               </div>
             </div>
+          </div>
+
+          {/* Integration 4: Operational Data Cleanse & Purge */}
+          <div className="p-5 sm:p-6 bg-bone-card dark:bg-obsidian-card border border-rose-500/30 space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-rose-500/20">
+              <div className="space-y-1">
+                <span className="text-[9px] font-mono uppercase px-2 py-0.5 bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/30 font-bold inline-block">
+                  Database Cleanse Engine
+                </span>
+                <h3 className="text-lg font-serif font-bold uppercase text-carbon dark:text-white">
+                  4. Operational Data Cleanse & Purge
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowClearAllDataModal(true)}
+                className="px-3.5 py-1.5 bg-rose-600 hover:bg-rose-700 text-white font-mono text-xs uppercase tracking-wider transition-all flex items-center gap-1.5 font-bold shrink-0"
+              >
+                <Trash2 size={13} />
+                <span>Clear All Data</span>
+              </button>
+            </div>
+
+            <p className="text-xs text-bone-muted dark:text-obsidian-muted leading-relaxed">
+              Permanently delete all operational records (quotations, enquiries, bookings/call sheets, invoices, general ledger transactions, and client feedback) across Supabase Cloud and local browser cache. Preserves your studio settings, banking credentials, GST setup, and crew accounts intact.
+            </p>
           </div>
         </div>
       )}
@@ -2083,7 +2337,7 @@ ON CONFLICT (id) DO UPDATE SET password = EXCLUDED.password;`;
                     onChange={(e) => setUserFormData({ ...userFormData, username: e.target.value })}
                     placeholder="e.g. joyline"
                     required
-                    disabled={editingUser?.username === 'admin'}
+                    disabled={editingUser?.username === 'admin' || editingUser?.username === 'root'}
                     className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white disabled:opacity-50 font-bold"
                   />
                 </div>
@@ -2387,82 +2641,87 @@ ON CONFLICT (id) DO UPDATE SET password = EXCLUDED.password;`;
         </div>
       )}
 
-      {/* Admin Reset Password Modal (Admin for any user) */}
-      {resetPasswordTarget && canEdit && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-carbon/80 dark:bg-black/80 backdrop-blur-sm animate-fadeIn">
-          <div className="relative w-full max-w-md bg-bone-card dark:bg-obsidian-card border-2 border-carbon dark:border-white shadow-2xl p-5 sm:p-6 space-y-4">
-            <div className="flex items-center justify-between pb-2 border-b border-bone-border dark:border-obsidian-border">
-              <div>
-                <div className="flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest text-vermillion font-bold mb-0.5">
-                  <ShieldCheck size={12} />
-                  <span>Admin Credential Authority</span>
-                </div>
-                <h3 className="font-serif text-lg font-bold uppercase text-carbon dark:text-white">
-                  Reset Password: @{resetPasswordTarget.username}
-                </h3>
+      {/* Operational Data Wipe Confirmation Modal */}
+      {showClearAllDataModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-carbon/80 dark:bg-black/85 backdrop-blur-sm animate-fadeIn">
+          <div className="relative w-full max-w-lg bg-bone-card dark:bg-obsidian-card border-2 border-rose-500 shadow-2xl p-5 sm:p-6 space-y-4 text-xs font-mono">
+            <div className="flex items-center justify-between pb-2 border-b border-rose-500/30">
+              <div className="flex items-center gap-2 text-rose-600 dark:text-rose-400 font-bold uppercase tracking-wider">
+                <AlertCircle size={18} />
+                <span className="font-serif text-base">Wipe All Operational Studio Data</span>
               </div>
               <button
                 type="button"
-                onClick={() => setResetPasswordTarget(null)}
+                onClick={() => {
+                  setShowClearAllDataModal(false);
+                  setClearDataInput('');
+                }}
                 className="text-xs font-mono text-bone-muted hover:text-carbon dark:hover:text-white"
               >
                 [ESC]
               </button>
             </div>
 
-            <div className="text-[11px] font-mono text-bone-muted dark:text-obsidian-muted">
-              Target account: <strong className="text-carbon dark:text-white font-bold">{resetPasswordTarget.fullName}</strong> ({resetPasswordTarget.role})
+            <div className="p-3.5 bg-rose-500/10 border-l-4 border-rose-500 text-rose-700 dark:text-rose-300 space-y-1.5 text-xs">
+              <p className="font-bold uppercase tracking-wide">⚠️ Permanent Data Purge Notice</p>
+              <p className="text-[11px] leading-relaxed">
+                This action will permanently delete all operational records from Supabase Cloud and local offline storage:
+              </p>
+              <ul className="list-disc list-inside text-[10.5px] space-y-0.5 pt-1 text-carbon dark:text-white font-bold">
+                <li>All Quotations & Client Proposals</li>
+                <li>All Client Enquiries & Google Form Submissions</li>
+                <li>All Shoot Bookings, Call Sheets & Production Days</li>
+                <li>All Tax Invoices & Retainer Records</li>
+                <li>All General Ledger Transactions (Receivables & Expenses)</li>
+                <li>All Client Feedback & Reviews</li>
+              </ul>
             </div>
 
-            {adminResetSuccess && (
-              <div className="p-2.5 bg-green-500/10 border border-green-500/30 text-green-600 dark:text-green-400 text-xs font-mono flex items-center gap-2">
+            <div className="p-3 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-[11px] text-bone-muted dark:text-obsidian-muted">
+              🔒 <strong className="text-carbon dark:text-white">Preserved Safely:</strong> Studio settings, banking credentials, GST terms, and user accounts & passwords will remain intact.
+            </div>
+
+            {wipeSuccessNotice && (
+              <div className="p-2.5 bg-green-500/10 border border-green-500/30 text-green-600 dark:text-green-400 text-xs flex items-center gap-2">
                 <Check size={14} className="shrink-0" />
-                <span>{adminResetSuccess}</span>
+                <span>{wipeSuccessNotice}</span>
               </div>
             )}
 
-            <form onSubmit={handleAdminResetPasswordSubmit} className="space-y-3.5 text-xs font-mono">
+            <form onSubmit={handleExecuteDataWipe} className="space-y-4 pt-1">
               <div>
-                <div className="flex items-center justify-between mb-1">
-                  <label className="text-[10px] uppercase text-bone-muted dark:text-obsidian-muted">
-                    New Generated or Custom Password
-                  </label>
-                  <button
-                    type="button"
-                    onClick={generateRandomPassword}
-                    className="text-[10px] text-vermillion hover:underline flex items-center gap-1 font-bold"
-                  >
-                    <Sparkles size={11} />
-                    <span>Generate Strong Key</span>
-                  </button>
-                </div>
+                <label className="block text-[11px] uppercase tracking-wider text-bone-muted dark:text-obsidian-muted mb-1.5">
+                  To confirm purge, type <strong className="text-rose-600 dark:text-rose-400 font-mono">CLEAR ALL DATA</strong> below:
+                </label>
                 <input
                   type="text"
-                  value={adminNewPassword}
-                  onChange={(e) => setAdminNewPassword(e.target.value)}
-                  placeholder="Enter new password or click Generate"
+                  value={clearDataInput}
+                  onChange={(e) => setClearDataInput(e.target.value)}
+                  placeholder="CLEAR ALL DATA"
+                  autoFocus
                   required
-                  className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white font-mono font-bold"
+                  className="w-full p-2.5 bg-bone-surface dark:bg-obsidian-surface border border-rose-500/50 text-carbon dark:text-white font-mono font-bold tracking-widest text-xs focus:outline-none focus:border-rose-500"
                 />
-              </div>
-
-              <div className="p-2.5 bg-bone-surface dark:bg-obsidian-surface border border-dashed border-bone-border dark:border-obsidian-border text-[10.5px] text-bone-muted dark:text-obsidian-muted">
-                As Studio Director, you can immediately update and deliver this password to the crew member or user.
               </div>
 
               <div className="flex justify-end gap-2 pt-2 border-t border-bone-border dark:border-obsidian-border">
                 <button
                   type="button"
-                  onClick={() => setResetPasswordTarget(null)}
+                  onClick={() => {
+                    setShowClearAllDataModal(false);
+                    setClearDataInput('');
+                  }}
                   className="px-3.5 py-1.5 border border-bone-border dark:border-obsidian-border uppercase text-xs"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-1.5 bg-carbon text-bone dark:bg-white dark:text-carbon font-bold uppercase hover:bg-vermillion dark:hover:bg-vermillion dark:hover:text-white transition-all text-xs"
+                  disabled={clearDataInput.trim() !== 'CLEAR ALL DATA' || isWipingData}
+                  className="px-4 py-1.5 bg-rose-600 hover:bg-rose-700 text-white font-bold uppercase transition-all text-xs disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1.5"
                 >
-                  Save New Password
+                  <Trash2 size={13} />
+                  <span>{isWipingData ? 'Purging Records...' : 'Confirm Operational Purge'}</span>
                 </button>
               </div>
             </form>

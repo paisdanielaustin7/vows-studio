@@ -74,7 +74,7 @@ export const FeedbackView: React.FC<FeedbackViewProps> = ({
   bookings,
   currentUser,
 }) => {
-  const [feedbackList, setFeedbackList] = useState<FeedbackSubmission[]>(defaultFeedbackList);
+  const [feedbackList, setFeedbackList] = useState<FeedbackSubmission[]>([]);
   const [selectedClientForLink, setSelectedClientForLink] = useState<Client>(clients[0]);
   const [copiedLink, setCopiedLink] = useState(false);
   const [copiedMessage, setCopiedMessage] = useState(false);
@@ -92,6 +92,7 @@ export const FeedbackView: React.FC<FeedbackViewProps> = ({
         const parsed: FeedbackSubmission[] = JSON.parse(stored);
         if (Array.isArray(parsed)) {
           localSubmissions = parsed;
+          setFeedbackList(parsed);
         }
       }
     } catch (e) {
@@ -107,7 +108,7 @@ export const FeedbackView: React.FC<FeedbackViewProps> = ({
             .select('*')
             .order('created_at', { ascending: false });
 
-          if (!error && data && data.length > 0) {
+          if (!error && data) {
             const mapped: FeedbackSubmission[] = data.map((row) => ({
               id: row.id,
               clientId: row.client_id,
@@ -123,11 +124,7 @@ export const FeedbackView: React.FC<FeedbackViewProps> = ({
               createdAt: row.created_at,
             }));
 
-            setFeedbackList((prev) => {
-              const ids = new Set(mapped.map((m) => m.id));
-              const remainingDefaults = prev.filter((d) => !ids.has(d.id));
-              return [...mapped, ...remainingDefaults];
-            });
+            setFeedbackList(mapped);
             return;
           }
         } catch (err) {
@@ -135,13 +132,9 @@ export const FeedbackView: React.FC<FeedbackViewProps> = ({
         }
       }
 
-      // Fallback: merge local storage with defaults
+      // Fallback: use local storage if cloud not configured
       if (localSubmissions.length > 0) {
-        setFeedbackList((prev) => {
-          const ids = new Set(prev.map((f) => f.id));
-          const newEntries = localSubmissions.filter((p) => !ids.has(p.id));
-          return [...newEntries, ...prev];
-        });
+        setFeedbackList(localSubmissions);
       }
     };
 
@@ -354,6 +347,15 @@ export const FeedbackView: React.FC<FeedbackViewProps> = ({
 
         {/* Reviews Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {filteredFeedbacks.length === 0 && (
+            <div className="p-8 border border-dashed border-bone-border dark:border-obsidian-border text-center space-y-2 col-span-full">
+              <MessageSquareQuote size={28} className="mx-auto text-bone-muted dark:text-obsidian-muted opacity-50" />
+              <p className="font-serif text-sm uppercase text-carbon dark:text-white font-bold">No Client Reviews Yet</p>
+              <p className="text-xs font-mono text-bone-muted dark:text-obsidian-muted">
+                Generate and dispatch feedback links to clients above. Verified reviews will stream here automatically.
+              </p>
+            </div>
+          )}
           {filteredFeedbacks.map((fb) => (
             <div
               key={fb.id}

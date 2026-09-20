@@ -369,6 +369,16 @@ export const LedgerView: React.FC<LedgerViewProps> = ({
                   </tr>
                 );
               })}
+              {filteredEntries.length === 0 && (
+                <tr>
+                  <td
+                    colSpan={canEditLedger ? 7 : 6}
+                    className="py-8 text-center text-xs font-mono text-bone-muted dark:text-obsidian-muted"
+                  >
+                    No ledger transactions found. Click "Record Transaction" to add an entry.
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

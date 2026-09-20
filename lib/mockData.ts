@@ -543,6 +543,27 @@ export const mockInvoices: Invoice[] = [
   },
 ];
 
+export const emptyKPISummary: KPISummary = {
+  netMargins: {
+    amount: 0,
+    percentage: 0,
+    changePct: 0,
+  },
+  cashFlow: {
+    current: 0,
+    monthInflow: 0,
+    monthOutflow: 0,
+  },
+  confirmedShoots: {
+    count: 0,
+    activeProductionDays: 0,
+  },
+  unpaidRetainers: {
+    total: 0,
+    count: 0,
+  },
+};
+
 export const mockKPISummary: KPISummary = {
   netMargins: {
     amount: 54200,

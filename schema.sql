@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS public.lumina_users (
   can_access_settings BOOLEAN NOT NULL DEFAULT false,
   can_edit_quotes_and_orders BOOLEAN NOT NULL DEFAULT false,
   can_edit_ledger BOOLEAN NOT NULL DEFAULT false,
+  is_locked BOOLEAN NOT NULL DEFAULT false,
   created_at TIMESTAMPTZ DEFAULT timezone('utc'::text, now())
 );
 
@@ -241,11 +242,11 @@ END $$;
 -- =========================================================================
 
 -- 1. Seed Crew Accounts
-INSERT INTO public.lumina_users (id, username, password, full_name, role, can_view_finances, can_access_settings, can_edit_quotes_and_orders, can_edit_ledger)
+INSERT INTO public.lumina_users (id, username, password, full_name, role, can_view_finances, can_access_settings, can_edit_quotes_and_orders, can_edit_ledger, is_locked)
 VALUES 
-  ('usr-reuben', 'reuben', 'reuben2026', 'Reuben Serrao (Director & Lead)', 'ADMIN_DIRECTOR', true, true, true, true),
-  ('usr-dan', 'dan', 'danvows2026', 'Dan (System Designer & Handler)', 'ADMIN_DIRECTOR', true, true, true, true),
-  ('usr-admin', 'admin', 'vowsadmin2026', 'Root Admin Director', 'ADMIN_DIRECTOR', true, true, true, true)
+  ('usr-reuben', 'reuben', 'reuben2026', 'Reuben Serrao (Director & Lead)', 'ADMIN_DIRECTOR', true, true, true, true, false),
+  ('usr-dan', 'dan', 'danvows2026', 'Dan (System Designer & Handler)', 'ADMIN_DIRECTOR', true, true, true, true, false),
+  ('usr-root', 'root', 'vowsroot2026', 'Root', 'ADMIN_DIRECTOR', true, true, true, true, false)
 ON CONFLICT (id) DO UPDATE 
 SET 
   username = EXCLUDED.username,
@@ -254,7 +255,8 @@ SET
   can_view_finances = EXCLUDED.can_view_finances,
   can_access_settings = EXCLUDED.can_access_settings,
   can_edit_quotes_and_orders = EXCLUDED.can_edit_quotes_and_orders,
-  can_edit_ledger = EXCLUDED.can_edit_ledger;
+  can_edit_ledger = EXCLUDED.can_edit_ledger,
+  is_locked = EXCLUDED.is_locked;
 
 -- 2. Seed Studio Settings
 INSERT INTO public.lumina_settings (

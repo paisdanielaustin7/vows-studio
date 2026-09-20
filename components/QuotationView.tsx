@@ -99,7 +99,17 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
   const [activeTab, setActiveTab] = useState<'quotations' | 'enquiries' | 'orders' | 'catalog'>(
     'quotations'
   );
-  const [selectedQuote, setSelectedQuote] = useState<Quotation>(quotations[0]);
+  const [selectedQuote, setSelectedQuote] = useState<Quotation | null>(quotations[0] || null);
+
+  useEffect(() => {
+    if (quotations.length > 0) {
+      if (!selectedQuote || !quotations.some((q) => q.id === selectedQuote.id)) {
+        setSelectedQuote(quotations[0]);
+      }
+    } else {
+      setSelectedQuote(null);
+    }
+  }, [quotations, selectedQuote]);
   const [searchQuery, setSearchQuery] = useState('');
 
   // Catalog State (editable by Admin)
@@ -239,6 +249,20 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
     setQClientEmail(enquiry.email);
     setQTotalPrice(Math.min(44000, enquiry.estimatedBudget).toString());
     setQPackageTitle(enquiry.eventType.toUpperCase().includes('WEDDING') ? 'WEDDING PACKAGE' : 'PACKAGE');
+    setQRequirements(catalog.standardRequirements);
+    setQDeliverables(catalog.standardDeliverables);
+    setQCrew(getCrewFromSettings());
+    setShowQuoteModal(true);
+  };
+
+  const handleOpenCreateQuote = () => {
+    setIsEditingQuote(false);
+    setEditQuoteId(null);
+    setQNumber(`Q NO. 0${quotations.length + 8}`);
+    setQClientName('');
+    setQClientCity('Mangalore');
+    setQClientPhone('');
+    setQTotalPrice('38000');
     setQRequirements(catalog.standardRequirements);
     setQDeliverables(catalog.standardDeliverables);
     setQCrew(getCrewFromSettings());
@@ -474,19 +498,7 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
           </button>
           <button
             disabled={!currentUser.canEditQuotesAndOrders}
-            onClick={() => {
-              setIsEditingQuote(false);
-              setEditQuoteId(null);
-              setQNumber(`Q NO. 0${quotations.length + 8}`);
-              setQClientName('');
-              setQClientCity('Mangalore');
-              setQClientPhone('');
-              setQTotalPrice('38000');
-              setQRequirements(catalog.standardRequirements);
-              setQDeliverables(catalog.standardDeliverables);
-              setQCrew(getCrewFromSettings());
-              setShowQuoteModal(true);
-            }}
+            onClick={handleOpenCreateQuote}
             className={`px-3.5 py-1.5 uppercase font-bold tracking-wider flex items-center gap-1.5 transition-all ${
               currentUser.canEditQuotesAndOrders
                 ? 'bg-carbon text-bone dark:bg-white dark:text-carbon hover:bg-vermillion dark:hover:bg-vermillion dark:hover:text-white'
@@ -567,8 +579,21 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
             </div>
 
             <div className="space-y-2 max-h-[380px] lg:max-h-none overflow-y-auto pr-1 flex-1">
+              {filteredQuotes.length === 0 && (
+                <div className="p-6 border border-dashed border-bone-border dark:border-obsidian-border text-center text-xs font-mono text-bone-muted dark:text-obsidian-muted space-y-2">
+                  <p>No quotations found.</p>
+                  {currentUser.canEditQuotesAndOrders && (
+                    <button
+                      onClick={handleOpenCreateQuote}
+                      className="text-vermillion hover:underline font-bold text-[11px]"
+                    >
+                      + Draft First Quotation
+                    </button>
+                  )}
+                </div>
+              )}
               {filteredQuotes.map((q) => {
-                const isSelected = selectedQuote.id === q.id;
+                const isSelected = selectedQuote?.id === q.id;
                 return (
                   <div
                     key={q.id}
@@ -611,6 +636,29 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
 
           {/* Right Column: Visual Preview Deck with Independent Scroll (Strictly LUMINA Branding with Active Theme Palette) */}
           {(() => {
+            if (!selectedQuote) {
+              return (
+                <div className="lg:col-span-7 p-10 border-2 border-dashed border-bone-border dark:border-obsidian-border text-center space-y-3 bg-bone-card/40 dark:bg-obsidian-card/40">
+                  <FileText size={36} className="mx-auto text-bone-muted dark:text-obsidian-muted opacity-40" />
+                  <h3 className="font-serif text-lg font-bold uppercase text-carbon dark:text-white">
+                    No Quotation Selected
+                  </h3>
+                  <p className="text-xs font-mono text-bone-muted dark:text-obsidian-muted max-w-sm mx-auto">
+                    Select a quotation from the list on the left or click "+ New Proposal" to issue a bespoke wedding quotation.
+                  </p>
+                  {currentUser.canEditQuotesAndOrders && (
+                    <button
+                      onClick={handleOpenCreateQuote}
+                      className="mt-2 px-4 py-2 bg-carbon text-bone dark:bg-white dark:text-carbon font-mono text-xs uppercase font-bold tracking-wider hover:bg-vermillion dark:hover:bg-vermillion dark:hover:text-white transition-all inline-flex items-center gap-1.5"
+                    >
+                      <Plus size={13} />
+                      <span>Draft First Quotation</span>
+                    </button>
+                  )}
+                </div>
+              );
+            }
+
             const previewPalette = resolvePDFPalette(settings);
             const previewBg = `rgb(${previewPalette.bg.join(',')})`;
             const previewText = `rgb(${previewPalette.text.join(',')})`;
