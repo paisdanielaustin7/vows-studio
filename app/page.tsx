@@ -154,13 +154,15 @@ export default function StudioOSHome() {
         try {
           const parsed = JSON.parse(savedUsers);
           if (Array.isArray(parsed) && parsed.length > 0) {
-            // Permanently filter out legacy dummy accounts of roshan and farooq
+            // Permanently filter out legacy dummy accounts of roshan, farooq, and dan
             const sanitized = parsed.filter(
               (u: UserAccount) =>
                 u.id !== 'usr-roshan' &&
                 u.id !== 'usr-farooq' &&
+                u.id !== 'usr-dan' &&
                 u.username.toLowerCase() !== 'roshan' &&
-                u.username.toLowerCase() !== 'farooq'
+                u.username.toLowerCase() !== 'farooq' &&
+                u.username.toLowerCase() !== 'dan'
             );
             activeUsersList = sanitized.length > 0 ? sanitized : defaultUsers;
             setUsers(activeUsersList);

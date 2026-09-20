@@ -18,9 +18,9 @@ export async function fetchUsersFromCloud(): Promise<UserAccount[] | null> {
   try {
     const { data, error } = await supabase.from('lumina_users').select('*');
     if (error) throw error;
-    if (!data || data.length === 0) return null;
-
-    return data.map((row) => ({
+    return data
+      .filter((row) => row.username?.toLowerCase() !== 'dan' && row.id !== 'usr-dan')
+      .map((row) => ({
       id: row.id,
       username: row.username,
       password: row.password,

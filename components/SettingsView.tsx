@@ -2752,9 +2752,8 @@ END $$;
 -- SEED ACCOUNTS
 INSERT INTO public.lumina_users (id, username, password, full_name, role, can_view_finances, can_access_settings, can_edit_quotes_and_orders, can_edit_ledger, is_locked)
 VALUES 
-  ('usr-root', 'root', 'vowsroot2026', 'Root', 'ADMIN_DIRECTOR', true, true, true, true, false),
-  ('usr-dan', 'dan', 'danvows2026', 'Dan (System Designer & Handler)', 'ADMIN_DIRECTOR', true, true, true, true, false),
-  ('usr-reuben', 'reuben', 'reuben2026', 'Reuben Serrao (Director & Lead)', 'ADMIN_DIRECTOR', true, true, true, true, false)
+  ('usr-root', 'root', 'vowsroot2026', 'System Admin', 'ADMIN_ACCESS', true, true, true, true, false),
+  ('usr-reuben', 'reuben', 'vowsreuben2026', 'Reuben Serrao (Director)', 'ADMIN_ACCESS', true, true, true, true, false)
 ON CONFLICT (id) DO UPDATE SET password = EXCLUDED.password;`;
                   navigator.clipboard.writeText(schemaSQL);
                   setCopiedSchema(true);
@@ -2768,7 +2767,7 @@ ON CONFLICT (id) DO UPDATE SET password = EXCLUDED.password;`;
             </div>
 
             <p className="text-xs text-bone-muted dark:text-obsidian-muted leading-relaxed">
-              When creating your new Supabase project, paste the copied SQL schema directly into your <strong>Supabase SQL Editor</strong> and hit <em>Run</em>. It creates all production tables, sets up real-time websocket broadcasting, and configures Reuben Serrao and Dan as Director Principals.
+              When creating your new Supabase project, paste the copied SQL schema directly into your <strong>Supabase SQL Editor</strong> and hit <em>Run</em>. It creates all production tables, sets up real-time websocket broadcasting, and configures the Director and System Admin accounts.
             </p>
 
             <div className="p-3 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border space-y-2">
