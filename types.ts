@@ -61,6 +61,7 @@ export interface ShootBooking {
     city: string;
     coordinates: string;
     accessCode?: string;
+    venue?: string;
   };
   productionTeam: ProductionCrewMember[];
   shotListTotal: number;
@@ -77,7 +78,10 @@ export interface ShootBooking {
     lead: string;
   }>;
   gearAllocated: string[];
+  gearChecklist?: string[];
   editorialNotes: string;
+  clientCallSheetNotes?: string;
+  crewCallSheetNotes?: string;
   quotationId?: string;
   enquiryId?: string;
   deliveryStage?: DeliveryStage;
@@ -92,7 +96,8 @@ export type LedgerCategory =
   | 'STUDIO_OVERHEAD'
   | 'TALENT_PAYOUT'
   | 'LOCATION_PERMIT'
-  | 'POST_COLOR_GRADE';
+  | 'POST_COLOR_GRADE'
+  | (string & {});
 
 export type LedgerStatus = 'CLEARED' | 'PENDING' | 'OVERDUE' | 'DISPUTED';
 
@@ -241,6 +246,7 @@ export interface Enquiry {
   notes?: string;
   quotationId?: string;
   createdAt: string;
+  shootCode?: string;
 }
 
 export type SiteColorTheme = 'slate' | 'obsidian' | 'sage' | 'mocha' | 'cobalt';
@@ -255,7 +261,13 @@ export type ViewModule =
   | 'feedback'
   | 'settings';
 
-export type UserRole = 'ADMIN_DIRECTOR' | 'SECOND_SHOOTER' | 'PRODUCER';
+export type UserRole = 
+  | 'ADMIN_ACCESS' 
+  | 'CREW' 
+  | 'PRODUCT_DEMO' 
+  | 'ADMIN_DIRECTOR' 
+  | 'SECOND_SHOOTER' 
+  | 'PRODUCER';
 
 export type PDFThemeColor = 'sage' | 'monochrome' | 'sand_gold' | 'terracotta' | string;
 
@@ -277,6 +289,28 @@ export interface BankingDetails {
   upiId?: string;
 }
 
+export interface GearItem {
+  id: string;
+  name: string;
+  category: 'BODY' | 'LENS' | 'LIGHTING' | 'DRONE' | 'AUDIO' | 'SUPPORT';
+  available?: boolean;
+  status?: 'AVAILABLE' | 'IN_USE';
+  notes?: string;
+}
+
+export interface AdvancePaymentSettings {
+  enabled: boolean;
+  mode: 'PERCENTAGE' | 'FIXED';
+  value: number;
+}
+
+export interface EmailTemplateSettings {
+  headingTitle: string;
+  tagline: string;
+  subjectLine: string;
+  bodyTemplate: string;
+}
+
 export interface StudioSettings {
   studioName: string;
   tagline: string;
@@ -293,6 +327,15 @@ export interface StudioSettings {
   uiTheme?: SiteColorTheme;
   packageRequirements?: QuotationItem[];
   packageDeliverables?: DeliverableItem[];
+  advancePaymentSettings?: AdvancePaymentSettings;
+  advancePaymentEnabled?: boolean;
+  advancePaymentType?: 'PERCENTAGE' | 'FIXED';
+  advancePaymentPercentage?: number;
+  advancePaymentFixedAmount?: number;
+  emailTemplate?: EmailTemplateSettings;
+  emailTemplateSettings?: EmailTemplateSettings;
+  customLedgerCategories?: string[];
+  gearInventory?: GearItem[];
 }
 
 export interface UserAccount {
@@ -304,7 +347,11 @@ export interface UserAccount {
   canViewFinances: boolean; // Selective access: hides ledger & revenues if false
   canAccessSettings: boolean; // Selective access: hides studio parameters if false
   canEditQuotesAndOrders: boolean; // Selective access: read-only quote/order access if false
-  canEditLedger: boolean; // Selective access: can edit/modify dual ledger transactions
+  canEditLedger: boolean; // Selective access: can edit/modify studio ledger transactions
+  canDeleteQuotes?: boolean; // Can delete quotations
+  canSendEmails?: boolean; // Can send quotation emails
+  canViewCallSheets?: boolean; // Can view & download call sheets
+  canExportPDFs?: boolean; // Can export proposal & invoice PDFs
   isLocked?: boolean; // Account lockout flag: triggers covert 503 handshake rejection at login
 }
 

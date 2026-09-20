@@ -70,7 +70,7 @@ export const mockClients: Client[] = [
 export const mockShoots: ShootBooking[] = [
   {
     id: 'sht-sep-01',
-    shootCode: 'LUM-TNB-26',
+    shootCode: 'VOWS-TNB-26',
     title: 'Ananya & Gautham: Sunset Pre-Wedding Editorial & Coastal Stills',
     client: mockClients[0],
     type: 'Wedding Cinemastory & Stills',
@@ -86,7 +86,7 @@ export const mockShoots: ShootBooking[] = [
       accessCode: 'TNB-COASTAL-09',
     },
     productionTeam: [
-      { role: 'Lead Candid Photographer', name: 'Dan Aurel', initials: 'DA' },
+      { role: 'Lead Candid Photographer', name: 'Lead Photographer', initials: 'LP' },
       { role: 'Cinematographer (4K Motion)', name: 'Reuben Serrao', initials: 'RS' },
     ],
     shotListTotal: 22,
@@ -98,8 +98,8 @@ export const mockShoots: ShootBooking[] = [
       currency: 'INR',
     },
     scheduleTimeline: [
-      { time: '14:30', activity: 'Ferry crossing & equipment staging at Tannirbhavi pine grove', lead: 'Dan Aurel' },
-      { time: '16:00', activity: 'Casual coastal editorial couple frames & golden glow stills', lead: 'Dan Aurel' },
+      { time: '14:30', activity: 'Ferry crossing & equipment staging at Tannirbhavi pine grove', lead: 'Lead Photographer' },
+      { time: '16:00', activity: 'Casual coastal editorial couple frames & golden glow stills', lead: 'Lead Photographer' },
       { time: '18:15', activity: 'Sunset 4K cinematic slow motion by crashing Arabian waves', lead: 'Reuben Serrao' },
     ],
     gearAllocated: [
@@ -114,7 +114,7 @@ export const mockShoots: ShootBooking[] = [
   },
   {
     id: 'sht-sep-02',
-    shootCode: 'LUM-JWL-26',
+    shootCode: 'VOWS-JWL-26',
     title: 'Coastal Heritage Haute Jewelry: Autumn Editorial Lookbook',
     client: mockClients[4],
     type: 'High Jewelry Lookbook',
@@ -124,13 +124,13 @@ export const mockShoots: ShootBooking[] = [
     endTime: '18:00',
     callTime: '09:00 AM (Studio Stage A)',
     location: {
-      name: 'Lumina Studio HQ & Kadri Heritage Villa',
+      name: 'VOWS Studio HQ & Kadri Heritage Villa',
       city: 'Kodialbail, Mangalore',
       coordinates: '12.8711° N, 74.8465° E',
-      accessCode: 'LUM-STAGE-A',
+      accessCode: 'VOWS-STAGE-A',
     },
     productionTeam: [
-      { role: 'Lead Candid Photographer', name: 'Dan Aurel', initials: 'DA' },
+      { role: 'Lead Candid Photographer', name: 'Lead Photographer', initials: 'LP' },
       { role: 'Lighting Director', name: 'Santhosh Bhandary', initials: 'SB' },
     ],
     shotListTotal: 30,
@@ -143,8 +143,8 @@ export const mockShoots: ShootBooking[] = [
     },
     scheduleTimeline: [
       { time: '09:00', activity: 'Light tent calibration & macro focus rail rigging', lead: 'Santhosh Bhandary' },
-      { time: '10:30', activity: 'Temple antique gold choker set macro captures with model', lead: 'Dan Aurel' },
-      { time: '14:00', activity: 'Editorial styling against dark slate and warm ivory marble', lead: 'Dan Aurel' },
+      { time: '10:30', activity: 'Temple antique gold choker set macro captures with model', lead: 'Lead Photographer' },
+      { time: '14:00', activity: 'Editorial styling against dark slate and warm ivory marble', lead: 'Lead Photographer' },
     ],
     gearAllocated: [
       'Sony A7R V + 90mm f/2.8 Macro GM',
@@ -157,7 +157,7 @@ export const mockShoots: ShootBooking[] = [
   },
   {
     id: 'sht-01',
-    shootCode: 'LUM-MNG-26',
+    shootCode: 'VOWS-MNG-26',
     title: 'Alveera & Jason: Catholic Nuptials & Ullal Beach Sunset Celebration',
     client: mockClients[0],
     type: 'Wedding Cinemastory & Stills',
@@ -173,7 +173,7 @@ export const mockShoots: ShootBooking[] = [
       accessCode: 'ALOYSIUS-PERMIT-26',
     },
     productionTeam: [
-      { role: 'Lead Candid Photographer', name: 'Dan Aurel', initials: 'DA' },
+      { role: 'Lead Candid Photographer', name: 'Lead Photographer', initials: 'LP' },
       { role: 'Traditional Photographer', name: 'Roshan D’Silva', initials: 'RD' },
       { role: 'Cinematographer (4K Motion)', name: 'Reuben Serrao', initials: 'RS' },
       { role: 'Traditional Videographer', name: 'Karthik Rao', initials: 'KR' },
@@ -189,11 +189,11 @@ export const mockShoots: ShootBooking[] = [
       currency: 'INR',
     },
     scheduleTimeline: [
-      { time: '07:30', activity: 'Bridal gown, heirloom veil & detail macro captures', lead: 'Dan Aurel' },
-      { time: '09:30', activity: 'St. Aloysius Chapel Nuptials Mass & Vow exchange', lead: 'Dan Aurel' },
+      { time: '07:30', activity: 'Bridal gown, heirloom veil & detail macro captures', lead: 'Lead Photographer' },
+      { time: '09:30', activity: 'St. Aloysius Chapel Nuptials Mass & Vow exchange', lead: 'Lead Photographer' },
       { time: '11:45', activity: 'Family traditional portraits in chapel colonnade', lead: 'Roshan D’Silva' },
       { time: '16:00', activity: 'Summer Sands Ullal golden hour beach cinematic couple session', lead: 'Reuben Serrao' },
-      { time: '18:30', activity: 'Grand reception entry, bridal waltz & toast speeches', lead: 'Dan Aurel' },
+      { time: '18:30', activity: 'Grand reception entry, bridal waltz & toast speeches', lead: 'Lead Photographer' },
       { time: '21:30', activity: 'Wrap, dual NVMe backup ingest and client preview', lead: 'Farooq Mansoor' },
     ],
     gearAllocated: [
@@ -211,7 +211,7 @@ export const mockShoots: ShootBooking[] = [
   },
   {
     id: 'sht-02',
-    shootCode: 'LUM-TMA-27',
+    shootCode: 'VOWS-TMA-27',
     title: 'Kavya & Nithin: Traditional Bunt Muhurtham & Grand Reception',
     client: mockClients[1],
     type: 'Royal Coastal Wedding',
@@ -227,7 +227,7 @@ export const mockShoots: ShootBooking[] = [
       accessCode: 'TMA-PAI-HALL-A',
     },
     productionTeam: [
-      { role: 'Lead Candid Photographer', name: 'Dan Aurel', initials: 'DA' },
+      { role: 'Lead Candid Photographer', name: 'Lead Photographer', initials: 'LP' },
       { role: 'Traditional Photographer', name: 'Roshan D’Silva', initials: 'RD' },
       { role: 'Cinematographer (4K Motion)', name: 'Reuben Serrao', initials: 'RS' },
       { role: 'Traditional Videographer', name: 'Karthik Rao', initials: 'KR' },
@@ -244,7 +244,7 @@ export const mockShoots: ShootBooking[] = [
     },
     scheduleTimeline: [
       { time: '06:00', activity: 'Grip setup, stage flood lighting check, battery docks ready', lead: 'Santhosh Bhandary' },
-      { time: '07:00', activity: 'Bride Mangalore traditional Kasavu gold waistbelt & hair styling', lead: 'Dan Aurel' },
+      { time: '07:00', activity: 'Bride Mangalore traditional Kasavu gold waistbelt & hair styling', lead: 'Lead Photographer' },
       { time: '09:00', activity: 'Muhurtham rituals, Kanyadaan & Akshathe ceremonies', lead: 'Roshan D’Silva' },
       { time: '13:00', activity: 'Buffet & traditional coastal feast crowd captures', lead: 'Karthik Rao' },
       { time: '17:30', activity: 'Evening reception stage, drone hall exterior & gala celebration', lead: 'Farooq Mansoor' },
@@ -263,7 +263,7 @@ export const mockShoots: ShootBooking[] = [
   },
   {
     id: 'sht-03',
-    shootCode: 'LUM-OCN-28',
+    shootCode: 'VOWS-OCN-28',
     title: 'Zahid & Ayesha: Heritage Nikkah & Ocean Pearl Reception',
     client: mockClients[2],
     type: 'Heritage Nikkah & Banquet',
@@ -279,7 +279,7 @@ export const mockShoots: ShootBooking[] = [
       accessCode: 'OCN-BALLROOM-02',
     },
     productionTeam: [
-      { role: 'Lead Candid Photographer', name: 'Dan Aurel', initials: 'DA' },
+      { role: 'Lead Candid Photographer', name: 'Lead Photographer', initials: 'LP' },
       { role: 'Traditional Photographer', name: 'Roshan D’Silva', initials: 'RD' },
       { role: 'Cinematographer (4K Motion)', name: 'Reuben Serrao', initials: 'RS' },
     ],
@@ -293,10 +293,10 @@ export const mockShoots: ShootBooking[] = [
     },
     scheduleTimeline: [
       { time: '09:00', activity: 'Ballroom ambient illumination & stage setup check', lead: 'Roshan D’Silva' },
-      { time: '10:30', activity: 'Groom procession and vintage car arrival', lead: 'Dan Aurel' },
-      { time: '11:45', activity: 'Nikkah ceremonial contract signing & qabuliyat', lead: 'Dan Aurel' },
+      { time: '10:30', activity: 'Groom procession and vintage car arrival', lead: 'Lead Photographer' },
+      { time: '11:45', activity: 'Nikkah ceremonial contract signing & qabuliyat', lead: 'Lead Photographer' },
       { time: '14:00', activity: 'Dawat-e-Walima feast candid captures', lead: 'Reuben Serrao' },
-      { time: '17:00', activity: 'Couple ballroom editorial portraits & family stage photos', lead: 'Dan Aurel' },
+      { time: '17:00', activity: 'Couple ballroom editorial portraits & family stage photos', lead: 'Lead Photographer' },
     ],
     gearAllocated: [
       'Sony A7 IV + 50mm f/1.2 GM Prime',
@@ -311,7 +311,7 @@ export const mockShoots: ShootBooking[] = [
   },
   {
     id: 'sht-04',
-    shootCode: 'LUM-MLG-29',
+    shootCode: 'VOWS-MLG-29',
     title: 'Neil & Rhea: Milagres Church Nuptials & Traditional Roce',
     client: mockClients[3],
     type: 'Catholic Roce & Nuptials',
@@ -327,7 +327,7 @@ export const mockShoots: ShootBooking[] = [
       accessCode: 'MILAGRES-JUBILEE-01',
     },
     productionTeam: [
-      { role: 'Lead Candid Photographer', name: 'Dan Aurel', initials: 'DA' },
+      { role: 'Lead Candid Photographer', name: 'Lead Photographer', initials: 'LP' },
       { role: 'Traditional Videographer', name: 'Karthik Rao', initials: 'KR' },
     ],
     shotListTotal: 20,
@@ -340,9 +340,9 @@ export const mockShoots: ShootBooking[] = [
     },
     scheduleTimeline: [
       { time: '14:00', activity: 'Jubilee hall stage decoration & audio tap into church PA system', lead: 'Karthik Rao' },
-      { time: '15:30', activity: 'Milagres church vows, ring ceremony and choir entrance', lead: 'Dan Aurel' },
-      { time: '18:00', activity: 'Traditional Roce coconut milk blessing captures and brass band rhythm', lead: 'Dan Aurel' },
-      { time: '20:30', activity: 'Baila dance floor candid energy and family felicitation', lead: 'Dan Aurel' },
+      { time: '15:30', activity: 'Milagres church vows, ring ceremony and choir entrance', lead: 'Lead Photographer' },
+      { time: '18:00', activity: 'Traditional Roce coconut milk blessing captures and brass band rhythm', lead: 'Lead Photographer' },
+      { time: '20:30', activity: 'Baila dance floor candid energy and family felicitation', lead: 'Lead Photographer' },
     ],
     gearAllocated: [
       'Sony A7R V + 35mm f/1.4 GM',
@@ -366,7 +366,7 @@ export const mockLedger: LedgerEntry[] = [
     type: 'INCOME',
     amount: 21000,
     counterparty: 'Nithin Rai (Coastal Tech)',
-    relatedShootCode: 'LUM-TMA-27',
+    relatedShootCode: 'VOWS-TMA-27',
     status: 'CLEARED',
     paymentMethod: 'UPI / GPay Direct',
   },
@@ -379,7 +379,7 @@ export const mockLedger: LedgerEntry[] = [
     type: 'EXPENSE',
     amount: 6800,
     counterparty: 'Hampankatta IT Mall Mangalore',
-    relatedShootCode: 'LUM-MNG-26',
+    relatedShootCode: 'VOWS-MNG-26',
     status: 'CLEARED',
     paymentMethod: 'Corporate HDFC Current A/C',
   },
@@ -392,7 +392,7 @@ export const mockLedger: LedgerEntry[] = [
     type: 'INCOME',
     amount: 19000,
     counterparty: 'Alveera D’Souza',
-    relatedShootCode: 'LUM-MNG-26',
+    relatedShootCode: 'VOWS-MNG-26',
     status: 'CLEARED',
     paymentMethod: 'NEFT / Axis Bank Mangalore',
   },
@@ -405,7 +405,7 @@ export const mockLedger: LedgerEntry[] = [
     type: 'EXPENSE',
     amount: 4500,
     counterparty: 'Roshan D’Silva Crew Logistics',
-    relatedShootCode: 'LUM-MNG-26',
+    relatedShootCode: 'VOWS-MNG-26',
     status: 'CLEARED',
     paymentMethod: 'UPI Direct',
   },
@@ -418,7 +418,7 @@ export const mockLedger: LedgerEntry[] = [
     type: 'INCOME',
     amount: 17000,
     counterparty: 'Zahid Mansoor Beary',
-    relatedShootCode: 'LUM-OCN-28',
+    relatedShootCode: 'VOWS-OCN-28',
     status: 'CLEARED',
     paymentMethod: 'IMPS Transfer',
   },
@@ -431,7 +431,7 @@ export const mockLedger: LedgerEntry[] = [
     type: 'EXPENSE',
     amount: 3200,
     counterparty: 'Dakshina Kannada District Administration',
-    relatedShootCode: 'LUM-MNG-26',
+    relatedShootCode: 'VOWS-MNG-26',
     status: 'CLEARED',
     paymentMethod: 'Karnataka Seva Sindhu Portal',
   },
@@ -444,7 +444,7 @@ export const mockLedger: LedgerEntry[] = [
     type: 'INCOME',
     amount: 14500,
     counterparty: 'Neil Anthony Sequeira',
-    relatedShootCode: 'LUM-MLG-29',
+    relatedShootCode: 'VOWS-MLG-29',
     status: 'CLEARED',
     paymentMethod: 'UPI / Google Pay',
   },
@@ -609,7 +609,7 @@ export const mockQuotations: Quotation[] = [
       { id: 'del-05', item: 'Complimentary : Couple photo frame', details: '*archival gallery frame included', included: true },
     ],
     crewAllocation: [
-      { id: 'crw-01', role: 'Lead Candid Photographer', number: 1, assignedTo: 'Dan Aurel' },
+      { id: 'crw-01', role: 'Lead Candid Photographer', number: 1, assignedTo: 'Lead Photographer' },
       { id: 'crw-02', role: 'Traditional Photographer', number: 1, assignedTo: 'Roshan D’Silva' },
       { id: 'crw-03', role: 'Cinematographer (4K Motion)', number: 1, assignedTo: 'Reuben Serrao' },
       { id: 'crw-04', role: 'Traditional Videographer', number: 1, assignedTo: 'Karthik Rao' },
@@ -646,7 +646,7 @@ export const mockQuotations: Quotation[] = [
       { id: 'del-05', item: 'Complimentary : Couple photo frame', details: '*archival frame included', included: true },
     ],
     crewAllocation: [
-      { id: 'crw-01', role: 'Lead Candid Photographer', number: 1, assignedTo: 'Dan Aurel' },
+      { id: 'crw-01', role: 'Lead Candid Photographer', number: 1, assignedTo: 'Lead Photographer' },
       { id: 'crw-02', role: 'Traditional Photographer', number: 1, assignedTo: 'Roshan D’Silva' },
       { id: 'crw-03', role: 'Cinematographer (4K Motion)', number: 1, assignedTo: 'Reuben Serrao' },
       { id: 'crw-05', role: 'Drone Pilot (Aerial Cinema)', number: 1, assignedTo: 'Farooq Mansoor' },
@@ -683,7 +683,7 @@ export const mockQuotations: Quotation[] = [
       { id: 'del-05', item: 'Complimentary : Couple photo frame', details: '*archival gallery frame included', included: true },
     ],
     crewAllocation: [
-      { id: 'crw-01', role: 'Lead Candid Photographer', number: 1, assignedTo: 'Dan Aurel' },
+      { id: 'crw-01', role: 'Lead Candid Photographer', number: 1, assignedTo: 'Lead Photographer' },
       { id: 'crw-02', role: 'Traditional Photographer', number: 1, assignedTo: 'Roshan D’Silva' },
       { id: 'crw-03', role: 'Cinematographer (4K Motion)', number: 1, assignedTo: 'Reuben Serrao' },
     ],
@@ -716,7 +716,7 @@ export const mockQuotations: Quotation[] = [
       { id: 'del-04', item: 'Complimentary : Couple photo frame', details: '*archival gallery frame included', included: true },
     ],
     crewAllocation: [
-      { id: 'crw-01', role: 'Lead Candid Photographer', number: 1, assignedTo: 'Dan Aurel' },
+      { id: 'crw-01', role: 'Lead Candid Photographer', number: 1, assignedTo: 'Lead Photographer' },
       { id: 'crw-04', role: 'Traditional Videographer', number: 1, assignedTo: 'Karthik Rao' },
     ],
     termsAndConditions: defaultCatalog.standardTerms,

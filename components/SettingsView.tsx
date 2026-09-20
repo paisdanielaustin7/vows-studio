@@ -32,6 +32,7 @@ import {
   Cloud,
   Code2,
   Unlock,
+  Camera,
 } from 'lucide-react';
 import {
   StudioSettings,
@@ -40,7 +41,9 @@ import {
   CustomThemePalette,
   UserRole,
   SiteColorTheme,
+  GearItem,
 } from '@/types';
+import { defaultGearInventory } from '@/lib/catalogDefaults';
 
 interface SettingsViewProps {
   settings: StudioSettings;
@@ -63,7 +66,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
   onResetSampleData,
   onClearAllData,
 }) => {
-  const [activeTab, setActiveTab] = useState<'pdf' | 'banking' | 'terms' | 'users' | 'access' | 'integrations'>('pdf');
+  const [activeTab, setActiveTab] = useState<'pdf' | 'banking' | 'terms' | 'users' | 'gear' | 'access' | 'integrations'>('pdf');
 
   // Viewer vs Admin edit rights
   const canEdit = currentUser.canAccessSettings;
@@ -86,6 +89,15 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
   const [editingTermIndex, setEditingTermIndex] = useState<number | null>(null);
   const [editingTermText, setEditingTermText] = useState('');
 
+  // Custom Ledger Category State
+  const [newCategoryInput, setNewCategoryInput] = useState('');
+
+  // Gear Inventory Modal & Add State
+  const [showAddGearModal, setShowAddGearModal] = useState(false);
+  const [newGearName, setNewGearName] = useState('');
+  const [newGearCategory, setNewGearCategory] = useState<'BODY' | 'LENS' | 'LIGHTING' | 'DRONE' | 'AUDIO' | 'SUPPORT'>('BODY');
+  const [newGearNotes, setNewGearNotes] = useState('');
+
   // User Management State
   const [isUserModalOpen, setIsUserModalOpen] = useState(false);
   const [editingUser, setEditingUser] = useState<UserAccount | null>(null);
@@ -98,15 +110,23 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
     canAccessSettings: boolean;
     canEditQuotesAndOrders: boolean;
     canEditLedger: boolean;
+    canDeleteQuotes: boolean;
+    canSendEmails: boolean;
+    canViewCallSheets: boolean;
+    canExportPDFs: boolean;
   }>({
     fullName: '',
     username: '',
     password: '',
-    role: 'SECOND_SHOOTER',
+    role: 'CREW',
     canViewFinances: false,
     canAccessSettings: false,
     canEditQuotesAndOrders: false,
     canEditLedger: false,
+    canDeleteQuotes: false,
+    canSendEmails: false,
+    canViewCallSheets: true,
+    canExportPDFs: true,
   });
 
   // Sample Data Reset Confirmation Modal
@@ -146,12 +166,14 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
           setShowChangePasswordModal(false);
         } else if (showClearAllDataModal) {
           setShowClearAllDataModal(false);
+        } else if (showAddGearModal) {
+          setShowAddGearModal(false);
         }
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [showAddColorModal, isUserModalOpen, showResetModal, showChangePasswordModal, showClearAllDataModal]);
+  }, [showAddColorModal, isUserModalOpen, showResetModal, showChangePasswordModal, showClearAllDataModal, showAddGearModal]);
 
   // Sync internal form when settings update from cloud realtime
   useEffect(() => {
@@ -275,11 +297,15 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       fullName: '',
       username: '',
       password: '',
-      role: 'SECOND_SHOOTER',
+      role: 'CREW',
       canViewFinances: false,
       canAccessSettings: false,
       canEditQuotesAndOrders: false,
       canEditLedger: false,
+      canDeleteQuotes: false,
+      canSendEmails: false,
+      canViewCallSheets: true,
+      canExportPDFs: true,
     });
     setIsUserModalOpen(true);
   };
@@ -296,6 +322,10 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       canAccessSettings: u.canAccessSettings,
       canEditQuotesAndOrders: u.canEditQuotesAndOrders,
       canEditLedger: !!u.canEditLedger,
+      canDeleteQuotes: u.canDeleteQuotes ?? true,
+      canSendEmails: u.canSendEmails ?? true,
+      canViewCallSheets: u.canViewCallSheets ?? true,
+      canExportPDFs: u.canExportPDFs ?? true,
     });
     setIsUserModalOpen(true);
   };
@@ -317,6 +347,10 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               canAccessSettings: userFormData.canAccessSettings,
               canEditQuotesAndOrders: userFormData.canEditQuotesAndOrders,
               canEditLedger: userFormData.canEditLedger,
+              canDeleteQuotes: userFormData.canDeleteQuotes,
+              canSendEmails: userFormData.canSendEmails,
+              canViewCallSheets: userFormData.canViewCallSheets,
+              canExportPDFs: userFormData.canExportPDFs,
             }
           : u
       );
@@ -336,6 +370,10 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         canAccessSettings: userFormData.canAccessSettings,
         canEditQuotesAndOrders: userFormData.canEditQuotesAndOrders,
         canEditLedger: userFormData.canEditLedger,
+        canDeleteQuotes: userFormData.canDeleteQuotes,
+        canSendEmails: userFormData.canSendEmails,
+        canViewCallSheets: userFormData.canViewCallSheets,
+        canExportPDFs: userFormData.canExportPDFs,
       };
       onUpdateUsers([...users, newUser]);
     }
@@ -347,7 +385,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
   const handleDeleteUser = (userId: string) => {
     if (!canEdit) return;
     const target = users.find((u) => u.id === userId);
-    if (target?.username === 'admin' || target?.username === 'root') {
+    if (target?.username === 'admin' || target?.username === 'root' || target?.username === 'system.admin') {
       alert('The root system account cannot be deleted.');
       return;
     }
@@ -399,13 +437,14 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
     }
     const isAuthorized =
       currentUser.username === 'root' ||
-      currentUser.username === 'dan' ||
+      currentUser.username === 'admin' ||
+      currentUser.username === 'system.admin' ||
       currentUser.username === 'reuben';
     if (!isAuthorized) {
-      alert('Unauthorized: Account locking privilege is reserved for Root, Dan, and Reuben.');
+      alert('Unauthorized: Account locking privilege is reserved for System Admin and Reuben.');
       return;
     }
-    if (currentUser.username === 'reuben' && (targetUser.username === 'root' || targetUser.username === 'dan')) {
+    if (currentUser.username === 'reuben' && (targetUser.username === 'root' || targetUser.username === 'admin' || targetUser.username === 'system.admin')) {
       alert('Access Denied: You cannot lock a higher system authority tier.');
       return;
     }
@@ -418,7 +457,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
 
   // Root Admin Dynamic Permission Override
   const handleOverrideUserPermission = (targetUserId: string, field: keyof UserAccount, val: any) => {
-    const isRootAuthority = currentUser.username === 'root' || currentUser.username === 'dan';
+    const isRootAuthority = currentUser.username === 'root' || currentUser.username === 'admin' || currentUser.username === 'system.admin';
     if (!isRootAuthority) {
       alert('Security Violation: Only Root Admin / Developer can override user access controls.');
       return;
@@ -427,6 +466,27 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
       u.id === targetUserId ? { ...u, [field]: val } : u
     );
     onUpdateUsers(updated);
+  };
+
+  // Add Gear Asset Item Handler
+  const handleAddGearItem = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newGearName.trim()) return;
+    const newItem: GearItem = {
+      id: `gear-${Date.now()}`,
+      name: newGearName.trim(),
+      category: newGearCategory,
+      available: true,
+      notes: newGearNotes.trim() || undefined,
+    };
+    const existing = studioForm.gearInventory || defaultGearInventory;
+    const nextForm = { ...studioForm, gearInventory: [...existing, newItem] };
+    setStudioForm(nextForm);
+    onUpdateSettings(nextForm);
+    setNewGearName('');
+    setNewGearNotes('');
+    setShowAddGearModal(false);
+    showSuccessFeedback();
   };
 
   // Operational Data Wipe Execution
@@ -530,6 +590,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
           { id: 'banking', label: 'Banking & Remittance', icon: Landmark },
           { id: 'terms', label: `Terms & Conditions (${terms.length})`, icon: FileCheck2 },
           { id: 'users', label: `User Credentials (${users.length})`, icon: KeyRound },
+          { id: 'gear', label: `Gear Catalog (${(studioForm.gearInventory || defaultGearInventory).length})`, icon: Camera },
           { id: 'access', label: 'Access Control & Security', icon: ShieldCheck },
           { id: 'integrations', label: 'Automations & Cloud', icon: Cloud },
         ].map((tab) => {
@@ -858,9 +919,9 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                   <button
                     type="button"
                     onClick={() => setShowAddColorModal(false)}
-                    className="text-xs font-mono text-bone-muted hover:text-carbon dark:hover:text-white"
+                    className="px-2.5 py-1 text-xs font-mono border border-bone-border dark:border-obsidian-border hover:border-carbon dark:hover:border-white text-carbon dark:text-white transition-colors"
                   >
-                    [ESC]
+                    ✕ [Esc]
                   </button>
                 </div>
 
@@ -1237,10 +1298,216 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                       bankingDetails: { ...studioForm.bankingDetails, upiId: e.target.value },
                     })
                   }
-                  placeholder="e.g. lumina.studios@hdfcbank"
+                  placeholder="e.g. vowsbyreuben@okaxis"
                   className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white disabled:opacity-75"
                 />
               </div>
+            </div>
+
+            {/* Advance Payment Policy */}
+            <div className="p-4 sm:p-5 border-t border-bone-border dark:border-obsidian-border bg-bone-surface/40 dark:bg-obsidian-surface/40 space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                  <span className="text-[10px] font-mono text-vermillion uppercase font-bold block">
+                    Financial Policies & Terms
+                  </span>
+                  <h4 className="font-serif text-base font-bold uppercase text-carbon dark:text-white">
+                    Advance Payment / Retainer Policy
+                  </h4>
+                </div>
+                <label className="flex items-center gap-2 cursor-pointer select-none">
+                  <input
+                    type="checkbox"
+                    disabled={!canEdit}
+                    checked={studioForm.advancePaymentEnabled ?? true}
+                    onChange={(e) =>
+                      setStudioForm({
+                        ...studioForm,
+                        advancePaymentEnabled: e.target.checked,
+                        advancePaymentSettings: {
+                          enabled: e.target.checked,
+                          mode: studioForm.advancePaymentType || 'PERCENTAGE',
+                          value: studioForm.advancePaymentPercentage || 50,
+                        },
+                      })
+                    }
+                    className="w-4 h-4 accent-vermillion rounded"
+                  />
+                  <span className="text-xs font-bold uppercase">
+                    {(studioForm.advancePaymentEnabled ?? true) ? 'Policy Enabled' : 'Policy Disabled'}
+                  </span>
+                </label>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-[10px] uppercase text-bone-muted dark:text-obsidian-muted mb-1 font-bold">
+                    Calculation Standard
+                  </label>
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      type="button"
+                      disabled={!canEdit}
+                      onClick={() =>
+                        setStudioForm({
+                          ...studioForm,
+                          advancePaymentType: 'PERCENTAGE',
+                          advancePaymentSettings: {
+                            enabled: studioForm.advancePaymentEnabled ?? true,
+                            mode: 'PERCENTAGE',
+                            value: studioForm.advancePaymentPercentage || 50,
+                          },
+                        })
+                      }
+                      className={`py-2 text-center uppercase font-bold border transition-colors ${
+                        (studioForm.advancePaymentType || 'PERCENTAGE') === 'PERCENTAGE'
+                          ? 'bg-carbon text-bone dark:bg-white dark:text-carbon font-bold border-carbon dark:border-white'
+                          : 'border-bone-border dark:border-obsidian-border text-bone-muted'
+                      }`}
+                    >
+                      Percentage (%)
+                    </button>
+                    <button
+                      type="button"
+                      disabled={!canEdit}
+                      onClick={() =>
+                        setStudioForm({
+                          ...studioForm,
+                          advancePaymentType: 'FIXED',
+                          advancePaymentSettings: {
+                            enabled: studioForm.advancePaymentEnabled ?? true,
+                            mode: 'FIXED',
+                            value: studioForm.advancePaymentFixedAmount || 25000,
+                          },
+                        })
+                      }
+                      className={`py-2 text-center uppercase font-bold border transition-colors ${
+                        studioForm.advancePaymentType === 'FIXED'
+                          ? 'bg-carbon text-bone dark:bg-white dark:text-carbon font-bold border-carbon dark:border-white'
+                          : 'border-bone-border dark:border-obsidian-border text-bone-muted'
+                      }`}
+                    >
+                      Fixed Amount (₹)
+                    </button>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-[10px] uppercase text-bone-muted dark:text-obsidian-muted mb-1 font-bold">
+                    {(studioForm.advancePaymentType || 'PERCENTAGE') === 'PERCENTAGE'
+                      ? 'Advance Percentage Required (%)'
+                      : 'Fixed Retainer Amount (INR / ₹)'}
+                  </label>
+                  <input
+                    type="number"
+                    min="1"
+                    disabled={!canEdit}
+                    value={
+                      (studioForm.advancePaymentType || 'PERCENTAGE') === 'PERCENTAGE'
+                        ? studioForm.advancePaymentPercentage ?? 50
+                        : studioForm.advancePaymentFixedAmount ?? 25000
+                    }
+                    onChange={(e) => {
+                      const val = parseFloat(e.target.value) || 0;
+                      if ((studioForm.advancePaymentType || 'PERCENTAGE') === 'PERCENTAGE') {
+                        setStudioForm({
+                          ...studioForm,
+                          advancePaymentPercentage: val,
+                          advancePaymentSettings: {
+                            enabled: studioForm.advancePaymentEnabled ?? true,
+                            mode: 'PERCENTAGE',
+                            value: val,
+                          },
+                        });
+                      } else {
+                        setStudioForm({
+                          ...studioForm,
+                          advancePaymentFixedAmount: val,
+                          advancePaymentSettings: {
+                            enabled: studioForm.advancePaymentEnabled ?? true,
+                            mode: 'FIXED',
+                            value: val,
+                          },
+                        });
+                      }
+                    }}
+                    className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white font-mono font-bold disabled:opacity-75"
+                  />
+                  <span className="text-[10px] text-bone-muted dark:text-obsidian-muted mt-1 block">
+                    Applied automatically to quotation proposals and milestone invoices.
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Custom Ledger Categories */}
+            <div className="p-4 sm:p-5 border-t border-bone-border dark:border-obsidian-border bg-bone-surface/40 dark:bg-obsidian-surface/40 space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                  <span className="text-[10px] font-mono text-vermillion uppercase font-bold block">
+                    Studio Accounting & General Ledger
+                  </span>
+                  <h4 className="font-serif text-base font-bold uppercase text-carbon dark:text-white">
+                    Custom Ledger Categories
+                  </h4>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                {['CLIENT_RECEIVABLE', 'PRODUCTION_EXPENSE', 'GEAR_RENTAL', 'STUDIO_OVERHEAD', 'TALENT_PAYOUT', 'LOCATION_PERMIT', 'POST_COLOR_GRADE'].map((c) => (
+                  <span key={c} className="px-2.5 py-1 text-[10px] uppercase font-mono bg-bone-card dark:bg-obsidian-card border border-bone-border dark:border-obsidian-border text-bone-muted">
+                    {c.replace(/_/g, ' ')} <span className="text-[8px] text-vermillion">(built-in)</span>
+                  </span>
+                ))}
+                {(studioForm.customLedgerCategories || []).map((cat) => (
+                  <span key={cat} className="px-2.5 py-1 text-[10px] uppercase font-mono bg-bone-surface dark:bg-obsidian-surface border border-carbon dark:border-white text-carbon dark:text-white flex items-center gap-1.5 font-bold">
+                    <span>{cat}</span>
+                    {canEdit && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const updated = (studioForm.customLedgerCategories || []).filter((c) => c !== cat);
+                          const nextForm = { ...studioForm, customLedgerCategories: updated };
+                          setStudioForm(nextForm);
+                          onUpdateSettings(nextForm);
+                        }}
+                        className="hover:text-vermillion transition-colors ml-1"
+                        title="Delete custom category"
+                      >
+                        ×
+                      </button>
+                    )}
+                  </span>
+                ))}
+              </div>
+
+              {canEdit && (
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    placeholder="e.g. Travel & Fuel, Drone Pilot Fee, Marketing..."
+                    value={newCategoryInput}
+                    onChange={(e) => setNewCategoryInput(e.target.value)}
+                    className="flex-1 p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white text-xs font-mono"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const trimmed = newCategoryInput.trim();
+                      if (!trimmed) return;
+                      const existing = studioForm.customLedgerCategories || [];
+                      if (existing.includes(trimmed)) return;
+                      const nextForm = { ...studioForm, customLedgerCategories: [...existing, trimmed] };
+                      setStudioForm(nextForm);
+                      onUpdateSettings(nextForm);
+                      setNewCategoryInput('');
+                    }}
+                    className="px-4 py-2 bg-carbon text-bone dark:bg-white dark:text-carbon uppercase font-bold text-xs hover:bg-vermillion dark:hover:bg-vermillion dark:hover:text-white transition-all"
+                  >
+                    Add Category
+                  </button>
+                </div>
+              )}
             </div>
 
             {canEdit && (
@@ -1249,7 +1516,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                   type="submit"
                   className="px-5 py-2 text-xs font-mono uppercase tracking-wider bg-carbon text-bone dark:bg-white dark:text-carbon hover:bg-vermillion dark:hover:bg-vermillion dark:hover:text-white transition-all font-bold"
                 >
-                  Update Banking Remittance
+                  Update Banking & Policies
                 </button>
               </div>
             )}
@@ -1407,15 +1674,23 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             {/* User Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 pt-1">
               {users.map((u) => {
-                const isRoot = u.username === 'root' || u.id === 'usr-root' || u.username === 'admin';
+                const isRoot = u.username === 'root' || u.id === 'usr-root' || u.username === 'admin' || u.username === 'system.admin';
+                const isReuben = u.username === 'reuben' || u.fullName.toLowerCase().includes('reuben');
                 const isCurrent = currentUser.id === u.id;
-                const isViewerRootOrDan = currentUser.username === 'root' || currentUser.username === 'dan';
-                const canManageLock = currentUser.username === 'root' || currentUser.username === 'dan' || currentUser.username === 'reuben';
+                const isViewerRoot = currentUser.username === 'root' || currentUser.username === 'admin' || currentUser.username === 'system.admin';
+                const isViewerReuben = currentUser.username === 'reuben';
+                const canManageLock = isViewerRoot || isViewerReuben;
                 
-                // Root password is strictly concealed from Reuben and other crew
-                const displayedPassword = isRoot && !isViewerRootOrDan
-                  ? '••••••••••••'
-                  : (canEdit ? u.password : '••••••••••••');
+                // Root password strictly hidden from Reuben and other crew
+                // Reuben's password hidden from other crew (visible only to Root and Reuben himself)
+                let displayedPassword = '••••••••••••';
+                if (isRoot) {
+                  displayedPassword = isViewerRoot ? u.password : '••••••••••••';
+                } else if (isReuben) {
+                  displayedPassword = (isViewerRoot || isViewerReuben) ? u.password : '••••••••••••';
+                } else if (canEdit) {
+                  displayedPassword = u.password;
+                }
 
                 return (
                   <div
@@ -1453,6 +1728,9 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                         Username: <code className="text-carbon dark:text-white font-bold">@{u.username}</code>
                       </div>
                       <div className="text-bone-muted dark:text-obsidian-muted text-[10px]">
+                        Role: <span className="font-bold uppercase text-carbon dark:text-white">{u.role.replace(/_/g, ' ')}</span>
+                      </div>
+                      <div className="text-bone-muted dark:text-obsidian-muted text-[10px]">
                         Password:{' '}
                         <code className="text-carbon dark:text-white font-mono">
                           {displayedPassword}
@@ -1481,9 +1759,27 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                         </span>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-bone-muted">Edit Ledger Entries:</span>
-                        <span className={u.canEditLedger || u.role === 'ADMIN_DIRECTOR' ? 'text-green-600 dark:text-green-400 font-bold' : 'text-vermillion'}>
-                          {u.canEditLedger || u.role === 'ADMIN_DIRECTOR' ? 'ALLOWED' : 'LOCKED'}
+                        <span className="text-bone-muted">Edit Ledger:</span>
+                        <span className={u.canEditLedger || u.role === 'ADMIN_ACCESS' || u.role === 'ADMIN_DIRECTOR' ? 'text-green-600 dark:text-green-400 font-bold' : 'text-vermillion'}>
+                          {u.canEditLedger || u.role === 'ADMIN_ACCESS' || u.role === 'ADMIN_DIRECTOR' ? 'ALLOWED' : 'LOCKED'}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-bone-muted">Delete Quotes:</span>
+                        <span className={u.canDeleteQuotes ? 'text-green-600 dark:text-green-400 font-bold' : 'text-vermillion'}>
+                          {u.canDeleteQuotes ? 'ALLOWED' : 'LOCKED'}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-bone-muted">Dispatch Emails:</span>
+                        <span className={u.canSendEmails ? 'text-green-600 dark:text-green-400 font-bold' : 'text-vermillion'}>
+                          {u.canSendEmails ? 'ALLOWED' : 'LOCKED'}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-bone-muted">Call Sheets & Gear:</span>
+                        <span className={u.canViewCallSheets ? 'text-green-600 dark:text-green-400 font-bold' : 'text-vermillion'}>
+                          {u.canViewCallSheets ? 'ALLOWED' : 'LOCKED'}
                         </span>
                       </div>
                     </div>
@@ -1495,7 +1791,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                           <button
                             type="button"
                             onClick={() => handleToggleUserLock(u)}
-                            disabled={isCurrent || (currentUser.username === 'reuben' && (isRoot || u.username === 'dan'))}
+                            disabled={isCurrent || (currentUser.username === 'reuben' && isRoot)}
                             className={`px-2 py-0.5 text-[10px] border font-mono font-bold transition-all flex items-center gap-1 ${
                               u.isLocked
                                 ? 'border-rose-500/50 text-rose-600 dark:text-rose-400 bg-rose-500/10 hover:bg-rose-500/20'
@@ -1514,7 +1810,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                           </button>
                         )}
 
-                        {(!isRoot || isViewerRootOrDan) && (
+                        {(!isRoot || isViewerRoot) && (
                           <button
                             onClick={() => handleOpenEditUser(u)}
                             className="px-2 py-0.5 text-[10px] border border-bone-border dark:border-obsidian-border hover:border-carbon dark:hover:border-white transition-all flex items-center gap-1"
@@ -1539,6 +1835,101 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                 );
               })}
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Tab: Gear Catalog Management */}
+      {activeTab === 'gear' && (
+        <div className="space-y-6 text-xs font-mono animate-fadeIn">
+          {/* Header */}
+          <div className="p-5 bg-bone-card dark:bg-obsidian-card border border-bone-border dark:border-obsidian-border space-y-2">
+            <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.2em] text-vermillion font-bold">
+              <Camera size={14} />
+              <span>Technical Production & Cinematography Kit</span>
+            </div>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <h2 className="text-xl sm:text-2xl font-serif font-black uppercase text-carbon dark:text-white">
+                  Studio Gear & Rental Inventory
+                </h2>
+                <p className="text-xs text-bone-muted dark:text-obsidian-muted mt-1">
+                  Manage cinema bodies, primes, zooms, lighting, and aerial drone kits available for shoot allocation and crew call sheets.
+                </p>
+              </div>
+              {canEdit && (
+                <button
+                  type="button"
+                  onClick={() => setShowAddGearModal(true)}
+                  className="px-4 py-2 bg-carbon text-bone dark:bg-white dark:text-carbon uppercase tracking-wider font-bold hover:bg-vermillion dark:hover:bg-vermillion dark:hover:text-white transition-all flex items-center gap-1.5 shrink-0"
+                >
+                  <Plus size={13} />
+                  <span>Add Gear Asset</span>
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Gear Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+            {(studioForm.gearInventory || defaultGearInventory).map((item) => (
+              <div
+                key={item.id}
+                className="p-4 bg-bone-card dark:bg-obsidian-card border border-bone-border dark:border-obsidian-border flex flex-col justify-between space-y-3"
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <span className="text-[9px] uppercase px-2 py-0.5 font-bold font-mono border border-bone-border dark:border-obsidian-border text-vermillion">
+                    {item.category}
+                  </span>
+                  <button
+                    type="button"
+                    disabled={!canEdit}
+                    onClick={() => {
+                      const existing = studioForm.gearInventory || defaultGearInventory;
+                      const updated = existing.map((g) =>
+                        g.id === item.id ? { ...g, available: !g.available } : g
+                      );
+                      const nextForm = { ...studioForm, gearInventory: updated };
+                      setStudioForm(nextForm);
+                      onUpdateSettings(nextForm);
+                    }}
+                    className={`text-[9px] uppercase px-2 py-0.5 font-bold border transition-colors ${
+                      item.available
+                        ? 'border-emerald-500/40 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10'
+                        : 'border-rose-500/40 text-rose-600 dark:text-rose-400 bg-rose-500/10'
+                    }`}
+                  >
+                    {item.available ? 'Ready / In Studio' : 'Deployed / In Field'}
+                  </button>
+                </div>
+                <div>
+                  <h4 className="font-bold text-sm text-carbon dark:text-white">{item.name}</h4>
+                  {item.notes && (
+                    <p className="text-[10px] text-bone-muted dark:text-obsidian-muted mt-1">{item.notes}</p>
+                  )}
+                </div>
+                {canEdit && (
+                  <div className="pt-2 border-t border-bone-border dark:border-obsidian-border flex items-center justify-end">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (confirm(`Remove "${item.name}" from gear inventory?`)) {
+                          const existing = studioForm.gearInventory || defaultGearInventory;
+                          const updated = existing.filter((g) => g.id !== item.id);
+                          const nextForm = { ...studioForm, gearInventory: updated };
+                          setStudioForm(nextForm);
+                          onUpdateSettings(nextForm);
+                        }
+                      }}
+                      className="p-1 text-bone-muted hover:text-vermillion transition-colors"
+                      title="Delete gear asset"
+                    >
+                      <Trash2 size={12} />
+                    </button>
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       )}
@@ -1837,6 +2228,129 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
             <p className="text-xs text-bone-muted dark:text-obsidian-muted">
               Connect external client touchpoints directly to VOWS Studio: automatic Google Forms intake, Google Drive client folder synchronization, and cloud PostgreSQL persistence.
             </p>
+          </div>
+
+          {/* Email Template Settings */}
+          <div className="p-5 sm:p-6 bg-bone-card dark:bg-obsidian-card border border-bone-border dark:border-obsidian-border space-y-4">
+            <div className="border-b border-bone-border dark:border-obsidian-border pb-3 flex items-center justify-between">
+              <div>
+                <span className="text-[9px] font-mono uppercase px-2 py-0.5 bg-vermillion/10 text-vermillion border border-vermillion/30 font-bold inline-block">
+                  Automated Correspondence
+                </span>
+                <h3 className="text-lg font-serif font-bold uppercase text-carbon dark:text-white mt-1">
+                  Client Quotation & Email Dispatch Template
+                </h3>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono">
+              <div>
+                <label className="block text-[10px] uppercase text-bone-muted mb-1 font-bold">
+                  Email Header Title
+                </label>
+                <input
+                  type="text"
+                  disabled={!canEdit}
+                  value={studioForm.emailTemplate?.headingTitle || 'VOWS'}
+                  onChange={(e) =>
+                    setStudioForm({
+                      ...studioForm,
+                      emailTemplate: {
+                        headingTitle: e.target.value,
+                        tagline: studioForm.emailTemplate?.tagline || 'Wedding Cinematics & Stills',
+                        subjectLine: studioForm.emailTemplate?.subjectLine || 'Proposal & Quotation — VOWS',
+                        bodyTemplate: studioForm.emailTemplate?.bodyTemplate || 'Thank you for reaching out to VOWS. Please find attached our bespoke proposal and quotation for your celebration.',
+                      },
+                    })
+                  }
+                  className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white disabled:opacity-75 font-bold"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[10px] uppercase text-bone-muted mb-1 font-bold">
+                  Email Subheader / Tagline
+                </label>
+                <input
+                  type="text"
+                  disabled={!canEdit}
+                  value={studioForm.emailTemplate?.tagline || 'Wedding Cinematics & Stills'}
+                  onChange={(e) =>
+                    setStudioForm({
+                      ...studioForm,
+                      emailTemplate: {
+                        headingTitle: studioForm.emailTemplate?.headingTitle || 'VOWS',
+                        tagline: e.target.value,
+                        subjectLine: studioForm.emailTemplate?.subjectLine || 'Proposal & Quotation — VOWS',
+                        bodyTemplate: studioForm.emailTemplate?.bodyTemplate || 'Thank you for reaching out to VOWS. Please find attached our bespoke proposal and quotation for your celebration.',
+                      },
+                    })
+                  }
+                  className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white disabled:opacity-75"
+                />
+              </div>
+
+              <div className="sm:col-span-2">
+                <label className="block text-[10px] uppercase text-bone-muted mb-1 font-bold">
+                  Default Email Subject
+                </label>
+                <input
+                  type="text"
+                  disabled={!canEdit}
+                  value={studioForm.emailTemplate?.subjectLine || 'Proposal & Quotation — VOWS'}
+                  onChange={(e) =>
+                    setStudioForm({
+                      ...studioForm,
+                      emailTemplate: {
+                        headingTitle: studioForm.emailTemplate?.headingTitle || 'VOWS',
+                        tagline: studioForm.emailTemplate?.tagline || 'Wedding Cinematics & Stills',
+                        subjectLine: e.target.value,
+                        bodyTemplate: studioForm.emailTemplate?.bodyTemplate || 'Thank you for reaching out to VOWS. Please find attached our bespoke proposal and quotation for your celebration.',
+                      },
+                    })
+                  }
+                  className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white disabled:opacity-75"
+                />
+              </div>
+
+              <div className="sm:col-span-2">
+                <label className="block text-[10px] uppercase text-bone-muted mb-1 font-bold">
+                  Email Message Body Template
+                </label>
+                <textarea
+                  rows={3}
+                  disabled={!canEdit}
+                  value={studioForm.emailTemplate?.bodyTemplate || 'Thank you for reaching out to VOWS. Please find attached our bespoke proposal and quotation for your celebration.'}
+                  onChange={(e) =>
+                    setStudioForm({
+                      ...studioForm,
+                      emailTemplate: {
+                        headingTitle: studioForm.emailTemplate?.headingTitle || 'VOWS',
+                        tagline: studioForm.emailTemplate?.tagline || 'Wedding Cinematics & Stills',
+                        subjectLine: studioForm.emailTemplate?.subjectLine || 'Proposal & Quotation — VOWS',
+                        bodyTemplate: e.target.value,
+                      },
+                    })
+                  }
+                  className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white resize-none disabled:opacity-75 leading-relaxed"
+                />
+              </div>
+            </div>
+
+            {canEdit && (
+              <div className="pt-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    onUpdateSettings(studioForm);
+                    showSuccessFeedback();
+                  }}
+                  className="px-4 py-2 bg-carbon text-bone dark:bg-white dark:text-carbon uppercase font-bold text-xs hover:bg-vermillion dark:hover:bg-vermillion dark:hover:text-white transition-all"
+                >
+                  Save Email Template
+                </button>
+              </div>
+            )}
           </div>
 
           {/* Integration 1: Google Form Webhook Intake */}
@@ -2301,19 +2815,28 @@ ON CONFLICT (id) DO UPDATE SET password = EXCLUDED.password;`;
       {isUserModalOpen && canEdit && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-carbon/80 dark:bg-black/80 backdrop-blur-sm animate-fadeIn">
           <div className="relative w-full max-w-lg bg-bone-card dark:bg-obsidian-card border-2 border-carbon dark:border-white shadow-2xl p-4 sm:p-6 space-y-4 sm:space-y-5 max-h-[90vh] overflow-y-auto">
-            <div>
-              <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.2em] text-vermillion font-bold mb-1">
-                <ShieldCheck size={12} />
-                <span>Credential & Permissions Authority</span>
+            <div className="flex items-center justify-between pb-3 border-b border-bone-border dark:border-obsidian-border">
+              <div>
+                <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.2em] text-vermillion font-bold mb-1">
+                  <ShieldCheck size={12} />
+                  <span>Credential & Permissions Authority</span>
+                </div>
+                <h2 className="text-xl font-serif font-black uppercase tracking-tight text-carbon dark:text-white">
+                  {editingUser ? `Edit Account: @${editingUser.username}` : 'Register New Studio User'}
+                </h2>
               </div>
-              <h2 className="text-xl font-serif font-black uppercase tracking-tight text-carbon dark:text-white">
-                {editingUser ? `Edit Account: @${editingUser.username}` : 'Register New Studio User'}
-              </h2>
+              <button
+                type="button"
+                onClick={() => setIsUserModalOpen(false)}
+                className="px-2.5 py-1 text-xs font-mono border border-bone-border dark:border-obsidian-border hover:border-carbon dark:hover:border-white text-carbon dark:text-white transition-colors"
+              >
+                ✕ [Esc]
+              </button>
             </div>
 
             <form onSubmit={handleSaveUser} className="space-y-3.5 text-xs font-mono">
               <div>
-                <label className="block text-[10px] uppercase text-bone-muted mb-1">
+                <label className="block text-[10px] uppercase text-bone-muted mb-1 font-bold">
                   Full Name / Title
                 </label>
                 <input
@@ -2322,13 +2845,13 @@ ON CONFLICT (id) DO UPDATE SET password = EXCLUDED.password;`;
                   onChange={(e) => setUserFormData({ ...userFormData, fullName: e.target.value })}
                   placeholder="e.g. Joyline Sequeira (Second Shooter)"
                   required
-                  className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white"
+                  className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white font-bold"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[10px] uppercase text-bone-muted mb-1">
+                  <label className="block text-[10px] uppercase text-bone-muted mb-1 font-bold">
                     Username
                   </label>
                   <input
@@ -2337,13 +2860,13 @@ ON CONFLICT (id) DO UPDATE SET password = EXCLUDED.password;`;
                     onChange={(e) => setUserFormData({ ...userFormData, username: e.target.value })}
                     placeholder="e.g. joyline"
                     required
-                    disabled={editingUser?.username === 'admin' || editingUser?.username === 'root'}
+                    disabled={editingUser?.username === 'admin' || editingUser?.username === 'root' || editingUser?.username === 'system.admin'}
                     className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white disabled:opacity-50 font-bold"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[10px] uppercase text-bone-muted mb-1">
+                  <label className="block text-[10px] uppercase text-bone-muted mb-1 font-bold">
                     Password
                   </label>
                   <input
@@ -2352,24 +2875,56 @@ ON CONFLICT (id) DO UPDATE SET password = EXCLUDED.password;`;
                     onChange={(e) => setUserFormData({ ...userFormData, password: e.target.value })}
                     placeholder="Enter password"
                     required
-                    className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white font-mono"
+                    className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white font-mono font-bold"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-[10px] uppercase text-bone-muted mb-1">
+                <label className="block text-[10px] uppercase text-bone-muted mb-1 font-bold">
                   Primary Role
                 </label>
                 <select
                   value={userFormData.role}
-                  onChange={(e) => setUserFormData({ ...userFormData, role: e.target.value as UserRole })}
+                  onChange={(e) => {
+                    const newRole = e.target.value as UserRole;
+                    if (newRole === 'PRODUCT_DEMO') {
+                      setUserFormData({
+                        ...userFormData,
+                        role: newRole,
+                        canViewFinances: false,
+                        canAccessSettings: false,
+                      });
+                    } else if (newRole === 'ADMIN_ACCESS' || newRole === 'ADMIN_DIRECTOR') {
+                      setUserFormData({
+                        ...userFormData,
+                        role: newRole,
+                        canViewFinances: true,
+                        canAccessSettings: true,
+                        canEditQuotesAndOrders: true,
+                        canEditLedger: true,
+                        canDeleteQuotes: true,
+                        canSendEmails: true,
+                        canViewCallSheets: true,
+                        canExportPDFs: true,
+                      });
+                    } else {
+                      setUserFormData({ ...userFormData, role: newRole });
+                    }
+                  }}
                   className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white uppercase font-bold"
                 >
-                  <option value="ADMIN_DIRECTOR">Admin Studio Director</option>
+                  <option value="ADMIN_ACCESS">Admin Director (Full Access)</option>
+                  <option value="CREW">Crew Member (Field Production)</option>
+                  <option value="PRODUCT_DEMO">Product Demo (Confidential Masking Mode)</option>
                   <option value="SECOND_SHOOTER">Second Unit / Crew</option>
                   <option value="PRODUCER">Production Producer</option>
                 </select>
+                {userFormData.role === 'PRODUCT_DEMO' && (
+                  <span className="text-[10px] text-amber-500 font-mono mt-1 block">
+                    🔒 Demo Mode: Client names, contact info, and financials are masked automatically for safe client pitching.
+                  </span>
+                )}
               </div>
 
               {/* Selective Access Control Toggles */}
@@ -2449,7 +3004,83 @@ ON CONFLICT (id) DO UPDATE SET password = EXCLUDED.password;`;
                       Edit & Record Ledger Transactions
                     </span>
                     <span className="text-[9px] text-bone-muted block">
-                      Allows staff to modify, create, and delete entries in the Dual General Ledger.
+                      Allows staff to modify, create, and delete entries in the General Ledger.
+                    </span>
+                  </div>
+                </label>
+
+                <label className="flex items-center gap-2.5 cursor-pointer select-none">
+                  <input
+                    type="checkbox"
+                    checked={userFormData.canDeleteQuotes}
+                    onChange={(e) =>
+                      setUserFormData({ ...userFormData, canDeleteQuotes: e.target.checked })
+                    }
+                    className="w-3.5 h-3.5 accent-vermillion rounded"
+                  />
+                  <div>
+                    <span className="font-bold text-carbon dark:text-white block text-[11px]">
+                      Delete Quotations
+                    </span>
+                    <span className="text-[9px] text-bone-muted block">
+                      Allows user to permanently delete previously generated quotations.
+                    </span>
+                  </div>
+                </label>
+
+                <label className="flex items-center gap-2.5 cursor-pointer select-none">
+                  <input
+                    type="checkbox"
+                    checked={userFormData.canSendEmails}
+                    onChange={(e) =>
+                      setUserFormData({ ...userFormData, canSendEmails: e.target.checked })
+                    }
+                    className="w-3.5 h-3.5 accent-vermillion rounded"
+                  />
+                  <div>
+                    <span className="font-bold text-carbon dark:text-white block text-[11px]">
+                      Dispatch Quotation Emails
+                    </span>
+                    <span className="text-[9px] text-bone-muted block">
+                      Allows sending official proposal emails directly to client inboxes.
+                    </span>
+                  </div>
+                </label>
+
+                <label className="flex items-center gap-2.5 cursor-pointer select-none">
+                  <input
+                    type="checkbox"
+                    checked={userFormData.canViewCallSheets}
+                    onChange={(e) =>
+                      setUserFormData({ ...userFormData, canViewCallSheets: e.target.checked })
+                    }
+                    className="w-3.5 h-3.5 accent-vermillion rounded"
+                  />
+                  <div>
+                    <span className="font-bold text-carbon dark:text-white block text-[11px]">
+                      View Call Sheets & Gear Allocations
+                    </span>
+                    <span className="text-[9px] text-bone-muted block">
+                      Allows inspection of production timelines and allocated gear kits.
+                    </span>
+                  </div>
+                </label>
+
+                <label className="flex items-center gap-2.5 cursor-pointer select-none">
+                  <input
+                    type="checkbox"
+                    checked={userFormData.canExportPDFs}
+                    onChange={(e) =>
+                      setUserFormData({ ...userFormData, canExportPDFs: e.target.checked })
+                    }
+                    className="w-3.5 h-3.5 accent-vermillion rounded"
+                  />
+                  <div>
+                    <span className="font-bold text-carbon dark:text-white block text-[11px]">
+                      Export & Download PDFs
+                    </span>
+                    <span className="text-[9px] text-bone-muted block">
+                      Permits exporting Proposal and Invoice PDFs locally or to Google Drive.
                     </span>
                   </div>
                 </label>
@@ -2475,6 +3106,94 @@ ON CONFLICT (id) DO UPDATE SET password = EXCLUDED.password;`;
         </div>
       )}
 
+      {/* Add Gear Asset Modal */}
+      {showAddGearModal && canEdit && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-carbon/80 dark:bg-black/80 backdrop-blur-sm animate-fadeIn">
+          <div className="relative w-full max-w-md bg-bone-card dark:bg-obsidian-card border-2 border-carbon dark:border-white shadow-2xl p-4 sm:p-6 space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-bone-border dark:border-obsidian-border">
+              <div>
+                <span className="text-[10px] font-mono text-vermillion uppercase font-bold block">
+                  Studio Kit Inventory
+                </span>
+                <h3 className="text-lg font-serif font-black uppercase text-carbon dark:text-white">
+                  Add Production Gear
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowAddGearModal(false)}
+                className="px-2.5 py-1 text-xs font-mono border border-bone-border dark:border-obsidian-border hover:border-carbon dark:hover:border-white text-carbon dark:text-white transition-colors"
+              >
+                ✕ [Esc]
+              </button>
+            </div>
+
+            <form onSubmit={handleAddGearItem} className="space-y-3.5 text-xs font-mono">
+              <div>
+                <label className="block text-[10px] uppercase text-bone-muted mb-1 font-bold">
+                  Gear Item Name
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={newGearName}
+                  onChange={(e) => setNewGearName(e.target.value)}
+                  placeholder="e.g. Sony FE 24-70mm f/2.8 GM II"
+                  className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[10px] uppercase text-bone-muted mb-1 font-bold">
+                  Category
+                </label>
+                <select
+                  value={newGearCategory}
+                  onChange={(e) => setNewGearCategory(e.target.value as any)}
+                  className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white uppercase font-bold"
+                >
+                  <option value="BODY">BODY (Camera / Cine Line)</option>
+                  <option value="LENS">LENS (Prime / Zoom Optics)</option>
+                  <option value="LIGHTING">LIGHTING (Strobe / Continuous LED)</option>
+                  <option value="DRONE">DRONE (Aerial Cinema)</option>
+                  <option value="AUDIO">AUDIO (Wireless Mic / Lav Kit)</option>
+                  <option value="SUPPORT">SUPPORT (Gimbal / Tripod / Rig)</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-[10px] uppercase text-bone-muted mb-1 font-bold">
+                  Notes / Serial (Optional)
+                </label>
+                <input
+                  type="text"
+                  value={newGearNotes}
+                  onChange={(e) => setNewGearNotes(e.target.value)}
+                  placeholder="e.g. Primary Wedding Stills Rig / SN: 847291"
+                  className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white"
+                />
+              </div>
+
+              <div className="flex justify-end gap-2 pt-2 border-t border-bone-border dark:border-obsidian-border">
+                <button
+                  type="button"
+                  onClick={() => setShowAddGearModal(false)}
+                  className="px-3.5 py-1.5 border border-bone-border dark:border-obsidian-border text-xs uppercase"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-1.5 bg-carbon text-bone dark:bg-white dark:text-carbon font-bold text-xs uppercase hover:bg-vermillion dark:hover:bg-vermillion dark:hover:text-white transition-all"
+                >
+                  Save Gear Asset
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
 
       {/* Reset Sample Data Confirmation Modal */}
       {showResetModal && onResetSampleData && (
@@ -2488,10 +3207,11 @@ ON CONFLICT (id) DO UPDATE SET password = EXCLUDED.password;`;
                 </h3>
               </div>
               <button
+                type="button"
                 onClick={() => setShowResetModal(false)}
-                className="text-xs font-mono text-bone-muted hover:text-carbon dark:hover:text-white"
+                className="px-2.5 py-1 text-xs font-mono border border-bone-border dark:border-obsidian-border hover:border-carbon dark:hover:border-white text-carbon dark:text-white transition-colors"
               >
-                [ESC]
+                ✕ [Esc]
               </button>
             </div>
 
@@ -2544,9 +3264,9 @@ ON CONFLICT (id) DO UPDATE SET password = EXCLUDED.password;`;
               <button
                 type="button"
                 onClick={() => setShowChangePasswordModal(false)}
-                className="text-xs font-mono text-bone-muted hover:text-carbon dark:hover:text-white"
+                className="px-2.5 py-1 text-xs font-mono border border-bone-border dark:border-obsidian-border hover:border-carbon dark:hover:border-white text-carbon dark:text-white transition-colors"
               >
-                [ESC]
+                ✕ [Esc]
               </button>
             </div>
 
@@ -2656,9 +3376,9 @@ ON CONFLICT (id) DO UPDATE SET password = EXCLUDED.password;`;
                   setShowClearAllDataModal(false);
                   setClearDataInput('');
                 }}
-                className="text-xs font-mono text-bone-muted hover:text-carbon dark:hover:text-white"
+                className="px-2.5 py-1 text-xs font-mono border border-bone-border dark:border-obsidian-border hover:border-carbon dark:hover:border-white text-carbon dark:text-white transition-colors"
               >
-                [ESC]
+                ✕ [Esc]
               </button>
             </div>
 

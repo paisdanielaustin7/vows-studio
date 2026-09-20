@@ -2,9 +2,22 @@
 
 import React, { useState, useEffect } from 'react';
 import { Invoice, StudioSettings, UserAccount } from '@/types';
-import { FileText, Download, CheckCircle, Clock, AlertCircle, Lock, Landmark, CloudUpload, Check, ExternalLink } from 'lucide-react';
+import {
+  FileText,
+  Download,
+  CheckCircle,
+  Clock,
+  AlertCircle,
+  Lock,
+  Landmark,
+  CloudUpload,
+  Check,
+  ExternalLink,
+  Edit3,
+} from 'lucide-react';
 import { generateInvoicePDF, resolvePDFPalette, getInvoicePDFBase64 } from '@/lib/pdfGenerator';
 import { defaultStudioSettings } from '@/lib/catalogDefaults';
+import { formatCurrencyINR, maskClientName, maskAmount } from '@/lib/formatters';
 
 interface InvoicesViewProps {
   invoices: Invoice[];
@@ -18,7 +31,19 @@ export const InvoicesView: React.FC<InvoicesViewProps> = ({ invoices, settings, 
   const [isUploadingToDrive, setIsUploadingToDrive] = useState(false);
   const [driveSuccessMsg, setDriveSuccessMsg] = useState<string | null>(null);
 
+  // Manual Invoice Editing State (Point 16)
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editInvoiceNumber, setEditInvoiceNumber] = useState('');
+  const [editClientName, setEditClientName] = useState('');
+  const [editBrand, setEditBrand] = useState('');
+  const [editIssueDate, setEditIssueDate] = useState('');
+  const [editDueDate, setEditDueDate] = useState('');
+  const [editTotal, setEditTotal] = useState('');
+  const [editBalance, setEditBalance] = useState('');
+  const [editStatus, setEditStatus] = useState<Invoice['status']>('UNPAID');
+
   const canViewFinances = currentUser ? currentUser.canViewFinances : true;
+  const isDemo = currentUser?.role === 'PRODUCT_DEMO';
 
   // Keep selectedInvoice in sync if invoices list updates
   useEffect(() => {
@@ -34,6 +59,56 @@ export const InvoicesView: React.FC<InvoicesViewProps> = ({ invoices, settings, 
     }
   }, [invoices, selectedInvoice]);
 
+  // Global Escape key listener (Point 18)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setShowEditModal(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  const handleOpenEdit = (inv: Invoice) => {
+    setEditInvoiceNumber(inv.invoiceNumber);
+    setEditClientName(inv.clientName);
+    setEditBrand(inv.brand);
+    setEditIssueDate(inv.issueDate);
+    setEditDueDate(inv.dueDate);
+    setEditTotal(inv.totalAmount.toString());
+    setEditBalance(inv.balanceDue.toString());
+    setEditStatus(inv.status);
+    setShowEditModal(true);
+  };
+
+  const handleSaveEdit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedInvoice) return;
+
+    const total = parseFloat(editTotal) || selectedInvoice.totalAmount;
+    const balance = parseFloat(editBalance) >= 0 ? parseFloat(editBalance) : 0;
+
+    const updated: Invoice = {
+      ...selectedInvoice,
+      invoiceNumber: editInvoiceNumber,
+      clientName: editClientName,
+      brand: editBrand,
+      issueDate: editIssueDate,
+      dueDate: editDueDate,
+      subtotal: total,
+      totalAmount: total,
+      balanceDue: balance,
+      status: editStatus,
+    };
+
+    if (onUpdateInvoice) {
+      onUpdateInvoice(updated);
+    }
+    setSelectedInvoice(updated);
+    setShowEditModal(false);
+  };
+
   const effectiveSettings = settings || defaultStudioSettings;
   const previewPalette = resolvePDFPalette(effectiveSettings);
   const previewBg = `rgb(${previewPalette.bg.join(',')})`;
@@ -43,12 +118,9 @@ export const InvoicesView: React.FC<InvoicesViewProps> = ({ invoices, settings, 
   const previewAccent = `rgb(${previewPalette.accent.join(',')})`;
 
   const formatCurrency = (val: number) => {
-    if (!canViewFinances) return '₹ ••••••';
-    return new Intl.NumberFormat('en-IN', {
-      style: 'currency',
-      currency: 'INR',
-      maximumFractionDigits: 0,
-    }).format(val);
+    if (!canViewFinances) return 'Rs. ••••••/-';
+    if (isDemo) return maskAmount(val, true);
+    return formatCurrencyINR(val);
   };
 
   const handleSaveInvoiceToDrive = async (inv: Invoice) => {
@@ -65,7 +137,7 @@ export const InvoicesView: React.FC<InvoicesViewProps> = ({ invoices, settings, 
           clientId,
           clientName: inv.clientName,
           docType: 'INVOICE',
-          fileName: `${inv.invoiceNumber.replace(/\s+/g, '_')}_${inv.clientName.replace(/\s+/g, '_')}.pdf`,
+          fileName: `Invoice for ${inv.clientName}.pdf`,
           pdfBase64,
         }),
       });
@@ -234,26 +306,23 @@ export const InvoicesView: React.FC<InvoicesViewProps> = ({ invoices, settings, 
               <p className="text-[#3b4741]">{selectedInvoice.brand}</p>
             </div>
 
-            {/* Line Items Table */}
+            {/* Deliverables List Table (Scope only, no split pricing - Item 21) */}
             <div className="border border-[#d8e2dc] rounded-sm overflow-hidden bg-white/70">
               <div
                 className="px-3.5 py-1.5 flex justify-between font-mono text-[11px] font-bold text-[#19231e]"
                 style={{ backgroundColor: previewStrip }}
               >
-                <span>Item & Deliverable</span>
-                <span>Total</span>
+                <span>Deliverables & Scope of Production</span>
+                <span>Coverage</span>
               </div>
               <div className="divide-y divide-[#e4ede7] text-[11px] font-mono bg-white/80">
                 {selectedInvoice.items.map((item) => (
                   <div key={item.id} className="p-3 flex justify-between items-center">
                     <div>
                       <span className="font-semibold text-[#0f1714] block">{item.description}</span>
-                      <span className="text-[10px] text-[#5a6962]">
-                        Qty {item.quantity} × {formatCurrency(item.unitPrice)}
-                      </span>
                     </div>
-                    <span className="font-bold text-[#0f1714]">
-                      {formatCurrency(item.total)}
+                    <span className="text-[10px] text-[#5a6962] italic">
+                      Included in Package
                     </span>
                   </div>
                 ))}
@@ -333,8 +402,17 @@ export const InvoicesView: React.FC<InvoicesViewProps> = ({ invoices, settings, 
             {/* Action Bar */}
             <div className="pt-3 border-t border-[#d8e2dc] flex flex-wrap gap-2.5">
               <button
+                onClick={() => handleOpenEdit(selectedInvoice)}
+                className="py-2.5 px-3 text-xs font-mono uppercase tracking-widest border border-[#0f1714] text-[#0f1714] hover:bg-[#0f1714] hover:text-white transition-all flex items-center justify-center gap-1.5 font-bold"
+                title="Edit invoice details manually"
+              >
+                <Edit3 size={13} />
+                <span>Edit Invoice</span>
+              </button>
+
+              <button
                 onClick={() => generateInvoicePDF(selectedInvoice, effectiveSettings)}
-                className="flex-1 min-w-[180px] py-2.5 text-xs font-mono uppercase tracking-widest bg-[#0f1714] text-white hover:bg-vermillion transition-all flex items-center justify-center gap-2 font-bold shadow-md"
+                className="flex-1 min-w-[150px] py-2.5 text-xs font-mono uppercase tracking-widest bg-[#0f1714] text-white hover:bg-vermillion transition-all flex items-center justify-center gap-2 font-bold shadow-md"
               >
                 <Download size={14} />
                 <span>Download PDF</span>
@@ -343,10 +421,10 @@ export const InvoicesView: React.FC<InvoicesViewProps> = ({ invoices, settings, 
               <button
                 onClick={() => handleSaveInvoiceToDrive(selectedInvoice)}
                 disabled={isUploadingToDrive}
-                className="flex-1 min-w-[180px] py-2.5 text-xs font-mono uppercase tracking-widest border border-[#0f1714] text-[#0f1714] hover:bg-[#0f1714] hover:text-white transition-all flex items-center justify-center gap-2 font-bold disabled:opacity-50"
+                className="flex-1 min-w-[150px] py-2.5 text-xs font-mono uppercase tracking-widest border border-[#0f1714] text-[#0f1714] hover:bg-[#0f1714] hover:text-white transition-all flex items-center justify-center gap-2 font-bold disabled:opacity-50"
               >
                 <CloudUpload size={14} className={isUploadingToDrive ? 'animate-bounce' : ''} />
-                <span>{isUploadingToDrive ? 'Archiving...' : 'Save to Google Drive'}</span>
+                <span>{isUploadingToDrive ? 'Archiving...' : 'Save to Drive'}</span>
               </button>
 
               {selectedInvoice.driveFileUrl && (
@@ -358,7 +436,7 @@ export const InvoicesView: React.FC<InvoicesViewProps> = ({ invoices, settings, 
                   title="Open stored file on Google Drive"
                 >
                   <ExternalLink size={13} />
-                  <span>Drive File</span>
+                  <span>Drive</span>
                 </a>
               )}
             </div>
@@ -369,6 +447,166 @@ export const InvoicesView: React.FC<InvoicesViewProps> = ({ invoices, settings, 
           </div>
         )}
       </div>
+
+      {/* Edit Invoice Modal (Point 16) */}
+      {showEditModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-carbon/70 backdrop-blur-sm">
+          <div className="w-full max-w-lg bg-bone-card dark:bg-obsidian-card border-2 border-carbon dark:border-white p-5 sm:p-6 shadow-2xl space-y-4 max-h-[92vh] overflow-y-auto">
+            <div className="flex items-center justify-between pb-2 border-b border-bone-border dark:border-obsidian-border">
+              <div>
+                <span className="text-[9.5px] font-mono text-vermillion uppercase font-bold block">
+                  Commercial Adjustment
+                </span>
+                <h3 className="font-serif text-lg font-bold uppercase text-carbon dark:text-white">
+                  Edit Invoice: {editInvoiceNumber}
+                </h3>
+              </div>
+              <button
+                onClick={() => setShowEditModal(false)}
+                className="text-xs font-mono text-bone-muted hover:text-carbon dark:hover:text-white font-bold"
+              >
+                ✕ [Esc]
+              </button>
+            </div>
+
+            <form onSubmit={handleSaveEdit} className="space-y-3 text-[11px] font-mono">
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label className="block text-[9px] uppercase text-bone-muted mb-0.5">Invoice Number</label>
+                  <input
+                    type="text"
+                    required
+                    value={editInvoiceNumber}
+                    onChange={(e) => setEditInvoiceNumber(e.target.value)}
+                    className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white font-bold outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[9px] uppercase text-bone-muted mb-0.5">Status</label>
+                  <select
+                    value={editStatus}
+                    onChange={(e) => setEditStatus(e.target.value as Invoice['status'])}
+                    className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white outline-none"
+                  >
+                    <option value="UNPAID">UNPAID</option>
+                    <option value="PARTIAL">PARTIAL</option>
+                    <option value="PAID">PAID</option>
+                    <option value="OVERDUE">OVERDUE</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label className="block text-[9px] uppercase text-bone-muted mb-0.5">Client Name</label>
+                  <input
+                    type="text"
+                    required
+                    value={editClientName}
+                    onChange={(e) => setEditClientName(e.target.value)}
+                    className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white outline-none font-bold"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[9px] uppercase text-bone-muted mb-0.5">Package / Brand</label>
+                  <input
+                    type="text"
+                    required
+                    value={editBrand}
+                    onChange={(e) => setEditBrand(e.target.value)}
+                    className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white outline-none"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label className="block text-[9px] uppercase text-bone-muted mb-0.5">Issue Date</label>
+                  <input
+                    type="text"
+                    required
+                    value={editIssueDate}
+                    onChange={(e) => setEditIssueDate(e.target.value)}
+                    className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[9px] uppercase text-bone-muted mb-0.5">Due Date</label>
+                  <input
+                    type="text"
+                    required
+                    value={editDueDate}
+                    onChange={(e) => setEditDueDate(e.target.value)}
+                    className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white outline-none"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2 p-3 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border">
+                <div>
+                  <label className="block text-[9px] uppercase text-bone-muted mb-0.5">Total Amount (INR)</label>
+                  <input
+                    type="number"
+                    required
+                    value={editTotal}
+                    onChange={(e) => {
+                      const newTot = e.target.value;
+                      setEditTotal(newTot);
+                      const totNum = parseFloat(newTot) || 0;
+                      if (effectiveSettings.advancePaymentEnabled) {
+                        if (effectiveSettings.advancePaymentType === 'PERCENTAGE') {
+                          const pct = effectiveSettings.advancePaymentPercentage || 50;
+                          const adv = (totNum * pct) / 100;
+                          setEditBalance((totNum - adv).toString());
+                        } else {
+                          const fix = effectiveSettings.advancePaymentFixedAmount || 15000;
+                          setEditBalance(Math.max(0, totNum - fix).toString());
+                        }
+                      }
+                    }}
+                    className="w-full p-2 bg-bone-card dark:bg-obsidian-card border border-bone-border dark:border-obsidian-border text-carbon dark:text-white font-serif font-black text-base outline-none"
+                  />
+                </div>
+                <div>
+                  <div className="flex items-center justify-between mb-0.5">
+                    <label className="block text-[9px] uppercase text-bone-muted">Balance Due (INR)</label>
+                    <button
+                      type="button"
+                      onClick={() => setEditBalance('0')}
+                      className="text-[9px] text-emerald-600 hover:underline"
+                    >
+                      Clear to 0
+                    </button>
+                  </div>
+                  <input
+                    type="number"
+                    required
+                    value={editBalance}
+                    onChange={(e) => setEditBalance(e.target.value)}
+                    className="w-full p-2 bg-bone-card dark:bg-obsidian-card border border-bone-border dark:border-obsidian-border text-carbon dark:text-white font-serif font-black text-base outline-none text-rose-600"
+                  />
+                </div>
+              </div>
+
+              <div className="pt-2 flex gap-2">
+                <button
+                  type="submit"
+                  className="flex-1 py-2.5 bg-carbon text-bone dark:bg-white dark:text-carbon font-bold uppercase tracking-widest hover:bg-vermillion transition-all"
+                >
+                  Save Changes
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowEditModal(false)}
+                  className="px-4 py-2.5 border border-bone-border dark:border-obsidian-border uppercase text-xs"
+                >
+                  ✕ [Esc] Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Sliders,
@@ -19,6 +19,7 @@ import {
   DollarSign,
   AlertCircle,
   FileCheck,
+  Camera,
 } from 'lucide-react';
 import {
   StudioSettings,
@@ -26,8 +27,10 @@ import {
   CrewTemplateItem,
   QuotationItem,
   DeliverableItem,
+  GearItem,
 } from '@/types';
-import { defaultCatalog, defaultCrewRoster } from '@/lib/catalogDefaults';
+import { defaultCatalog, defaultCrewRoster, defaultGearInventory } from '@/lib/catalogDefaults';
+import { formatCurrencyINR, parseCurrencyNumber } from '@/lib/formatters';
 
 interface CatalogViewProps {
   settings: StudioSettings;
@@ -40,7 +43,7 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
   onUpdateSettings,
   currentUser,
 }) => {
-  const [activeTab, setActiveTab] = useState<'crew' | 'requirements' | 'deliverables'>('crew');
+  const [activeTab, setActiveTab] = useState<'crew' | 'requirements' | 'deliverables' | 'gear'>('crew');
   const canEdit = currentUser.canAccessSettings || currentUser.canEditQuotesAndOrders;
 
   const [savedBanner, setSavedBanner] = useState<string | null>(null);
@@ -49,6 +52,20 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
     setSavedBanner(msg);
     setTimeout(() => setSavedBanner(null), 3000);
   };
+
+  // Keyboard Escape listener for all CatalogView modals
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsCrewModalOpen(false);
+        setIsReqModalOpen(false);
+        setIsDelModalOpen(false);
+        setIsGearModalOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   // -------------------------------------------------------------
   // 1. CREW ROSTER STATE & ACTIONS
@@ -150,7 +167,8 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
   const handleOpenEditReq = (item: QuotationItem) => {
     setEditingReqId(item.id);
     setReqName(item.name);
-    setReqPrice(String(item.price || '-'));
+    const num = parseCurrencyNumber(item.price);
+    setReqPrice(num > 0 ? formatCurrencyINR(num) : String(item.price || '-'));
     setReqIncluded(item.included);
     setIsReqModalOpen(true);
   };
@@ -159,6 +177,14 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
     e.preventDefault();
     if (!canEdit || !reqName.trim()) return;
 
+    let formattedPrice = reqPrice.trim();
+    if (formattedPrice && formattedPrice !== '-') {
+      const num = parseCurrencyNumber(formattedPrice);
+      if (num > 0) {
+        formattedPrice = formatCurrencyINR(num);
+      }
+    }
+
     let updatedReqs: QuotationItem[];
     if (editingReqId) {
       updatedReqs = requirementsList.map((r) =>
@@ -166,7 +192,7 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
           ? {
               ...r,
               name: reqName.trim(),
-              price: reqPrice.trim() || '-',
+              price: formattedPrice || '-',
               included: reqIncluded,
             }
           : r
@@ -175,7 +201,7 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
       const newReq: QuotationItem = {
         id: `req-${Date.now()}`,
         name: reqName.trim(),
-        price: reqPrice.trim() || '-',
+        price: formattedPrice || '-',
         included: reqIncluded,
       };
       updatedReqs = [...requirementsList, newReq];
@@ -273,6 +299,50 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
     showSavedNotice('Deliverable removed from catalog');
   };
 
+  // -------------------------------------------------------------
+  // 4. GEAR INVENTORY STATE & ACTIONS
+  // -------------------------------------------------------------
+  const gearInventory: GearItem[] = settings.gearInventory || defaultGearInventory;
+  const [selectedGearCategory, setSelectedGearCategory] = useState<string>('ALL');
+  const [isGearModalOpen, setIsGearModalOpen] = useState(false);
+  const [gearName, setGearName] = useState('');
+  const [gearCategory, setGearCategory] = useState<'BODY' | 'LENS' | 'LIGHTING' | 'DRONE' | 'AUDIO' | 'SUPPORT'>('BODY');
+  const [gearNotes, setGearNotes] = useState('');
+
+  const handleToggleGearStatus = (id: string) => {
+    if (!canEdit) return;
+    const updated = gearInventory.map((g) =>
+      g.id === id ? { ...g, status: (g.status === 'AVAILABLE' ? 'IN_USE' : 'AVAILABLE') as 'AVAILABLE' | 'IN_USE' } : g
+    );
+    onUpdateSettings({ ...settings, gearInventory: updated });
+    showSavedNotice('Gear status updated');
+  };
+
+  const handleSaveGear = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!canEdit || !gearName.trim()) return;
+    const newGear: GearItem = {
+      id: `gear-${Date.now()}`,
+      name: gearName.trim(),
+      category: gearCategory,
+      notes: gearNotes.trim() || undefined,
+      status: 'AVAILABLE',
+    };
+    const updated = [...gearInventory, newGear];
+    onUpdateSettings({ ...settings, gearInventory: updated });
+    setIsGearModalOpen(false);
+    setGearName('');
+    setGearNotes('');
+    showSavedNotice('New gear asset added to inventory');
+  };
+
+  const handleDeleteGear = (id: string) => {
+    if (!canEdit) return;
+    const updated = gearInventory.filter((g) => g.id !== id);
+    onUpdateSettings({ ...settings, gearInventory: updated });
+    showSavedNotice('Gear asset removed from inventory');
+  };
+
   return (
     <div className="p-3.5 sm:p-6 lg:p-10 max-w-7xl mx-auto space-y-6">
       {/* Toast Notice */}
@@ -316,6 +386,7 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
           { id: 'crew', label: `Crew Roster (${crewRoster.length})`, icon: Users },
           { id: 'requirements', label: `Requirements (${requirementsList.length})`, icon: Sparkles },
           { id: 'deliverables', label: `Deliverables (${deliverablesList.length})`, icon: Package },
+          { id: 'gear', label: `Gear Inventory (${gearInventory.length})`, icon: Camera },
         ].map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -471,8 +542,8 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
                 </div>
 
                 <div className="flex items-center justify-between sm:justify-end gap-4">
-                  <span className="px-2.5 py-1 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border font-bold text-xs">
-                    {req.price}
+                  <span className="px-2.5 py-1 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border font-bold text-xs font-mono">
+                    {req.price && req.price !== '-' ? (parseCurrencyNumber(req.price) > 0 ? formatCurrencyINR(parseCurrencyNumber(req.price)) : req.price) : '-'}
                   </span>
 
                   {canEdit && (
@@ -579,6 +650,107 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
       )}
 
       {/* ===================================================================== */}
+      {/* TAB 4: GEAR INVENTORY                                                 */}
+      {/* ===================================================================== */}
+      {activeTab === 'gear' && (
+        <div className="space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h2 className="font-serif text-lg font-bold uppercase text-carbon dark:text-white">
+                Studio Gear & Rental Inventory
+              </h2>
+              <p className="text-xs font-mono text-bone-muted dark:text-obsidian-muted">
+                Track primary camera bodies, cinema lenses, Godox lighting, drones, and audio kit.
+              </p>
+            </div>
+
+            {canEdit && (
+              <button
+                type="button"
+                onClick={() => {
+                  setGearName('');
+                  setGearNotes('');
+                  setGearCategory('BODY');
+                  setIsGearModalOpen(true);
+                }}
+                className="px-4 py-2 bg-carbon text-bone dark:bg-white dark:text-carbon font-mono text-xs uppercase tracking-wider hover:bg-vermillion dark:hover:bg-vermillion dark:hover:text-white transition-all flex items-center gap-1.5 shrink-0 font-bold"
+              >
+                <Plus size={13} />
+                <span>Add Gear Asset</span>
+              </button>
+            )}
+          </div>
+
+          {/* Category filter pills */}
+          <div className="flex items-center gap-1.5 flex-wrap pb-1 text-[11px] font-mono">
+            {['ALL', 'BODY', 'LENS', 'LIGHTING', 'DRONE', 'AUDIO', 'SUPPORT'].map((cat) => (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => setSelectedGearCategory(cat)}
+                className={`px-2.5 py-1 uppercase tracking-wider border transition-colors ${
+                  selectedGearCategory === cat
+                    ? 'bg-carbon text-bone dark:bg-white dark:text-carbon font-bold border-carbon dark:border-white'
+                    : 'border-bone-border dark:border-obsidian-border text-bone-muted hover:text-carbon dark:hover:text-white'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 font-mono text-xs">
+            {gearInventory
+              .filter((g) => selectedGearCategory === 'ALL' || g.category === selectedGearCategory)
+              .map((item) => (
+                <div
+                  key={item.id}
+                  className="p-3.5 bg-bone-card dark:bg-obsidian-card border border-bone-border dark:border-obsidian-border flex flex-col justify-between space-y-2 hover:border-carbon dark:hover:border-white transition-colors"
+                >
+                  <div>
+                    <div className="flex items-start justify-between gap-2 mb-1">
+                      <span className="font-bold text-sm text-carbon dark:text-white">{item.name}</span>
+                      <span className="text-[9px] uppercase px-1.5 py-0.5 bg-carbon/10 dark:bg-white/10 font-bold">
+                        {item.category}
+                      </span>
+                    </div>
+                    {item.notes && (
+                      <p className="text-[11px] text-bone-muted italic leading-relaxed">{item.notes}</p>
+                    )}
+                  </div>
+
+                  <div className="flex items-center justify-between pt-2 border-t border-bone-border/60 dark:border-obsidian-border/60">
+                    <button
+                      type="button"
+                      disabled={!canEdit}
+                      onClick={() => handleToggleGearStatus(item.id)}
+                      className={`text-[9px] uppercase px-2 py-0.5 font-bold border transition-colors ${
+                        item.status === 'AVAILABLE'
+                          ? 'border-green-600/40 text-green-600 dark:text-green-400 bg-green-600/10'
+                          : 'border-amber-500/40 text-amber-600 dark:text-amber-400 bg-amber-500/10'
+                      }`}
+                    >
+                      ● {item.status === 'AVAILABLE' ? 'Available' : 'In Use / Field'}
+                    </button>
+
+                    {canEdit && (
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteGear(item.id)}
+                        className="p-1 text-bone-muted hover:text-vermillion transition-colors"
+                        title="Delete gear asset"
+                      >
+                        <Trash2 size={12} />
+                      </button>
+                    )}
+                  </div>
+                </div>
+              ))}
+          </div>
+        </div>
+      )}
+
+      {/* ===================================================================== */}
       {/* MODAL 1: ADD / EDIT CREW                                              */}
       {/* ===================================================================== */}
       {isCrewModalOpen && (
@@ -589,10 +761,11 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
                 {editingCrewId ? 'Edit Crew Role' : 'Add Production Crew Role'}
               </h3>
               <button
+                type="button"
                 onClick={() => setIsCrewModalOpen(false)}
-                className="text-xs font-mono text-bone-muted hover:text-carbon dark:hover:text-white"
+                className="px-2.5 py-1 text-xs font-mono border border-bone-border dark:border-obsidian-border hover:border-carbon dark:hover:border-white text-carbon dark:text-white transition-colors"
               >
-                [ESC]
+                ✕ [Esc]
               </button>
             </div>
 
@@ -635,7 +808,7 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
                     type="text"
                     value={crewName}
                     onChange={(e) => setCrewName(e.target.value)}
-                    placeholder="e.g. Dan Aurel"
+                    placeholder="e.g. Jason Fernandes"
                     className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white"
                   />
                 </div>
@@ -685,10 +858,11 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
                 {editingReqId ? 'Edit Requirement Item' : 'Add Requirement Item'}
               </h3>
               <button
+                type="button"
                 onClick={() => setIsReqModalOpen(false)}
-                className="text-xs font-mono text-bone-muted hover:text-carbon dark:hover:text-white"
+                className="px-2.5 py-1 text-xs font-mono border border-bone-border dark:border-obsidian-border hover:border-carbon dark:hover:border-white text-carbon dark:text-white transition-colors"
               >
-                [ESC]
+                ✕ [Esc]
               </button>
             </div>
 
@@ -709,14 +883,20 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
 
               <div>
                 <label className="block text-[10px] uppercase text-bone-muted mb-1">
-                  Default Display Price (or '-' if bundled in package)
+                  Default Display Price (e.g. Rs. 8,000/- or '-' if bundled)
                 </label>
                 <input
                   type="text"
                   value={reqPrice}
                   onChange={(e) => setReqPrice(e.target.value)}
-                  placeholder="e.g. - or Rs 6,000 /-"
-                  className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white"
+                  onBlur={() => {
+                    const num = parseCurrencyNumber(reqPrice);
+                    if (num > 0) {
+                      setReqPrice(formatCurrencyINR(num));
+                    }
+                  }}
+                  placeholder="e.g. Rs. 8,000/- or -"
+                  className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white font-mono"
                 />
               </div>
 
@@ -763,10 +943,11 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
                 {editingDelId ? 'Edit Deliverable Item' : 'Add Deliverable Item'}
               </h3>
               <button
+                type="button"
                 onClick={() => setIsDelModalOpen(false)}
-                className="text-xs font-mono text-bone-muted hover:text-carbon dark:hover:text-white"
+                className="px-2.5 py-1 text-xs font-mono border border-bone-border dark:border-obsidian-border hover:border-carbon dark:hover:border-white text-carbon dark:text-white transition-colors"
               >
-                [ESC]
+                ✕ [Esc]
               </button>
             </div>
 
@@ -823,6 +1004,91 @@ export const CatalogView: React.FC<CatalogViewProps> = ({
                   className="px-5 py-1.5 bg-carbon text-bone dark:bg-white dark:text-carbon font-bold text-xs uppercase hover:bg-vermillion dark:hover:bg-vermillion dark:hover:text-white transition-all"
                 >
                   {editingDelId ? 'Save Changes' : 'Add Deliverable'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* ===================================================================== */}
+      {/* MODAL 4: ADD GEAR ASSET                                               */}
+      {/* ===================================================================== */}
+      {isGearModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-carbon/70 backdrop-blur-xs">
+          <div className="w-full max-w-md bg-bone-card dark:bg-obsidian-card border-2 border-carbon dark:border-white p-6 shadow-2xl space-y-4">
+            <div className="flex items-center justify-between pb-2 border-b border-bone-border dark:border-obsidian-border">
+              <h3 className="font-serif text-lg font-bold uppercase text-carbon dark:text-white">
+                Add Studio Gear Asset
+              </h3>
+              <button
+                type="button"
+                onClick={() => setIsGearModalOpen(false)}
+                className="px-2.5 py-1 text-xs font-mono border border-bone-border dark:border-obsidian-border hover:border-carbon dark:hover:border-white text-carbon dark:text-white transition-colors"
+              >
+                ✕ [Esc]
+              </button>
+            </div>
+
+            <form onSubmit={handleSaveGear} className="space-y-3 text-xs font-mono">
+              <div>
+                <label className="block text-[10px] uppercase text-bone-muted mb-1">
+                  Asset Name & Model *
+                </label>
+                <input
+                  type="text"
+                  value={gearName}
+                  onChange={(e) => setGearName(e.target.value)}
+                  placeholder="e.g. Sony FX3 Cinema Line"
+                  required
+                  className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white font-bold"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[10px] uppercase text-bone-muted mb-1">
+                  Category *
+                </label>
+                <select
+                  value={gearCategory}
+                  onChange={(e) => setGearCategory(e.target.value as any)}
+                  className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white"
+                >
+                  <option value="BODY">BODY</option>
+                  <option value="LENS">LENS</option>
+                  <option value="LIGHTING">LIGHTING</option>
+                  <option value="DRONE">DRONE</option>
+                  <option value="AUDIO">AUDIO</option>
+                  <option value="SUPPORT">SUPPORT</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-[10px] uppercase text-bone-muted mb-1">
+                  Notes / Serial / Lens Mount
+                </label>
+                <input
+                  type="text"
+                  value={gearNotes}
+                  onChange={(e) => setGearNotes(e.target.value)}
+                  placeholder="e.g. Primary 4K 120fps Cinema A-Cam"
+                  className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white"
+                />
+              </div>
+
+              <div className="flex justify-end gap-2 pt-2 border-t border-bone-border dark:border-obsidian-border">
+                <button
+                  type="button"
+                  onClick={() => setIsGearModalOpen(false)}
+                  className="px-3.5 py-1.5 border border-bone-border dark:border-obsidian-border text-xs uppercase"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-1.5 bg-carbon text-bone dark:bg-white dark:text-carbon font-bold text-xs uppercase hover:bg-vermillion dark:hover:bg-vermillion dark:hover:text-white transition-all"
+                >
+                  Add Gear Asset
                 </button>
               </div>
             </form>

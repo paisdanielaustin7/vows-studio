@@ -18,23 +18,57 @@ import {
   Shield,
   Download,
 } from 'lucide-react';
-import { ShootBooking, ShootType } from '@/types';
-import { generateCallSheetPDF } from '@/lib/pdfGenerator';
+import { ShootBooking, ShootType, StudioSettings } from '@/types';
+import { defaultStudioSettings, defaultGearInventory } from '@/lib/catalogDefaults';
+import { generateClientCallSheetPDF, generateCrewCallSheetPDF } from '@/lib/pdfGenerator';
 
 interface CalendarViewProps {
   shoots: ShootBooking[];
   selectedShoot: ShootBooking | null;
   onSelectShoot: (shoot: ShootBooking | null) => void;
+  onUpdateBooking?: (booking: ShootBooking) => void;
+  settings?: StudioSettings;
 }
 
 export const CalendarView: React.FC<CalendarViewProps> = ({
   shoots,
   selectedShoot,
   onSelectShoot,
+  onUpdateBooking,
+  settings,
 }) => {
+  const activeSettings = settings || defaultStudioSettings;
   const [currentYear, setCurrentYear] = useState(2026);
   const [currentMonthIndex, setCurrentMonthIndex] = useState(8); // 8 = September (0-indexed)
   const [activeFilter, setActiveFilter] = useState<string>('ALL');
+  const [gearChecklist, setGearChecklist] = useState<string[]>([]);
+  const [saveNotice, setSaveNotice] = useState<string | null>(null);
+
+  // Sync year and month whenever selectedShoot is opened or changed
+  React.useEffect(() => {
+    if (selectedShoot?.date) {
+      const parts = selectedShoot.date.split('-');
+      if (parts.length === 3) {
+        const y = parseInt(parts[0]);
+        const m = parseInt(parts[1]) - 1;
+        if (!isNaN(y)) setCurrentYear(y);
+        if (!isNaN(m) && m >= 0 && m <= 11) setCurrentMonthIndex(m);
+      }
+      setGearChecklist(selectedShoot.gearChecklist || []);
+      setSaveNotice(null);
+    }
+  }, [selectedShoot]);
+
+  // Global Escape key listener to close drawer (Point 18)
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onSelectShoot(null);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onSelectShoot]);
 
   const monthNames = [
     'January', 'February', 'March', 'April', 'May', 'June',
@@ -368,10 +402,10 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
                 </div>
                 <button
                   onClick={() => onSelectShoot(null)}
-                  className="p-1.5 rounded border border-bone-border dark:border-obsidian-border text-bone-muted hover:text-carbon dark:hover:text-white transition-colors"
+                  className="px-2.5 py-1 rounded border border-bone-border dark:border-obsidian-border text-bone-muted hover:text-carbon dark:hover:text-white transition-colors text-xs font-mono font-bold"
                   aria-label="Close Drawer"
                 >
-                  <X size={16} />
+                  ✕ [Esc]
                 </button>
               </div>
 
@@ -481,19 +515,75 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
 
                 {/* Equipment & Gear Allocated */}
                 <div className="space-y-3">
-                  <h3 className="text-xs font-mono uppercase tracking-[0.2em] font-bold text-carbon dark:text-white">
-                    Allocated Studio & Rental Gear
-                  </h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    {selectedShoot.gearAllocated.map((gear, i) => (
-                      <div
-                        key={i}
-                        className="p-2 bg-bone-surface dark:bg-obsidian-card border border-bone-border dark:border-obsidian-border text-[11px] font-mono text-carbon dark:text-white flex items-center gap-2"
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-xs font-mono uppercase tracking-[0.2em] font-bold text-carbon dark:text-white">
+                      Allocated Studio & Rental Gear
+                    </h3>
+                    <span className="text-[10px] font-mono text-bone-muted">
+                      {gearChecklist.length} Items Loaded
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-48 overflow-y-auto p-2 border border-bone-border dark:border-obsidian-border bg-bone-surface/40 dark:bg-obsidian-surface/40">
+                    {(activeSettings.gearInventory && activeSettings.gearInventory.length > 0
+                      ? activeSettings.gearInventory
+                      : defaultGearInventory
+                    ).map((item: any) => {
+                      const isChecked = gearChecklist.includes(item.id);
+                      return (
+                        <label
+                          key={item.id}
+                          className={`p-2 border flex items-center justify-between cursor-pointer transition-all text-[11px] font-mono ${
+                            isChecked
+                              ? 'bg-carbon/10 dark:bg-white/10 border-carbon dark:border-white font-bold text-carbon dark:text-white'
+                              : 'border-bone-border dark:border-obsidian-border text-bone-muted hover:border-carbon dark:hover:border-white'
+                          }`}
+                        >
+                          <div className="flex items-center gap-2">
+                            <input
+                              type="checkbox"
+                              checked={isChecked}
+                              onChange={(e) => {
+                                if (e.target.checked) {
+                                  setGearChecklist([...gearChecklist, item.id]);
+                                } else {
+                                  setGearChecklist(gearChecklist.filter((id) => id !== item.id));
+                                }
+                              }}
+                              className="accent-vermillion"
+                            />
+                            <span>{item.name}</span>
+                          </div>
+                          <span className="text-[9px] uppercase opacity-70">
+                            {item.category}
+                          </span>
+                        </label>
+                      );
+                    })}
+                  </div>
+
+                  <div className="flex justify-between items-center">
+                    {saveNotice ? (
+                      <span className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400">
+                        {saveNotice}
+                      </span>
+                    ) : <span />}
+                    {onUpdateBooking && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          onUpdateBooking({
+                            ...selectedShoot,
+                            gearChecklist,
+                          });
+                          setSaveNotice('Gear allocation updated!');
+                          setTimeout(() => setSaveNotice(null), 3000);
+                        }}
+                        className="px-3 py-1 bg-carbon text-bone dark:bg-white dark:text-carbon hover:bg-vermillion dark:hover:bg-vermillion dark:hover:text-white text-[10px] font-mono uppercase font-bold tracking-wider transition-all"
                       >
-                        <Camera size={12} className="text-bone-muted dark:text-obsidian-muted shrink-0" />
-                        <span className="truncate">{gear}</span>
-                      </div>
-                    ))}
+                        Save Gear Checklist
+                      </button>
+                    )}
                   </div>
                 </div>
 
@@ -521,20 +611,27 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
                 </div>
               </div>
 
-              {/* Drawer Footer Actions */}
-              <div className="p-4 border-t border-bone-border dark:border-obsidian-border bg-bone-card dark:bg-obsidian-surface sticky bottom-0 flex items-center gap-3">
+              {/* Drawer Footer Actions: Client Call Sheet vs Crew Call Sheet */}
+              <div className="p-4 border-t border-bone-border dark:border-obsidian-border bg-bone-card dark:bg-obsidian-surface sticky bottom-0 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                 <button
-                  onClick={() => generateCallSheetPDF(selectedShoot)}
-                  className="flex-1 py-2.5 text-xs font-mono uppercase tracking-widest bg-carbon text-bone dark:bg-white dark:text-carbon hover:bg-vermillion dark:hover:bg-vermillion dark:hover:text-white transition-all flex items-center justify-center gap-2"
+                  onClick={() => generateClientCallSheetPDF(selectedShoot, activeSettings)}
+                  className="flex-1 py-2.5 text-xs font-mono uppercase tracking-widest border border-carbon dark:border-white hover:bg-carbon hover:text-bone dark:hover:bg-white dark:hover:text-carbon transition-all flex items-center justify-center gap-2 font-bold"
                 >
-                  <Download size={14} />
-                  <span>Download Call Sheet PDF</span>
+                  <Download size={13} />
+                  <span>Client Call Sheet (PDF)</span>
+                </button>
+                <button
+                  onClick={() => generateCrewCallSheetPDF(selectedShoot, activeSettings)}
+                  className="flex-1 py-2.5 text-xs font-mono uppercase tracking-widest bg-vermillion text-white hover:bg-vermillion-glow transition-all flex items-center justify-center gap-2 font-bold"
+                >
+                  <Download size={13} />
+                  <span>Crew Call Sheet (PDF)</span>
                 </button>
                 <button
                   onClick={() => onSelectShoot(null)}
-                  className="px-4 py-2.5 text-xs font-mono uppercase tracking-widest border border-bone-border dark:border-obsidian-border hover:border-carbon dark:hover:border-white transition-colors"
+                  className="px-4 py-2.5 text-xs font-mono uppercase tracking-widest border border-bone-border dark:border-obsidian-border hover:border-carbon dark:hover:border-white transition-colors text-center"
                 >
-                  Close
+                  ✕ [Esc]
                 </button>
               </div>
             </motion.div>

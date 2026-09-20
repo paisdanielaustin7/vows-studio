@@ -26,10 +26,14 @@ export async function fetchUsersFromCloud(): Promise<UserAccount[] | null> {
       password: row.password,
       fullName: row.full_name,
       role: row.role,
-      canViewFinances: row.can_view_finances,
-      canAccessSettings: row.can_access_settings,
-      canEditQuotesAndOrders: row.can_edit_quotes_and_orders,
-      canEditLedger: row.can_edit_ledger,
+      canViewFinances: row.can_view_finances ?? true,
+      canAccessSettings: row.can_access_settings ?? false,
+      canEditQuotesAndOrders: row.can_edit_quotes_and_orders ?? false,
+      canEditLedger: row.can_edit_ledger ?? false,
+      canDeleteQuotes: row.can_delete_quotes ?? (row.role === 'ADMIN_ACCESS' || row.role === 'ADMIN_DIRECTOR'),
+      canSendEmails: row.can_send_emails ?? (row.role === 'ADMIN_ACCESS' || row.role === 'ADMIN_DIRECTOR'),
+      canViewCallSheets: row.can_view_call_sheets ?? true,
+      canExportPDFs: row.can_export_pdfs ?? true,
       isLocked: row.is_locked ?? false,
     }));
   } catch (err) {
@@ -65,6 +69,13 @@ export async function fetchSettingsFromCloud(): Promise<StudioSettings | null> {
       uiTheme: data.ui_theme || 'slate',
       packageRequirements: Array.isArray(data.package_requirements) && data.package_requirements.length > 0 ? data.package_requirements : undefined,
       packageDeliverables: Array.isArray(data.package_deliverables) && data.package_deliverables.length > 0 ? data.package_deliverables : undefined,
+      advancePaymentEnabled: data.advance_payment_enabled ?? true,
+      advancePaymentType: data.advance_payment_type || 'PERCENTAGE',
+      advancePaymentPercentage: Number(data.advance_payment_percentage ?? 50),
+      advancePaymentFixedAmount: Number(data.advance_payment_fixed_amount ?? 25000),
+      emailTemplate: data.email_template || undefined,
+      customLedgerCategories: Array.isArray(data.custom_ledger_categories) ? data.custom_ledger_categories : undefined,
+      gearInventory: Array.isArray(data.gear_inventory) ? data.gear_inventory : undefined,
     };
   } catch (err) {
     console.warn('[Supabase] Failed to fetch settings:', err);
@@ -251,29 +262,56 @@ export async function fetchInvoicesFromCloud(): Promise<Invoice[] | null> {
 // 2. SYNC / WRITE OPERATIONS
 // =========================================================================
 
-export async function syncUserToCloud(user: UserAccount): Promise<void> {
-  if (!supabase || !isSupabaseConfigured()) return;
+export async function syncUserToCloud(user: UserAccount): Promise<{ success: boolean; error?: string }> {
+  if (!supabase || !isSupabaseConfigured()) return { success: true };
   try {
-    const { error } = await supabase.from('lumina_users').upsert(
-      {
-        id: user.id,
-        username: user.username.trim().toLowerCase(),
-        password: user.password,
-        full_name: user.fullName,
-        role: user.role,
-        can_view_finances: user.canViewFinances,
-        can_access_settings: user.canAccessSettings,
-        can_edit_quotes_and_orders: user.canEditQuotesAndOrders,
-        can_edit_ledger: user.canEditLedger,
-        is_locked: user.isLocked ?? false,
-      },
-      { onConflict: 'username' }
-    );
-    if (error) {
-      console.error('[Supabase] syncUserToCloud error:', error);
+    const payload: any = {
+      id: user.id,
+      username: user.username.trim().toLowerCase(),
+      password: user.password,
+      full_name: user.fullName,
+      role: user.role,
+      can_view_finances: user.canViewFinances,
+      can_access_settings: user.canAccessSettings,
+      can_edit_quotes_and_orders: user.canEditQuotesAndOrders,
+      can_edit_ledger: user.canEditLedger,
+      can_delete_quotes: user.canDeleteQuotes ?? true,
+      can_send_emails: user.canSendEmails ?? true,
+      can_view_call_sheets: user.canViewCallSheets ?? true,
+      can_export_pdfs: user.canExportPDFs ?? true,
+      is_locked: user.isLocked ?? false,
+    };
+
+    // First attempt upsert with onConflict: id
+    let { error } = await supabase.from('lumina_users').upsert(payload, { onConflict: 'id' });
+    
+    // If conflict on username constraint, attempt upsert by username
+    if (error && (error.message?.includes('username') || error.code === '23505')) {
+      const retry = await supabase.from('lumina_users').upsert(payload, { onConflict: 'username' });
+      error = retry.error;
     }
-  } catch (e) {
-    console.error('[Supabase] syncUserToCloud error:', e);
+
+    // Gracefully handle schema differences if extra columns don't exist yet
+    if (error && error.message?.toLowerCase().includes('column')) {
+      const newerCols = ['can_delete_quotes', 'can_send_emails', 'can_view_call_sheets', 'can_export_pdfs'];
+      for (const col of newerCols) {
+        delete payload[col];
+      }
+      let retry = await supabase.from('lumina_users').upsert(payload, { onConflict: 'id' });
+      if (retry.error && (retry.error.message?.includes('username') || retry.error.code === '23505')) {
+        retry = await supabase.from('lumina_users').upsert(payload, { onConflict: 'username' });
+      }
+      error = retry.error;
+    }
+
+    if (error) {
+      console.error('[Supabase] syncUserToCloud error:', error.message);
+      return { success: false, error: error.message };
+    }
+    return { success: true };
+  } catch (e: any) {
+    console.error('[Supabase] syncUserToCloud exception:', e);
+    return { success: false, error: e?.message || 'Database error' };
   }
 }
 
@@ -306,13 +344,33 @@ export async function syncSettingsToCloud(settings: StudioSettings): Promise<voi
       ui_theme: settings.uiTheme || 'slate',
       package_requirements: settings.packageRequirements || [],
       package_deliverables: settings.packageDeliverables || [],
+      advance_payment_enabled: settings.advancePaymentEnabled,
+      advance_payment_type: settings.advancePaymentType,
+      advance_payment_percentage: settings.advancePaymentPercentage,
+      advance_payment_fixed_amount: settings.advancePaymentFixedAmount,
+      email_template: settings.emailTemplate,
+      custom_ledger_categories: settings.customLedgerCategories,
+      gear_inventory: settings.gearInventory,
       updated_at: new Date().toISOString(),
     };
 
     let { error } = await supabase.from('lumina_settings').upsert(payload);
     if (error) {
       console.warn('[Supabase] syncSettingsToCloud column warning:', error.message);
-      const newerColumns = ['crew_roster', 'ui_theme', 'package_requirements', 'package_deliverables', 'custom_palettes'];
+      const newerColumns = [
+        'advance_payment_enabled',
+        'advance_payment_type',
+        'advance_payment_percentage',
+        'advance_payment_fixed_amount',
+        'email_template',
+        'custom_ledger_categories',
+        'gear_inventory',
+        'crew_roster',
+        'ui_theme',
+        'package_requirements',
+        'package_deliverables',
+        'custom_palettes',
+      ];
       for (const col of newerColumns) {
         if (error?.message?.toLowerCase().includes(col)) {
           delete payload[col];
@@ -358,6 +416,15 @@ export async function syncQuotationToCloud(quote: Quotation): Promise<void> {
     });
   } catch (e) {
     console.error('[Supabase] syncQuotationToCloud error:', e);
+  }
+}
+
+export async function deleteQuotationFromCloud(quoteId: string): Promise<void> {
+  if (!supabase || !isSupabaseConfigured()) return;
+  try {
+    await supabase.from('lumina_quotations').delete().eq('id', quoteId);
+  } catch (e) {
+    console.warn('[Supabase] deleteQuotationFromCloud error:', e);
   }
 }
 

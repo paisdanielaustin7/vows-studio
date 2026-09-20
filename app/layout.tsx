@@ -3,8 +3,8 @@ import './globals.css';
 import { ThemeProvider } from '@/components/ThemeContext';
 
 export const metadata: Metadata = {
-  title: 'LUMINA // Avant-Garde Photography Studio OS',
-  description: 'Bespoke creative operating system & CRM for world-class editorial, fashion, and commercial photographers.',
+  title: 'VOWS Portal',
+  description: 'Wedding Cinematics & Stills // Bespoke Creative Operating System',
 };
 
 export const viewport: Viewport = {

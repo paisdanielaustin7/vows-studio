@@ -287,13 +287,15 @@ export const createQuotationPDFDoc = (
   y += 11;
 
   quote.crewAllocation.forEach((crew) => {
+    // Strip bracketed names for confidentiality (e.g. "Cinematographer (Gavin John)" -> "Cinematographer")
+    const cleanRole = crew.role.replace(/\s*\([^)]*\)/g, '').trim();
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(9.5);
     doc.setTextColor(palette.text[0], palette.text[1], palette.text[2]);
-    doc.text(crew.role, margin + 6, y + 4.5);
+    doc.text(cleanRole, margin + 6, y + 4.5);
 
     doc.setFont('helvetica', 'bold');
-    doc.text(`${crew.number}`, pageWidth - margin - 8, y + 4.5, { align: 'right' });
+    doc.text('1', pageWidth - margin - 8, y + 4.5, { align: 'right' });
 
     y += 9;
   });
@@ -341,7 +343,7 @@ export const generateQuotationPDF = (
   settings: StudioSettings = defaultStudioSettings
 ) => {
   const doc = createQuotationPDFDoc(quote, settings);
-  doc.save(`${quote.quotationNumber.replace(/\s+/g, '_')}_${quote.clientName.replace(/\s+/g, '_')}.pdf`);
+  doc.save(`Proposal for ${quote.clientName.trim()}.pdf`);
 };
 
 export const getQuotationPDFBlob = (
@@ -436,16 +438,15 @@ export const createInvoicePDFDoc = (
 
   y += 22;
 
-  // Line Items Table Header
+  // Line Items Table Header (Only Deliverables & Total, No Split Prices)
   doc.setFillColor(palette.strip[0], palette.strip[1], palette.strip[2]);
   doc.roundedRect(margin, y, contentWidth, 9, 1, 1, 'F');
 
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(9.5);
   doc.setTextColor(palette.text[0], palette.text[1], palette.text[2]);
-  doc.text('Description', margin + 6, y + 6.2);
-  doc.text('Qty', margin + 112, y + 6.2);
-  doc.text('Amount', pageWidth - margin - 8, y + 6.2, { align: 'right' });
+  doc.text('Deliverable & Scope of Production', margin + 6, y + 6.2);
+  doc.text('Status', pageWidth - margin - 8, y + 6.2, { align: 'right' });
 
   y += 11;
 
@@ -454,18 +455,20 @@ export const createInvoicePDFDoc = (
     doc.setFontSize(9);
     doc.setTextColor(palette.text[0], palette.text[1], palette.text[2]);
 
-    const lines = doc.splitTextToSize(item.description, 100);
+    const lines = doc.splitTextToSize(item.description, contentWidth - 55);
     doc.text(lines[0], margin + 6, y + 4.5);
-    doc.text(`${item.quantity}`, margin + 112, y + 4.5);
-    doc.setFont('helvetica', 'bold');
-    doc.text(formatINR(item.total), pageWidth - margin - 8, y + 4.5, { align: 'right' });
+
+    doc.setFont('helvetica', 'italic');
+    doc.setFontSize(8.5);
+    doc.setTextColor(palette.muted[0], palette.muted[1], palette.muted[2]);
+    doc.text('Included in Package', pageWidth - margin - 8, y + 4.5, { align: 'right' });
 
     y += 9;
   });
 
   y += 4;
 
-  // Totals
+  // Totals (Display Total Only)
   doc.setFillColor(palette.strip[0], palette.strip[1], palette.strip[2]);
   doc.roundedRect(margin, y, contentWidth, 9, 1, 1, 'F');
   doc.setFont('helvetica', 'bold');
@@ -513,7 +516,7 @@ export const createInvoicePDFDoc = (
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(9.5);
   doc.setTextColor(palette.text[0], palette.text[1], palette.text[2]);
-  doc.text(`${settings.contactPerson.toUpperCase()} // STUDIO PRINCIPAL`, margin, footerY);
+  doc.text(`${settings.contactPerson.toUpperCase()} // DIRECTOR`, margin, footerY);
   doc.text(settings.contactPhone, pageWidth - margin, footerY, { align: 'right' });
 
   return doc;
@@ -524,7 +527,7 @@ export const generateInvoicePDF = (
   settings: StudioSettings = defaultStudioSettings
 ) => {
   const doc = createInvoicePDFDoc(invoice, settings);
-  doc.save(`${invoice.invoiceNumber}.pdf`);
+  doc.save(`Invoice for ${invoice.clientName.trim()}.pdf`);
 };
 
 export const getInvoicePDFBlob = (
@@ -545,12 +548,12 @@ export const getInvoicePDFBase64 = (
 };
 
 /**
- * Call Sheet PDF export
+ * CLIENT CALL SHEET PDF (Financials, balance, and sensitive internal notes hidden)
  */
-export const generateCallSheetPDF = (
+export const createClientCallSheetPDFDoc = (
   shoot: ShootBooking,
   settings: StudioSettings = defaultStudioSettings
-) => {
+): jsPDF => {
   const doc = new jsPDF({
     orientation: 'portrait',
     unit: 'mm',
@@ -561,37 +564,191 @@ export const generateCallSheetPDF = (
   const pageHeight = doc.internal.pageSize.getHeight();
   const margin = 20;
   const contentWidth = pageWidth - margin * 2;
+  const palette = resolvePDFPalette(settings);
 
-  const palette = PDF_PALETTES[settings.pdfThemeColor || 'sage'] || PDF_PALETTES.sage;
+  doc.setFillColor(palette.bg[0], palette.bg[1], palette.bg[2]);
+  doc.rect(0, 0, pageWidth, pageHeight, 'F');
+
+  // Top Bar
+  doc.setFillColor(palette.strip[0], palette.strip[1], palette.strip[2]);
+  doc.roundedRect(margin, 20, contentWidth, 14, 1, 1, 'F');
+
+  doc.setTextColor(palette.text[0], palette.text[1], palette.text[2]);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(11);
+  doc.text('VOWS // PRODUCTION CALL SHEET', margin + 6, 28);
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(9);
+  doc.text(`COMMISSION: ${shoot.shootCode}`, pageWidth - margin - 6, 28, { align: 'right' });
+
+  let y = 44;
+
+  // Title
+  doc.setTextColor(palette.text[0], palette.text[1], palette.text[2]);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(16);
+  const titleLines = doc.splitTextToSize(shoot.title, contentWidth);
+  doc.text(titleLines, margin, y);
+  y += titleLines.length * 7 + 2;
+
+  // Client Details
+  doc.setFontSize(9.5);
+  doc.setFont('helvetica', 'bold');
+  doc.setTextColor(palette.accent[0], palette.accent[1], palette.accent[2]);
+  doc.text(`[ ${shoot.type.toUpperCase()} ]`, margin, y);
+  doc.setFont('helvetica', 'normal');
+  doc.setTextColor(palette.muted[0], palette.muted[1], palette.muted[2]);
+  doc.text(`Client: ${shoot.client.name}`, margin + 65, y);
+
+  y += 10;
+
+  // Logistics Box
+  doc.setFillColor(palette.strip[0], palette.strip[1], palette.strip[2]);
+  doc.roundedRect(margin, y, contentWidth, 22, 1, 1, 'F');
+
+  doc.setTextColor(palette.muted[0], palette.muted[1], palette.muted[2]);
+  doc.setFontSize(7.5);
+  doc.setFont('helvetica', 'bold');
+  doc.text('EVENT DATE & CALL TIME', margin + 6, y + 6);
+  doc.setTextColor(palette.text[0], palette.text[1], palette.text[2]);
+  doc.setFontSize(9.5);
+  doc.text(`${shoot.date} @ ${shoot.callTime}`, margin + 6, y + 12);
+  doc.setFontSize(8);
+  doc.setTextColor(palette.accent[0], palette.accent[1], palette.accent[2]);
+  doc.text(`Wrap Target: ${shoot.endTime}`, margin + 6, y + 17.5);
+
+  doc.setTextColor(palette.muted[0], palette.muted[1], palette.muted[2]);
+  doc.setFontSize(7.5);
+  doc.setFont('helvetica', 'bold');
+  doc.text('SET LOCATION', margin + contentWidth / 2, y + 6);
+  doc.setTextColor(palette.text[0], palette.text[1], palette.text[2]);
+  doc.setFontSize(9.5);
+  doc.text(shoot.location.name, margin + contentWidth / 2, y + 12);
+  doc.setFontSize(8);
+  doc.setTextColor(palette.muted[0], palette.muted[1], palette.muted[2]);
+  doc.text(shoot.location.city, margin + contentWidth / 2, y + 17.5);
+
+  y += 30;
+
+  // Timeline
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(10.5);
+  doc.setTextColor(palette.text[0], palette.text[1], palette.text[2]);
+  doc.text('EVENT SCHEDULE TIMELINE', margin, y);
+
+  y += 4;
+  doc.setFillColor(palette.strip[0], palette.strip[1], palette.strip[2]);
+  doc.roundedRect(margin, y, contentWidth, 7, 1, 1, 'F');
+  doc.setFontSize(8);
+  doc.text('TIME', margin + 4, y + 4.8);
+  doc.text('COVERAGE & EVENT ACTIVITY', margin + 30, y + 4.8);
+
+  y += 9;
+
+  shoot.scheduleTimeline.forEach((item) => {
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(8.5);
+    doc.setTextColor(palette.accent[0], palette.accent[1], palette.accent[2]);
+    doc.text(item.time, margin + 4, y + 4.5);
+
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(palette.text[0], palette.text[1], palette.text[2]);
+    const act = doc.splitTextToSize(item.activity, contentWidth - 40);
+    doc.text(act[0], margin + 30, y + 4.5);
+
+    y += 7.5;
+  });
+
+  y += 10;
+
+  // Client Set Guidelines & Notes
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(10);
+  doc.setTextColor(palette.text[0], palette.text[1], palette.text[2]);
+  doc.text('IMPORTANT EVENT GUIDELINES', margin, y);
+
+  y += 4;
+  const guidelines = [
+    'Please ensure couple portraiture sessions begin on schedule for optimal coastal light.',
+    'Hard drive for master RAW data collection should be handed to the lead crew coordinator.',
+    'Accommodation and travel arrangements should be verified as per booking agreement.',
+  ];
+
+  guidelines.forEach((g, idx) => {
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(8.5);
+    doc.setTextColor(palette.muted[0], palette.muted[1], palette.muted[2]);
+    doc.text(`${idx + 1}. ${g}`, margin + 2, y + 4);
+    y += 6.5;
+  });
+
+  // Footer
+  const footerY = pageHeight - 16;
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(9);
+  doc.setTextColor(palette.text[0], palette.text[1], palette.text[2]);
+  doc.text('VOWS // WEDDING CINEMATICS & STILLS', margin, footerY);
+  doc.text(`CONTACT: ${settings.contactPhone}`, pageWidth - margin, footerY, { align: 'right' });
+
+  return doc;
+};
+
+export const generateClientCallSheetPDF = (
+  shoot: ShootBooking,
+  settings: StudioSettings = defaultStudioSettings
+) => {
+  const doc = createClientCallSheetPDFDoc(shoot, settings);
+  doc.save(`Call Sheet for ${shoot.client.name.trim()}.pdf`);
+};
+
+/**
+ * CREW TECHNICAL CALL SHEET PDF (Full gear checklist, gate access, technical timeline)
+ */
+export const createCrewCallSheetPDFDoc = (
+  shoot: ShootBooking,
+  settings: StudioSettings = defaultStudioSettings
+): jsPDF => {
+  const doc = new jsPDF({
+    orientation: 'portrait',
+    unit: 'mm',
+    format: 'a4',
+  });
+
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const pageHeight = doc.internal.pageSize.getHeight();
+  const margin = 20;
+  const contentWidth = pageWidth - margin * 2;
+  const palette = resolvePDFPalette(settings);
 
   doc.setFillColor(palette.bg[0], palette.bg[1], palette.bg[2]);
   doc.rect(0, 0, pageWidth, pageHeight, 'F');
 
   // Top Bar
   doc.setFillColor(13, 13, 13);
-  doc.rect(margin, 20, contentWidth, 12, 'F');
+  doc.roundedRect(margin, 20, contentWidth, 14, 1, 1, 'F');
 
   doc.setTextColor(255, 255, 255);
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(10);
-  doc.text('LUMINA ATELIER // PRODUCTION CALL SHEET', margin + 4, 27.5);
+  doc.setFontSize(11);
+  doc.text('VOWS // TECHNICAL CREW CALL SHEET', margin + 6, 28);
 
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(9);
-  doc.text(`CODE: ${shoot.shootCode}`, pageWidth - margin - 4, 27.5, { align: 'right' });
+  doc.text(`CODE: ${shoot.shootCode}`, pageWidth - margin - 6, 28, { align: 'right' });
 
-  let y = 42;
+  let y = 44;
 
   // Title
   doc.setTextColor(13, 13, 13);
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(15);
-  const titleLines = doc.splitTextToSize(shoot.title.toUpperCase(), contentWidth);
+  doc.setFontSize(16);
+  const titleLines = doc.splitTextToSize(shoot.title, contentWidth);
   doc.text(titleLines, margin, y);
-  y += titleLines.length * 6.5 + 2;
+  y += titleLines.length * 7 + 2;
 
-  // Type
-  doc.setFontSize(9);
+  // Type & Location
+  doc.setFontSize(9.5);
   doc.setFont('helvetica', 'bold');
   doc.setTextColor(palette.accent[0], palette.accent[1], palette.accent[2]);
   doc.text(`[ ${shoot.type.toUpperCase()} ]`, margin, y);
@@ -601,105 +758,137 @@ export const generateCallSheetPDF = (
 
   y += 10;
 
-  // Logistics Box
+  // Logistics Box with Gate Access
   doc.setFillColor(palette.strip[0], palette.strip[1], palette.strip[2]);
   doc.roundedRect(margin, y, contentWidth, 22, 1, 1, 'F');
 
   doc.setTextColor(70, 80, 75);
   doc.setFontSize(7.5);
   doc.setFont('helvetica', 'bold');
-  doc.text('PRODUCTION DATE & CALL TIME', margin + 4, y + 6);
+  doc.text('CALL TIME & WRAP TARGET', margin + 6, y + 6);
   doc.setTextColor(13, 13, 13);
-  doc.setFontSize(9);
-  doc.text(`${shoot.date} @ ${shoot.callTime}`, margin + 4, y + 12);
+  doc.setFontSize(9.5);
+  doc.text(`${shoot.date} @ ${shoot.callTime}`, margin + 6, y + 12);
   doc.setFontSize(8);
   doc.setTextColor(palette.accent[0], palette.accent[1], palette.accent[2]);
-  doc.text(`Wrap Target: ${shoot.endTime}`, margin + 4, y + 17.5);
+  doc.text(`Wrap Target: ${shoot.endTime}`, margin + 6, y + 17.5);
 
   doc.setTextColor(70, 80, 75);
   doc.setFontSize(7.5);
   doc.setFont('helvetica', 'bold');
-  doc.text('SET LOCATION & ACCESS', margin + contentWidth / 2, y + 6);
+  doc.text('LOCATION & ACCESS CODE', margin + contentWidth / 2, y + 6);
   doc.setTextColor(13, 13, 13);
-  doc.setFontSize(9);
+  doc.setFontSize(9.5);
   doc.text(shoot.location.name, margin + contentWidth / 2, y + 12);
   doc.setFontSize(8);
   doc.setTextColor(70, 70, 70);
-  doc.text(`${shoot.location.city} (${shoot.location.coordinates})`, margin + contentWidth / 2, y + 17.5);
+  doc.text(`${shoot.location.city} // Code: ${shoot.location.accessCode || 'Open Set'}`, margin + contentWidth / 2, y + 17.5);
 
   y += 30;
 
-  // Timeline
+  // Technical Timeline
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(9.5);
+  doc.setFontSize(10.5);
   doc.setTextColor(15, 23, 20);
-  doc.text('PRODUCTION SCHEDULE TIMELINE', margin, y);
+  doc.text('PRODUCTION SCHEDULE & CREW LEADS', margin, y);
 
-  y += 3;
+  y += 4;
   doc.setFillColor(palette.strip[0], palette.strip[1], palette.strip[2]);
-  doc.roundedRect(margin, y, contentWidth, 6, 1, 1, 'F');
-  doc.setFontSize(7.5);
-  doc.text('TIME', margin + 3, y + 4.2);
-  doc.text('ACTIVITY / SPECIFICATION', margin + 25, y + 4.2);
-  doc.text('LEAD', margin + 125, y + 4.2);
+  doc.roundedRect(margin, y, contentWidth, 7, 1, 1, 'F');
+  doc.setFontSize(8);
+  doc.text('TIME', margin + 4, y + 4.8);
+  doc.text('ACTIVITY / SETUP SPECIFICATION', margin + 30, y + 4.8);
+  doc.text('COORDINATOR', margin + 125, y + 4.8);
 
-  y += 7;
+  y += 9;
 
   shoot.scheduleTimeline.forEach((item) => {
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(8);
+    doc.setFontSize(8.5);
     doc.setTextColor(palette.accent[0], palette.accent[1], palette.accent[2]);
-    doc.text(item.time, margin + 3, y + 4);
+    doc.text(item.time, margin + 4, y + 4.5);
 
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(13, 13, 13);
-    const act = doc.splitTextToSize(item.activity, 95);
-    doc.text(act[0], margin + 25, y + 4);
+    const act = doc.splitTextToSize(item.activity, 92);
+    doc.text(act[0], margin + 30, y + 4.5);
 
     doc.setTextColor(90, 90, 90);
-    doc.text(item.lead, margin + 125, y + 4);
+    doc.text(item.lead, margin + 125, y + 4.5);
 
-    y += 6.5;
+    y += 7.5;
+  });
+
+  y += 8;
+
+  // Allocated Gear Checklist
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(10);
+  doc.setTextColor(15, 23, 20);
+  doc.text(`ALLOCATED STUDIO & RENTAL GEAR (${shoot.gearAllocated.length} ITEMS)`, margin, y);
+
+  y += 4;
+  shoot.gearAllocated.forEach((gear, idx) => {
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(8.5);
+    doc.setTextColor(30, 40, 35);
+    doc.text(`[✓]  ${gear}`, margin + 4, y + 4);
+    y += 6;
   });
 
   y += 6;
 
-  // Crew Members
+  // Crew Dispatch
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(9.5);
+  doc.setFontSize(10);
   doc.setTextColor(15, 23, 20);
   doc.text(`CONFIRMED CREW DISPATCH (${shoot.productionTeam.length})`, margin, y);
 
-  y += 3;
+  y += 4;
   const colWidth = contentWidth / 2;
   shoot.productionTeam.forEach((member, i) => {
     const col = i % 2;
     const row = Math.floor(i / 2);
     const itemX = margin + col * colWidth;
-    const itemY = y + row * 8;
+    const itemY = y + row * 9;
 
     doc.setFillColor(255, 255, 255);
-    doc.roundedRect(itemX, itemY, colWidth - 2, 7, 1, 1, 'F');
+    doc.roundedRect(itemX, itemY, colWidth - 2, 7.5, 1, 1, 'F');
     doc.setDrawColor(220, 220, 218);
-    doc.roundedRect(itemX, itemY, colWidth - 2, 7, 1, 1, 'S');
+    doc.roundedRect(itemX, itemY, colWidth - 2, 7.5, 1, 1, 'S');
 
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(8);
     doc.setTextColor(13, 13, 13);
-    doc.text(`${member.initials} - ${member.name}`, itemX + 3, itemY + 4.8);
+    doc.text(member.name, itemX + 4, itemY + 5);
 
     doc.setFont('helvetica', 'normal');
-    doc.setFontSize(7);
+    doc.setFontSize(7.5);
     doc.setTextColor(100, 100, 100);
-    doc.text(member.role, itemX + 45, itemY + 4.8);
+    doc.text(member.role, itemX + 45, itemY + 5);
   });
 
   // Footer
-  const footerY = pageHeight - 12;
-  doc.setFontSize(7);
+  const footerY = pageHeight - 14;
+  doc.setFontSize(7.5);
   doc.setTextColor(120, 120, 120);
-  doc.text('VOWS STUDIO // PHOTOGRAPHY & CINEMA // BY REUBEN', margin, footerY);
-  doc.text('VERIFIED DIGITAL DISPATCH', pageWidth - margin, footerY, { align: 'right' });
+  doc.text('VOWS // TECHNICAL DIGITAL DISPATCH', margin, footerY);
+  doc.text(`CONFIDENTIAL PRODUCTION DOSSIER`, pageWidth - margin, footerY, { align: 'right' });
 
-  doc.save(`CallSheet-${shoot.shootCode}.pdf`);
+  return doc;
+};
+
+export const generateCrewCallSheetPDF = (
+  shoot: ShootBooking,
+  settings: StudioSettings = defaultStudioSettings
+) => {
+  const doc = createCrewCallSheetPDFDoc(shoot, settings);
+  doc.save(`Crew Call Sheet - ${shoot.shootCode.trim()}.pdf`);
+};
+
+export const generateCallSheetPDF = (
+  shoot: ShootBooking,
+  settings: StudioSettings = defaultStudioSettings
+) => {
+  generateCrewCallSheetPDF(shoot, settings);
 };

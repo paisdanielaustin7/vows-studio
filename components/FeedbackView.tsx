@@ -1,86 +1,60 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
   Star,
   MessageSquareQuote,
   Copy,
   Check,
-  Share2,
-  ExternalLink,
-  Plus,
   Send,
-  Heart,
-  Camera,
-  Film,
-  Clock,
   Sparkles,
-  Download,
-  Filter,
   Search,
 } from 'lucide-react';
-import { FeedbackSubmission, Client, ShootBooking, UserAccount } from '@/types';
+import { FeedbackSubmission, Enquiry, ShootBooking, UserAccount } from '@/types';
 import { supabase, isSupabaseConfigured } from '@/lib/supabaseClient';
 
 interface FeedbackViewProps {
-  clients: Client[];
-  bookings: ShootBooking[];
+  enquiries?: Enquiry[];
+  bookings?: ShootBooking[];
   currentUser: UserAccount;
 }
 
-const defaultFeedbackList: FeedbackSubmission[] = [
-  {
-    id: 'fb-01',
-    clientId: 'cli-01',
-    clientName: 'Alveera D’Souza & Jason Pinto',
-    shootId: 'sht-sep-01',
-    eventDate: '2026-09-12',
-    eventType: 'Wedding Cinemastory & Stills',
-    rating: 5,
-    serviceRatings: {
-      photography: 5,
-      cinematography: 5,
-      deliveryPunctuality: 5,
-    },
-    review:
-      'Reuben and Dan captured our coastal wedding with unbelievable emotion and style. The sunset frames by Tannirbhavi feel like a European editorial film. Every family member was blown away by their calm demeanor and prompt delivery!',
-    highlights: 'Sunset wave slow-motion 4K cinema and the intimate church portraits.',
-    allowSocialSharing: true,
-    createdAt: '2026-09-14T10:30:00Z',
-  },
-  {
-    id: 'fb-02',
-    clientId: 'cli-02',
-    clientName: 'Kavya Bhandary & Nithin Rai',
-    eventDate: '2026-08-28',
-    eventType: 'Royal Coastal Wedding',
-    rating: 5,
-    serviceRatings: {
-      photography: 5,
-      cinematography: 5,
-      deliveryPunctuality: 5,
-    },
-    review:
-      'Choosing VOWS Studio was the best decision of our wedding! Reuben has a rare eye for true candid moments without feeling staged. Highly recommended for couples who want authentic, artistic memories.',
-    highlights: 'Candid laughter during the banquet and aerial drone entry shots.',
-    allowSocialSharing: true,
-    createdAt: '2026-09-02T15:45:00Z',
-  },
-];
-
 export const FeedbackView: React.FC<FeedbackViewProps> = ({
-  clients,
-  bookings,
+  enquiries = [],
+  bookings = [],
   currentUser,
 }) => {
   const [feedbackList, setFeedbackList] = useState<FeedbackSubmission[]>([]);
-  const [selectedClientForLink, setSelectedClientForLink] = useState<Client>(clients[0]);
+  const [selectedEnquiryId, setSelectedEnquiryId] = useState<string>(
+    enquiries.length > 0 ? enquiries[0].id : ''
+  );
+
+  useEffect(() => {
+    if (!selectedEnquiryId && enquiries.length > 0) {
+      setSelectedEnquiryId(enquiries[0].id);
+    }
+  }, [enquiries, selectedEnquiryId]);
+
+  const selectedEnquiry =
+    enquiries.find((e) => e.id === selectedEnquiryId) || enquiries[0];
+
   const [copiedLink, setCopiedLink] = useState(false);
   const [copiedMessage, setCopiedMessage] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [starFilter, setStarFilter] = useState<number | 'ALL'>('ALL');
   const [activeDeckModal, setActiveDeckModal] = useState<FeedbackSubmission | null>(null);
+
+  // Keyboard shortcut: Escape dismisses modal
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setActiveDeckModal(null);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   // Load feedback from Supabase Realtime & LocalStorage
   useEffect(() => {
@@ -161,27 +135,29 @@ export const FeedbackView: React.FC<FeedbackViewProps> = ({
     }
   }, []);
 
-  const getFeedbackUrl = (client: Client) => {
+  const getFeedbackUrl = (enq?: Enquiry) => {
+    const id = enq?.id || 'client';
     if (typeof window !== 'undefined') {
-      return `${window.location.origin}/feedback/${client.id}`;
+      return `${window.location.origin}/feedback/${id}`;
     }
-    return `https://vowsstudio.com/feedback/${client.id}`;
+    return `https://vowsstudio.com/feedback/${id}`;
   };
 
-  const getWhatsAppMessage = (client: Client) => {
-    const url = getFeedbackUrl(client);
-    return `Hi ${client.name}! Thank you for trusting VOWS Studio with your special day. Reuben and the crew would love to hear your thoughts and memories. Please take a moment to share your review: ${url}`;
+  const getWhatsAppMessage = (enq?: Enquiry) => {
+    const url = getFeedbackUrl(enq);
+    const clientName = enq?.clientName || 'there';
+    return `Hi ${clientName}! Thank you for trusting VOWS with your special day. Reuben and the crew would love to hear your thoughts and memories. Please take a moment to share your review: ${url}`;
   };
 
   const handleCopyLink = () => {
-    const url = getFeedbackUrl(selectedClientForLink);
+    const url = getFeedbackUrl(selectedEnquiry);
     navigator.clipboard.writeText(url);
     setCopiedLink(true);
     setTimeout(() => setCopiedLink(false), 2000);
   };
 
   const handleCopyWhatsApp = () => {
-    const text = getWhatsAppMessage(selectedClientForLink);
+    const text = getWhatsAppMessage(selectedEnquiry);
     navigator.clipboard.writeText(text);
     setCopiedMessage(true);
     setTimeout(() => setCopiedMessage(false), 2000);
@@ -256,21 +232,22 @@ export const FeedbackView: React.FC<FeedbackViewProps> = ({
           {/* Select Client */}
           <div className="md:col-span-5 space-y-1">
             <label className="text-[10px] uppercase text-bone-muted dark:text-obsidian-muted block font-bold">
-              Select Client / Couple:
+              Select Client:
             </label>
             <select
-              value={selectedClientForLink.id}
-              onChange={(e) => {
-                const found = clients.find((c) => c.id === e.target.value);
-                if (found) setSelectedClientForLink(found);
-              }}
+              value={selectedEnquiry?.id || ''}
+              onChange={(e) => setSelectedEnquiryId(e.target.value)}
               className="w-full p-2.5 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white outline-none"
             >
-              {clients.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.name} ({c.city})
-                </option>
-              ))}
+              {enquiries.length === 0 ? (
+                <option value="">No clients registered</option>
+              ) : (
+                enquiries.map((enq) => (
+                  <option key={enq.id} value={enq.id}>
+                    {enq.clientName} ({enq.city || 'Mangalore'})
+                  </option>
+                ))
+              )}
             </select>
           </div>
 
@@ -283,14 +260,14 @@ export const FeedbackView: React.FC<FeedbackViewProps> = ({
               <input
                 type="text"
                 readOnly
-                value={getFeedbackUrl(selectedClientForLink)}
+                value={getFeedbackUrl(selectedEnquiry)}
                 className="w-full p-2.5 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white outline-none truncate font-mono text-[11px]"
               />
             </div>
 
             <button
               onClick={handleCopyLink}
-              className="px-3.5 py-2.5 border border-carbon dark:border-white bg-carbon text-bone dark:bg-white dark:text-carbon font-bold uppercase tracking-wider flex items-center gap-1.5 shrink-0 hover:bg-vermillion dark:hover:bg-vermillion dark:hover:text-white transition-all"
+              className="px-3.5 py-2.5 border border-carbon dark:border-white bg-carbon text-bone dark:bg-white dark:text-carbon font-bold uppercase tracking-wider flex items-center gap-1.5 shrink-0 hover:bg-vermillion dark:hover:bg-vermillion dark:hover:text-white transition-all shadow-xs"
               title="Copy URL only"
             >
               {copiedLink ? <Check size={14} className="text-green-400" /> : <Copy size={14} />}
@@ -440,10 +417,11 @@ export const FeedbackView: React.FC<FeedbackViewProps> = ({
                 Social Media & Deck Card Generator
               </span>
               <button
+                type="button"
                 onClick={() => setActiveDeckModal(null)}
-                className="text-xs font-mono text-[#8a9e93] hover:text-white"
+                className="px-2 py-1 text-xs font-mono border border-zinc-700 text-[#8a9e93] hover:text-white hover:border-white transition-colors"
               >
-                [CLOSE]
+                ✕ [Esc]
               </button>
             </div>
 
@@ -473,15 +451,16 @@ export const FeedbackView: React.FC<FeedbackViewProps> = ({
                   {activeDeckModal.clientName}
                 </h3>
                 <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#8a9e93]">
-                  VOWS Studio // by Reuben
+                  VOWS // by Reuben
                 </p>
               </div>
             </div>
 
             <div className="flex gap-3 text-xs font-mono">
               <button
+                type="button"
                 onClick={() => {
-                  const quoteCardText = `"${activeDeckModal.review}"\n\n— ${activeDeckModal.clientName}\nVOWS Studio // @vowsbyreuben`;
+                  const quoteCardText = `"${activeDeckModal.review}"\n\n— ${activeDeckModal.clientName}\nVOWS // @vowsbyreuben`;
                   navigator.clipboard.writeText(quoteCardText);
                   alert('Quote text formatted for Instagram Story / Deck copied to clipboard!');
                 }}

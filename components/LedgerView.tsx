@@ -15,18 +15,38 @@ import {
   KeyRound,
   Trash2,
   Edit3,
+  CreditCard,
+  User,
 } from 'lucide-react';
-import { LedgerEntry, LedgerCategory, LedgerStatus, UserAccount } from '@/types';
+import {
+  LedgerEntry,
+  LedgerCategory,
+  LedgerStatus,
+  UserAccount,
+  Enquiry,
+  StudioSettings,
+} from '@/types';
+import {
+  formatCurrencyINR,
+  maskClientName,
+  maskAmount,
+} from '@/lib/formatters';
 
 interface LedgerViewProps {
   initialLedger: LedgerEntry[];
+  enquiries?: Enquiry[];
+  settings?: StudioSettings;
   currentUser?: UserAccount;
   onOpenLoginModal?: () => void;
   onUpdateLedger?: (entries: LedgerEntry[]) => void;
 }
 
+const PAYMENT_METHODS = ['UPI', 'Cash', 'Bank Transfer', 'Cheque', 'Other'] as const;
+
 export const LedgerView: React.FC<LedgerViewProps> = ({
   initialLedger,
+  enquiries = [],
+  settings,
   currentUser,
   onOpenLoginModal,
   onUpdateLedger,
@@ -47,29 +67,61 @@ export const LedgerView: React.FC<LedgerViewProps> = ({
   const [editDesc, setEditDesc] = useState('');
   const [editAmount, setEditAmount] = useState('');
   const [editCounterparty, setEditCounterparty] = useState('');
-  const [editType, setEditType] = useState<'INCOME' | 'EXPENSE'>('EXPENSE');
-  const [editCategory, setEditCategory] = useState<LedgerCategory>('GEAR_RENTAL');
+  const [editType, setEditType] = useState<'INCOME' | 'EXPENSE'>('INCOME');
+  const [editCategory, setEditCategory] = useState<string>('CLIENT_RECEIVABLE');
   const [editStatus, setEditStatus] = useState<LedgerStatus>('CLEARED');
   const [editDate, setEditDate] = useState('');
+  const [editPaymentMethod, setEditPaymentMethod] = useState<string>('UPI');
 
   // Permission check: Admin or user explicitly granted canEditLedger
   const canEditLedger =
-    currentUser?.role === 'ADMIN_DIRECTOR' || !!currentUser?.canEditLedger;
+    currentUser?.role === 'ADMIN_ACCESS' ||
+    currentUser?.role === 'ADMIN_DIRECTOR' ||
+    !!currentUser?.canEditLedger;
 
-  // New entry form state
+  const isDemo = currentUser?.role === 'PRODUCT_DEMO';
+
+  // New entry form state - Default to Client Receivable (INCOME)
   const [newDesc, setNewDesc] = useState('');
   const [newAmount, setNewAmount] = useState('');
   const [newCounterparty, setNewCounterparty] = useState('');
-  const [newType, setNewType] = useState<'INCOME' | 'EXPENSE'>('EXPENSE');
-  const [newCategory, setNewCategory] = useState<LedgerCategory>('GEAR_RENTAL');
+  const [newType, setNewType] = useState<'INCOME' | 'EXPENSE'>('INCOME');
+  const [newCategory, setNewCategory] = useState<string>('CLIENT_RECEIVABLE');
+  const [newPaymentMethod, setNewPaymentMethod] = useState<string>('UPI');
+  const [selectedEnquiryId, setSelectedEnquiryId] = useState<string>('');
 
-  const formatCurrency = (val: number) => {
-    return new Intl.NumberFormat('en-IN', {
-      style: 'currency',
-      currency: 'INR',
-      maximumFractionDigits: 0,
-    }).format(val);
-  };
+  // Keyboard shortcut: Escape dismisses modals
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setShowAddModal(false);
+        setEditingEntry(null);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  // Built-in categories + custom studio ledger categories
+  const builtInCategories: { value: string; label: string }[] = [
+    { value: 'CLIENT_RECEIVABLE', label: 'Client Receivable' },
+    { value: 'PRODUCTION_EXPENSE', label: 'Production Expense' },
+    { value: 'GEAR_RENTAL', label: 'Gear Rental' },
+    { value: 'TALENT_PAYOUT', label: 'Talent Payout' },
+    { value: 'LOCATION_PERMIT', label: 'Location Permit' },
+    { value: 'STUDIO_OVERHEAD', label: 'Studio Overhead' },
+    { value: 'POST_COLOR_GRADE', label: 'Post / Color Grade' },
+  ];
+
+  const customCategories = (settings?.customLedgerCategories || []).map((cat) => ({
+    value: cat,
+    label: cat,
+  }));
+
+  const allCategories = [
+    ...builtInCategories,
+    ...customCategories.filter((c) => !builtInCategories.some((b) => b.value === c.value)),
+  ];
 
   const filteredEntries = entries.filter((e) => {
     if (typeFilter !== 'ALL' && e.type !== typeFilter) return false;
@@ -79,7 +131,8 @@ export const LedgerView: React.FC<LedgerViewProps> = ({
       return (
         e.description.toLowerCase().includes(q) ||
         e.counterparty.toLowerCase().includes(q) ||
-        e.transactionRef.toLowerCase().includes(q)
+        e.transactionRef.toLowerCase().includes(q) ||
+        (e.paymentMethod && e.paymentMethod.toLowerCase().includes(q))
       );
     }
     return true;
@@ -95,21 +148,39 @@ export const LedgerView: React.FC<LedgerViewProps> = ({
 
   const netBalance = totalIncome - totalExpense;
 
+  const handleEnquirySelect = (enqId: string) => {
+    setSelectedEnquiryId(enqId);
+    if (!enqId) return;
+    const found = enquiries.find((e) => e.id === enqId);
+    if (found) {
+      setNewCounterparty(found.clientName);
+      if (!newDesc) {
+        setNewDesc(`Retainer / Shoot Advance — ${found.clientName}`);
+      }
+      setNewType('INCOME');
+      setNewCategory('CLIENT_RECEIVABLE');
+    }
+  };
+
   const handleAddEntry = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newDesc || !newAmount || !newCounterparty) return;
 
+    const matchedEnquiry = enquiries.find((enq) => enq.id === selectedEnquiryId);
     const newRef = `${newType === 'INCOME' ? 'REC' : 'EXP'}-2026-${Math.floor(100 + Math.random() * 900)}`;
+
     const created: LedgerEntry = {
       id: `led-${Date.now()}`,
       transactionRef: newRef,
       date: new Date().toISOString().split('T')[0],
       description: newDesc,
-      category: newCategory,
+      category: newCategory as LedgerCategory,
       type: newType,
       amount: parseFloat(newAmount),
       counterparty: newCounterparty,
+      relatedShootCode: matchedEnquiry?.shootCode || matchedEnquiry?.enquiryNumber,
       status: 'CLEARED',
+      paymentMethod: newPaymentMethod,
     };
 
     const updated = [created, ...entries];
@@ -118,6 +189,10 @@ export const LedgerView: React.FC<LedgerViewProps> = ({
     setNewDesc('');
     setNewAmount('');
     setNewCounterparty('');
+    setSelectedEnquiryId('');
+    setNewType('INCOME');
+    setNewCategory('CLIENT_RECEIVABLE');
+    setNewPaymentMethod('UPI');
     setShowAddModal(false);
   };
 
@@ -131,6 +206,7 @@ export const LedgerView: React.FC<LedgerViewProps> = ({
     setEditCategory(entry.category);
     setEditStatus(entry.status);
     setEditDate(entry.date);
+    setEditPaymentMethod(entry.paymentMethod || 'UPI');
   };
 
   const handleSaveEdit = (e: React.FormEvent) => {
@@ -145,9 +221,10 @@ export const LedgerView: React.FC<LedgerViewProps> = ({
             amount: parseFloat(editAmount),
             counterparty: editCounterparty,
             type: editType,
-            category: editCategory,
+            category: editCategory as LedgerCategory,
             status: editStatus,
             date: editDate,
+            paymentMethod: editPaymentMethod,
           }
         : item
     );
@@ -173,11 +250,12 @@ export const LedgerView: React.FC<LedgerViewProps> = ({
           <div className="flex items-center gap-3 text-vermillion">
             <Lock size={28} />
             <h2 className="text-2xl font-serif font-black uppercase tracking-tight">
-              Access Restricted // Dual General Ledger
+              Access Restricted // Studio Ledger
             </h2>
           </div>
           <p className="text-xs font-mono text-bone-muted dark:text-obsidian-muted leading-relaxed">
-            Financial ledger entries, cashflow vaults, and retainer balances are hidden for account <code className="text-carbon dark:text-white font-bold">@{currentUser.username}</code> ({currentUser.fullName}) as per selective studio access policies.
+            Financial ledger entries, cashflow vaults, and retainer balances are hidden for account{' '}
+            <code className="text-carbon dark:text-white font-bold">@{currentUser.username}</code> ({currentUser.fullName}) as per selective studio access policies.
           </p>
           {onOpenLoginModal && (
             <div className="pt-4">
@@ -216,7 +294,7 @@ export const LedgerView: React.FC<LedgerViewProps> = ({
           {canEditLedger && (
             <button
               onClick={() => setShowAddModal(true)}
-              className="px-3 sm:px-4 py-2 sm:py-2.5 text-[11px] sm:text-xs font-mono uppercase tracking-widest bg-carbon text-bone dark:bg-white dark:text-carbon hover:bg-vermillion dark:hover:bg-vermillion dark:hover:text-white transition-all flex items-center gap-1.5 sm:gap-2 font-bold"
+              className="px-3 sm:px-4 py-2 sm:py-2.5 text-[11px] sm:text-xs font-mono uppercase tracking-widest bg-carbon text-bone dark:bg-white dark:text-carbon hover:bg-vermillion dark:hover:bg-vermillion dark:hover:text-white transition-all flex items-center gap-1.5 sm:gap-2 font-bold shadow-sm"
             >
               <Plus size={14} />
               <span>Record Transaction</span>
@@ -232,7 +310,7 @@ export const LedgerView: React.FC<LedgerViewProps> = ({
             Total Receivables Cleared
           </span>
           <span className="text-xl sm:text-2xl lg:text-3xl font-serif font-bold text-green-600 dark:text-green-400 mt-1 block">
-            +{formatCurrency(totalIncome)}
+            {isDemo ? 'Rs. ••••••/-' : `+${formatCurrencyINR(totalIncome)}`}
           </span>
         </div>
 
@@ -241,7 +319,7 @@ export const LedgerView: React.FC<LedgerViewProps> = ({
             Total Production & Gear Expenses
           </span>
           <span className="text-xl sm:text-2xl lg:text-3xl font-serif font-bold text-rose-600 dark:text-rose-400 mt-1 block">
-            -{formatCurrency(totalExpense)}
+            {isDemo ? 'Rs. ••••••/-' : `-${formatCurrencyINR(totalExpense)}`}
           </span>
         </div>
 
@@ -250,7 +328,7 @@ export const LedgerView: React.FC<LedgerViewProps> = ({
             Net Studio Operating Margin
           </span>
           <span className="text-xl sm:text-2xl lg:text-3xl font-serif font-bold text-emerald-600 dark:text-emerald-400 mt-1 block">
-            {formatCurrency(netBalance)}
+            {isDemo ? 'Rs. ••••••/-' : formatCurrencyINR(netBalance)}
           </span>
         </div>
       </div>
@@ -269,6 +347,20 @@ export const LedgerView: React.FC<LedgerViewProps> = ({
         </div>
 
         <div className="flex flex-wrap items-center gap-2 w-full md:w-auto justify-end">
+          {/* Category Filter */}
+          <select
+            value={categoryFilter}
+            onChange={(e) => setCategoryFilter(e.target.value)}
+            className="px-2.5 py-1 text-[10px] uppercase font-mono bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white outline-none"
+          >
+            <option value="ALL">All Categories</option>
+            {allCategories.map((c) => (
+              <option key={c.value} value={c.value}>
+                {c.label}
+              </option>
+            ))}
+          </select>
+
           {/* Type Filter */}
           <div className="flex items-center border border-bone-border dark:border-obsidian-border text-[10px]">
             <button
@@ -296,13 +388,14 @@ export const LedgerView: React.FC<LedgerViewProps> = ({
       {/* Ledger Table */}
       <div className="border border-bone-border dark:border-obsidian-border bg-bone-card dark:bg-obsidian-card overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse min-w-[620px]">
+          <table className="w-full text-left border-collapse min-w-[680px]">
             <thead>
               <tr className="border-b border-bone-border dark:border-obsidian-border bg-bone-surface/70 dark:bg-obsidian-surface/80 text-[10px] font-mono uppercase tracking-widest text-bone-muted dark:text-obsidian-muted">
                 <th className="py-3 px-4">Transaction Ref</th>
                 <th className="py-3 px-4">Date</th>
                 <th className="py-3 px-4">Description & Counterparty</th>
                 <th className="py-3 px-4">Category</th>
+                <th className="py-3 px-4">Method</th>
                 <th className="py-3 px-4 text-right">Amount (INR / ₹)</th>
                 <th className="py-3 px-4 text-center">Status</th>
                 {canEditLedger && <th className="py-3 px-4 text-right">Actions</th>}
@@ -324,17 +417,22 @@ export const LedgerView: React.FC<LedgerViewProps> = ({
                         {entry.description}
                       </div>
                       <div className="text-[10px] text-bone-muted dark:text-obsidian-muted mt-0.5">
-                        {entry.counterparty}
+                        {maskClientName(entry.counterparty, isDemo)}
                         {entry.relatedShootCode && ` // ${entry.relatedShootCode}`}
                       </div>
                     </td>
                     <td className="py-3.5 px-4 uppercase text-[10px] text-bone-muted dark:text-obsidian-muted whitespace-nowrap">
                       {entry.category.replace(/_/g, ' ')}
                     </td>
+                    <td className="py-3.5 px-4 whitespace-nowrap">
+                      <span className="text-[9px] px-2 py-0.5 uppercase tracking-wider font-mono font-bold bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white">
+                        {entry.paymentMethod || 'UPI'}
+                      </span>
+                    </td>
                     <td className="py-3.5 px-4 text-right font-bold whitespace-nowrap">
                       <span className={`inline-flex items-center gap-1 ${isIncome ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}`}>
                         {isIncome ? <ArrowDownLeft size={13} /> : <ArrowUpRight size={13} className="text-rose-500" />}
-                        {isIncome ? '+' : '-'}{formatCurrency(entry.amount)}
+                        {isDemo ? 'Rs. ••••••/-' : `${isIncome ? '+' : '-'}${formatCurrencyINR(entry.amount)}`}
                       </span>
                     </td>
                     <td className="py-3.5 px-4 text-center whitespace-nowrap">
@@ -372,7 +470,7 @@ export const LedgerView: React.FC<LedgerViewProps> = ({
               {filteredEntries.length === 0 && (
                 <tr>
                   <td
-                    colSpan={canEditLedger ? 7 : 6}
+                    colSpan={canEditLedger ? 8 : 7}
                     className="py-8 text-center text-xs font-mono text-bone-muted dark:text-obsidian-muted"
                   >
                     No ledger transactions found. Click "Record Transaction" to add an entry.
@@ -390,101 +488,181 @@ export const LedgerView: React.FC<LedgerViewProps> = ({
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-bone-card dark:bg-obsidian-card border-2 border-carbon dark:border-white p-4 sm:p-6 max-w-md w-full shadow-2xl max-h-[90vh] overflow-y-auto"
+            className="bg-bone-card dark:bg-obsidian-card border-2 border-carbon dark:border-white p-4 sm:p-6 max-w-lg w-full shadow-2xl max-h-[90vh] overflow-y-auto"
           >
             <div className="flex items-center justify-between pb-4 border-b border-bone-border dark:border-obsidian-border mb-4">
-              <h2 className="font-serif text-xl font-bold uppercase text-carbon dark:text-white">
-                Record Ledger Entry
-              </h2>
+              <div>
+                <span className="text-[10px] font-mono text-vermillion uppercase font-bold block">
+                  Studio Accounting // Audit Trail
+                </span>
+                <h2 className="font-serif text-xl font-bold uppercase text-carbon dark:text-white">
+                  Record Ledger Entry
+                </h2>
+              </div>
               <button
+                type="button"
                 onClick={() => setShowAddModal(false)}
-                className="text-bone-muted hover:text-carbon dark:hover:text-white text-xs font-mono"
+                className="px-2.5 py-1 text-xs font-mono border border-bone-border dark:border-obsidian-border hover:border-carbon dark:hover:border-white text-carbon dark:text-white transition-colors"
               >
-                [ESC]
+                ✕ [Esc]
               </button>
             </div>
 
             <form onSubmit={handleAddEntry} className="space-y-4 text-xs font-mono">
+              {/* Type Switcher */}
               <div>
-                <label className="block text-[10px] uppercase text-bone-muted dark:text-obsidian-muted mb-1">
-                  Transaction Type
+                <label className="block text-[10px] uppercase text-bone-muted dark:text-obsidian-muted mb-1 font-bold">
+                  Transaction Classification
                 </label>
                 <div className="grid grid-cols-2 gap-2">
                   <button
                     type="button"
-                    onClick={() => setNewType('INCOME')}
-                    className={`py-2 text-center uppercase border ${newType === 'INCOME' ? 'bg-carbon text-bone dark:bg-white dark:text-carbon font-bold' : 'border-bone-border dark:border-obsidian-border text-bone-muted'}`}
+                    onClick={() => {
+                      setNewType('INCOME');
+                      setNewCategory('CLIENT_RECEIVABLE');
+                    }}
+                    className={`py-2 text-center uppercase font-bold border transition-colors ${
+                      newType === 'INCOME'
+                        ? 'bg-emerald-600 text-white border-emerald-600'
+                        : 'border-bone-border dark:border-obsidian-border text-bone-muted hover:border-carbon'
+                    }`}
                   >
                     Client Receivable (+)
                   </button>
                   <button
                     type="button"
-                    onClick={() => setNewType('EXPENSE')}
-                    className={`py-2 text-center uppercase border ${newType === 'EXPENSE' ? 'bg-carbon text-bone dark:bg-white dark:text-carbon font-bold' : 'border-bone-border dark:border-obsidian-border text-bone-muted'}`}
+                    onClick={() => {
+                      setNewType('EXPENSE');
+                      setNewCategory('GEAR_RENTAL');
+                    }}
+                    className={`py-2 text-center uppercase font-bold border transition-colors ${
+                      newType === 'EXPENSE'
+                        ? 'bg-rose-600 text-white border-rose-600'
+                        : 'border-bone-border dark:border-obsidian-border text-bone-muted hover:border-carbon'
+                    }`}
                   >
                     Production Cost (-)
                   </button>
                 </div>
               </div>
 
+              {/* Quick Select Client / Enquiry */}
+              {enquiries.length > 0 && (
+                <div className="p-3 bg-bone-surface/60 dark:bg-obsidian-surface/60 border border-bone-border dark:border-obsidian-border">
+                  <label className="block text-[10px] uppercase text-vermillion font-bold mb-1">
+                    Quick-Select Enquiry / Shoot (Optional)
+                  </label>
+                  <select
+                    value={selectedEnquiryId}
+                    onChange={(e) => handleEnquirySelect(e.target.value)}
+                    className="w-full p-2 bg-bone-card dark:bg-obsidian-card border border-bone-border dark:border-obsidian-border text-carbon dark:text-white outline-none text-xs font-mono"
+                  >
+                    <option value="">-- Choose registered enquiry to auto-fill --</option>
+                    {enquiries.map((enq) => (
+                      <option key={enq.id} value={enq.id}>
+                        {enq.clientName} [{enq.shootCode || enq.enquiryNumber}] — {enq.eventDate || 'Date TBD'} ({enq.eventType})
+                      </option>
+                    ))}
+                  </select>
+                  <span className="text-[9px] text-bone-muted dark:text-obsidian-muted block mt-1">
+                    Selecting an enquiry populates counterparty and references automatically.
+                  </span>
+                </div>
+              )}
+
+              {/* Description */}
               <div>
-                <label className="block text-[10px] uppercase text-bone-muted dark:text-obsidian-muted mb-1">
+                <label className="block text-[10px] uppercase text-bone-muted dark:text-obsidian-muted mb-1 font-bold">
                   Description
                 </label>
                 <input
                   type="text"
                   required
-                  placeholder="e.g. Phase One Digital Back Rental"
+                  placeholder="e.g. Wedding Cinematics Retainer — Sarah & David"
                   value={newDesc}
                   onChange={(e) => setNewDesc(e.target.value)}
                   className="w-full p-2.5 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white outline-none"
                 />
               </div>
 
+              {/* Counterparty */}
               <div>
-                <label className="block text-[10px] uppercase text-bone-muted dark:text-obsidian-muted mb-1">
+                <label className="block text-[10px] uppercase text-bone-muted dark:text-obsidian-muted mb-1 font-bold">
                   Counterparty (Client / Vendor)
                 </label>
                 <input
                   type="text"
                   required
-                  placeholder="e.g. Kudla Cine Gear Hire"
+                  placeholder="e.g. Sarah D'Souza or Kudla Cine Gear Hire"
                   value={newCounterparty}
                   onChange={(e) => setNewCounterparty(e.target.value)}
                   className="w-full p-2.5 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white outline-none"
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              {/* Amount & Category */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[10px] uppercase text-bone-muted dark:text-obsidian-muted mb-1">
+                  <label className="block text-[10px] uppercase text-bone-muted dark:text-obsidian-muted mb-1 font-bold">
                     Amount (INR / ₹)
                   </label>
                   <input
                     type="number"
                     step="1"
                     required
-                    placeholder="35000"
+                    placeholder="8000"
                     value={newAmount}
                     onChange={(e) => setNewAmount(e.target.value)}
-                    className="w-full p-2.5 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white outline-none"
+                    className="w-full p-2.5 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white outline-none font-bold"
                   />
+                  {newAmount && (
+                    <span className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 block mt-1">
+                      Preview: {formatCurrencyINR(newAmount)}
+                    </span>
+                  )}
                 </div>
+
                 <div>
-                  <label className="block text-[10px] uppercase text-bone-muted dark:text-obsidian-muted mb-1">
-                    Category
+                  <label className="block text-[10px] uppercase text-bone-muted dark:text-obsidian-muted mb-1 font-bold">
+                    Ledger Category
                   </label>
                   <select
                     value={newCategory}
-                    onChange={(e) => setNewCategory(e.target.value as LedgerCategory)}
+                    onChange={(e) => setNewCategory(e.target.value)}
                     className="w-full p-2.5 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white outline-none"
                   >
-                    <option value="CLIENT_RECEIVABLE">Client Receivable</option>
-                    <option value="GEAR_RENTAL">Gear Rental</option>
-                    <option value="TALENT_PAYOUT">Talent Payout</option>
-                    <option value="LOCATION_PERMIT">Location Permit</option>
-                    <option value="STUDIO_OVERHEAD">Studio Overhead</option>
+                    {allCategories.map((c) => (
+                      <option key={c.value} value={c.value}>
+                        {c.label}
+                      </option>
+                    ))}
                   </select>
+                </div>
+              </div>
+
+              {/* Payment Method Pills */}
+              <div>
+                <label className="block text-[10px] uppercase text-bone-muted dark:text-obsidian-muted mb-1.5 font-bold">
+                  Payment Method
+                </label>
+                <div className="flex flex-wrap gap-1.5">
+                  {PAYMENT_METHODS.map((method) => {
+                    const isSelected = newPaymentMethod === method;
+                    return (
+                      <button
+                        key={method}
+                        type="button"
+                        onClick={() => setNewPaymentMethod(method)}
+                        className={`px-3 py-1.5 text-[10px] font-mono uppercase tracking-wider border transition-all ${
+                          isSelected
+                            ? 'bg-carbon text-bone dark:bg-white dark:text-carbon font-bold border-carbon dark:border-white shadow-sm'
+                            : 'border-bone-border dark:border-obsidian-border text-bone-muted dark:text-obsidian-muted hover:border-carbon dark:hover:border-white'
+                        }`}
+                      >
+                        {method}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -514,7 +692,7 @@ export const LedgerView: React.FC<LedgerViewProps> = ({
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-bone-card dark:bg-obsidian-card border-2 border-carbon dark:border-white p-4 sm:p-6 max-w-md w-full shadow-2xl max-h-[90vh] overflow-y-auto"
+            className="bg-bone-card dark:bg-obsidian-card border-2 border-carbon dark:border-white p-4 sm:p-6 max-w-lg w-full shadow-2xl max-h-[90vh] overflow-y-auto"
           >
             <div className="flex items-center justify-between pb-4 border-b border-bone-border dark:border-obsidian-border mb-4">
               <div>
@@ -526,30 +704,39 @@ export const LedgerView: React.FC<LedgerViewProps> = ({
                 </h2>
               </div>
               <button
+                type="button"
                 onClick={() => setEditingEntry(null)}
-                className="text-bone-muted hover:text-carbon dark:hover:text-white text-xs font-mono"
+                className="px-2.5 py-1 text-xs font-mono border border-bone-border dark:border-obsidian-border hover:border-carbon dark:hover:border-white text-carbon dark:text-white transition-colors"
               >
-                [ESC]
+                ✕ [Esc]
               </button>
             </div>
 
             <form onSubmit={handleSaveEdit} className="space-y-4 text-xs font-mono">
               <div>
-                <label className="block text-[10px] uppercase text-bone-muted dark:text-obsidian-muted mb-1">
-                  Transaction Type
+                <label className="block text-[10px] uppercase text-bone-muted dark:text-obsidian-muted mb-1 font-bold">
+                  Transaction Classification
                 </label>
                 <div className="grid grid-cols-2 gap-2">
                   <button
                     type="button"
                     onClick={() => setEditType('INCOME')}
-                    className={`py-2 text-center uppercase border ${editType === 'INCOME' ? 'bg-carbon text-bone dark:bg-white dark:text-carbon font-bold' : 'border-bone-border dark:border-obsidian-border text-bone-muted'}`}
+                    className={`py-2 text-center uppercase font-bold border transition-colors ${
+                      editType === 'INCOME'
+                        ? 'bg-emerald-600 text-white border-emerald-600'
+                        : 'border-bone-border dark:border-obsidian-border text-bone-muted'
+                    }`}
                   >
                     Client Receivable (+)
                   </button>
                   <button
                     type="button"
                     onClick={() => setEditType('EXPENSE')}
-                    className={`py-2 text-center uppercase border ${editType === 'EXPENSE' ? 'bg-carbon text-bone dark:bg-white dark:text-carbon font-bold' : 'border-bone-border dark:border-obsidian-border text-bone-muted'}`}
+                    className={`py-2 text-center uppercase font-bold border transition-colors ${
+                      editType === 'EXPENSE'
+                        ? 'bg-rose-600 text-white border-rose-600'
+                        : 'border-bone-border dark:border-obsidian-border text-bone-muted'
+                    }`}
                   >
                     Production Cost (-)
                   </button>
@@ -557,7 +744,7 @@ export const LedgerView: React.FC<LedgerViewProps> = ({
               </div>
 
               <div>
-                <label className="block text-[10px] uppercase text-bone-muted dark:text-obsidian-muted mb-1">
+                <label className="block text-[10px] uppercase text-bone-muted dark:text-obsidian-muted mb-1 font-bold">
                   Description
                 </label>
                 <input
@@ -570,7 +757,7 @@ export const LedgerView: React.FC<LedgerViewProps> = ({
               </div>
 
               <div>
-                <label className="block text-[10px] uppercase text-bone-muted dark:text-obsidian-muted mb-1">
+                <label className="block text-[10px] uppercase text-bone-muted dark:text-obsidian-muted mb-1 font-bold">
                   Counterparty (Client / Vendor)
                 </label>
                 <input
@@ -582,9 +769,9 @@ export const LedgerView: React.FC<LedgerViewProps> = ({
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[10px] uppercase text-bone-muted dark:text-obsidian-muted mb-1">
+                  <label className="block text-[10px] uppercase text-bone-muted dark:text-obsidian-muted mb-1 font-bold">
                     Amount (INR / ₹)
                   </label>
                   <input
@@ -593,30 +780,61 @@ export const LedgerView: React.FC<LedgerViewProps> = ({
                     required
                     value={editAmount}
                     onChange={(e) => setEditAmount(e.target.value)}
-                    className="w-full p-2.5 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white outline-none"
+                    className="w-full p-2.5 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white outline-none font-bold"
                   />
+                  {editAmount && (
+                    <span className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 block mt-1">
+                      Preview: {formatCurrencyINR(editAmount)}
+                    </span>
+                  )}
                 </div>
                 <div>
-                  <label className="block text-[10px] uppercase text-bone-muted dark:text-obsidian-muted mb-1">
+                  <label className="block text-[10px] uppercase text-bone-muted dark:text-obsidian-muted mb-1 font-bold">
                     Category
                   </label>
                   <select
                     value={editCategory}
-                    onChange={(e) => setEditCategory(e.target.value as LedgerCategory)}
+                    onChange={(e) => setEditCategory(e.target.value)}
                     className="w-full p-2.5 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white outline-none"
                   >
-                    <option value="CLIENT_RECEIVABLE">Client Receivable</option>
-                    <option value="GEAR_RENTAL">Gear Rental</option>
-                    <option value="TALENT_PAYOUT">Talent Payout</option>
-                    <option value="LOCATION_PERMIT">Location Permit</option>
-                    <option value="STUDIO_OVERHEAD">Studio Overhead</option>
+                    {allCategories.map((c) => (
+                      <option key={c.value} value={c.value}>
+                        {c.label}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              {/* Payment Method Pills */}
+              <div>
+                <label className="block text-[10px] uppercase text-bone-muted dark:text-obsidian-muted mb-1.5 font-bold">
+                  Payment Method
+                </label>
+                <div className="flex flex-wrap gap-1.5">
+                  {PAYMENT_METHODS.map((method) => {
+                    const isSelected = editPaymentMethod === method;
+                    return (
+                      <button
+                        key={method}
+                        type="button"
+                        onClick={() => setEditPaymentMethod(method)}
+                        className={`px-3 py-1.5 text-[10px] font-mono uppercase tracking-wider border transition-all ${
+                          isSelected
+                            ? 'bg-carbon text-bone dark:bg-white dark:text-carbon font-bold border-carbon dark:border-white shadow-sm'
+                            : 'border-bone-border dark:border-obsidian-border text-bone-muted dark:text-obsidian-muted hover:border-carbon dark:hover:border-white'
+                        }`}
+                      >
+                        {method}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[10px] uppercase text-bone-muted dark:text-obsidian-muted mb-1">
+                  <label className="block text-[10px] uppercase text-bone-muted dark:text-obsidian-muted mb-1 font-bold">
                     Date
                   </label>
                   <input
@@ -628,7 +846,7 @@ export const LedgerView: React.FC<LedgerViewProps> = ({
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] uppercase text-bone-muted dark:text-obsidian-muted mb-1">
+                  <label className="block text-[10px] uppercase text-bone-muted dark:text-obsidian-muted mb-1 font-bold">
                     Status
                   </label>
                   <select

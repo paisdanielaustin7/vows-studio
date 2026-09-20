@@ -244,9 +244,8 @@ END $$;
 -- 1. Seed Crew Accounts
 INSERT INTO public.lumina_users (id, username, password, full_name, role, can_view_finances, can_access_settings, can_edit_quotes_and_orders, can_edit_ledger, is_locked)
 VALUES 
-  ('usr-reuben', 'reuben', 'reuben2026', 'Reuben Serrao (Director & Lead)', 'ADMIN_DIRECTOR', true, true, true, true, false),
-  ('usr-dan', 'dan', 'danvows2026', 'Dan (System Designer & Handler)', 'ADMIN_DIRECTOR', true, true, true, true, false),
-  ('usr-root', 'root', 'vowsroot2026', 'Root', 'ADMIN_DIRECTOR', true, true, true, true, false)
+  ('usr-reuben', 'reuben', 'vowsreuben2026', 'Reuben Serrao (Director)', 'ADMIN_ACCESS', true, true, true, true, false),
+  ('usr-root', 'root', 'vowsroot2026', 'System Admin', 'ADMIN_ACCESS', true, true, true, true, false)
 ON CONFLICT (id) DO UPDATE 
 SET 
   username = EXCLUDED.username,
@@ -263,18 +262,18 @@ INSERT INTO public.lumina_settings (
   id, studio_name, tagline, city, has_gst, gstin, banking_details, contact_person, contact_phone, terms_and_conditions, pdf_theme_color, custom_palettes, crew_roster, ui_theme
 ) VALUES (
   'studio_settings',
-  'VOWS Studio',
-  'Photography & Cinema // by Reuben',
+  'VOWS',
+  'Wedding Cinematics & Stills',
   'Mangalore, Karnataka',
   false,
   '',
-  '{"accountName": "REUBEN SERRAO", "bankName": "HDFC Bank Ltd", "branch": "Kadri Branch, Mangalore", "accountNumber": "50100428910245", "ifscCode": "HDFC0000180", "upiId": "reuben.vows@okaxis"}'::jsonb,
+  '{"accountName": "VOWS // REUBEN SERRAO", "bankName": "HDFC Bank Ltd", "branch": "Hampankatta Branch, Mangalore", "accountNumber": "50200084920194", "ifscCode": "HDFC0000084", "upiId": "vowsbyreuben@okaxis"}'::jsonb,
   'REUBEN SERRAO',
-  '+91 97412 88401',
+  '+91 93800 57445',
   '["A 50% advance is required to confirm the booking. Dates are secured only after payment.", "Remaining balance must be cleared on or before the event date.", "Advance is non-refundable. Date changes are subject to studio calendar availability.", "Final photos/videos will be delivered within 2-6 weeks following post-processing.", "Travel and accommodation need to be provided for outstation locations if requested.", "Accommodation is not included in the quotation and has to be provided by the client.", "We reserve the right to display selected frames for portfolio, editorial, and social presence (VOWS by Reuben).", "In case of unforeseen force majeure, studio liability is limited to the advance fee received.", "Delays from client side schedule may impact coverage. The studio is not responsible for shortened event timelines.", "Additional album sheets or parent albums will be billed separately upon proofing approval.", "Photo selection for master album is curated collaboratively with the couple.", "Client must provide a high-speed hard drive for collection of master RAW footage; archive kept for 6 months."]'::jsonb,
   'sage',
   '[]'::jsonb,
-  '[{"id": "crw-01", "role": "Lead Candid Photographer & Director", "defaultCount": 1, "defaultName": "Reuben Serrao", "phone": "+91 97412 88401"}, {"id": "crw-02", "role": "System Designer & Production Handler", "defaultCount": 1, "defaultName": "Dan", "phone": "+91 93800 57445"}, {"id": "crw-03", "role": "Cinematographer (4K Motion)", "defaultCount": 1, "defaultName": "Second Shooter Unit", "phone": "+91 98450 11234"}, {"id": "crw-04", "role": "Drone Aerial Cinematographer", "defaultCount": 1, "defaultName": "Aerial Cinema Unit", "phone": "+91 96110 33912"}, {"id": "crw-05", "role": "Lighting & Production Assistant", "defaultCount": 1, "defaultName": "Production Assist", "phone": "+91 98440 77123"}]'::jsonb,
+  '[{"id": "crw-01", "role": "Lead Cinematographer & Director", "defaultCount": 1, "defaultName": "Reuben Serrao", "phone": "+91 93800 57445"}, {"id": "crw-02", "role": "Candid Photographer", "defaultCount": 1, "defaultName": "Lead Photographer", "phone": "+91 93800 57445"}, {"id": "crw-03", "role": "Cinematographer", "defaultCount": 1, "defaultName": "Second Shooter Unit", "phone": "+91 98450 11234"}, {"id": "crw-04", "role": "Drone Pilot", "defaultCount": 1, "defaultName": "Aerial Cinema Unit", "phone": "+91 96110 33912"}, {"id": "crw-05", "role": "Grip & Lighting Assistant", "defaultCount": 1, "defaultName": "Production Assist", "phone": "+91 98440 77123"}]'::jsonb,
   'slate'
 ) ON CONFLICT (id) DO UPDATE 
 SET 

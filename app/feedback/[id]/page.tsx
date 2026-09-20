@@ -78,10 +78,10 @@ export default function ClientFeedbackPage() {
             V
           </div>
           <h1 className="font-serif text-2xl sm:text-3xl font-black uppercase tracking-[0.25em] text-white">
-            VOWS Studio
+            VOWS
           </h1>
           <p className="text-[11px] font-mono text-[#8a9e93] uppercase tracking-[0.2em] mt-1">
-            Photography & Cinema // by Reuben
+            Wedding Cinematics & Stills // by Reuben
           </p>
         </div>
 
@@ -94,17 +94,17 @@ export default function ClientFeedbackPage() {
               Thank You So Much!
             </h2>
             <p className="text-xs font-mono text-[#a3b8ad] leading-relaxed max-w-md mx-auto">
-              Your valuable words mean the world to Reuben and the entire VOWS Studio crew. It was a true honor documenting your special memories.
+              Your valuable words mean the world to Reuben and the entire VOWS crew. It was a true honor documenting your special memories.
             </p>
             <div className="pt-4 border-t border-[#273730] flex flex-col sm:flex-row items-center justify-center gap-3 text-xs font-mono">
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/vowsbyreuben?stkn=c21nb3JlbG1xYTFp&utm_source=qr"
                 target="_blank"
                 rel="noreferrer"
-                className="px-4 py-2 bg-white text-black uppercase font-bold tracking-wider hover:bg-[#eb3829] hover:text-white transition-all flex items-center gap-1.5"
+                className="px-5 py-3 bg-white text-black uppercase font-bold tracking-wider hover:bg-[#eb3829] hover:text-white transition-all flex items-center gap-2 shadow-lg"
               >
-                <span>Follow @vowsbyreuben</span>
-                <ArrowRight size={13} />
+                <span>Visit Instagram @vowsbyreuben</span>
+                <ArrowRight size={14} />
               </a>
             </div>
           </div>
@@ -279,7 +279,7 @@ export default function ClientFeedbackPage() {
                   className="mt-0.5 accent-[#eb3829]"
                 />
                 <span>
-                  I give permission to share this review and photos on VOWS Studio social media (@vowsbyreuben) and official studio portfolio deck.
+                  I give permission to share this review and photos on VOWS social media (@vowsbyreuben) and official portfolio deck.
                 </span>
               </label>
 
@@ -305,7 +305,7 @@ export default function ClientFeedbackPage() {
 
       {/* Footer */}
       <div className="text-center text-[10px] font-mono text-[#587567] mt-8">
-        VOWS Studio // Reuben Serrao // Coastal Karnataka
+        VOWS // Reuben Serrao // Coastal Karnataka
       </div>
     </div>
   );

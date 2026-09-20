@@ -45,13 +45,16 @@ import {
   StudioSettings,
   UserAccount,
 } from '@/types';
-import { defaultCatalog, CatalogTemplate } from '@/lib/catalogDefaults';
+import { defaultCatalog, CatalogTemplate, defaultGearInventory } from '@/lib/catalogDefaults';
 import {
   generateQuotationPDF,
   getQuotationPDFBase64,
   getQuotationPDFBlob,
   resolvePDFPalette,
+  generateClientCallSheetPDF,
+  generateCrewCallSheetPDF,
 } from '@/lib/pdfGenerator';
+import { formatCurrencyINR, maskClientName, maskPhone, maskEmail, maskAmount } from '@/lib/formatters';
 
 interface QuotationViewProps {
   quotations: Quotation[];
@@ -62,7 +65,10 @@ interface QuotationViewProps {
   currentUser: UserAccount;
   onAddQuotation: (quote: Quotation) => void;
   onUpdateQuotation: (quote: Quotation) => void;
+  onDeleteQuotation?: (quoteId: string) => void;
   onAddEnquiry: (enquiry: Enquiry) => void;
+  onUpdateEnquiry?: (enquiry: Enquiry) => void;
+  onUpdateBooking?: (booking: ShootBooking) => void;
   onConvertQuotationToBooking: (quote: Quotation) => void;
   onRecordPayment: (payment: {
     reference: string;
@@ -91,13 +97,17 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
   currentUser,
   onAddQuotation,
   onUpdateQuotation,
+  onDeleteQuotation,
   onAddEnquiry,
+  onUpdateEnquiry,
+  onUpdateBooking,
   onConvertQuotationToBooking,
   onRecordPayment,
   onUpdateBookingDelivery,
 }) => {
-  const [activeTab, setActiveTab] = useState<'quotations' | 'enquiries' | 'orders' | 'catalog'>(
-    'quotations'
+  const isDemo = currentUser.role === 'PRODUCT_DEMO';
+  const [activeTab, setActiveTab] = useState<'enquiries' | 'quotations' | 'orders'>(
+    'enquiries'
   );
   const [selectedQuote, setSelectedQuote] = useState<Quotation | null>(quotations[0] || null);
 
@@ -124,10 +134,28 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
   const [enqPhone, setEnqPhone] = useState('');
   const [enqEmail, setEnqEmail] = useState('');
   const [enqCity, setEnqCity] = useState('Mangalore');
-  const [enqDate, setEnqDate] = useState('2026-11-20');
-  const [enqType, setEnqType] = useState('Catholic Nuptials & Reception');
+  const [enqDate, setEnqDate] = useState(new Date().toISOString().split('T')[0]);
+  const [enqType, setEnqType] = useState(''); // Empty default as per instruction
   const [enqBudget, setEnqBudget] = useState('38000');
   const [enqNotes, setEnqNotes] = useState('');
+
+  // Edit Enquiry Modal State
+  const [showEditEnquiryModal, setShowEditEnquiryModal] = useState(false);
+  const [editingEnquiry, setEditingEnquiry] = useState<Enquiry | null>(null);
+  const [editEnqClientName, setEditEnqClientName] = useState('');
+  const [editEnqPhone, setEditEnqPhone] = useState('');
+  const [editEnqEmail, setEditEnqEmail] = useState('');
+  const [editEnqCity, setEditEnqCity] = useState('Mangalore');
+  const [editEnqDate, setEditEnqDate] = useState('');
+  const [editEnqType, setEditEnqType] = useState('');
+  const [editEnqBudget, setEditEnqBudget] = useState('38000');
+  const [editEnqNotes, setEditEnqNotes] = useState('');
+
+  // Call Sheet Modal State (For Orders & Deliverables)
+  const [showCallSheetModal, setShowCallSheetModal] = useState(false);
+  const [callSheetBooking, setCallSheetBooking] = useState<ShootBooking | null>(null);
+  const [allocatedGears, setAllocatedGears] = useState<string[]>([]);
+  const [callSheetSaveNotice, setCallSheetSaveNotice] = useState<string | null>(null);
 
   // Create / Edit Quotation Modal State
   const [showQuoteModal, setShowQuoteModal] = useState(false);
@@ -135,7 +163,8 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
   const [editQuoteId, setEditQuoteId] = useState<string | null>(null);
 
   const [qNumber, setQNumber] = useState(`Q NO. 0${quotations.length + 7}`);
-  const [qDate, setQDate] = useState('6 August , 2026');
+  const todayFormattedDate = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+  const [qDate, setQDate] = useState(todayFormattedDate);
   const [qClientName, setQClientName] = useState('');
   const [qClientCity, setQClientCity] = useState('Mangalore');
   const [qClientPhone, setQClientPhone] = useState('');
@@ -150,7 +179,7 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
   // Email Modal State
   const [showEmailModal, setShowEmailModal] = useState(false);
   const [emailRecipient, setEmailRecipient] = useState('');
-  const [emailSubject, setEmailSubject] = useState('');
+  const [emailSubject, setEmailSubject] = useState('Proposal & Quotation — VOWS');
   const [emailCustomMessage, setEmailCustomMessage] = useState('');
   const [isSendingEmail, setIsSendingEmail] = useState(false);
   const [emailStatusMsg, setEmailStatusMsg] = useState<string | null>(null);
@@ -164,12 +193,16 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
     if (settings.crewRoster && settings.crewRoster.length > 0) {
       return settings.crewRoster.map((c) => ({
         id: c.id,
-        role: c.role,
-        number: c.defaultCount,
-        assignedTo: c.defaultName,
+        role: c.role.replace(/\s*\([^)]*\)/g, '').trim(),
+        number: 1, // 1 person per crew item
+        assignedTo: undefined, // confidential
       }));
     }
-    return catalog.standardCrew;
+    return catalog.standardCrew.map((c) => ({
+      ...c,
+      role: c.role.replace(/\s*\([^)]*\)/g, '').trim(),
+      number: 1,
+    }));
   };
 
   const [qCrew, setQCrew] = useState<CrewRequirement[]>(getCrewFromSettings);
@@ -179,30 +212,30 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
   // Manual Payment Entry Modal State
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [paymentAmount, setPaymentAmount] = useState('19000');
-  const [paymentMethod, setPaymentMethod] = useState('UPI / GPay');
+  const [paymentMethod, setPaymentMethod] = useState('UPI');
   const [paymentNotes, setPaymentNotes] = useState('50% Advance booking confirmation');
   const [paymentTargetQuote, setPaymentTargetQuote] = useState<Quotation | null>(null);
 
-  // Global Escape Key listener to immediately close Edit/Create Quote popup
+  // Global Escape Key listener to immediately close any open modal (Point 18)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        if (showQuoteModal) {
-          setShowQuoteModal(false);
-        } else if (showEnquiryModal) {
-          setShowEnquiryModal(false);
-        } else if (showPaymentModal) {
-          setShowPaymentModal(false);
-        }
+        setShowQuoteModal(false);
+        setShowEnquiryModal(false);
+        setShowEditEnquiryModal(false);
+        setShowPaymentModal(false);
+        setShowEmailModal(false);
+        setShowCallSheetModal(false);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [showQuoteModal, showEnquiryModal, showPaymentModal]);
+  }, []);
 
-  const formatINR = (val: number) => {
-    if (!currentUser.canViewFinances) return 'Rs *** /-';
-    return 'Rs ' + new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 }).format(val) + ' /-';
+  const formatINR = (val: number | string | undefined | null) => {
+    if (!currentUser.canViewFinances) return 'Rs. ••••••/-';
+    if (isDemo) return maskAmount(val, true);
+    return formatCurrencyINR(val);
   };
 
   const handleCreateEnquiry = (e: React.FormEvent) => {
@@ -236,6 +269,42 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
     setEnqCity('Mangalore');
     setEnqBudget('38000');
     setEnqNotes('');
+  };
+
+  const handleOpenEditEnquiry = (enq: Enquiry) => {
+    setEditingEnquiry(enq);
+    setEditEnqClientName(enq.clientName);
+    setEditEnqPhone(enq.phone);
+    setEditEnqEmail(enq.email);
+    setEditEnqCity(enq.city);
+    setEditEnqDate(enq.eventDate);
+    setEditEnqType(enq.eventType);
+    setEditEnqBudget(enq.estimatedBudget.toString());
+    setEditEnqNotes(enq.notes || '');
+    setShowEditEnquiryModal(true);
+  };
+
+  const handleSaveEditEnquiry = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingEnquiry || !editEnqClientName) return;
+
+    const updatedEnq: Enquiry = {
+      ...editingEnquiry,
+      clientName: editEnqClientName,
+      phone: editEnqPhone,
+      email: editEnqEmail,
+      city: editEnqCity,
+      eventDate: editEnqDate,
+      eventType: editEnqType,
+      estimatedBudget: parseFloat(editEnqBudget) || 38000,
+      notes: editEnqNotes,
+    };
+
+    if (onUpdateEnquiry) {
+      onUpdateEnquiry(updatedEnq);
+    }
+    setShowEditEnquiryModal(false);
+    setEditingEnquiry(null);
   };
 
   // Launch pre-filled quote from enquiry
@@ -349,9 +418,9 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
   // Open Email Quotation Modal
   const handleOpenEmailModal = (quote: Quotation) => {
     setEmailRecipient(quote.clientEmail || '');
-    setEmailSubject(`Proposal & Quotation: ${quote.quotationNumber} — VOWS Studio // Reuben Serrao`);
+    setEmailSubject('Proposal & Quotation — VOWS');
     setEmailCustomMessage(
-      `Dear ${quote.clientName},\n\nThank you for reaching out to VOWS Studio. Attached is our bespoke quotation and coverage plan for your upcoming event.\n\nPackage: ${quote.packageTitle}\nInvestment: Rs ${Number(quote.totalPrice).toLocaleString('en-IN')}/-\nAdvance: ${quote.advancePercentage}% secures your dates on our production schedule.\n\nLooking forward to capturing timeless frames with you.\n\nWarm regards,\nReuben Serrao\nVOWS Studio // Photography & Cinema\n+91 97412 88401`
+      `Thank you for reaching out to VOWS. Attached is our bespoke quotation and coverage plan for your upcoming event.\n\nPackage: ${quote.packageTitle}\nInvestment: Rs. ${Number(quote.totalPrice).toLocaleString('en-IN')}/-\nAdvance: ${quote.advancePercentage}% secures your dates on our production schedule.\n\nLooking forward to capturing timeless frames with you.\n\nWarm regards,\nReuben Serrao\nVOWS // Wedding Cinematics & Stills\n+91 93800 57445`
     );
     setEmailStatusMsg(null);
     setShowEmailModal(true);
@@ -413,7 +482,7 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
           clientId,
           clientName: quote.clientName,
           docType: 'QUOTATION',
-          fileName: `${quote.quotationNumber.replace(/\s+/g, '_')}_${quote.clientName.replace(/\s+/g, '_')}.pdf`,
+          fileName: `Proposal for ${quote.clientName}.pdf`,
           pdfBase64,
         }),
       });
@@ -478,7 +547,7 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
           <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-[9.5px] sm:text-[10px] font-mono uppercase tracking-[0.2em] text-bone-muted dark:text-obsidian-muted mb-0.5">
             <span>Commercial Operations</span>
             <span>//</span>
-            <span className="text-vermillion font-bold">LUMINA Quotation Engine</span>
+            <span className="text-vermillion font-bold">VOWS Quotation Engine</span>
             <span className="hidden xs:inline">//</span>
             <span className="hidden xs:inline">Mangalore Atelier</span>
           </div>
@@ -491,38 +560,16 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
         <div className="flex flex-wrap items-center gap-2 text-xs font-mono">
           <button
             onClick={() => setShowEnquiryModal(true)}
-            className="px-3 py-1.5 border border-bone-border dark:border-obsidian-border hover:border-carbon dark:hover:border-white transition-all flex items-center gap-1.5 uppercase"
+            className="px-3.5 py-1.5 border border-bone-border dark:border-obsidian-border hover:border-carbon dark:hover:border-white transition-all flex items-center gap-1.5 uppercase font-bold"
           >
             <Plus size={12} />
             <span>New Enquiry</span>
           </button>
-          <button
-            disabled={!currentUser.canEditQuotesAndOrders}
-            onClick={handleOpenCreateQuote}
-            className={`px-3.5 py-1.5 uppercase font-bold tracking-wider flex items-center gap-1.5 transition-all ${
-              currentUser.canEditQuotesAndOrders
-                ? 'bg-carbon text-bone dark:bg-white dark:text-carbon hover:bg-vermillion dark:hover:bg-vermillion dark:hover:text-white'
-                : 'opacity-50 cursor-not-allowed bg-bone-surface text-bone-muted'
-            }`}
-          >
-            {currentUser.canEditQuotesAndOrders ? <FileText size={12} /> : <Lock size={12} />}
-            <span>Generate Quote</span>
-          </button>
         </div>
       </div>
 
-      {/* Primary Module Tabs */}
+      {/* Primary Module Tabs - Reordered: 1. Enquiries, 2. Quotations, 3. Orders & Deliveries */}
       <div className="flex items-center border-b border-bone-border dark:border-obsidian-border text-[11px] font-mono overflow-x-auto">
-        <button
-          onClick={() => setActiveTab('quotations')}
-          className={`pb-2.5 px-3.5 uppercase tracking-wider font-bold transition-all relative whitespace-nowrap ${
-            activeTab === 'quotations'
-              ? 'text-carbon dark:text-white border-b-2 border-vermillion'
-              : 'text-bone-muted dark:text-obsidian-muted hover:text-carbon dark:hover:text-white'
-          }`}
-        >
-          Quotations ({quotations.length})
-        </button>
         <button
           onClick={() => setActiveTab('enquiries')}
           className={`pb-2.5 px-3.5 uppercase tracking-wider font-bold transition-all relative whitespace-nowrap ${
@@ -534,6 +581,16 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
           Enquiries ({enquiries.length})
         </button>
         <button
+          onClick={() => setActiveTab('quotations')}
+          className={`pb-2.5 px-3.5 uppercase tracking-wider font-bold transition-all relative whitespace-nowrap ${
+            activeTab === 'quotations'
+              ? 'text-carbon dark:text-white border-b-2 border-vermillion'
+              : 'text-bone-muted dark:text-obsidian-muted hover:text-carbon dark:hover:text-white'
+          }`}
+        >
+          Quotations ({quotations.length})
+        </button>
+        <button
           onClick={() => setActiveTab('orders')}
           className={`pb-2.5 px-3.5 uppercase tracking-wider font-bold transition-all relative whitespace-nowrap ${
             activeTab === 'orders'
@@ -542,16 +599,6 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
           }`}
         >
           Orders & Deliveries ({bookings.length})
-        </button>
-        <button
-          onClick={() => setActiveTab('catalog')}
-          className={`pb-2.5 px-3.5 uppercase tracking-wider font-bold transition-all relative whitespace-nowrap ${
-            activeTab === 'catalog'
-              ? 'text-carbon dark:text-white border-b-2 border-vermillion'
-              : 'text-bone-muted dark:text-obsidian-muted hover:text-carbon dark:hover:text-white'
-          }`}
-        >
-          Catalog Presets
         </button>
       </div>
 
@@ -625,8 +672,29 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
                     </p>
 
                     <div className="mt-2 pt-2 border-t border-bone-border dark:border-obsidian-border flex items-center justify-between text-[11px] font-mono">
-                      <span className="text-bone-muted dark:text-obsidian-muted">Total</span>
-                      <span className="font-bold text-carbon dark:text-white">{formatINR(q.totalPrice)}</span>
+                      <div>
+                        <span className="text-bone-muted dark:text-obsidian-muted mr-1.5">Total</span>
+                        <span className="font-bold text-carbon dark:text-white">{formatINR(q.totalPrice)}</span>
+                      </div>
+                      {currentUser.canDeleteQuotes !== false && onDeleteQuotation && (
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (
+                              window.confirm(
+                                `Are you sure you want to permanently delete quotation "${q.quotationNumber}" for ${q.clientName}?`
+                              )
+                            ) {
+                              onDeleteQuotation(q.id);
+                            }
+                          }}
+                          className="text-bone-muted hover:text-rose-600 p-1 transition-colors"
+                          title="Delete quotation"
+                        >
+                          <Trash2 size={12} />
+                        </button>
+                      )}
                     </div>
                   </div>
                 );
@@ -883,6 +951,26 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
                   <CheckCircle size={11} />
                   <span>{selectedQuote.status === 'CONVERTED' ? 'Order Active' : 'Convert Order'}</span>
                 </button>
+
+                {/* 7. Delete Quote Button (Point 3) */}
+                {currentUser.canDeleteQuotes !== false && onDeleteQuotation && (
+                  <button
+                    onClick={() => {
+                      if (
+                        window.confirm(
+                          `Are you sure you want to permanently delete quotation "${selectedQuote.quotationNumber}" for ${selectedQuote.clientName}? This cannot be undone.`
+                        )
+                      ) {
+                        onDeleteQuotation(selectedQuote.id);
+                      }
+                    }}
+                    className="py-2 px-2 border border-rose-600/50 text-rose-600 hover:bg-rose-600 hover:text-white transition-all text-[10px] font-mono uppercase font-bold tracking-wider flex items-center justify-center gap-1.5"
+                    title="Permanently remove quotation"
+                  >
+                    <Trash2 size={11} />
+                    <span>Delete Quote</span>
+                  </button>
+                )}
               </div>
 
               {/* Record Payment Button (Full Width) */}
@@ -912,7 +1000,7 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
       )}
 
       {/* ========================================================================= */}
-      {/* TAB 2: ENQUIRIES CRM PIPELINE                                             */}
+      {/* TAB 1: ENQUIRIES CRM PIPELINE                                             */}
       {/* ========================================================================= */}
       {activeTab === 'enquiries' && (
         <div className="space-y-4">
@@ -920,13 +1008,6 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
             <span className="uppercase tracking-widest text-bone-muted dark:text-obsidian-muted">
               Incoming Coastal Enquiries ({enquiries.length})
             </span>
-            <button
-              onClick={() => setShowEnquiryModal(true)}
-              className="px-3 py-1 bg-carbon text-bone dark:bg-white dark:text-carbon text-[11px] font-mono uppercase tracking-wider flex items-center gap-1"
-            >
-              <Plus size={11} />
-              <span>Log Lead</span>
-            </button>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -952,31 +1033,42 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
                   </div>
 
                   <h3 className="font-serif text-base font-bold text-carbon dark:text-white">
-                    {enq.clientName}
+                    {isDemo ? maskClientName(enq.clientName) : enq.clientName}
                   </h3>
-                  <p className="text-[11px] font-mono text-bone-muted dark:text-obsidian-muted">
-                    {enq.eventType}
+                  <p className="text-[11px] font-mono text-zinc-600 dark:text-zinc-300">
+                    {enq.eventType || 'Bespoke Coverage'}
                   </p>
 
-                  <div className="mt-3 space-y-1 text-[11px] font-mono text-carbon/80 dark:text-bone/80">
+                  <div className="mt-3 space-y-1.5 text-[11px] font-mono text-zinc-700 dark:text-zinc-200">
                     <div className="flex items-center gap-2">
-                      <Calendar size={11} className="text-vermillion" />
+                      <Calendar size={11} className="text-vermillion shrink-0" />
                       <span>{enq.eventDate}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <MapPin size={11} className="text-vermillion" />
+                      <MapPin size={11} className="text-vermillion shrink-0" />
                       <span>{enq.city}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Phone size={11} className="text-bone-muted" />
-                      <span>{enq.phone}</span>
+                      <Phone size={11} className="text-zinc-500 dark:text-zinc-400 shrink-0" />
+                      <span>{isDemo ? maskPhone(enq.phone) : enq.phone}</span>
                     </div>
+                    {enq.email && (
+                      <div className="flex items-center gap-2">
+                        <Mail size={11} className="text-zinc-500 dark:text-zinc-400 shrink-0" />
+                        <span className="truncate">{isDemo ? maskEmail(enq.email) : enq.email}</span>
+                      </div>
+                    )}
+                    {enq.notes && (
+                      <p className="text-[10px] text-zinc-500 dark:text-zinc-400 italic pt-1 border-t border-bone-border dark:border-obsidian-border">
+                        &quot;{enq.notes}&quot;
+                      </p>
+                    )}
                   </div>
                 </div>
 
-                <div className="pt-3 border-t border-bone-border dark:border-obsidian-border flex items-center justify-between text-[11px] font-mono">
+                <div className="pt-3 border-t border-bone-border dark:border-obsidian-border flex items-center justify-between text-[11px] font-mono gap-2">
                   <div>
-                    <span className="text-[9px] uppercase text-bone-muted dark:text-obsidian-muted block">
+                    <span className="text-[9px] uppercase text-zinc-500 dark:text-zinc-400 block">
                       Target Budget
                     </span>
                     <span className="font-bold text-carbon dark:text-white">
@@ -984,14 +1076,24 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
                     </span>
                   </div>
 
-                  <button
-                    disabled={!currentUser.canEditQuotesAndOrders}
-                    onClick={() => handleLaunchQuoteFromEnquiry(enq)}
-                    className="px-2.5 py-1 bg-carbon text-bone dark:bg-white dark:text-carbon text-[10px] font-mono uppercase tracking-wider hover:bg-vermillion transition-all flex items-center gap-1"
-                  >
-                    <span>Create Quote</span>
-                    <ArrowRight size={10} />
-                  </button>
+                  <div className="flex items-center gap-1.5">
+                    <button
+                      onClick={() => handleOpenEditEnquiry(enq)}
+                      className="px-2.5 py-1 border border-bone-border dark:border-obsidian-border hover:border-carbon dark:hover:border-white text-carbon dark:text-white text-[10px] font-mono uppercase tracking-wider transition-all flex items-center gap-1"
+                      title="Edit enquiry details"
+                    >
+                      <Edit3 size={10} />
+                      <span>Edit</span>
+                    </button>
+                    <button
+                      disabled={!currentUser.canEditQuotesAndOrders}
+                      onClick={() => handleLaunchQuoteFromEnquiry(enq)}
+                      className="px-2.5 py-1 bg-carbon text-bone dark:bg-white dark:text-carbon text-[10px] font-mono uppercase tracking-wider hover:bg-vermillion dark:hover:bg-vermillion dark:hover:text-white transition-all flex items-center gap-1 font-bold"
+                    >
+                      <span>Create Quote</span>
+                      <ArrowRight size={10} />
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
@@ -1034,16 +1136,30 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
                       </p>
                     </div>
 
-                    <div className="text-right font-mono">
-                      <span className="text-[9px] uppercase text-bone-muted dark:text-obsidian-muted block">
-                        Order Financials
-                      </span>
-                      <span className="text-xs text-green-600 dark:text-green-400 font-bold">
-                        Paid: {formatINR(booking.financialSummary.retainerPaid)}
-                      </span>
-                      <span className="text-xs text-vermillion font-bold block">
-                        Due: {formatINR(booking.financialSummary.balanceDue)}
-                      </span>
+                    <div className="text-right font-mono flex flex-col items-end gap-1.5">
+                      <div>
+                        <span className="text-[9px] uppercase text-bone-muted dark:text-obsidian-muted block">
+                          Order Financials
+                        </span>
+                        <span className="text-xs text-green-600 dark:text-green-400 font-bold">
+                          Paid: {formatINR(booking.financialSummary.retainerPaid)}
+                        </span>
+                        <span className="text-xs text-vermillion font-bold block">
+                          Due: {formatINR(booking.financialSummary.balanceDue)}
+                        </span>
+                      </div>
+                      <button
+                        onClick={() => {
+                          setCallSheetBooking(booking);
+                          setAllocatedGears(booking.gearChecklist || []);
+                          setCallSheetSaveNotice(null);
+                          setShowCallSheetModal(true);
+                        }}
+                        className="px-2.5 py-1 bg-carbon text-bone dark:bg-white dark:text-carbon hover:bg-vermillion dark:hover:bg-vermillion dark:hover:text-white text-[10px] font-mono uppercase font-bold tracking-wider transition-all flex items-center gap-1.5"
+                      >
+                        <Camera size={11} />
+                        <span>Call Sheet & Gear</span>
+                      </button>
                     </div>
                   </div>
 
@@ -1124,155 +1240,7 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
         </div>
       )}
 
-      {/* ========================================================================= */}
-      {/* TAB 4: PRE-DEFINED CATALOG & PRESETS                                      */}
-      {/* ========================================================================= */}
-      {activeTab === 'catalog' && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
-          {/* Section 1: Pre-defined Requirements */}
-          <div className="p-5 bg-bone-card dark:bg-obsidian-card border border-bone-border dark:border-obsidian-border space-y-3">
-            <div className="flex items-center justify-between pb-2 border-b border-bone-border dark:border-obsidian-border">
-              <h3 className="font-serif text-base font-bold uppercase text-carbon dark:text-white">
-                Requirements Catalog
-              </h3>
-              <span className="text-[9px] font-mono text-bone-muted">Admin Controlled</span>
-            </div>
 
-            <div className="space-y-1.5">
-              {catalog.standardRequirements.map((req) => (
-                <div
-                  key={req.id}
-                  className="p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border flex items-center justify-between text-[11px] font-mono"
-                >
-                  <div>
-                    <span className="font-bold text-carbon dark:text-white">{req.name}</span>
-                    <span className="text-bone-muted ml-2">({req.price})</span>
-                  </div>
-                  <button
-                    disabled={!currentUser.canAccessSettings}
-                    onClick={() => {
-                      setCatalog({
-                        ...catalog,
-                        standardRequirements: catalog.standardRequirements.filter((r) => r.id !== req.id),
-                      });
-                    }}
-                    className="text-bone-muted hover:text-vermillion p-0.5"
-                  >
-                    <Trash2 size={12} />
-                  </button>
-                </div>
-              ))}
-            </div>
-
-            {/* Add requirement */}
-            <div className="flex gap-2 pt-1 text-[11px] font-mono">
-              <input
-                type="text"
-                placeholder="e.g. Pre-Wedding Beach Teaser"
-                value={newReqName}
-                onChange={(e) => setNewReqName(e.target.value)}
-                className="flex-1 p-1.5 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white outline-none"
-              />
-              <button
-                disabled={!currentUser.canAccessSettings}
-                onClick={() => {
-                  if (!newReqName.trim()) return;
-                  setCatalog({
-                    ...catalog,
-                    standardRequirements: [
-                      ...catalog.standardRequirements,
-                      { id: `req-${Date.now()}`, name: newReqName, price: '-', included: true },
-                    ],
-                  });
-                  setNewReqName('');
-                }}
-                className="px-3 py-1.5 bg-carbon text-bone dark:bg-white dark:text-carbon font-bold uppercase"
-              >
-                Add
-              </button>
-            </div>
-          </div>
-
-          {/* Section 2: Pre-defined Deliverables */}
-          <div className="p-5 bg-bone-card dark:bg-obsidian-card border border-bone-border dark:border-obsidian-border space-y-3">
-            <div className="flex items-center justify-between pb-2 border-b border-bone-border dark:border-obsidian-border">
-              <h3 className="font-serif text-base font-bold uppercase text-carbon dark:text-white">
-                Deliverables & Footnotes
-              </h3>
-              <span className="text-[9px] font-mono text-bone-muted">Admin Controlled</span>
-            </div>
-
-            <div className="space-y-1.5">
-              {catalog.standardDeliverables.map((del) => (
-                <div
-                  key={del.id}
-                  className="p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border flex items-start justify-between text-[11px] font-mono"
-                >
-                  <div>
-                    <span className="font-bold text-carbon dark:text-white block">{del.item}</span>
-                    <span className="text-[10px] text-bone-muted italic">{del.details}</span>
-                  </div>
-                  <button
-                    disabled={!currentUser.canAccessSettings}
-                    onClick={() => {
-                      setCatalog({
-                        ...catalog,
-                        standardDeliverables: catalog.standardDeliverables.filter((d) => d.id !== del.id),
-                      });
-                    }}
-                    className="text-bone-muted hover:text-vermillion p-0.5 shrink-0"
-                  >
-                    <Trash2 size={12} />
-                  </button>
-                </div>
-              ))}
-            </div>
-
-            {/* Add deliverable */}
-            <div className="space-y-1.5 pt-1 text-[11px] font-mono">
-              <input
-                type="text"
-                placeholder="Item title (e.g. Reel for Instagram 4K)"
-                value={newDelivItem}
-                onChange={(e) => setNewDelivItem(e.target.value)}
-                className="w-full p-1.5 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white outline-none"
-              />
-              <div className="flex gap-2">
-                <input
-                  type="text"
-                  placeholder="Details (e.g. *delivered within 48 hours)"
-                  value={newDelivDetail}
-                  onChange={(e) => setNewDelivDetail(e.target.value)}
-                  className="flex-1 p-1.5 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white outline-none"
-                />
-                <button
-                  disabled={!currentUser.canAccessSettings}
-                  onClick={() => {
-                    if (!newDelivItem.trim()) return;
-                    setCatalog({
-                      ...catalog,
-                      standardDeliverables: [
-                        ...catalog.standardDeliverables,
-                        {
-                          id: `del-${Date.now()}`,
-                          item: newDelivItem,
-                          details: newDelivDetail || '*custom deliverable',
-                          included: true,
-                        },
-                      ],
-                    });
-                    setNewDelivItem('');
-                    setNewDelivDetail('');
-                  }}
-                  className="px-3 py-1.5 bg-carbon text-bone dark:bg-white dark:text-carbon font-bold uppercase"
-                >
-                  Add
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* ========================================================================= */}
       {/* MODAL 1: NEW ENQUIRY MODAL                                                */}
@@ -1290,9 +1258,9 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
               </h3>
               <button
                 onClick={() => setShowEnquiryModal(false)}
-                className="text-xs font-mono text-bone-muted hover:text-carbon dark:hover:text-white"
+                className="text-xs font-mono text-bone-muted hover:text-carbon dark:hover:text-white font-bold"
               >
-                [ESC]
+                ✕ [Esc]
               </button>
             </div>
 
@@ -1388,8 +1356,7 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
                 </label>
                 <input
                   type="text"
-                  required
-                  placeholder="Catholic Wedding Ceremony & Reception"
+                  placeholder="e.g. Catholic Wedding Ceremony & Reception"
                   value={enqType}
                   onChange={(e) => setEnqType(e.target.value)}
                   className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white outline-none"
@@ -1406,9 +1373,156 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
                 <button
                   type="button"
                   onClick={() => setShowEnquiryModal(false)}
-                  className="px-3 py-2 border border-bone-border dark:border-obsidian-border uppercase"
+                  className="px-3 py-2 border border-bone-border dark:border-obsidian-border uppercase text-xs"
                 >
-                  Cancel
+                  ✕ [Esc] Cancel
+                </button>
+              </div>
+            </form>
+          </motion.div>
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* MODAL 1B: EDIT ENQUIRY MODAL (Point 1)                                     */}
+      {/* ========================================================================= */}
+      {showEditEnquiryModal && editingEnquiry && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-carbon/70 backdrop-blur-sm">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="w-full max-w-md bg-bone-card dark:bg-obsidian-card border-2 border-carbon dark:border-white p-5 shadow-2xl space-y-3"
+          >
+            <div className="flex items-center justify-between pb-2 border-b border-bone-border dark:border-obsidian-border">
+              <h3 className="font-serif text-lg font-bold uppercase text-carbon dark:text-white">
+                Edit Enquiry: {editingEnquiry.enquiryNumber}
+              </h3>
+              <button
+                onClick={() => setShowEditEnquiryModal(false)}
+                className="text-xs font-mono text-bone-muted hover:text-carbon dark:hover:text-white font-bold"
+              >
+                ✕ [Esc]
+              </button>
+            </div>
+
+            <form onSubmit={handleSaveEditEnquiry} className="space-y-2.5 text-[11px] font-mono">
+              <div>
+                <label className="block text-[9.5px] uppercase text-bone-muted mb-0.5">
+                  Client / Couple Name
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={editEnqClientName}
+                  onChange={(e) => setEditEnqClientName(e.target.value)}
+                  className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white outline-none"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label className="block text-[9.5px] uppercase text-bone-muted mb-0.5">
+                    Phone / WhatsApp *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={editEnqPhone}
+                    onChange={(e) => setEditEnqPhone(e.target.value)}
+                    className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[9.5px] uppercase text-bone-muted mb-0.5">
+                    City / Venue
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={editEnqCity}
+                    onChange={(e) => setEditEnqCity(e.target.value)}
+                    className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white outline-none"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-[9.5px] uppercase text-bone-muted mb-0.5">
+                  Client Email Address *
+                </label>
+                <input
+                  type="email"
+                  required
+                  value={editEnqEmail}
+                  onChange={(e) => setEditEnqEmail(e.target.value)}
+                  className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white outline-none"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label className="block text-[9.5px] uppercase text-bone-muted mb-0.5">
+                    Event Date
+                  </label>
+                  <input
+                    type="date"
+                    required
+                    value={editEnqDate}
+                    onChange={(e) => setEditEnqDate(e.target.value)}
+                    className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[9.5px] uppercase text-bone-muted mb-0.5">
+                    Estimated Budget (INR)
+                  </label>
+                  <input
+                    type="number"
+                    required
+                    value={editEnqBudget}
+                    onChange={(e) => setEditEnqBudget(e.target.value)}
+                    className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white outline-none"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-[9.5px] uppercase text-bone-muted mb-0.5">
+                  Event Description
+                </label>
+                <input
+                  type="text"
+                  value={editEnqType}
+                  onChange={(e) => setEditEnqType(e.target.value)}
+                  className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[9.5px] uppercase text-bone-muted mb-0.5">
+                  Internal Notes
+                </label>
+                <textarea
+                  rows={2}
+                  value={editEnqNotes}
+                  onChange={(e) => setEditEnqNotes(e.target.value)}
+                  className="w-full p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border text-carbon dark:text-white outline-none resize-none"
+                />
+              </div>
+
+              <div className="pt-2 flex gap-2">
+                <button
+                  type="submit"
+                  className="flex-1 py-2 bg-carbon text-bone dark:bg-white dark:text-carbon font-bold uppercase tracking-widest hover:bg-vermillion transition-all"
+                >
+                  Update Enquiry
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowEditEnquiryModal(false)}
+                  className="px-3 py-2 border border-bone-border dark:border-obsidian-border uppercase text-xs"
+                >
+                  ✕ [Esc] Cancel
                 </button>
               </div>
             </form>
@@ -1437,9 +1551,9 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
               </div>
               <button
                 onClick={() => setShowQuoteModal(false)}
-                className="text-xs font-mono text-bone-muted hover:text-carbon dark:hover:text-white"
+                className="text-xs font-mono text-bone-muted hover:text-carbon dark:hover:text-white font-bold"
               >
-                [ESC]
+                ✕ [Esc]
               </button>
             </div>
 
@@ -1531,20 +1645,20 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
 
               {/* Requirements Checklist */}
               <div className="space-y-1.5">
-                <span className="font-bold uppercase text-[10px] block">
+                <span className="font-bold uppercase text-[10px] block text-carbon dark:text-white">
                   Requirements Included in Package:
                 </span>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 max-h-36 overflow-y-auto p-2 border border-bone-border dark:border-obsidian-border">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 max-h-48 overflow-y-auto p-2 border border-bone-border dark:border-obsidian-border">
                   {qRequirements.map((req) => (
-                    <label
+                    <div
                       key={req.id}
-                      className={`p-1.5 border flex items-center justify-between cursor-pointer transition-all ${
+                      className={`p-2 border flex items-center justify-between gap-2 transition-all ${
                         req.included
                           ? 'bg-carbon/5 dark:bg-white/10 border-carbon dark:border-white font-bold'
                           : 'border-bone-border dark:border-obsidian-border text-bone-muted'
                       }`}
                     >
-                      <div className="flex items-center gap-1.5">
+                      <label className="flex items-center gap-2 cursor-pointer flex-1 min-w-0">
                         <input
                           type="checkbox"
                           checked={req.included}
@@ -1555,12 +1669,25 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
                               )
                             );
                           }}
-                          className="accent-vermillion"
+                          className="accent-vermillion shrink-0"
                         />
-                        <span>{req.name}</span>
-                      </div>
-                      <span className="text-[9px] opacity-70">{req.price}</span>
-                    </label>
+                        <span className="text-[11px] truncate text-carbon dark:text-white">{req.name}</span>
+                      </label>
+                      <input
+                        type="text"
+                        value={req.price}
+                        placeholder="Rs. 8,000/-"
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setQRequirements(
+                            qRequirements.map((r) =>
+                              r.id === req.id ? { ...r, price: val } : r
+                            )
+                          );
+                        }}
+                        className="w-24 px-1.5 py-0.5 bg-bone-card dark:bg-obsidian-card border border-bone-border dark:border-obsidian-border text-right text-[10px] font-mono outline-none text-carbon dark:text-white"
+                      />
+                    </div>
                   ))}
                 </div>
               </div>
@@ -1625,47 +1752,32 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
               {/* Dynamic Crew Allocation Editor */}
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="font-bold uppercase text-[10px] block">
+                  <span className="font-bold uppercase text-[10px] block text-carbon dark:text-white">
                     Crew Allocation ({qCrew.length} Assigned):
                   </span>
                   <span className="text-[9px] text-bone-muted italic">
-                    Add or remove roles for this quotation
+                    1 person per role (confidential crew roster)
                   </span>
                 </div>
 
                 {/* Current Quote Crew Cards */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
-                  {qCrew.map((crew) => (
-                    <div
-                      key={crew.id}
-                      className="p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border flex items-center justify-between gap-2"
-                    >
-                      <div className="flex-1 min-w-0">
-                        <span className="text-[9.5px] font-bold text-carbon dark:text-white uppercase block truncate">
-                          {crew.role}
-                        </span>
-                        {crew.assignedTo && (
-                          <span className="text-[8.5px] text-bone-muted block truncate">
-                            {crew.assignedTo}
+                  {qCrew.map((crew) => {
+                    const cleanRole = crew.role.replace(/\s*\([^)]*\)/g, '').trim();
+                    return (
+                      <div
+                        key={crew.id}
+                        className="p-2 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border flex items-center justify-between gap-2"
+                      >
+                        <div className="flex-1 min-w-0">
+                          <span className="text-[9.5px] font-bold text-carbon dark:text-white uppercase block truncate">
+                            {cleanRole}
                           </span>
-                        )}
-                      </div>
-
-                      <div className="flex items-center gap-1.5 shrink-0">
-                        <div className="flex items-center border border-bone-border dark:border-obsidian-border bg-bone-card dark:bg-obsidian-card px-1.5 py-0.5">
-                          <span className="text-[8.5px] text-bone-muted mr-1">Qty:</span>
-                          <input
-                            type="number"
-                            min="1"
-                            max="10"
-                            value={crew.number}
-                            onChange={(e) => {
-                              const val = parseInt(e.target.value) || 1;
-                              setQCrew(qCrew.map((c) => (c.id === crew.id ? { ...c, number: val } : c)));
-                            }}
-                            className="w-7 bg-transparent font-bold text-xs text-carbon dark:text-white outline-none text-center"
-                          />
+                          <span className="text-[8.5px] text-bone-muted block">
+                            Assigned: 1 Crew Member
+                          </span>
                         </div>
+
                         <button
                           type="button"
                           onClick={() => setQCrew(qCrew.filter((c) => c.id !== crew.id))}
@@ -1675,8 +1787,8 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
                           <Trash2 size={12} />
                         </button>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
 
                   {qCrew.length === 0 && (
                     <div className="col-span-full p-3 border border-dashed border-bone-border dark:border-obsidian-border text-center text-[10px] text-bone-muted">
@@ -1694,11 +1806,14 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
                       className="flex-1 p-1.5 bg-bone-card dark:bg-obsidian-card border border-bone-border dark:border-obsidian-border text-carbon dark:text-white text-[11px] font-mono outline-none"
                     >
                       <option value="">-- Select Crew Role from Settings Roster --</option>
-                      {(settings.crewRoster || []).map((r) => (
-                        <option key={r.id} value={r.id}>
-                          {r.role} {r.defaultName ? `(${r.defaultName})` : ''} - Def: {r.defaultCount}
-                        </option>
-                      ))}
+                      {(settings.crewRoster || []).map((r) => {
+                        const cleanRoleName = r.role.replace(/\s*\([^)]*\)/g, '').trim();
+                        return (
+                          <option key={r.id} value={r.id}>
+                            {cleanRoleName}
+                          </option>
+                        );
+                      })}
                       <option value="__custom__">+ Custom Crew Role...</option>
                     </select>
 
@@ -1721,41 +1836,34 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
                     }
                     onClick={() => {
                       let roleName = '';
-                      let assigned: string | undefined = undefined;
-                      let count = 1;
 
                       if (selectedRosterRoleToAdd === '__custom__') {
-                        roleName = customCrewRoleInput.trim();
+                        roleName = customCrewRoleInput.replace(/\s*\([^)]*\)/g, '').trim();
                       } else {
                         const matched = (settings.crewRoster || []).find(
                           (r) => r.id === selectedRosterRoleToAdd
                         );
                         if (matched) {
-                          roleName = matched.role;
-                          assigned = matched.defaultName;
-                          count = matched.defaultCount;
+                          roleName = matched.role.replace(/\s*\([^)]*\)/g, '').trim();
                         } else {
-                          roleName = selectedRosterRoleToAdd;
+                          roleName = selectedRosterRoleToAdd.replace(/\s*\([^)]*\)/g, '').trim();
                         }
                       }
 
                       if (!roleName) return;
 
                       // Check if already in qCrew
-                      const existingIndex = qCrew.findIndex((c) => c.role.toLowerCase() === roleName.toLowerCase());
-                      if (existingIndex >= 0) {
-                        // Increment count
-                        setQCrew(
-                          qCrew.map((c, i) => (i === existingIndex ? { ...c, number: c.number + 1 } : c))
-                        );
-                      } else {
+                      const existingIndex = qCrew.findIndex(
+                        (c) => c.role.toLowerCase() === roleName.toLowerCase()
+                      );
+                      if (existingIndex < 0) {
                         setQCrew([
                           ...qCrew,
                           {
                             id: `qcrew-${Date.now()}`,
                             role: roleName,
-                            number: count,
-                            assignedTo: assigned,
+                            number: 1, // Locked to 1
+                            assignedTo: undefined, // Confidential
                           },
                         ]);
                       }
@@ -1804,12 +1912,169 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
                 <button
                   type="button"
                   onClick={() => setShowQuoteModal(false)}
-                  className="px-4 py-2.5 border border-bone-border dark:border-obsidian-border uppercase"
+                  className="px-4 py-2.5 border border-bone-border dark:border-obsidian-border uppercase text-xs"
                 >
-                  Cancel
+                  ✕ [Esc] Cancel
                 </button>
               </div>
             </form>
+          </motion.div>
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* MODAL 2B: CALL SHEET & GEAR ALLOCATION MODAL (Point 23)                    */}
+      {/* ========================================================================= */}
+      {showCallSheetModal && callSheetBooking && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-carbon/70 backdrop-blur-sm overflow-y-auto">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="w-full max-w-2xl bg-bone-card dark:bg-obsidian-card border-2 border-carbon dark:border-white p-5 sm:p-6 shadow-2xl space-y-4 my-4 max-h-[90vh] overflow-y-auto"
+          >
+            <div className="flex items-center justify-between pb-2 border-b border-bone-border dark:border-obsidian-border">
+              <div>
+                <span className="text-[9.5px] font-mono text-vermillion uppercase font-bold block">
+                  Production Operations // Order {callSheetBooking.shootCode}
+                </span>
+                <h3 className="font-serif text-xl font-bold uppercase text-carbon dark:text-white">
+                  Call Sheet & Gear Allocation
+                </h3>
+              </div>
+              <button
+                onClick={() => setShowCallSheetModal(false)}
+                className="text-xs font-mono text-bone-muted hover:text-carbon dark:hover:text-white font-bold"
+              >
+                ✕ [Esc]
+              </button>
+            </div>
+
+            {/* Shoot Overview */}
+            <div className="p-3 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px] font-mono">
+              <div>
+                <span className="text-[9px] uppercase text-bone-muted block">Client</span>
+                <span className="font-bold text-carbon dark:text-white">{callSheetBooking.client.name}</span>
+              </div>
+              <div>
+                <span className="text-[9px] uppercase text-bone-muted block">Event Date</span>
+                <span className="font-bold text-carbon dark:text-white">{callSheetBooking.date}</span>
+              </div>
+              <div>
+                <span className="text-[9px] uppercase text-bone-muted block">Location / City</span>
+                <span className="font-bold text-carbon dark:text-white">{callSheetBooking.location.venue}, {callSheetBooking.location.city}</span>
+              </div>
+              <div>
+                <span className="text-[9px] uppercase text-bone-muted block">Call Time</span>
+                <span className="font-bold text-vermillion">{callSheetBooking.callTime || '06:30 AM'}</span>
+              </div>
+            </div>
+
+            {/* Allocated Studio & Rental Gear Checklist */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="font-bold uppercase text-[10px] font-mono text-carbon dark:text-white">
+                  Allocated Studio & Rental Gear Checklist:
+                </span>
+                <span className="text-[9px] font-mono text-bone-muted italic">
+                  Select kit items loaded into production bags
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 max-h-48 overflow-y-auto p-2 border border-bone-border dark:border-obsidian-border bg-bone-surface/50 dark:bg-obsidian-surface/50 text-[11px] font-mono">
+                {(settings.gearInventory && settings.gearInventory.length > 0
+                  ? settings.gearInventory
+                  : defaultGearInventory
+                ).map((item) => {
+                  const isChecked = allocatedGears.includes(item.id);
+                  return (
+                    <label
+                      key={item.id}
+                      className={`p-2 border flex items-center justify-between cursor-pointer transition-all ${
+                        isChecked
+                          ? 'bg-carbon/10 dark:bg-white/10 border-carbon dark:border-white font-bold'
+                          : 'border-bone-border dark:border-obsidian-border text-bone-muted hover:border-carbon dark:hover:border-white'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          checked={isChecked}
+                          onChange={(e) => {
+                            if (e.target.checked) {
+                              setAllocatedGears([...allocatedGears, item.id]);
+                            } else {
+                              setAllocatedGears(allocatedGears.filter((id) => id !== item.id));
+                            }
+                          }}
+                          className="accent-vermillion"
+                        />
+                        <span className="text-carbon dark:text-white">{item.name}</span>
+                      </div>
+                      <span className="text-[9px] px-1 py-0.2 uppercase border border-bone-border dark:border-obsidian-border text-bone-muted">
+                        {item.category}
+                      </span>
+                    </label>
+                  );
+                })}
+              </div>
+
+              <div className="flex justify-end">
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (onUpdateBooking && callSheetBooking) {
+                      onUpdateBooking({
+                        ...callSheetBooking,
+                        gearChecklist: allocatedGears,
+                      });
+                      setCallSheetSaveNotice('Gear checklist updated successfully!');
+                      setTimeout(() => setCallSheetSaveNotice(null), 3000);
+                    }
+                  }}
+                  className="px-3 py-1.5 bg-carbon text-bone dark:bg-white dark:text-carbon hover:bg-vermillion dark:hover:bg-vermillion dark:hover:text-white text-[10px] font-mono uppercase font-bold tracking-wider transition-all"
+                >
+                  Save Gear Allocation
+                </button>
+              </div>
+              {callSheetSaveNotice && (
+                <div className="p-2 bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-[10px] font-mono">
+                  {callSheetSaveNotice}
+                </div>
+              )}
+            </div>
+
+            {/* Call Sheet PDF Exports: Client Call Sheet vs Crew Call Sheet */}
+            <div className="p-3 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border space-y-2">
+              <span className="font-bold uppercase text-[10px] font-mono text-carbon dark:text-white block">
+                Export Call Sheets (PDF):
+              </span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] font-mono">
+                <button
+                  onClick={() => generateClientCallSheetPDF(callSheetBooking, settings)}
+                  className="p-2.5 border border-carbon dark:border-white hover:bg-carbon hover:text-bone dark:hover:bg-white dark:hover:text-carbon transition-all font-bold uppercase flex items-center justify-center gap-2"
+                >
+                  <Download size={12} />
+                  <span>Client Call Sheet (Financials Hidden)</span>
+                </button>
+                <button
+                  onClick={() => generateCrewCallSheetPDF(callSheetBooking, settings)}
+                  className="p-2.5 bg-vermillion text-white hover:bg-vermillion-glow transition-all font-bold uppercase flex items-center justify-center gap-2"
+                >
+                  <Download size={12} />
+                  <span>Crew Call Sheet (Full Tech & Gear)</span>
+                </button>
+              </div>
+            </div>
+
+            <div className="pt-2 flex justify-end">
+              <button
+                type="button"
+                onClick={() => setShowCallSheetModal(false)}
+                className="px-4 py-2 border border-bone-border dark:border-obsidian-border font-mono text-xs uppercase"
+              >
+                ✕ [Esc] Close
+              </button>
+            </div>
           </motion.div>
         </div>
       )}
@@ -1830,9 +2095,9 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
               </h3>
               <button
                 onClick={() => setShowPaymentModal(false)}
-                className="text-xs font-mono text-bone-muted hover:text-carbon dark:hover:text-white"
+                className="text-xs font-mono text-bone-muted hover:text-carbon dark:hover:text-white font-bold"
               >
-                [ESC]
+                ✕ [Esc]
               </button>
             </div>
 
@@ -1881,9 +2146,9 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
                 <button
                   type="button"
                   onClick={() => setShowPaymentModal(false)}
-                  className="px-3 py-2.5 border border-bone-border dark:border-obsidian-border uppercase"
+                  className="px-3 py-2.5 border border-bone-border dark:border-obsidian-border uppercase text-xs"
                 >
-                  Cancel
+                  ✕ [Esc] Cancel
                 </button>
               </div>
             </form>
@@ -1910,9 +2175,9 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
               </div>
               <button
                 onClick={() => setShowEmailModal(false)}
-                className="text-xs font-mono text-bone-muted hover:text-carbon dark:hover:text-white"
+                className="text-xs font-mono text-bone-muted hover:text-carbon dark:hover:text-white font-bold"
               >
-                [ESC]
+                ✕ [Esc]
               </button>
             </div>
 
@@ -1959,7 +2224,7 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
               <div className="p-2.5 bg-bone-surface dark:bg-obsidian-surface border border-bone-border dark:border-obsidian-border flex items-center justify-between text-[10px]">
                 <span className="text-bone-muted">Attachment:</span>
                 <span className="font-bold text-carbon dark:text-white">
-                  {selectedQuote.quotationNumber.replace(/\s+/g, '_')}_Proposal.pdf (2 Pages)
+                  Proposal for {selectedQuote.clientName}.pdf (2 Pages)
                 </span>
               </div>
 
@@ -1993,9 +2258,9 @@ export const QuotationView: React.FC<QuotationViewProps> = ({
                 <button
                   type="button"
                   onClick={() => setShowEmailModal(false)}
-                  className="px-4 py-2.5 border border-bone-border dark:border-obsidian-border uppercase"
+                  className="px-4 py-2.5 border border-bone-border dark:border-obsidian-border uppercase text-xs"
                 >
-                  Cancel
+                  ✕ [Esc] Cancel
                 </button>
               </div>
             </form>

@@ -58,7 +58,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     { id: 'quotations' as ViewModule, label: 'Quotations & Orders', icon: Sparkles, badge: currentUser.canEditQuotesAndOrders ? null : 'VIEW' },
     { id: 'catalog' as ViewModule, label: 'Catalog & Crew', icon: Sliders, badge: 'CORE' },
     { id: 'calendar' as ViewModule, label: 'Calendar / Call Sheets', icon: CalendarDays, badge: 'SETS' },
-    { id: 'ledger' as ViewModule, label: 'Dual Ledger', icon: Scale, badge: currentUser.canViewFinances ? null : 'LOCK' },
+    { id: 'ledger' as ViewModule, label: 'Studio Ledger', icon: Scale, badge: currentUser.canViewFinances ? null : 'LOCK' },
     { id: 'billing' as ViewModule, label: 'Invoices & Retainers', icon: FileText, badge: null },
     { id: 'feedback' as ViewModule, label: 'Client Feedback', icon: MessageSquareQuote, badge: 'PORTAL' },
     { id: 'settings' as ViewModule, label: 'Studio Settings', icon: Settings, badge: currentUser.canAccessSettings ? null : 'VIEW' },
@@ -104,10 +104,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 className="flex flex-col whitespace-nowrap"
               >
                 <span className="font-serif tracking-[0.2em] text-xs font-bold uppercase text-carbon dark:text-white">
-                  VOWS Studio
+                  VOWS
                 </span>
                 <span className="text-[9px] uppercase font-mono text-bone-muted dark:text-obsidian-muted tracking-[0.15em]">
-                  by Reuben
+                  Wedding Cinematics & Stills
                 </span>
               </motion.div>
             )}
@@ -270,7 +270,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   {currentUser.fullName}
                 </p>
                 <p className="text-[9px] font-mono uppercase tracking-wider text-bone-muted dark:text-obsidian-muted truncate">
-                  @{currentUser.username} // {currentUser.role === 'ADMIN_DIRECTOR' ? 'ROOT' : 'CREW'}
+                  @{currentUser.username} // {currentUser.role === 'ADMIN_DIRECTOR' ? 'ROOT' : currentUser.role === 'PRODUCT_DEMO' ? 'DEMO' : currentUser.role === 'ADMIN_ACCESS' ? 'ADMIN' : 'CREW'}
                 </p>
               </div>
 

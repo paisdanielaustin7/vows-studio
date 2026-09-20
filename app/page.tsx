@@ -67,6 +67,7 @@ import {
   fetchLedgerFromCloud,
   fetchInvoicesFromCloud,
   syncQuotationToCloud,
+  deleteQuotationFromCloud,
   syncBookingToCloud,
   syncEnquiryToCloud,
   syncLedgerEntryToCloud,
@@ -768,7 +769,37 @@ export default function StudioOSHome() {
     syncEnquiryToCloud(enquiry);
   };
 
-  // 4. One-Click Conversion: Quotation -> Confirmed Booking / Order
+  // 4. Quotation Deletion Engine
+  const handleDeleteQuotation = (quoteId: string) => {
+    setQuotations((prev) => prev.filter((q) => q.id !== quoteId));
+    if (typeof window !== 'undefined') {
+      const remaining = quotations.filter((q) => q.id !== quoteId);
+      localStorage.setItem('lumina_quotations', JSON.stringify(remaining));
+    }
+    deleteQuotationFromCloud(quoteId);
+  };
+
+  // 4b. Update Enquiry Engine
+  const handleUpdateEnquiry = (updatedEnq: Enquiry) => {
+    setEnquiries((prev) => prev.map((e) => (e.id === updatedEnq.id ? updatedEnq : e)));
+    syncEnquiryToCloud(updatedEnq);
+    if (typeof window !== 'undefined') {
+      const updated = enquiries.map((e) => (e.id === updatedEnq.id ? updatedEnq : e));
+      localStorage.setItem('lumina_enquiries', JSON.stringify(updated));
+    }
+  };
+
+  // 4c. Update Booking Engine
+  const handleUpdateBooking = (updatedBooking: ShootBooking) => {
+    setBookings((prev) => prev.map((b) => (b.id === updatedBooking.id ? updatedBooking : b)));
+    syncBookingToCloud(updatedBooking);
+    if (typeof window !== 'undefined') {
+      const updated = bookings.map((b) => (b.id === updatedBooking.id ? updatedBooking : b));
+      localStorage.setItem('lumina_bookings', JSON.stringify(updated));
+    }
+  };
+
+  // 4d. One-Click Conversion: Quotation -> Confirmed Booking / Order
   const handleConvertQuotationToBooking = (quote: Quotation) => {
     const updatedQuote: Quotation = {
       ...quote,
@@ -776,10 +807,22 @@ export default function StudioOSHome() {
     };
     handleUpdateQuotation(updatedQuote);
 
-    if (quote.enquiryId) {
+    // Locate linked enquiry to dynamically pull actual event date
+    const linkedEnq = enquiries.find(
+      (e) => e.id === quote.enquiryId || e.clientName.toLowerCase() === quote.clientName.toLowerCase()
+    );
+
+    let finalEventDate = linkedEnq?.eventDate;
+    if (!finalEventDate || !/^\d{4}-\d{2}-\d{2}$/.test(finalEventDate)) {
+      const parsed = new Date(quote.date);
+      finalEventDate = !isNaN(parsed.getTime()) ? parsed.toISOString().split('T')[0] : new Date().toISOString().split('T')[0];
+    }
+
+    if (quote.enquiryId || linkedEnq) {
+      const targetEnqId = quote.enquiryId || linkedEnq?.id;
       setEnquiries(
         enquiries.map((e) => {
-          if (e.id === quote.enquiryId) {
+          if (e.id === targetEnqId) {
             const updatedEnq = { ...e, status: 'CONVERTED' as const };
             syncEnquiryToCloud(updatedEnq);
             return updatedEnq;
@@ -789,8 +832,8 @@ export default function StudioOSHome() {
       );
     }
 
-    const code = `LUM-MNG-${Math.floor(10 + Math.random() * 89)}`;
-    const advance = (quote.totalPrice * quote.advancePercentage) / 100;
+    const code = `VOWS-MNG-${Math.floor(10 + Math.random() * 89)}`;
+    const advance = (quote.totalPrice * (quote.advancePercentage || 50)) / 100;
     const balance = quote.totalPrice - advance;
 
     const newBooking: ShootBooking = {
@@ -800,30 +843,30 @@ export default function StudioOSHome() {
       client: {
         id: `cli-${Date.now()}`,
         name: quote.clientName,
-        company: quote.clientName,
+        company: quote.packageTitle,
         brandTier: 'HAUTE_COUTURE',
-        email: quote.clientEmail || 'client@lumina.in',
+        email: quote.clientEmail || 'client@vows.in',
         phone: quote.clientPhone,
         city: quote.clientCity,
         totalBilled: quote.totalPrice,
         totalPaid: advance,
         status: 'ACTIVE',
       },
-      type: 'Haute Couture Editorial',
+      type: 'Wedding Cinemastory & Stills',
       status: 'CONFIRMED',
-      date: '2026-11-20',
+      date: finalEventDate,
       startTime: '06:00',
       endTime: '19:30',
       callTime: '05:30 AM (Set Call)',
       location: {
-        name: `${quote.clientCity} Coastal Venue & Heritage Set`,
+        name: `${quote.clientCity} Coastal Set & Reception Venue`,
         city: quote.clientCity,
         coordinates: '12.9141° N, 74.8560° E',
-        accessCode: 'COAST-GATE-26',
+        accessCode: 'VOWS-PASS-26',
       },
       productionTeam: [
-        { role: 'Studio Director & Lead Camera', name: 'Dan Aurel', initials: 'DA' },
-        { role: 'Cinematographer (4K Motion)', name: 'Reuben Serrao', initials: 'RS' },
+        { role: 'Owner & Lead Cinematographer', name: 'Reuben Serrao', initials: 'RS' },
+        { role: 'Lead Candid Photographer', name: 'Lead Photographer', initials: 'LP' },
         { role: 'Grip & Lighting Assistant', name: 'Santhosh Bhandary', initials: 'SB' },
       ],
       shotListTotal: 25,
@@ -835,15 +878,17 @@ export default function StudioOSHome() {
         currency: 'INR',
       },
       scheduleTimeline: [
-        { time: '05:30', activity: 'Grip & Lighting Equipment Setup', lead: 'Santhosh Bhandary' },
-        { time: '06:30', activity: 'Traditional Draping & Portraiture Master Plates', lead: 'Dan Aurel' },
-        { time: '16:00', activity: 'Sunset Coastal & Drone Cinema Flight', lead: 'Dan Aurel' },
+        { time: '05:30', activity: 'Grip & Camera Rig Setup', lead: 'Santhosh Bhandary' },
+        { time: '06:30', activity: 'Traditional Rituals & Bridal Portraiture', lead: 'Lead Photographer' },
+        { time: '16:00', activity: 'Sunset Coastal & Drone Cinema Flight', lead: 'Reuben Serrao' },
         { time: '19:30', activity: 'Wrap & Dual NVMe RAW Ingest Verification', lead: 'Reuben Serrao' },
       ],
       gearAllocated: [
-        'Sony FX3 + Sony A7R V Dual Body Rig',
-        'Sony GM 24-70mm f/2.8 & 85mm f/1.4 Primes',
+        'Sony FX3 Full-Frame Cinema Body',
+        'Sony A7R V High-Resolution Stills Body',
+        'Sony FE 24-70mm f/2.8 GM II & 85mm f/1.4 Primes',
         'Godox AD400 Pro Wireless Strobes',
+        'DJI Mavic 3 Pro Cine Drone',
       ],
       editorialNotes: 'Converted from Quotation ' + quote.quotationNumber,
       quotationId: quote.id,
@@ -872,7 +917,7 @@ export default function StudioOSHome() {
       : [
           {
             id: 'item-1',
-            description: `${quote.packageTitle} Coverage & Master Deliverables`,
+            description: `${quote.packageTitle} Master Coverage & Deliverables`,
             quantity: 1,
             unitPrice: quote.totalPrice,
             total: quote.totalPrice,
@@ -887,7 +932,7 @@ export default function StudioOSHome() {
       clientName: quote.clientName,
       brand: quote.packageTitle,
       issueDate: new Date().toISOString().split('T')[0],
-      dueDate: '2026-11-20',
+      dueDate: finalEventDate,
       items: lineItems,
       subtotal: quote.totalPrice,
       productionFeeTax: 0,
@@ -899,7 +944,9 @@ export default function StudioOSHome() {
     setInvoices([newInvoice, ...invoices]);
     syncInvoiceToCloud(newInvoice);
 
-    alert(`Order ${code} created successfully! Added to Calendar and Invoices.`);
+    // Focus on new booking in Calendar immediately
+    setSelectedShoot(newBooking);
+    setActiveModule('calendar');
   };
 
   // 5. Synced Payment Entry Engine
@@ -1232,7 +1279,10 @@ export default function StudioOSHome() {
               currentUser={currentUser}
               onAddQuotation={handleAddQuotation}
               onUpdateQuotation={handleUpdateQuotation}
+              onDeleteQuotation={handleDeleteQuotation}
               onAddEnquiry={handleAddEnquiry}
+              onUpdateEnquiry={handleUpdateEnquiry}
+              onUpdateBooking={handleUpdateBooking}
               onConvertQuotationToBooking={handleConvertQuotationToBooking}
               onRecordPayment={handleRecordPayment}
               onUpdateBookingDelivery={handleUpdateBookingDelivery}
@@ -1244,12 +1294,16 @@ export default function StudioOSHome() {
               shoots={bookings}
               selectedShoot={selectedShoot}
               onSelectShoot={setSelectedShoot}
+              onUpdateBooking={handleUpdateBooking}
+              settings={studioSettings}
             />
           )}
 
           {activeModule === 'ledger' && (
             <LedgerView
               initialLedger={ledger}
+              enquiries={enquiries}
+              settings={studioSettings}
               currentUser={currentUser}
               onOpenLoginModal={() => setIsLoginModalOpen(true)}
               onUpdateLedger={handleUpdateLedger}
@@ -1268,7 +1322,7 @@ export default function StudioOSHome() {
           {/* Client Feedback & Deck Testimonial Hub */}
           {activeModule === 'feedback' && (
             <FeedbackView
-              clients={mockClients}
+              enquiries={enquiries}
               bookings={bookings}
               currentUser={currentUser}
             />
