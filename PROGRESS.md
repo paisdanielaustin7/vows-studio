@@ -13,7 +13,7 @@
 | **Task 0** | Reconcile Documents 01–08 | **DONE** | `docs: reconcile documents 01-08` |
 | **Phase 0** | Project Foundation & Tooling | **DONE** | Branch `phase-0-foundation` |
 | **Phase 1** | Identity, Roles, RLS Foundation | **DONE** | Branch `phase-1-auth` |
-| **Phase 2** | Settings, Catalogue, Clients, Enquiries, Quotations | Pending | Branch `phase-2-sales` |
+| **Phase 2** | Settings, Catalogue, Clients, Enquiries, Quotations | **IN PROGRESS** | Branch `phase-2-sales` |
 | **Phase 3** | Bookings, Events, Crew, Schedule | Pending | Branch `phase-3-bookings` |
 | **Phase 4** | Finance (Invoices, Payments, Receipts, Credits, Expenses, Ledger) | Pending | Branch `phase-4-finance` |
 | **Phase 5** | PDF Generation & Gmail Integration | Pending | Branch `phase-5-documents` |
@@ -63,3 +63,16 @@
 - [x] Task 11: Admin pages (SA only): `/admin/dashboard`, `/admin/users`, `/admin/audit-log`. Business Owner scoped audit view at `/crm/audit-log`. Self-profile pages.
 - [x] Task 12: RLS policies (migration 014 part 1) and test harness (`tests/integration/rls/rls-matrix.test.ts`).
 - [x] Task 13: Auth screens per UI_DESIGN_SPEC §7.2 and CRM shell (`app/crm/layout.tsx` with sidebar, topbar, mobile nav, notification polling, theme toggle, 403/404/500 pages).
+
+---
+
+## Phase 2 Checklist (Settings, Catalogue, Clients, Enquiries, Quotations)
+- [x] Task 1: Migrations 004–007, seed data, and `app.next_document_number()` with FY rollover logic & concurrency safety.
+- [x] Task 2: Settings pages: studio profile, branding, billing and GST (audited gst_toggle), document numbering, email templates, expense categories, quotation templates.
+- [x] Task 3: Catalogue: services and packages with price history (`effective_from`), archive, `show_on_website`, CSV import, current-price views.
+- [x] Task 4: Clients: child tables for phones (max 3) and emails (max 2), duplicate detection, activity feed, soft delete, formula-injection safe CSV export.
+- [x] Task 5: Enquiries: manual create, list/kanban toggle, explicit state machine transitions, follow-ups, lost reasons, link client action.
+- [x] Task 6: Quotations: builder UI per UI_DESIGN_SPEC §8.2, live totals via `lib/money`, server recompute, versioning drawer, acceptance/rejection actions.
+- [x] Task 7: Deferred constraint triggers (sum checks) and money CHECKs on quotations.
+- [x] Task 8: RLS policies (migration 014 part 2) and extended RLS test matrix.
+- [x] Task 9: Dashboard skeleton page (`/crm/dashboard`) with enquiry and quotation widgets.

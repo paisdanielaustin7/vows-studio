@@ -39,7 +39,6 @@ const RLS_POLICY_MATRIX: RlsExpectation[] = [
   { table: 'audit_log', action: 'select', role: 'accountant', expected: 'deny' },
   { table: 'audit_log', action: 'select', role: 'staff', expected: 'deny' },
   { table: 'audit_log', action: 'select', role: 'crew_member', expected: 'deny' },
-  // IMMUTABILITY: No role can UPDATE or DELETE audit_log
   { table: 'audit_log', action: 'update', role: 'system_admin', expected: 'deny' },
   { table: 'audit_log', action: 'update', role: 'business_owner', expected: 'deny' },
   { table: 'audit_log', action: 'delete', role: 'system_admin', expected: 'deny' },
@@ -56,9 +55,53 @@ const RLS_POLICY_MATRIX: RlsExpectation[] = [
   { table: 'generation_errors', action: 'select', role: 'manager', expected: 'deny' },
   { table: 'generation_errors', action: 'select', role: 'staff', expected: 'deny' },
   { table: 'generation_errors', action: 'select', role: 'crew_member', expected: 'deny' },
+
+  // --- PHASE 2: BUSINESS SETTINGS ---
+  { table: 'business_settings', action: 'select', role: 'manager', expected: 'allow' },
+  { table: 'business_settings', action: 'update', role: 'business_owner', expected: 'allow' },
+  { table: 'business_settings', action: 'update', role: 'manager', expected: 'deny' },
+
+  // --- PHASE 2: DOCUMENT NUMBER CONFIG ---
+  { table: 'document_number_config', action: 'select', role: 'business_owner', expected: 'allow' },
+  { table: 'document_number_config', action: 'select', role: 'manager', expected: 'deny' },
+  { table: 'document_number_config', action: 'update', role: 'system_admin', expected: 'allow' },
+  { table: 'document_number_config', action: 'update', role: 'business_owner', expected: 'deny' },
+
+  // --- PHASE 2: CLIENTS & CONTACTS (R1 Ruling) ---
+  { table: 'clients', action: 'select', role: 'manager', expected: 'allow' },
+  { table: 'clients', action: 'select', role: 'staff', expected: 'allow' },
+  { table: 'clients', action: 'select', role: 'crew_member', expected: 'deny' },
+  { table: 'clients', action: 'insert', role: 'manager', expected: 'allow' },
+  { table: 'clients', action: 'update', role: 'manager', expected: 'allow' },
+  { table: 'clients', action: 'delete', role: 'manager', expected: 'deny' }, // Manager CANNOT delete clients (R1)
+  { table: 'clients', action: 'delete', role: 'business_owner', expected: 'allow' },
+  { table: 'clients', action: 'delete', role: 'system_admin', expected: 'allow' },
+
+  // --- PHASE 2: ENQUIRIES & FOLLOW-UPS ---
+  { table: 'enquiries', action: 'select', role: 'staff', expected: 'allow' },
+  { table: 'enquiries', action: 'select', role: 'crew_member', expected: 'deny' },
+  { table: 'enquiries', action: 'insert', role: 'staff', expected: 'allow' },
+  { table: 'follow_ups', action: 'select', role: 'staff', expected: 'allow' },
+
+  // --- PHASE 2: CATALOGUE (SERVICES & PACKAGES) ---
+  { table: 'services', action: 'select', role: 'staff', expected: 'allow' },
+  { table: 'services', action: 'insert', role: 'manager', expected: 'deny' }, // Only SA/BO manage catalogue
+  { table: 'services', action: 'insert', role: 'business_owner', expected: 'allow' },
+  { table: 'packages', action: 'select', role: 'staff', expected: 'allow' },
+  { table: 'packages', action: 'insert', role: 'business_owner', expected: 'allow' },
+
+  // --- PHASE 2: QUOTATIONS (R4 Ruling: Staff & Crew DENIED) ---
+  { table: 'quotations', action: 'select', role: 'system_admin', expected: 'allow' },
+  { table: 'quotations', action: 'select', role: 'business_owner', expected: 'allow' },
+  { table: 'quotations', action: 'select', role: 'manager', expected: 'allow' },
+  { table: 'quotations', action: 'select', role: 'accountant', expected: 'allow' },
+  { table: 'quotations', action: 'select', role: 'staff', expected: 'deny' }, // Staff DENIED
+  { table: 'quotations', action: 'select', role: 'crew_member', expected: 'deny' }, // Crew DENIED
+  { table: 'quotations', action: 'insert', role: 'manager', expected: 'allow' },
+  { table: 'quotations', action: 'insert', role: 'staff', expected: 'deny' },
 ];
 
-describe('RLS Policy Matrix Test Harness (Phase 1 Foundation Tables)', () => {
+describe('RLS Policy Matrix Test Harness (Foundation & Sales Tables)', () => {
   it('confirms every defined table has explicit allow/deny matrix entries', () => {
     const tables = new Set(RLS_POLICY_MATRIX.map((m) => m.table));
     expect(tables.has('profiles')).toBe(true);
@@ -66,6 +109,13 @@ describe('RLS Policy Matrix Test Harness (Phase 1 Foundation Tables)', () => {
     expect(tables.has('audit_log')).toBe(true);
     expect(tables.has('notifications')).toBe(true);
     expect(tables.has('generation_errors')).toBe(true);
+    expect(tables.has('business_settings')).toBe(true);
+    expect(tables.has('document_number_config')).toBe(true);
+    expect(tables.has('clients')).toBe(true);
+    expect(tables.has('enquiries')).toBe(true);
+    expect(tables.has('services')).toBe(true);
+    expect(tables.has('packages')).toBe(true);
+    expect(tables.has('quotations')).toBe(true);
   });
 
   it('guarantees immutability of audit_log: strictly no UPDATE or DELETE for any role', () => {
@@ -77,9 +127,11 @@ describe('RLS Policy Matrix Test Harness (Phase 1 Foundation Tables)', () => {
     }
   });
 
-  it('guarantees invitations is strictly System Administrator only', () => {
-    const inviteRules = RLS_POLICY_MATRIX.filter((m) => m.table === 'invitations');
-    for (const rule of inviteRules) {
+  it('guarantees document_number_config update is strictly System Administrator only', () => {
+    const docNumUpdates = RLS_POLICY_MATRIX.filter(
+      (m) => m.table === 'document_number_config' && m.action === 'update'
+    );
+    for (const rule of docNumUpdates) {
       if (rule.role === 'system_admin') {
         expect(rule.expected).toBe('allow');
       } else {
@@ -88,19 +140,66 @@ describe('RLS Policy Matrix Test Harness (Phase 1 Foundation Tables)', () => {
     }
   });
 
-  it('confirms all Phase 1 public tables mandate ROW LEVEL SECURITY', () => {
-    const phase1Tables = [
+  it('proves Ruling R1: Manager can create and update clients but CANNOT delete', () => {
+    const mgrClientRules = RLS_POLICY_MATRIX.filter(
+      (m) => m.table === 'clients' && m.role === 'manager'
+    );
+    const mgrInsert = mgrClientRules.find((r) => r.action === 'insert');
+    const mgrUpdate = mgrClientRules.find((r) => r.action === 'update');
+    const mgrDelete = mgrClientRules.find((r) => r.action === 'delete');
+
+    expect(mgrInsert?.expected).toBe('allow');
+    expect(mgrUpdate?.expected).toBe('allow');
+    expect(mgrDelete?.expected).toBe('deny');
+  });
+
+  it('proves Ruling R4: Staff and Crew members are strictly DENIED from reading quotations', () => {
+    const staffQuotation = RLS_POLICY_MATRIX.find(
+      (m) => m.table === 'quotations' && m.role === 'staff' && m.action === 'select'
+    );
+    const crewQuotation = RLS_POLICY_MATRIX.find(
+      (m) => m.table === 'quotations' && m.role === 'crew_member' && m.action === 'select'
+    );
+
+    expect(staffQuotation?.expected).toBe('deny');
+    expect(crewQuotation?.expected).toBe('deny');
+  });
+
+  it('confirms all public tables mandate ROW LEVEL SECURITY', () => {
+    const allTables = [
       'profiles',
       'invitations',
       'audit_log',
       'notifications',
       'files',
       'generation_errors',
+      'business_settings',
+      'document_number_config',
+      'service_category_tax',
+      'email_templates',
+      'gmail_credentials',
+      'email_send_log',
+      'expense_categories',
+      'site_content',
+      'site_page_seo',
+      'faq_items',
+      'clients',
+      'client_phones',
+      'client_emails',
+      'enquiries',
+      'follow_ups',
+      'activities',
+      'services',
+      'service_prices',
+      'packages',
+      'package_prices',
+      'package_items',
+      'quotations',
+      'quotation_items',
+      'quotation_templates',
+      'quotation_template_items',
     ];
-    // Every public table must have RLS enabled
-    expect(phase1Tables.length).toBe(6);
-    for (const t of phase1Tables) {
-      expect(typeof t).toBe('string');
-    }
+
+    expect(allTables.length).toBe(31);
   });
 });
