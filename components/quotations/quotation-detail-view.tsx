@@ -12,6 +12,7 @@ import {
   createQuotationVersionAction,
   deleteDraftQuotationAction,
 } from '@/server/actions/quotation.actions';
+import { SendDocumentDialog } from '@/components/common/send-document-dialog';
 
 interface QuotationDetailViewProps {
   quotation: Quotation;
@@ -35,6 +36,7 @@ export function QuotationDetailView({
   const [quotation, setQuotation] = useState<Quotation>(initialQuotation);
   const [isVersionDrawerOpen, setIsVersionDrawerOpen] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isSendEmailOpen, setIsSendEmailOpen] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const effectiveStatus = quotation.derivedStatus || quotation.status;
@@ -186,15 +188,34 @@ export function QuotationDetailView({
           )}
 
           <Button
+            onClick={() => setIsSendEmailOpen(true)}
+            className="bg-[#1c1917] hover:bg-stone-800 text-white flex items-center gap-1.5"
+          >
+            <span className="material-symbols-outlined text-[18px]">mail</span>
+            Send via Email
+          </Button>
+
+          <Button
             variant="outline"
-            onClick={() => window.print()}
+            onClick={() => window.open(`/api/pdf/quotation/${quotation.id}`, '_blank')}
             className="flex items-center gap-1.5"
           >
-            <span className="material-symbols-outlined text-[18px]">print</span>
-            Print / PDF
+            <span className="material-symbols-outlined text-[18px]">download</span>
+            Download PDF
           </Button>
         </div>
       </div>
+
+      <SendDocumentDialog
+        isOpen={isSendEmailOpen}
+        onClose={() => setIsSendEmailOpen(false)}
+        documentType="quotation"
+        documentId={quotation.id}
+        documentNumber={quotation.quotationNumber}
+        defaultRecipientEmail=""
+        defaultSubject={`Quotation ${quotation.quotationNumber} from VOWS Studio`}
+        pdfDownloadUrl={`/api/pdf/quotation/${quotation.id}`}
+      />
 
       {errorMsg && (
         <div className="p-4 rounded-xl bg-error-container text-on-error-container text-sm flex items-center gap-2">

@@ -223,11 +223,48 @@ export async function forgotPasswordAction(
       metadata: { reason: 'Password recovery requested' },
     });
 
+    const recoveryLink = linkData?.properties?.action_link;
+    if (recoveryLink) {
+      try {
+        const { getGmailStatus } = await import('@/lib/gmail/oauth');
+        const gmailStatus = await getGmailStatus();
+        if (gmailStatus.status === 'connected') {
+          const { sendEmailService } = await import('@/server/services/email.service');
+          const { wrapInBrandedEmailLayout } = await import('@/lib/email/template-renderer');
+          const htmlBody = wrapInBrandedEmailLayout({
+            title: 'Reset Your Password',
+            bodyContent: `
+              <p>Hello,</p>
+              <p>You requested a password reset for your VOWS Studio account. Click the button below to set a new password:</p>
+              <p>This link is valid for 1 hour.</p>
+            `,
+            actionButton: {
+              label: 'Reset Password',
+              url: recoveryLink,
+            },
+          });
+
+          await sendEmailService(
+            {
+              to: email,
+              subject: 'VOWS Studio — Password Reset Link',
+              htmlBody,
+              documentType: 'password_reset',
+              idempotencyKey: `pwd-reset-${Date.now()}-${email}`,
+            },
+            '00000000-0000-0000-0000-000000000000'
+          );
+        }
+      } catch (e) {
+        console.warn('Gmail password reset send failed:', e);
+      }
+    }
+
     const isDev = process.env.NODE_ENV !== 'production' || process.env.APP_MODE === 'demo';
     return {
       data: {
         message: 'If an account exists with this email, a password recovery link has been generated.',
-        manualLink: isDev ? linkData?.properties?.action_link : undefined,
+        manualLink: isDev ? recoveryLink : undefined,
       },
     };
   }
@@ -305,7 +342,7 @@ export async function resetPasswordAction(
  */
 export async function inviteUserAction(
   input: InviteUserInput
-): Promise<ActionResult<{ inviteLink: string; invitationId: string }>> {
+): Promise<ActionResult<{ inviteLink: string; invitationId: string; emailSent?: boolean }>> {
   const user = await getAuthenticatedUser();
   requirePermission(user, 'users:manage');
 
@@ -387,10 +424,47 @@ export async function inviteUserAction(
   const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
   const inviteLink = `${appUrl}/invite/${rawToken}`;
 
+  let emailSent = false;
+  try {
+    const { getGmailStatus } = await import('@/lib/gmail/oauth');
+    const gmailStatus = await getGmailStatus();
+    if (gmailStatus.status === 'connected') {
+      const { sendEmailService } = await import('@/server/services/email.service');
+      const { wrapInBrandedEmailLayout } = await import('@/lib/email/template-renderer');
+      const htmlBody = wrapInBrandedEmailLayout({
+        title: 'VOWS Studio CRM Team Invitation',
+        bodyContent: `
+          <p>Hello ${fullName},</p>
+          <p>You have been invited to join <strong>VOWS Studio CRM</strong> as a <strong>${role.replace('_', ' ')}</strong>.</p>
+          <p>This invitation link is valid for 72 hours.</p>
+        `,
+        actionButton: {
+          label: 'Accept Invitation & Set Password',
+          url: inviteLink,
+        },
+      });
+
+      await sendEmailService(
+        {
+          to: email,
+          subject: 'You have been invited to VOWS Studio CRM',
+          htmlBody,
+          documentType: 'invitation',
+          idempotencyKey: `invite-${invitation.id}`,
+        },
+        user.id
+      );
+      emailSent = true;
+    }
+  } catch (e) {
+    console.warn('Gmail invite send failed, manual link provided:', e);
+  }
+
   return {
     data: {
       inviteLink,
       invitationId: invitation.id,
+      emailSent,
     },
   };
 }

@@ -11,6 +11,7 @@ import {
   issueCreditNoteAction,
 } from '@/server/actions/finance.actions';
 import { RecordPaymentDialog } from '@/components/finance/record-payment-dialog';
+import { SendDocumentDialog } from '@/components/common/send-document-dialog';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -49,6 +50,7 @@ export function InvoiceDetailView({
 
   // Dialog states
   const [isRecordPaymentOpen, setIsRecordPaymentOpen] = useState(false);
+  const [isSendEmailOpen, setIsSendEmailOpen] = useState(false);
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
   const [cancelReason, setCancelReason] = useState('');
   const [isSubmittingCancel, setIsSubmittingCancel] = useState(false);
@@ -162,6 +164,25 @@ export function InvoiceDetailView({
               Issue Credit Note
             </Button>
           )}
+
+          {invoice.status !== 'cancelled' && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setIsSendEmailOpen(true)}
+              className="bg-stone-900 text-white hover:bg-stone-800"
+            >
+              Send via Email
+            </Button>
+          )}
+
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => window.open(`/api/pdf/invoice/${invoice.id}`, '_blank')}
+          >
+            Download PDF
+          </Button>
 
           {invoice.balancePaise > 0 && invoice.status !== 'cancelled' && canManage && (
             <Button size="sm" onClick={() => setIsRecordPaymentOpen(true)}>
@@ -506,6 +527,18 @@ export function InvoiceDetailView({
         preselectedInvoiceId={invoice.id}
         preselectedClientId={invoice.clientId}
         onSuccess={() => router.refresh()}
+      />
+
+      {/* Send Document Dialog */}
+      <SendDocumentDialog
+        isOpen={isSendEmailOpen}
+        onClose={() => setIsSendEmailOpen(false)}
+        documentType="invoice"
+        documentId={invoice.id}
+        documentNumber={invoice.invoiceNumber}
+        defaultRecipientEmail=""
+        defaultSubject={`Tax Invoice ${invoice.invoiceNumber} from VOWS Studio`}
+        pdfDownloadUrl={`/api/pdf/invoice/${invoice.id}`}
       />
 
       {/* Cancel Invoice Modal */}

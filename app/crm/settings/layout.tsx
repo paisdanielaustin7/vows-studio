@@ -8,9 +8,9 @@ import {
   Building2,
   Receipt,
   Binary,
+  Mail,
   MailCheck,
   Wallet,
-  Globe,
   ChevronRight,
 } from 'lucide-react';
 
@@ -62,6 +62,12 @@ const SETTINGS_NAV: SettingsNavGroup[] = [
   {
     title: 'Integrations & Comm',
     items: [
+      {
+        title: 'Gmail Integration',
+        description: 'Connected Google account & OAuth',
+        href: '/crm/settings/gmail',
+        icon: Mail,
+      },
       {
         title: 'Email Templates',
         description: 'Quotation & invoice messages',

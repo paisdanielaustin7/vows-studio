@@ -433,6 +433,102 @@ export interface Database {
         };
         Relationships: Relationship[];
       };
+      gmail_credentials: {
+        Row: {
+          id: number;
+          google_email: string;
+          from_name: string | null;
+          reply_to: string | null;
+          access_token_enc: string;
+          refresh_token_enc: string;
+          token_expires_at: string;
+          scopes: string[];
+          status: 'connected' | 'needs_reconnect' | 'disconnected';
+          connected_by: string | null;
+          connected_at: string | null;
+          last_error: string | null;
+          updated_at: string;
+        };
+        Insert: {
+          id?: number;
+          google_email: string;
+          from_name?: string | null;
+          reply_to?: string | null;
+          access_token_enc: string;
+          refresh_token_enc: string;
+          token_expires_at: string;
+          scopes: string[];
+          status?: 'connected' | 'needs_reconnect' | 'disconnected';
+          connected_by?: string | null;
+          connected_at?: string | null;
+          last_error?: string | null;
+          updated_at?: string;
+        };
+        Update: {
+          id?: number;
+          google_email?: string;
+          from_name?: string | null;
+          reply_to?: string | null;
+          access_token_enc?: string;
+          refresh_token_enc?: string;
+          token_expires_at?: string;
+          scopes?: string[];
+          status?: 'connected' | 'needs_reconnect' | 'disconnected';
+          connected_by?: string | null;
+          connected_at?: string | null;
+          last_error?: string | null;
+          updated_at?: string;
+        };
+        Relationships: Relationship[];
+      };
+      email_send_log: {
+        Row: {
+          id: string;
+          document_type: string | null;
+          document_id: string | null;
+          client_id: string | null;
+          recipient: string;
+          subject: string;
+          sender_email: string;
+          gmail_message_id: string | null;
+          status: 'sent' | 'failed' | 'queued';
+          error: string | null;
+          idempotency_key: string;
+          sent_by: string;
+          sent_at: string;
+        };
+        Insert: {
+          id?: string;
+          document_type?: string | null;
+          document_id?: string | null;
+          client_id?: string | null;
+          recipient: string;
+          subject: string;
+          sender_email: string;
+          gmail_message_id?: string | null;
+          status: 'sent' | 'failed' | 'queued';
+          error?: string | null;
+          idempotency_key: string;
+          sent_by: string;
+          sent_at?: string;
+        };
+        Update: {
+          id?: string;
+          document_type?: string | null;
+          document_id?: string | null;
+          client_id?: string | null;
+          recipient?: string;
+          subject?: string;
+          sender_email?: string;
+          gmail_message_id?: string | null;
+          status?: 'sent' | 'failed' | 'queued';
+          error?: string | null;
+          idempotency_key?: string;
+          sent_by?: string;
+          sent_at?: string;
+        };
+        Relationships: Relationship[];
+      };
       expense_categories: {
         Row: {
           id: string;
