@@ -99,9 +99,34 @@ const RLS_POLICY_MATRIX: RlsExpectation[] = [
   { table: 'quotations', action: 'select', role: 'crew_member', expected: 'deny' }, // Crew DENIED
   { table: 'quotations', action: 'insert', role: 'manager', expected: 'allow' },
   { table: 'quotations', action: 'insert', role: 'staff', expected: 'deny' },
+
+  // --- PHASE 3: BOOKINGS & OPERATIONS ---
+  { table: 'bookings', action: 'select', role: 'system_admin', expected: 'allow' },
+  { table: 'bookings', action: 'select', role: 'business_owner', expected: 'allow' },
+  { table: 'bookings', action: 'select', role: 'manager', expected: 'allow' },
+  { table: 'bookings', action: 'select', role: 'accountant', expected: 'allow' },
+  { table: 'bookings', action: 'select', role: 'staff', expected: 'deny' }, // via bookings_ops_v only
+  { table: 'bookings', action: 'select', role: 'crew_member', expected: 'deny' }, // via bookings_ops_v only
+  { table: 'bookings', action: 'delete', role: 'manager', expected: 'deny' }, // SA & BO only
+  { table: 'bookings', action: 'delete', role: 'system_admin', expected: 'allow' },
+
+  // --- PHASE 3: BOOKING LINE ITEMS ---
+  { table: 'booking_line_items', action: 'select', role: 'system_admin', expected: 'allow' },
+  { table: 'booking_line_items', action: 'select', role: 'manager', expected: 'allow' },
+  { table: 'booking_line_items', action: 'select', role: 'staff', expected: 'deny' },
+  { table: 'booking_line_items', action: 'select', role: 'crew_member', expected: 'deny' },
+
+  // --- PHASE 3: EVENTS & CREW ---
+  { table: 'events', action: 'select', role: 'staff', expected: 'allow' },
+  { table: 'events', action: 'select', role: 'crew_member', expected: 'allow', scope: 'assigned_events_only' },
+  { table: 'crew_members', action: 'select', role: 'crew_member', expected: 'allow', scope: 'own_record_only' },
+  { table: 'event_crew_assignments', action: 'select', role: 'crew_member', expected: 'allow', scope: 'assigned_only' },
+  { table: 'crew_unavailability', action: 'select', role: 'crew_member', expected: 'allow', scope: 'own_records_only' },
+  { table: 'crew_pay_records', action: 'select', role: 'staff', expected: 'deny' },
+  { table: 'crew_pay_records', action: 'select', role: 'crew_member', expected: 'allow', scope: 'own_records_only' },
 ];
 
-describe('RLS Policy Matrix Test Harness (Foundation & Sales Tables)', () => {
+describe('RLS Policy Matrix Test Harness (Foundation, Sales, Bookings & Operations)', () => {
   it('confirms every defined table has explicit allow/deny matrix entries', () => {
     const tables = new Set(RLS_POLICY_MATRIX.map((m) => m.table));
     expect(tables.has('profiles')).toBe(true);
@@ -165,6 +190,22 @@ describe('RLS Policy Matrix Test Harness (Foundation & Sales Tables)', () => {
     expect(crewQuotation?.expected).toBe('deny');
   });
 
+  it('proves Phase 3 Money-Free Operations Rule: Staff and Crew are DENIED direct bookings table access', () => {
+    const staffBooking = RLS_POLICY_MATRIX.find(
+      (m) => m.table === 'bookings' && m.role === 'staff' && m.action === 'select'
+    );
+    const crewBooking = RLS_POLICY_MATRIX.find(
+      (m) => m.table === 'bookings' && m.role === 'crew_member' && m.action === 'select'
+    );
+    const staffLines = RLS_POLICY_MATRIX.find(
+      (m) => m.table === 'booking_line_items' && m.role === 'staff' && m.action === 'select'
+    );
+
+    expect(staffBooking?.expected).toBe('deny');
+    expect(crewBooking?.expected).toBe('deny');
+    expect(staffLines?.expected).toBe('deny');
+  });
+
   it('confirms all public tables mandate ROW LEVEL SECURITY', () => {
     const allTables = [
       'profiles',
@@ -198,8 +239,18 @@ describe('RLS Policy Matrix Test Harness (Foundation & Sales Tables)', () => {
       'quotation_items',
       'quotation_templates',
       'quotation_template_items',
+      // Phase 3 tables
+      'bookings',
+      'booking_line_items',
+      'events',
+      'crew_members',
+      'event_crew_assignments',
+      'crew_unavailability',
+      'crew_pay_records',
+      'delivery_pipelines',
+      'delivery_stages',
     ];
 
-    expect(allTables.length).toBe(31);
+    expect(allTables.length).toBe(40);
   });
 });

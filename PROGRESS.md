@@ -13,9 +13,9 @@
 | **Task 0** | Reconcile Documents 01–08 | **DONE** | `docs: reconcile documents 01-08` |
 | **Phase 0** | Project Foundation & Tooling | **DONE** | Branch `phase-0-foundation` |
 | **Phase 1** | Identity, Roles, RLS Foundation | **DONE** | Branch `phase-1-auth` |
-| **Phase 2** | Settings, Catalogue, Clients, Enquiries, Quotations | **IN PROGRESS** | Branch `phase-2-sales` |
-| **Phase 3** | Bookings, Events, Crew, Schedule | Pending | Branch `phase-3-bookings` |
-| **Phase 4** | Finance (Invoices, Payments, Receipts, Credits, Expenses, Ledger) | Pending | Branch `phase-4-finance` |
+| **Phase 2** | Settings, Catalogue, Clients, Enquiries, Quotations | **DONE** | Branch `phase-2-sales` |
+| **Phase 3** | Bookings, Events, Crew, Schedule | **DONE** | Branch `phase-3-bookings` |
+| **Phase 4** | Finance (Invoices, Payments, Receipts, Credits, Expenses, Ledger) | **IN PROGRESS** | Branch `phase-4-finance` |
 | **Phase 5** | PDF Generation & Gmail Integration | Pending | Branch `phase-5-documents` |
 | **Phase 6** | Delivery Pipeline (9 Stages) | Pending | Branch `phase-6-delivery` |
 | **Phase 7** | Public Website | Pending | Branch `phase-7-website` |
@@ -76,3 +76,20 @@
 - [x] Task 7: Deferred constraint triggers (sum checks) and money CHECKs on quotations.
 - [x] Task 8: RLS policies (migration 014 part 2) and extended RLS test matrix.
 - [x] Task 9: Dashboard skeleton page (`/crm/dashboard`) with enquiry and quotation widgets.
+
+---
+
+## Phase 3 Checklist (Bookings, Events, Crew, Schedule)
+- [x] Task 1: Migration 008 (tables: bookings, booking_line_items, events, crew_members, event_crew_assignments, crew_unavailability, crew_pay_records, delivery_pipelines, delivery_stages) & views `bookings_ops_v`, `crew_event_v`.
+- [x] Task 2: Conflict detection function `check_crew_conflicts()` and assignment function `assign_crew()` enforcing D-34 override invariants.
+- [x] Task 3: Automatic delivery pipeline initialization `init_booking_delivery_pipeline()` on booking creation.
+- [x] Task 4: Booking conversion functions (`convert_enquiry_to_booking`, `create_booking_from_quotation` copying lines BK-10).
+- [x] Task 5: Booking cancellation function `cancel_booking()` requiring reason and preserving invoices per D-35.
+- [x] Task 6: RLS policies (migration 016) enforcing role separation: Staff & Crew read through views, direct table access denied.
+- [x] Task 7: Sensitive crew bank account encryption via AES-256-GCM; decrypted server-side only for SA/BO.
+- [x] Task 8: Server actions for bookings, events, and crew management with role-based money hiding.
+- [x] Task 9: Booking List (`/crm/bookings`) and Detail (`/crm/bookings/[id]`) matching Stitch designs with 5 tab views, add event modal, crew assignment modal with conflict detection, and cancellation dialog.
+- [x] Task 10: Standalone Booking Builder (`/crm/bookings/new`) with client picker, dynamic lines, and auto-computed totals.
+- [x] Task 11: Crew Directory (`/crm/crew`) and Profile (`/crm/crew/[id]`) with metrics, discipline filter, blackout date management, and assignment history.
+- [x] Task 12: Production Schedule Calendar (`/crm/schedule`) matching Stitch designs with month/week/list views, ceremony type legend, crew filtering, and anti-poaching client masking.
+- [x] Task 13: Unit and integration tests covering scheduling conflicts, quotation conversion, cancellation invariants, and RLS matrix (168 tests, 100% coverage on validations and money).

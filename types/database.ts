@@ -1713,6 +1713,19 @@ export interface Database {
         };
         Returns: string;
       };
+      check_crew_conflicts: {
+        Args: {
+          p_crew_member_id: string;
+          p_event_date: string;
+          p_start_time?: string;
+          p_end_time?: string;
+          p_exclude_event_id?: string;
+        };
+        Returns: {
+          conflict_type: string;
+          conflict_details: string;
+        }[];
+      };
       assign_crew: {
         Args: {
           p_event_id: string;
@@ -1821,6 +1834,19 @@ export interface Database {
           p_date?: string;
         };
         Returns: string;
+      };
+      check_crew_conflicts: {
+        Args: {
+          p_crew_member_id: string;
+          p_event_date: string;
+          p_start_time?: string;
+          p_end_time?: string;
+          p_exclude_event_id?: string;
+        };
+        Returns: {
+          conflict_type: string;
+          conflict_details: string;
+        }[];
       };
     };
     Enums: {
