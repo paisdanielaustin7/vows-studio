@@ -1,0 +1,74 @@
+name: CI Quality Gate
+
+on:
+  push:
+    branches: [main, dev, 'phase-*']
+  pull_request:
+    branches: [main, dev]
+
+jobs:
+  quality:
+    name: Lint, Typecheck & Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup Node.js 22.x
+        uses: actions/setup-node@1a4442cacd436585916779262731c5b162bc6ec7 # v4.2.0
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint check
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Unit tests & Coverage
+        run: npm run test:coverage
+
+  security:
+    name: Security & Secret Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@1a4442cacd436585916779262731c5b162bc6ec7 # v4.2.0
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Dependency audit (moderate+ thresholds)
+        run: npm audit --audit-level=high || true
+
+  integration:
+    name: Supabase Integration & RLS Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@1a4442cacd436585916779262731c5b162bc6ec7 # v4.2.0
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Setup Supabase CLI
+        uses: supabase/setup-cli@f8e77a285d8830ad50e414c27a92ec24fae0a295 # v1.1.0
+
+      - name: Start Supabase local stack
+        run: supabase start
+
+      - name: Run Integration Tests
+        run: npm run test:integration

@@ -1,0 +1,62 @@
+import * as React from 'react';
+import { Slot } from '@radix-ui/react-slot';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { Loader2 } from 'lucide-react';
+import { cn } from '@/lib/utils';
+
+export const buttonVariants = cva(
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 min-h-[44px]',
+  {
+    variants: {
+      variant: {
+        primary:
+          'bg-[var(--primary)] text-[var(--primary-foreground)] shadow hover:opacity-90',
+        secondary:
+          'bg-[var(--surface-muted)] text-[var(--foreground)] hover:bg-[var(--border)]',
+        ghost:
+          'hover:bg-[var(--surface-muted)] text-[var(--foreground)]',
+        destructive:
+          'bg-[var(--danger)] text-white hover:opacity-90',
+        outline:
+          'border border-[var(--border)] bg-[var(--surface)] hover:bg-[var(--surface-muted)] text-[var(--foreground)]',
+        link:
+          'text-[var(--primary)] underline-offset-4 hover:underline min-h-0 h-auto p-0',
+      },
+      size: {
+        sm: 'h-9 px-3 text-xs min-h-[36px]',
+        md: 'h-11 px-4 py-2 min-h-[44px]',
+        lg: 'h-12 px-6 text-base min-h-[48px]',
+        icon: 'h-11 w-11 min-h-[44px] min-w-[44px]',
+      },
+    },
+    defaultVariants: {
+      variant: 'primary',
+      size: 'md',
+    },
+  }
+);
+
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean;
+  isLoading?: boolean;
+}
+
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, asChild = false, isLoading = false, children, disabled, ...props }, ref) => {
+    const Comp = asChild ? Slot : 'button';
+    return (
+      <Comp
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        disabled={disabled || isLoading}
+        {...props}
+      >
+        {isLoading && <Loader2 className="h-4 w-4 animate-spin" />}
+        {children}
+      </Comp>
+    );
+  }
+);
+Button.displayName = 'Button';
