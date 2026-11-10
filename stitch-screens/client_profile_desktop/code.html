@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-background":"#171d19","surface-container-highest":"#dee4de","secondary-container":"#ceead2","on-surface-variant":"#424843","secondary":"#4b6451","error-container":"#ffdad6","surface-variant":"#dee4de","surface-bright":"#f5fbf4","on-primary-container":"#1c3223","outline-variant":"#c3c8c1","tertiary-fixed-dim":"#c2c8c2","tertiary-fixed":"#dee4dd","primary-fixed":"#cfe9d3","on-secondary-fixed":"#082011","on-tertiary-fixed":"#171d19","inverse-primary":"#b3cdb7","surface":"#f5fbf4","surface-tint":"#4c6452","on-secondary-container":"#516a57","on-secondary":"#ffffff","on-tertiary-container":"#282f2a","on-primary":"#ffffff","on-primary-fixed":"#092012","surface-dim":"#d6dcd5","error":"#ba1a1a","on-surface":"#171d19","outline":"#737972","on-tertiary":"#ffffff","surface-container":"#eaefe9","inverse-surface":"#2c322e","inverse-on-surface":"#ecf2ec","surface-container-lowest":"#ffffff","surface-container-high":"#e4eae3","on-tertiary-fixed-variant":"#424843","on-primary-fixed-variant":"#354c3b","tertiary-container":"#909690","background":"#f5fbf4","on-secondary-fixed-variant":"#344c3b","on-error":"#ffffff","on-error-container":"#93000a","surface-container-low":"#eff5ef","primary-container":"#829b87","primary-fixed-dim":"#b3cdb7","secondary-fixed-dim":"#b2cdb6","tertiary":"#5a605b","secondary-fixed":"#ceead2","primary":"#4c6452"},borderRadius:{DEFAULT:"0.25rem",lg:"0.5rem",xl:"0.75rem",full:"9999px"},spacing:{"space-sm":"0.5rem",margin:"3rem","space-xs":"0.25rem","space-lg":"1.5rem","space-xl":"2.5rem",gutter:"1.5rem","gutter-mobile":"1rem","space-md":"1rem","margin-mobile":"1.25rem"},fontFamily:{"headline-lg":["Inter"],"body-md":["Inter"],"body-lg":["Inter"],"headline-lg-mobile":["Inter"],"body-sm":["Inter"],"headline-sm":["Inter"],"label-md":["Inter"],"label-sm":["Inter"],"label-lg":["Inter"],"display-mobile":["Inter"],display:["Inter"],"headline-md":["Inter"]},fontSize:{"headline-lg":["2rem",{lineHeight:"2.5rem",letterSpacing:"-0.02em",fontWeight:"600"}],"body-md":["0.875rem",{lineHeight:"1.5rem",fontWeight:"400"}],"body-lg":["1rem",{lineHeight:"1.625rem",fontWeight:"400"}],"headline-lg-mobile":["1.5rem",{lineHeight:"2rem",letterSpacing:"-0.015em",fontWeight:"600"}],"body-sm":["0.8125rem",{lineHeight:"1.25rem",fontWeight:"400"}],"headline-sm":["1.125rem",{lineHeight:"1.5rem",letterSpacing:"-0.01em",fontWeight:"500"}],"label-md":["0.75rem",{lineHeight:"1rem",letterSpacing:"0.02em",fontWeight:"500"}],"label-sm":["0.6875rem",{lineHeight:"0.875rem",letterSpacing:"0.04em",fontWeight:"600"}],"label-lg":["0.875rem",{lineHeight:"1.25rem",letterSpacing:"0.01em",fontWeight:"500"}],"display-mobile":["2rem",{lineHeight:"2.5rem",letterSpacing:"-0.02em",fontWeight:"600"}],display:["2.75rem",{lineHeight:"3.25rem",letterSpacing:"-0.03em",fontWeight:"600"}],"headline-md":["1.375rem",{lineHeight:"1.75rem",letterSpacing:"-0.015em",fontWeight:"600"}]}}}}</script></head><body class="bg-background font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-50 flex flex-col justify-between overflow-y-auto"><div class="flex flex-col"><div class="h-16 px-space-lg flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">movie_filter</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm tracking-tight text-on-surface">VOWS STUDIO</span><span class="font-label-sm text-label-sm text-on-surface-variant tracking-wider uppercase">Cinematic &amp; Stills</span></div></div><button aria-label="Collapse sidebar" class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded p-space-xs transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">menu_open</span></button></div><nav class="px-space-md py-space-sm space-y-space-md" data-active-classes="bg-secondary-container text-on-secondary-fixed font-medium rounded-lg"><div class="space-y-1"><div class="px-space-sm py-1 font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Sales</div><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="enquiries-list" href="#"><span class="font-body-sm text-body-sm">Enquiries</span><span class="px-2 py-0.5 rounded-full font-label-sm text-label-sm bg-primary-container text-on-primary-container">11</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="client-list,client-profile" href="#"><span class="font-body-sm text-body-sm">Clients</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="quotations" href="#"><span class="font-body-sm text-body-sm">Quotations</span></a></div><div class="space-y-1"><div class="px-space-sm py-1 font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Operations</div><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="bookings" href="#"><span class="font-body-sm text-body-sm">Bookings</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="schedule" href="#"><span class="font-body-sm text-body-sm">Schedule</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="crew" href="#"><span class="font-body-sm text-body-sm">Crew</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="delivery" href="#"><span class="font-body-sm text-body-sm">Delivery</span></a></div><div class="space-y-1"><div class="px-space-sm py-1 font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Finance</div><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="invoices" href="#"><span class="font-body-sm text-body-sm">Invoices</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="payments" href="#"><span class="font-body-sm text-body-sm">Payments</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="ledger" href="#"><span class="font-body-sm text-body-sm">Ledger</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="expenses" href="#"><span class="font-body-sm text-body-sm">Expenses</span></a></div><div class="space-y-1"><div class="px-space-sm py-1 font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Catalogue</div><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="services" href="#"><span class="font-body-sm text-body-sm">Services</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="packages" href="#"><span class="font-body-sm text-body-sm">Packages</span></a></div><div class="space-y-1"><div class="px-space-sm py-1 font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Website</div><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="portfolio" href="#"><span class="font-body-sm text-body-sm">Portfolio</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="reviews" href="#"><span class="font-body-sm text-body-sm">Reviews</span></a></div><div class="space-y-1"><div class="px-space-sm py-1 font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">System</div><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="settings" href="#"><span class="font-body-sm text-body-sm">Settings</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="audit-log" href="#"><span class="font-body-sm text-body-sm">Audit log</span></a></div></nav></div><div class="p-space-md"><div class="bg-surface-container p-space-sm rounded-lg flex items-center justify-between"><div class="flex items-center gap-space-sm min-w-0"><div class="w-9 h-9 rounded-full bg-primary flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-on-primary text-[20px]">person</span></div><div class="min-w-0"><p class="font-label-lg text-label-lg text-on-surface truncate">Reuben Serrao</p><p class="font-label-sm text-label-sm text-on-surface-variant truncate">Lead Director</p></div></div><button aria-label="Account switch" class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded p-1 transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">unfold_more</span></button></div></div></aside><div class="pl-72"><div class="fixed top-0 left-72 right-0 z-40 flex flex-col"><div class="bg-secondary-container/90 text-on-secondary-fixed text-label-sm font-label-sm px-space-lg py-1.5 flex items-center justify-between backdrop-blur-md"><div class="flex items-center gap-space-sm"><span>Demo Mode: You are viewing sample production workspace data.</span><span class="px-2 py-0.5 rounded bg-surface-container-low/60 uppercase text-[10px] tracking-wider">Sandbox</span></div><button class="hover:underline focus:outline-none">Reset Demo</button></div><div class="bg-error-container text-on-error-container text-label-sm font-label-sm px-space-lg py-1 flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px]">sync_problem</span><span>Live connection interrupted. Reconnecting studio sync...</span></div><button class="hover:underline font-medium focus:outline-none">Reconnect now</button></div><header class="h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] flex items-center justify-between px-space-lg"><div class="flex items-center gap-space-xs font-label-md text-label-md"><span class="text-on-surface-variant">Studio CRM</span><span class="material-symbols-outlined text-[16px] text-on-surface-variant">chevron_right</span><span class="text-on-surface-variant">Sales</span><span class="material-symbols-outlined text-[16px] text-on-surface-variant">chevron_right</span><span class="text-on-surface font-medium">Clients</span></div><div class="flex items-center gap-space-md"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-on-surface-variant text-[18px]">search</span><input class="w-72 pl-9 pr-12 py-1.5 bg-surface-container-low rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:bg-surface-container transition-colors" placeholder="Search leads, shoots, files..." type="text"/><kbd class="absolute right-2 px-1.5 py-0.5 rounded font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant">⌘K</kbd></div><div class="flex items-center gap-space-xs"><button aria-label="Notifications" class="relative p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-lg transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-error"></span></button><button aria-label="Toggle theme" class="p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-lg transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">light_mode</span></button></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header></div><main class="w-full pt-[7.25rem] bg-background"><div class="flex flex-col w-full">
+<div class="px-space-lg lg:px-margin py-space-lg max-w-[1400px] mx-auto w-full space-y-space-lg">
+<!-- Top Action Breadcrumbs & Navigation -->
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-sm pb-space-xs">
+<div class="flex items-center gap-space-xs font-label-md text-label-md text-on-surface-variant flex-wrap">
+<a class="hover:text-primary transition-colors flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[16px]">west</span>
+<span>Back to Clients</span>
+</a>
+<span class="text-outline-variant">/</span>
+<span class="text-on-surface-variant">Studio CRM</span>
+<span class="text-outline-variant">/</span>
+<span class="text-on-surface-variant">Sales</span>
+<span class="text-outline-variant">/</span>
+<span class="text-on-surface-variant">Clients</span>
+<span class="text-outline-variant">/</span>
+<span class="text-on-surface font-medium">Derick D'Souza &amp; Samantha Pinto</span>
+<span class="px-2 py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-tertiary tracking-wide uppercase">CLT-2025-019</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="inline-flex items-center gap-1.5 px-space-sm py-1 rounded bg-secondary-container text-on-secondary-fixed font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+          Production Phase: Active
+        </span>
+<button class="p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-lg transition-colors" title="Export Client Dossier" type="button">
+<span class="material-symbols-outlined text-[18px]">ios_share</span>
+</button>
+</div>
+</div>
+<!-- Main Editorial Client Profile Header Card -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm p-space-lg lg:p-space-xl relative overflow-hidden">
+<!-- Watermark / Decorative Accent -->
+<div class="absolute -right-8 -top-8 w-64 h-64 bg-secondary-container/20 rounded-full blur-3xl pointer-events-none"></div>
+<div class="relative flex flex-col xl:flex-row items-start justify-between gap-space-xl">
+<!-- Left: Editorial Title and Subtitle -->
+<div class="flex-1 space-y-space-md">
+<div class="flex flex-wrap items-center gap-space-sm">
+<span class="px-space-sm py-0.5 rounded bg-secondary-container text-on-secondary-fixed font-label-sm text-label-sm font-medium">
+              Client Active • Verified Identity
+            </span>
+<span class="px-space-sm py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm">
+              Tier 1 • High-Production
+            </span>
+<span class="font-label-sm text-label-sm text-tertiary">
+              ID: CLT-2025-019 • Registered Oct 14, 2024
+            </span>
+</div>
+<div>
+<h1 class="font-display text-display tracking-tight text-on-surface">
+              Derick D'Souza &amp; Samantha Pinto
+            </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-1 max-w-2xl">
+              Primary Client • 3-Day Catholic Nuptials &amp; Grand Reception (Nov 18–20, 2025, Mangalore)
+            </p>
+</div>
+<!-- Split Contact Dossier: Groom, Bride, Postal -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md pt-space-sm">
+<!-- Groom -->
+<div class="bg-surface-container-low/70 rounded-lg p-space-md flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-primary font-semibold">Groom (Primary)</span>
+<span class="material-symbols-outlined text-primary text-[18px]">badge</span>
+</div>
+<p class="font-headline-sm text-headline-sm text-on-surface">Derick D'Souza</p>
+<p class="font-label-md text-label-md text-on-surface-variant">Senior Architect</p>
+</div>
+<div class="pt-space-md space-y-1">
+<a class="font-body-sm text-body-sm text-on-surface hover:text-primary transition-colors flex items-center gap-1.5 truncate" href="mailto:derick.dsouza@gmail.com">
+<span class="material-symbols-outlined text-[15px] text-tertiary">mail</span>
+<span class="truncate">derick.dsouza@gmail.com</span>
+</a>
+<a class="font-body-sm text-body-sm text-on-surface hover:text-primary transition-colors flex items-center gap-1.5" href="tel:+919845211984">
+<span class="material-symbols-outlined text-[15px] text-tertiary">call</span>
+<span>+91 98452 11984</span>
+</a>
+</div>
+</div>
+<!-- Bride -->
+<div class="bg-surface-container-low/70 rounded-lg p-space-md flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-semibold">Bride (Co-Client)</span>
+<span class="material-symbols-outlined text-secondary text-[18px]">favorite</span>
+</div>
+<p class="font-headline-sm text-headline-sm text-on-surface">Samantha Pinto</p>
+<p class="font-label-md text-label-md text-on-surface-variant">Creative Strategist</p>
+</div>
+<div class="pt-space-md space-y-1">
+<a class="font-body-sm text-body-sm text-on-surface hover:text-primary transition-colors flex items-center gap-1.5 truncate" href="mailto:sam.pinto.creative@gmail.com">
+<span class="material-symbols-outlined text-[15px] text-tertiary">mail</span>
+<span class="truncate">sam.pinto.creative@gmail.com</span>
+</a>
+<a class="font-body-sm text-body-sm text-on-surface hover:text-primary transition-colors flex items-center gap-1.5" href="tel:+919901488721">
+<span class="material-symbols-outlined text-[15px] text-tertiary">call</span>
+<span>+91 99014 88721</span>
+</a>
+</div>
+</div>
+<!-- Studio Address / Region -->
+<div class="bg-surface-container-low/70 rounded-lg p-space-md flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-tertiary font-semibold">Postal &amp; Logistics</span>
+<span class="material-symbols-outlined text-tertiary text-[18px]">location_on</span>
+</div>
+<p class="font-headline-sm text-headline-sm text-on-surface">Residence &amp; Base</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+                  Kodialbail, Mangalore,<br/>Karnataka 575003, India
+                </p>
+</div>
+<div class="pt-space-md">
+<span class="inline-flex items-center gap-1 font-label-sm text-label-sm text-primary">
+<span class="material-symbols-outlined text-[14px]">flight_takeoff</span>
+                  Local Destination Shoot (Domestic Hub)
+                </span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Side: Editorial Quick Actions Bar -->
+<div class="w-full xl:w-72 flex flex-col gap-space-sm pt-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Direct Client Actions</span>
+<div class="grid grid-cols-2 gap-space-xs">
+<a class="px-space-sm py-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md flex items-center justify-center gap-1.5 transition-colors" href="tel:+919845211984">
+<span class="material-symbols-outlined text-[16px]">call</span>
+<span>Direct Call</span>
+</a>
+<a class="px-space-sm py-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md flex items-center justify-center gap-1.5 transition-colors" href="https://wa.me/919845211984" target="_blank">
+<span class="material-symbols-outlined text-[16px] text-secondary">chat</span>
+<span>WhatsApp</span>
+</a>
+</div>
+<a class="w-full px-space-sm py-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md flex items-center justify-center gap-1.5 transition-colors" href="mailto:derick.dsouza@gmail.com,sam.pinto.creative@gmail.com">
+<span class="material-symbols-outlined text-[16px]">email</span>
+<span>Send Joint Email</span>
+</a>
+<div class="h-[1px] bg-surface-container my-1"></div>
+<div class="flex flex-col gap-space-xs">
+<button class="w-full px-space-md py-2.5 rounded-lg bg-primary hover:bg-on-primary-container text-on-primary font-label-lg text-label-lg flex items-center justify-center gap-2 transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span>+ New Booking</span>
+</button>
+<button class="w-full px-space-md py-2 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface font-label-md text-label-md flex items-center justify-center gap-2 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">request_quote</span>
+<span>Create Quotation</span>
+</button>
+<button class="w-full px-space-md py-2 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface-variant hover:text-on-surface font-label-md text-label-md flex items-center justify-center gap-2 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">edit_note</span>
+<span>Edit Profile</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Financial Pulse: Stat Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- Outstanding Balance -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-medium">Outstanding Balance</span>
+<span class="w-7 h-7 rounded-full bg-error-container text-on-error-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">pending_actions</span>
+</span>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-on-surface tracking-tight">₹1,80,000</span>
+<span class="font-label-sm text-label-sm text-error font-medium">Due Nov 01</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Second Advance Milestone (35%)</p>
+</div>
+<div class="mt-space-md pt-2 border-t-0 bg-surface-container-low rounded px-2.5 py-1 flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>Status</span>
+<span class="text-error font-medium flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span> Pending Payment
+          </span>
+</div>
+</div>
+<!-- Lifetime Revenue -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-medium">Lifetime Revenue</span>
+<span class="w-7 h-7 rounded-full bg-secondary-container text-on-secondary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">account_balance_wallet</span>
+</span>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-on-surface tracking-tight">₹5,40,000</span>
+<span class="font-label-sm text-label-sm text-secondary font-medium">100% Contracted</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">1 Booked Production + Pre-Wedding</p>
+</div>
+<div class="mt-space-md pt-2 bg-surface-container-low rounded px-2.5 py-1 flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>Collected</span>
+<span class="text-secondary font-medium">₹3,60,000 (66.7%)</span>
+</div>
+</div>
+<!-- Total Quotations -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-medium">Total Quotations</span>
+<span class="w-7 h-7 rounded-full bg-surface-container-high text-on-surface flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">receipt_long</span>
+</span>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-on-surface tracking-tight">₹6,00,000</span>
+<span class="font-label-sm text-label-sm text-tertiary">2 Quotes</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">1 Approved (₹5.4L), 1 Draft Add-on</p>
+</div>
+<div class="mt-space-md pt-2 bg-surface-container-low rounded px-2.5 py-1 flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>Pipeline</span>
+<span class="text-primary font-medium">₹60,000 in Review</span>
+</div>
+</div>
+<!-- Productions / Events -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-medium">Productions / Events</span>
+<span class="w-7 h-7 rounded-full bg-primary-container/40 text-on-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">celebration</span>
+</span>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-on-surface tracking-tight">1 Confirmed</span>
+<span class="font-label-sm text-label-sm text-primary font-medium">Nov 2025</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">3 Days • 650 Expected Guests</p>
+</div>
+<div class="mt-space-md pt-2 bg-surface-container-low rounded px-2.5 py-1 flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>Location</span>
+<span class="text-on-surface font-medium truncate">Mangalore, Karnataka</span>
+</div>
+</div>
+</div>
+<!-- Main Tabbed Experience -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<!-- Tab Header Switcher -->
+<div class="bg-surface-container-low px-space-lg pt-space-sm flex items-center gap-space-md overflow-x-auto scrollbar-none border-b-0">
+<button class="tab-btn pb-3 px-1 font-label-lg text-label-lg transition-all text-primary font-semibold relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-primary" id="tab-btn-overview" onclick="switchClientTab('overview')" type="button">
+          Overview
+        </button>
+<button class="tab-btn pb-3 px-1 font-label-lg text-label-lg transition-all text-on-surface-variant hover:text-on-surface relative" id="tab-btn-enquiries" onclick="switchClientTab('enquiries')" type="button">
+          Enquiries <span class="ml-1 px-1.5 py-0.5 rounded-full text-[10px] bg-surface-container text-on-surface-variant">1</span>
+</button>
+<button class="tab-btn pb-3 px-1 font-label-lg text-label-lg transition-all text-on-surface-variant hover:text-on-surface relative" id="tab-btn-quotations" onclick="switchClientTab('quotations')" type="button">
+          Quotations <span class="ml-1 px-1.5 py-0.5 rounded-full text-[10px] bg-secondary-container text-on-secondary-fixed font-medium">2</span>
+</button>
+<button class="tab-btn pb-3 px-1 font-label-lg text-label-lg transition-all text-on-surface-variant hover:text-on-surface relative" id="tab-btn-bookings" onclick="switchClientTab('bookings')" type="button">
+          Bookings <span class="ml-1 px-1.5 py-0.5 rounded-full text-[10px] bg-primary-container text-on-primary-container font-medium">1</span>
+</button>
+<button class="tab-btn pb-3 px-1 font-label-lg text-label-lg transition-all text-on-surface-variant hover:text-on-surface relative" id="tab-btn-invoices" onclick="switchClientTab('invoices')" type="button">
+          Invoices and payments <span class="ml-1 px-1.5 py-0.5 rounded-full text-[10px] bg-error-container text-on-error-container font-medium">1 Due</span>
+</button>
+<button class="tab-btn pb-3 px-1 font-label-lg text-label-lg transition-all text-on-surface-variant hover:text-on-surface relative" id="tab-btn-activity" onclick="switchClientTab('activity')" type="button">
+          Activity
+        </button>
+</div>
+<!-- TAB CONTENT AREA -->
+<div class="p-space-lg lg:p-space-xl">
+<!-- TAB 1: OVERVIEW -->
+<div class="tab-pane space-y-space-xl" id="tab-content-overview">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl">
+<!-- Left 7 cols: Key Event Details & Visual Direction -->
+<div class="lg:col-span-7 space-y-space-lg">
+<!-- Event Monograph Overview -->
+<div class="space-y-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">church</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-primary font-semibold">Production Dossier</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface">
+                  3-Day Catholic Wedding &amp; Coastal Reception
+                </h2>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                  Solemn high nuptial mass at the historical 1880s <strong>St. Aloysius Chapel</strong>, renowned for Italian master Antony Moscheni's frescoes, followed by a seaside cocktail soiree and grand grand ballroom reception at <strong>The Ocean Pearl, Mangalore</strong>.
+                </p>
+</div>
+<!-- Production & Itinerary Schedule Highlights -->
+<div class="bg-surface-container-low rounded-lg p-space-md space-y-space-sm">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">Milestone Dates (Nov 2025)</span>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-sm pt-1">
+<div class="bg-surface-container-lowest p-space-sm rounded">
+<span class="font-label-sm text-label-sm text-tertiary">Day 1 • Nov 18</span>
+<p class="font-label-lg text-label-lg text-on-surface">Roce &amp; Blessings</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Ancestral Manor, Mangalore</p>
+</div>
+<div class="bg-surface-container-lowest p-space-sm rounded">
+<span class="font-label-sm text-label-sm text-tertiary">Day 2 • Nov 19</span>
+<p class="font-label-lg text-label-lg text-on-surface">Holy Nuptials</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">St. Aloysius Chapel</p>
+</div>
+<div class="bg-surface-container-lowest p-space-sm rounded">
+<span class="font-label-sm text-label-sm text-tertiary">Day 3 • Nov 20</span>
+<p class="font-label-lg text-label-lg text-on-surface">Grand Reception</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">The Ocean Pearl Hall</p>
+</div>
+</div>
+</div>
+<!-- Editorial Aesthetic & Look Preferences -->
+<div class="space-y-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">Preferences &amp; Creative Notes</span>
+<div class="bg-surface-container-low rounded-lg p-space-md border-l-4 border-primary">
+<div class="flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[22px] mt-0.5">style</span>
+<div class="space-y-1">
+<p class="font-headline-sm text-headline-sm text-on-surface">
+                        "Loves vintage 35mm monograph look and Portra 400 wedding prints. Full 4K Cinema Teaser requested."
+                      </p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                        Client explicitly requested subdued skin tones, avoidance of warm orange highlights, and high dynamic range capture inside the fresco church nave. Portra 400 grain simulation approved for official fine-art hardcover monograph album.
+                      </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Moodboard Visual Previews -->
+<div class="space-y-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">Curated Aesthetic Moodboard (Approved Tone)</span>
+<div class="grid grid-cols-2 gap-space-sm">
+<div class="relative rounded-lg overflow-hidden h-44 bg-surface-container-high group">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Cinematic still of an elegant Catholic bride inside historic St Aloysius Chapel with natural golden light streaming across vintage baroque architecture and delicate lace veil, 35mm Portra 400 aesthetic, muted sage and warm neutral tones, fine art editorial wedding photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkFu3kKFzx187LMuHecpPLabBj0JXb_nk5Guxa_TJjjjL-rrLtBqaGrOQs22CbvKRP9rnWHMl3WDP1g_Z4PAH6MLyBzd55fRB69lyQeGhFTMp_i2VfcnpMhccIEIMshS2vde_rWtfLmMxNxgg5C5bRL_9doFmAoV9fihQtzo7cSisAcgctsYf-nC2oRNo7CbVjT_CpUo7a-RmjcYbL93wN3ColuJ4zn6v0GyHMV8RR"/>
+<div class="absolute bottom-0 inset-x-0 p-space-sm bg-gradient-to-t from-black/70 via-black/30 to-transparent">
+<span class="font-label-sm text-label-sm text-white">St. Aloysius Chapel Architectural Lighting</span>
+</div>
+</div>
+<div class="relative rounded-lg overflow-hidden h-44 bg-surface-container-high group">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Monochromatic and subtle color wedding portrait of an elegant couple in classical tailored attire overlooking Mangalore coastal shore at twilight, editorial film grain, serene quiet luxury aesthetic with deep contrast and natural poise." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbd3htTmUtf-G3Z78yWHDOAXyolmfLXEO_v6EY7OfU4hC2jOY-637NPKdl7URQ06wSqolkMGNcFKNAhuAbq3DMs1MFs6Pv6Bn23FH5e2n-l7AUYzWwcwirqe7G3DsKnQ87P__ARpNO0JojCuKDyOBf_EwrVqMXqOOfarZvFhWHcFc2LxxusNnjRCFm4FVsFwoxt1u75a4yFYPp5K6rng83FR4HBS6JWHp4dnHPxlMd"/>
+<div class="absolute bottom-0 inset-x-0 p-space-sm bg-gradient-to-t from-black/70 via-black/30 to-transparent">
+<span class="font-label-sm text-label-sm text-white">Coastal Sunset Monograph Tone</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right 5 cols: Assigned Production Crew & Emergency Family Contacts -->
+<div class="lg:col-span-5 space-y-space-lg">
+<!-- Assigned Studio Team -->
+<div class="bg-surface-container-low rounded-xl p-space-lg space-y-space-md">
+<div class="flex items-center justify-between">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-primary font-semibold">Assigned Production Team</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Director &amp; Cinematographer</h3>
+</div>
+<span class="material-symbols-outlined text-primary text-[22px]">video_camera_front</span>
+</div>
+<div class="space-y-space-sm">
+<!-- Lead Director -->
+<div class="bg-surface-container-lowest p-space-sm rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary font-semibold text-sm">
+                        RS
+                      </div>
+<div>
+<p class="font-label-lg text-label-lg text-on-surface font-semibold">Reuben Serrao</p>
+<p class="font-label-sm text-label-sm text-primary">Lead Visual Director</p>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded bg-secondary-container text-on-secondary-fixed text-label-sm font-label-sm">
+                      Confirmed Lead
+                    </span>
+</div>
+<!-- Senior Cine -->
+<div class="bg-surface-container-lowest p-space-sm rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center font-semibold text-sm">
+                        KV
+                      </div>
+<div>
+<p class="font-label-lg text-label-lg text-on-surface font-semibold">Kiran V.</p>
+<p class="font-label-sm text-label-sm text-tertiary">Senior Cine &amp; Colorist</p>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant text-label-sm font-label-sm">
+                      4K Cine Crew
+                    </span>
+</div>
+</div>
+<div class="pt-2 text-right">
+<button class="text-primary hover:text-on-primary-container font-label-sm text-label-sm font-medium flex items-center gap-1 justify-end ml-auto" type="button">
+<span>Manage Crew Allocations</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Emergency & Family Contacts -->
+<div class="bg-surface-container-low rounded-xl p-space-lg space-y-space-md">
+<div class="flex items-center justify-between">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-tertiary font-semibold">Escalation &amp; Logistics</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Key Family &amp; Coordinator</h3>
+</div>
+<span class="material-symbols-outlined text-tertiary text-[22px]">contact_phone</span>
+</div>
+<div class="space-y-space-sm">
+<!-- Wedding Coordinator -->
+<div class="bg-surface-container-lowest p-space-sm rounded-lg">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-secondary font-semibold">Wedding Coordinator</span>
+<span class="font-label-sm text-label-sm text-tertiary">Primary Logistics Contact</span>
+</div>
+<p class="font-label-lg text-label-lg text-on-surface font-medium mt-0.5">Maria Fernandes (Maria Coord)</p>
+<div class="flex items-center justify-between mt-1 pt-1 font-body-sm text-body-sm text-on-surface-variant">
+<span>Planners Guild Mangalore</span>
+<a class="text-primary hover:underline font-medium" href="tel:+919880199210">+91 98801 99210</a>
+</div>
+</div>
+<!-- Groom's Father -->
+<div class="bg-surface-container-lowest p-space-sm rounded-lg">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">Groom's Family Representative</span>
+<span class="font-label-sm text-label-sm text-tertiary">Father</span>
+</div>
+<p class="font-label-lg text-label-lg text-on-surface font-medium mt-0.5">Capt. Ronald D'Souza</p>
+<div class="flex items-center justify-between mt-1 pt-1 font-body-sm text-body-sm text-on-surface-variant">
+<span>Kodialbail Manor</span>
+<a class="text-on-surface hover:text-primary font-medium" href="tel:+919845012345">+91 98450 12345</a>
+</div>
+</div>
+<!-- Bride's Mother -->
+<div class="bg-surface-container-lowest p-space-sm rounded-lg">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">Bride's Family Representative</span>
+<span class="font-label-sm text-label-sm text-tertiary">Mother</span>
+</div>
+<p class="font-label-lg text-label-lg text-on-surface font-medium mt-0.5">Dr. Philomena Pinto</p>
+<div class="flex items-center justify-between mt-1 pt-1 font-body-sm text-body-sm text-on-surface-variant">
+<span>Kadri Hills, Mangalore</span>
+<a class="text-on-surface hover:text-primary font-medium" href="tel:+919945187654">+91 99451 87654</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- TAB 2: ENQUIRIES -->
+<div class="tab-pane hidden space-y-space-md" id="tab-content-enquiries">
+<div class="flex items-center justify-between">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Linked Enquiry Inflow</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Original leads and preliminary scope requests received from this client.</p>
+</div>
+<button class="px-space-md py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition-colors flex items-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[16px]">add</span>
+<span>Manual Lead Log</span>
+</button>
+</div>
+<div class="bg-surface-container-low rounded-xl p-space-lg space-y-space-md">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm pb-space-sm border-b border-surface-variant/40">
+<div class="flex items-center gap-space-sm">
+<span class="px-2.5 py-1 rounded-md bg-secondary-container text-on-secondary-fixed font-label-sm text-label-sm font-semibold">
+                  ENQ-2025-042
+                </span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">
+                  3-Day Catholic Wedding Cinematography &amp; Stills Monograph
+                </span>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm">
+                  Received 2h ago
+                </span>
+<span class="px-2.5 py-0.5 rounded-full bg-secondary-container text-on-secondary-fixed font-label-sm text-label-sm font-medium">
+                  Converted to Booking
+                </span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-space-md">
+<div>
+<span class="font-label-sm text-label-sm text-tertiary uppercase">Target Production Budget</span>
+<p class="font-label-lg text-label-lg text-on-surface font-semibold mt-0.5">₹4,50,000 – ₹6,00,000</p>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-tertiary uppercase">Lead Channel</span>
+<p class="font-label-lg text-label-lg text-on-surface font-semibold mt-0.5">VOWS Studio Editorial Portfolio</p>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-tertiary uppercase">Initial Request Date</span>
+<p class="font-label-lg text-label-lg text-on-surface font-semibold mt-0.5">Oct 14, 2024</p>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-tertiary uppercase">Assigned Consultant</span>
+<p class="font-label-lg text-label-lg text-on-surface font-semibold mt-0.5">Reuben Serrao</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-lg space-y-1">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-tertiary font-medium">Initial Client Message</span>
+<p class="font-body-md text-body-md text-on-surface-variant italic">
+                "Hello VOWS Studio, we are planning our nuptials in Mangalore in Nov 2025 across St. Aloysius Chapel and Ocean Pearl. We are architecture and creative professionals and seek a strictly quiet, editorial visual tone rather than saturated high-contrast wedding videos. Would love to discuss a comprehensive 3-day package including drone stills."
+              </p>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="font-label-sm text-label-sm text-tertiary">Converted into confirmed booking BK-2025-014 on Nov 02, 2024</span>
+<button class="font-label-sm text-label-sm text-primary font-semibold hover:underline flex items-center gap-1" type="button">
+<span>View Full Enquiry History</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- TAB 3: QUOTATIONS -->
+<div class="tab-pane hidden space-y-space-md" id="tab-content-quotations">
+<div class="flex items-center justify-between">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Issued Quotations &amp; Proposals</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Pricing proposals, coverage specs, and custom line-item quotes.</p>
+</div>
+<button class="px-space-md py-2 rounded-lg bg-primary hover:bg-on-primary-container text-on-primary font-label-md text-label-md transition-colors flex items-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[16px]">add</span>
+<span>Create New Quotation</span>
+</button>
+</div>
+<div class="space-y-space-md">
+<!-- Quotation 1: Accepted -->
+<div class="bg-surface-container-low rounded-xl p-space-lg space-y-space-sm">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-lg text-label-lg font-bold text-on-surface">QT-2025-088</span>
+<span class="px-2 py-0.5 rounded bg-secondary-container text-on-secondary-fixed font-label-sm text-label-sm font-medium">
+                    Accepted &amp; Signed
+                  </span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-label-sm text-label-sm text-tertiary">Grand Total</span>
+<span class="font-headline-md text-headline-md text-on-surface font-semibold">₹5,40,000</span>
+</div>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Monograph Suite &amp; 4K Cinema (3 Days)</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+                  Includes 3-day lead cinematography, 2 fine art still photographers, 4K Master Cinema film (18-22 min), 90s Teaser, raw archival drive, and 2 bespoke linen-bound 35mm art albums.
+                </p>
+</div>
+<div class="flex flex-wrap items-center justify-between gap-space-sm pt-space-xs text-on-surface-variant font-label-sm text-label-sm">
+<div class="flex items-center gap-space-md">
+<span>Issued: Oct 22, 2024</span>
+<span>Signed: Oct 28, 2024</span>
+<span>Valid Through: Nov 20, 2025</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="px-space-sm py-1 rounded bg-surface-container-lowest text-on-surface hover:text-primary font-medium transition-colors" type="button">
+                    View PDF
+                  </button>
+<button class="px-space-sm py-1 rounded bg-surface-container-lowest text-on-surface hover:text-primary font-medium transition-colors" type="button">
+                    Audit Trail
+                  </button>
+</div>
+</div>
+</div>
+<!-- Quotation 2: Draft Addon -->
+<div class="bg-surface-container-low rounded-xl p-space-lg space-y-space-sm">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-lg text-label-lg font-bold text-on-surface">QT-2025-094</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm font-medium">
+                    Draft Pending Review
+                  </span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-label-sm text-label-sm text-tertiary">Estimated Total</span>
+<span class="font-headline-md text-headline-md text-on-surface font-semibold">₹60,000</span>
+</div>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Pre-Wedding Coastal Drone Teaser Add-on</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+                  Half-day sunset aerial shoot along Panambur &amp; Tannirbhavi coastline. Includes licensed FPV pilot, 60-second social cut, and raw 10-bit log footage color grading.
+                </p>
+</div>
+<div class="flex flex-wrap items-center justify-between gap-space-sm pt-space-xs text-on-surface-variant font-label-sm text-label-sm">
+<div class="flex items-center gap-space-md">
+<span>Drafted: Nov 12, 2024</span>
+<span>Author: Reuben Serrao</span>
+<span>Awaiting Couple Confirmation</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="px-space-sm py-1 rounded bg-primary text-on-primary font-medium hover:bg-on-primary-container transition-colors" type="button">
+                    Send to Client
+                  </button>
+<button class="px-space-sm py-1 rounded bg-surface-container-lowest text-on-surface hover:text-primary font-medium transition-colors" type="button">
+                    Edit Add-on
+                  </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- TAB 4: BOOKINGS -->
+<div class="tab-pane hidden space-y-space-md" id="tab-content-bookings">
+<div class="flex items-center justify-between">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Confirmed Studio Bookings</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Active operational bookings linked to crew scheduling and logistics.</p>
+</div>
+<button class="px-space-md py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition-colors flex items-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[16px]">calendar_add_on</span>
+<span>Sync with Master Calendar</span>
+</button>
+</div>
+<div class="bg-surface-container-low rounded-xl p-space-lg space-y-space-md">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm pb-space-sm border-b border-surface-variant/40">
+<div>
+<div class="flex items-center gap-space-sm">
+<span class="font-label-lg text-label-lg font-bold text-on-surface">BK-2025-014</span>
+<span class="px-2.5 py-0.5 rounded-full bg-secondary-container text-on-secondary-fixed font-label-sm text-label-sm font-semibold">
+                    Confirmed / In Pre-Production
+                  </span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mt-1">
+                  Derick &amp; Samantha 3-Day Nuptials
+                </h3>
+</div>
+<div class="text-right">
+<span class="font-label-sm text-label-sm text-tertiary uppercase">Production Schedule</span>
+<p class="font-headline-sm text-headline-sm text-primary font-semibold">Nov 18–20, 2025</p>
+</div>
+</div>
+<!-- Booking Highlights -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<div class="bg-surface-container-lowest p-space-md rounded-lg">
+<span class="font-label-sm text-label-sm text-tertiary uppercase">Crew Allocation</span>
+<p class="font-label-lg text-label-lg text-on-surface font-semibold mt-1">5 Members Deployed</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Reuben (Dir), Kiran (Cine), 2 Stills, 1 Tech</p>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-lg">
+<span class="font-label-sm text-label-sm text-tertiary uppercase">Deliverables Pack</span>
+<p class="font-label-lg text-label-lg text-on-surface font-semibold mt-1">Editorial Monograph &amp; Film</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">4K Master + 35mm Prints Album</p>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-lg">
+<span class="font-label-sm text-label-sm text-tertiary uppercase">Delivery Target</span>
+<p class="font-label-lg text-label-lg text-on-surface font-semibold mt-1">Feb 15, 2026</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Teaser promised by Dec 05, 2025</p>
+</div>
+</div>
+<!-- Callout -->
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px] text-primary">verified</span>
+<span>Church permissions granted for drone hover outside St. Aloysius perimeter.</span>
+</div>
+<button class="px-space-md py-1.5 rounded-lg bg-surface-container text-on-surface hover:text-primary font-label-sm text-label-sm transition-colors" type="button">
+                Open Full Production Hub
+              </button>
+</div>
+</div>
+</div>
+<!-- TAB 5: INVOICES AND PAYMENTS -->
+<div class="tab-pane hidden space-y-space-md" id="tab-content-invoices">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Invoices &amp; Payment Ledger</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Billed milestones, transaction references, and upcoming payment schedules.</p>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="px-space-md py-1.5 rounded-lg bg-surface-container text-on-surface font-label-md text-label-md hover:bg-surface-container-high transition-colors" type="button">
+                Download Statement
+              </button>
+<button class="px-space-md py-1.5 rounded-lg bg-primary text-on-primary font-label-md text-label-md hover:bg-on-primary-container transition-colors flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[16px]">add</span>
+<span>Issue New Invoice</span>
+</button>
+</div>
+</div>
+<!-- Clean Financial Table -->
+<div class="overflow-x-auto rounded-xl bg-surface-container-low">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
+<th class="py-3 px-space-md">Invoice #</th>
+<th class="py-3 px-space-md">Milestone &amp; Description</th>
+<th class="py-3 px-space-md">Billed Amount</th>
+<th class="py-3 px-space-md">Status</th>
+<th class="py-3 px-space-md">Payment Details</th>
+<th class="py-3 px-space-md text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y-0 font-body-sm text-body-sm text-on-surface">
+<!-- Row 1: Paid -->
+<tr class="hover:bg-surface-container-lowest/80 transition-colors">
+<td class="py-3.5 px-space-md font-label-md text-label-md font-semibold text-on-surface">
+                    INV-2025-110
+                  </td>
+<td class="py-3.5 px-space-md">
+<p class="font-medium text-on-surface">Retainer Deposit (25%)</p>
+<p class="text-tertiary text-xs">Date: Nov 10, 2024 • Contract Confirmation</p>
+</td>
+<td class="py-3.5 px-space-md font-semibold text-on-surface">
+                    ₹1,35,000
+                  </td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-fixed text-label-sm font-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Paid
+                    </span>
+</td>
+<td class="py-3.5 px-space-md text-on-surface-variant">
+                    Razorpay • Auth #RZP-884920
+                  </td>
+<td class="py-3.5 px-space-md text-right">
+<button class="text-primary hover:underline font-label-sm text-label-sm" type="button">Receipt</button>
+</td>
+</tr>
+<!-- Row 2: Paid -->
+<tr class="hover:bg-surface-container-lowest/80 transition-colors">
+<td class="py-3.5 px-space-md font-label-md text-label-md font-semibold text-on-surface">
+                    INV-2025-124
+                  </td>
+<td class="py-3.5 px-space-md">
+<p class="font-medium text-on-surface">Production Advance (40%)</p>
+<p class="text-tertiary text-xs">Date: Dec 15, 2024 • Crew Lock &amp; Logistics</p>
+</td>
+<td class="py-3.5 px-space-md font-semibold text-on-surface">
+                    ₹2,25,000
+                  </td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-fixed text-label-sm font-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Paid
+                    </span>
+</td>
+<td class="py-3.5 px-space-md text-on-surface-variant">
+                    NEFT / HDFC Transfer Ref #489210
+                  </td>
+<td class="py-3.5 px-space-md text-right">
+<button class="text-primary hover:underline font-label-sm text-label-sm" type="button">Receipt</button>
+</td>
+</tr>
+<!-- Row 3: Outstanding -->
+<tr class="bg-error-container/10 hover:bg-error-container/20 transition-colors">
+<td class="py-3.5 px-space-md font-label-md text-label-md font-semibold text-on-surface">
+                    INV-2025-140
+                  </td>
+<td class="py-3.5 px-space-md">
+<p class="font-medium text-on-surface">Pre-Shoot Milestone (35%)</p>
+<p class="text-error font-medium text-xs">Due on Nov 01, 2025 (Second Advance)</p>
+</td>
+<td class="py-3.5 px-space-md font-semibold text-error">
+                    ₹1,80,000
+                  </td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-error-container text-on-error-container text-label-sm font-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-error animate-pulse"></span> Outstanding
+                    </span>
+</td>
+<td class="py-3.5 px-space-md text-on-surface-variant italic">
+                    Awaiting Schedule Trigger
+                  </td>
+<td class="py-3.5 px-space-md text-right">
+<button class="px-2.5 py-1 rounded bg-primary text-on-primary font-label-sm text-label-sm hover:bg-on-primary-container transition-colors" type="button">
+                      Send Reminder
+                    </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Summary Strip -->
+<div class="p-space-md bg-surface-container-low rounded-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-sm font-label-md text-label-md">
+<span class="text-on-surface-variant">
+              Total Contract Billed: <strong class="text-on-surface font-semibold">₹5,40,000</strong>
+</span>
+<div class="flex items-center gap-space-lg">
+<span>Paid: <strong class="text-secondary font-semibold">₹3,60,000</strong></span>
+<span>Pending: <strong class="text-error font-semibold">₹1,80,000</strong></span>
+</div>
+</div>
+</div>
+<!-- TAB 6: ACTIVITY -->
+<div class="tab-pane hidden space-y-space-md" id="tab-content-activity">
+<div class="flex items-center justify-between">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Chronological Activity Log</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Comprehensive timeline of client interactions, payments, and document signatures.</p>
+</div>
+<button class="px-space-md py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition-colors flex items-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[16px]">post_add</span>
+<span>Add Internal Note</span>
+</button>
+</div>
+<!-- Editorial Timeline -->
+<div class="space-y-space-md relative before:content-[''] before:absolute before:left-3.5 before:top-2 before:bottom-2 before:w-[1px] before:bg-surface-container-highest">
+<!-- Item 1: Payment Received -->
+<div class="relative pl-10">
+<span class="absolute left-1.5 top-1.5 w-5 h-5 rounded-full bg-secondary-container text-on-secondary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px]">payments</span>
+</span>
+<div class="bg-surface-container-low rounded-lg p-space-md">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">Payment Received of ₹2,25,000</span>
+<span class="font-label-sm text-label-sm text-tertiary">Dec 15, 2024 at 14:32</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+                  Production Advance (40%) successfully received via NEFT Bank Transfer. Auto-receipt issued to Derick D'Souza.
+                </p>
+<div class="mt-2 flex items-center gap-2 font-label-sm text-label-sm text-tertiary">
+<span class="px-1.5 py-0.5 rounded bg-surface-container">Ref: INV-2025-124</span>
+<span>Finance Bot Sync</span>
+</div>
+</div>
+</div>
+<!-- Item 2: Contract Signed -->
+<div class="relative pl-10">
+<span class="absolute left-1.5 top-1.5 w-5 h-5 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px]">draw</span>
+</span>
+<div class="bg-surface-container-low rounded-lg p-space-md">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">Contract Signed via DocuSign</span>
+<span class="font-label-sm text-label-sm text-tertiary">Nov 02, 2024 at 18:45</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+                  Master Wedding Agreement signed by both Derick D'Souza and Samantha Pinto. Sealed with certificate #DS-99120.
+                </p>
+<div class="mt-2 flex items-center gap-2 font-label-sm text-label-sm text-tertiary">
+<span class="px-1.5 py-0.5 rounded bg-surface-container">Booking Ref: BK-2025-014</span>
+<span>Signed by 2 Recipients</span>
+</div>
+</div>
+</div>
+<!-- Item 3: WhatsApp Consultation Log -->
+<div class="relative pl-10">
+<span class="absolute left-1.5 top-1.5 w-5 h-5 rounded-full bg-surface-container-high text-on-surface flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px]">chat</span>
+</span>
+<div class="bg-surface-container-low rounded-lg p-space-md">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">WhatsApp Consultation Logged</span>
+<span class="font-label-sm text-label-sm text-tertiary">Oct 26, 2024 at 11:15</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+                  Consultation call conducted by <strong>Reuben Serrao</strong>. Discussed 35mm film stock preference, chapel lighting restrictions, and agreed to add drone teaser addon proposal.
+                </p>
+<div class="mt-2 flex items-center gap-2 font-label-sm text-label-sm text-tertiary">
+<span class="px-1.5 py-0.5 rounded bg-surface-container">Call Duration: 38 min</span>
+<span>Logged by Director</span>
+</div>
+</div>
+</div>
+<!-- Item 4: Profile Linked from Enquiry -->
+<div class="relative pl-10">
+<span class="absolute left-1.5 top-1.5 w-5 h-5 rounded-full bg-surface-container text-tertiary flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px]">link</span>
+</span>
+<div class="bg-surface-container-low rounded-lg p-space-md">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">Profile Created &amp; Linked from Enquiry ENQ-2025-042</span>
+<span class="font-label-sm text-label-sm text-tertiary">Oct 14, 2024 at 09:20</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+                  New client account generated automatically from verified enquiry submission. Client tagged for Mangalore regional team.
+                </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  function switchClientTab(tabId) {
+    // Hide all tab panes
+    const panes = document.querySelectorAll('.tab-pane');
+    panes.forEach(pane => pane.classList.add('hidden'));
+
+    // Deactivate all tab buttons
+    const buttons = document.querySelectorAll('.tab-btn');
+    buttons.forEach(btn => {
+      btn.classList.remove('text-primary', 'font-semibold', "after:content-['']", 'after:absolute', 'after:bottom-0', 'after:left-0', 'after:right-0', 'after:h-0.5', 'after:bg-primary');
+      btn.classList.add('text-on-surface-variant');
+    });
+
+    // Show target pane
+    const targetPane = document.getElementById('tab-content-' + tabId);
+    if (targetPane) {
+      targetPane.classList.remove('hidden');
+    }
+
+    // Activate target button
+    const targetBtn = document.getElementById('tab-btn-' + tabId);
+    if (targetBtn) {
+      targetBtn.classList.remove('text-on-surface-variant');
+      targetBtn.classList.add('text-primary', 'font-semibold', "after:content-['']", 'after:absolute', 'after:bottom-0', 'after:left-0', 'after:right-0', 'after:h-0.5', 'after:bg-primary');
+    }
+  }
+</script></main></div></body></html>

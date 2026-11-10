@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "secondary-container": "#ceead2",
+        "on-surface-variant": "#424843",
+        "on-primary-fixed": "#092012",
+        "on-primary": "#ffffff",
+        "outline": "#737972",
+        "surface": "#f5fbf4",
+        "inverse-primary": "#b3cdb7",
+        "on-secondary-container": "#516a57",
+        "error-container": "#ffdad6",
+        "secondary": "#4b6451",
+        "surface-container-highest": "#dee4de",
+        "surface-container-low": "#eff5ef",
+        "on-primary-container": "#1c3223",
+        "on-error-container": "#93000a",
+        "on-secondary-fixed": "#082011",
+        "tertiary-fixed-dim": "#c2c8c2",
+        "on-secondary": "#ffffff",
+        "on-background": "#171d19",
+        "primary-container": "#829b87",
+        "inverse-surface": "#2c322e",
+        "on-tertiary-fixed": "#171d19",
+        "surface-container": "#eaefe9",
+        "secondary-fixed": "#ceead2",
+        "surface-variant": "#dee4de",
+        "surface-tint": "#4c6452",
+        "on-secondary-fixed-variant": "#344c3b",
+        "error": "#ba1a1a",
+        "on-error": "#ffffff",
+        "primary-fixed": "#cfe9d3",
+        "tertiary": "#5a605b",
+        "primary-fixed-dim": "#b3cdb7",
+        "on-tertiary-container": "#282f2a",
+        "on-tertiary-fixed-variant": "#424843",
+        "secondary-fixed-dim": "#b2cdb6",
+        "surface-bright": "#f5fbf4",
+        "on-surface": "#171d19",
+        "tertiary-fixed": "#dee4dd",
+        "surface-container-lowest": "#ffffff",
+        "surface-container-high": "#e4eae3",
+        "tertiary-container": "#909690",
+        "primary": "#4c6452",
+        "outline-variant": "#c3c8c1",
+        "on-primary-fixed-variant": "#354c3b",
+        "on-tertiary": "#ffffff",
+        "surface-dim": "#d6dcd5",
+        "inverse-on-surface": "#ecf2ec",
+        "background": "#f5fbf4"
+      },
+      "borderRadius": {
+        "DEFAULT": "0.25rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "full": "9999px"
+      },
+      "spacing": {
+        "space-xs": "0.25rem",
+        "space-lg": "1.5rem",
+        "margin-mobile": "1.25rem",
+        "space-sm": "0.5rem",
+        "margin": "3rem",
+        "space-md": "1rem",
+        "space-xl": "2.5rem",
+        "gutter": "1.5rem",
+        "gutter-mobile": "1rem"
+      },
+      "fontFamily": {
+        "headline-md": ["Inter"],
+        "display": ["Inter"],
+        "body-sm": ["Inter"],
+        "display-mobile": ["Inter"],
+        "body-lg": ["Inter"],
+        "label-sm": ["Inter"],
+        "body-md": ["Inter"],
+        "label-md": ["Inter"],
+        "headline-lg": ["Inter"],
+        "headline-lg-mobile": ["Inter"],
+        "label-lg": ["Inter"],
+        "headline-sm": ["Inter"]
+      },
+      "fontSize": {
+        "headline-md": ["1.375rem", {"lineHeight": "1.75rem", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+        "display": ["2.75rem", {"lineHeight": "3.25rem", "letterSpacing": "-0.03em", "fontWeight": "600"}],
+        "body-sm": ["0.8125rem", {"lineHeight": "1.25rem", "fontWeight": "400"}],
+        "display-mobile": ["2rem", {"lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+        "body-lg": ["1rem", {"lineHeight": "1.625rem", "fontWeight": "400"}],
+        "label-sm": ["0.6875rem", {"lineHeight": "0.875rem", "letterSpacing": "0.04em", "fontWeight": "600"}],
+        "body-md": ["0.875rem", {"lineHeight": "1.5rem", "fontWeight": "400"}],
+        "label-md": ["0.75rem", {"lineHeight": "1rem", "letterSpacing": "0.02em", "fontWeight": "500"}],
+        "headline-lg": ["2rem", {"lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+        "headline-lg-mobile": ["1.5rem", {"lineHeight": "2rem", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+        "label-lg": ["0.875rem", {"lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "500"}],
+        "headline-sm": ["1.125rem", {"lineHeight": "1.5rem", "letterSpacing": "-0.01em", "fontWeight": "500"}]
+      }
+    }
+  }
+}</script></head><body class="bg-background font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-screen w-72 bg-surface-container-low flex flex-col z-50 overflow-y-auto"><div class="h-16 px-space-lg flex items-center justify-between"><div class="flex flex-col"><span class="font-headline-sm text-headline-sm uppercase tracking-wider text-on-surface font-semibold">VOWS STUDIO</span><span class="font-label-sm text-label-sm tracking-widest text-outline uppercase">WEDDING CINEMATIC &amp; STILLS</span></div><button aria-label="Collapse sidebar" class="w-8 h-8 flex items-center justify-center rounded text-outline hover:text-on-surface hover:bg-surface-container transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">keyboard_double_arrow_left</span></button></div><div class="flex-1 px-space-md py-space-sm space-y-space-lg"><nav class="space-y-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-medium"><div class="px-space-sm py-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">Sales</span></div><div class="space-y-0.5"><a class="flex items-center justify-between px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="enquiries" href="#"><span class="font-body-sm text-body-sm">Enquiries</span><span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-semibold">4</span></a><a class="flex items-center px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="clients" href="#"><span class="font-body-sm text-body-sm">Clients</span></a><a class="flex items-center px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="quotations" href="#"><span class="font-body-sm text-body-sm">Quotations</span></a></div></nav><nav class="space-y-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-medium"><div class="px-space-sm py-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">Operations</span></div><div class="space-y-0.5"><a class="flex items-center px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="bookings" href="#"><span class="font-body-sm text-body-sm">Bookings</span></a><a class="flex items-center px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="schedule" href="#"><span class="font-body-sm text-body-sm">Schedule</span></a><a class="flex items-center px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="crew" href="#"><span class="font-body-sm text-body-sm">Crew</span></a><a class="flex items-center px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="delivery" href="#"><span class="font-body-sm text-body-sm">Delivery</span></a></div></nav><nav class="space-y-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-medium"><div class="px-space-sm py-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">Studio Tools</span></div><div class="space-y-0.5"><a class="flex items-center px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="services" href="#"><span class="font-body-sm text-body-sm">Services</span></a><a class="flex items-center px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="packages" href="#"><span class="font-body-sm text-body-sm">Packages</span></a><a aria-current="page" class="flex items-center px-space-sm py-1.5 rounded transition-colors bg-secondary-container text-on-secondary-container font-medium" data-path="portfolio" href="#"><span class="font-body-sm text-body-sm">Portfolio</span></a></div></nav><nav class="space-y-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-medium"><div class="px-space-sm py-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">Finance</span></div><div class="space-y-0.5"><a class="flex items-center px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="invoices" href="#"><span class="font-body-sm text-body-sm">Invoices</span></a><a class="flex items-center px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="payments" href="#"><span class="font-body-sm text-body-sm">Payments</span></a><a class="flex items-center px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="ledger" href="#"><span class="font-body-sm text-body-sm">Ledger</span></a><a class="flex items-center px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="expenses" href="#"><span class="font-body-sm text-body-sm">Expenses</span></a></div></nav><nav class="space-y-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-medium"><div class="px-space-sm py-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">Website</span></div><div class="space-y-0.5"><a class="flex items-center px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="reviews" href="#"><span class="font-body-sm text-body-sm">Reviews</span></a></div></nav><nav class="space-y-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-medium"><div class="px-space-sm py-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">System</span></div><div class="space-y-0.5"><a class="flex items-center px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="settings" href="#"><span class="font-body-sm text-body-sm">Settings</span></a><a class="flex items-center px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="audit-log" href="#"><span class="font-body-sm text-body-sm">Audit log</span></a></div></nav></div><div class="p-space-md mt-auto"><div class="bg-surface-container-lowest p-space-sm rounded-lg flex flex-col gap-space-xs shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="min-w-0 flex-1"><div class="flex items-center justify-between gap-1"><span class="font-label-lg text-label-lg text-on-surface truncate font-medium">Reuben Serrao</span><span class="font-label-sm text-label-sm px-1.5 py-0.2 rounded bg-secondary-fixed text-on-secondary-fixed font-medium">Active</span></div><span class="font-label-sm text-label-sm text-outline truncate block">reuben@vowsstudio.com</span></div></div><div class="pt-space-xs flex items-center justify-between font-label-sm text-label-sm text-outline"><button class="hover:text-primary transition-colors" type="button">Switch role</button><button class="hover:text-error transition-colors" type="button">Sign out</button></div></div></div></aside><div class="pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-72 right-0 h-16 z-40 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 w-full px-space-lg flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-xs font-label-md text-label-md text-outline"><span class="text-on-surface-variant">Studio CRM</span><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="text-on-surface-variant">Studio Tools</span><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="text-on-surface font-semibold">Overview</span></div><div class="flex items-center gap-space-md"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-2.5 text-outline text-[18px]">search</span><input class="bg-surface-container-lowest font-body-sm text-body-sm text-on-surface placeholder-outline pl-8 pr-12 py-1.5 rounded-lg w-64 focus:outline-none focus:ring-1 focus:ring-primary shadow-[0_1px_4px_rgba(0,0,0,0.02)]" placeholder="Search studio, clients, events..." type="text"/><span class="absolute right-2 font-label-sm text-label-sm text-outline px-1 rounded bg-surface-container">⌘K</span></div><div class="flex items-center gap-space-xs"><button aria-label="Notifications" class="relative w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error"></span></button><button aria-label="Toggle appearance" class="w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">light_mode</span></button></div><div class="flex items-center pl-space-xs"><button class="flex items-center gap-space-xs hover:opacity-90 transition-opacity" type="button"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><span class="material-symbols-outlined text-outline text-[16px]">arrow_drop_down</span></button></div></div></div></header><div class="pt-16 flex flex-col flex-1"><div class="w-full flex flex-col"><div class="bg-secondary-fixed text-on-secondary-fixed px-space-lg py-2 flex items-center justify-between"><div class="flex items-center gap-space-sm font-label-md text-label-md"><span class="material-symbols-outlined text-[18px]">shield_person</span><span>Demo Mode Active — Currently viewing as Reuben Serrao (Owner). Changes are isolated in sandbox environment.</span></div><button class="font-label-sm text-label-sm font-semibold px- space-sm py-0.5 rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container transition-colors" type="button">Switch Role</button></div><div class="bg-error-container text-on-error-container px-space-lg py-2 flex items-center justify-between"><div class="flex items-center gap-space-sm font-label-md text-label-md"><span class="material-symbols-outlined text-[18px]">warning</span><span>Gmail integration needs reconnecting — Studio booking confirmations and client email synchronisation are currently paused.</span></div><div class="flex items-center gap-space-md"><button class="font-label-sm text-label-sm font-semibold px- space-sm py-0.5 rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container transition-colors" type="button">Reconnect Account</button><button aria-label="Dismiss alert" class="text-on-error-container hover:opacity-80 transition-opacity" type="button"><span class="material-symbols-outlined text-[18px]">close</span></button></div></div></div><main class="relative flex-1 bg-background px-space-lg py-space-xl max-w-[1280px] w-full mx-auto"><div class="flex flex-col w-full">
+<!-- Top Utility Ribbon / Sequence Notifier -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm mb-space-md text-outline">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-secondary">drag_indicator</span>
+<span class="font-label-md text-label-md tracking-wide text-on-surface-variant">
+        DRAG-AND-DROP REORDERING ACTIVE • Sequence mirrors public site grid layout
+      </span>
+</div>
+<div class="flex items-center gap-space-md">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Last published 14m ago by R. Serrao</span>
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm text-secondary font-medium">Production CDN Synced</span>
+</div>
+</div>
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-lg mb-space-xl pb-space-lg bg-surface-container-low p-space-lg rounded-xl shadow-sm">
+<div class="space-y-space-xs max-w-2xl">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary font-semibold bg-secondary-fixed px-2 py-0.5 rounded">Website Showcase Engine</span>
+<span class="font-label-sm text-label-sm text-outline">Curated Edition 2025.4</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface font-semibold tracking-tight">Portfolio &amp; Showcase Manager</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">
+        Curate public web galleries, arrange visual story sequences, and ensure strict client publication releases across high-res stills and cinema stills.
+      </p>
+</div>
+<div class="flex items-center gap-space-sm shrink-0">
+<button class="inline-flex items-center gap-space-xs px-space-md py-2 rounded-lg bg-surface-container-lowest text-on-surface hover:bg-surface-container font-label-lg text-label-lg transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">add_photo_alternate</span>
+<span>+ Upload New Frames</span>
+</button>
+<button class="inline-flex items-center gap-space-xs px-space-lg py-2 rounded-lg bg-primary text-on-primary hover:bg-secondary font-label-lg text-label-lg font-medium transition-all shadow-sm" id="open-consent-modal" type="button">
+<span class="material-symbols-outlined text-[18px]">publish</span>
+<span>Publish Changes to Website</span>
+</button>
+</div>
+</div>
+<!-- Controls Bar: Filtering, Search, Visibility Switch -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md mb-space-lg bg-surface-container-lowest p-space-md rounded-xl shadow-sm">
+<!-- Category Tabs -->
+<div class="flex items-center gap-1.5 overflow-x-auto pb-1 lg:pb-0">
+<button class="px-3 py-1.5 rounded-lg bg-secondary-container text-on-secondary-container font-label-md text-label-md font-semibold whitespace-nowrap" type="button">
+        All (38)
+      </button>
+<button class="px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container font-label-md text-label-md whitespace-nowrap transition-colors" type="button">
+        Nuptials &amp; Chapel (14)
+      </button>
+<button class="px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container font-label-md text-label-md whitespace-nowrap transition-colors" type="button">
+        Reception Gala (10)
+      </button>
+<button class="px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container font-label-md text-label-md whitespace-nowrap transition-colors" type="button">
+        Pre-Wedding Monograph (8)
+      </button>
+<button class="px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container font-label-md text-label-md whitespace-nowrap transition-colors" type="button">
+        Editorial Portraits (6)
+      </button>
+</div>
+<!-- Search & Visibility Toggle -->
+<div class="flex items-center gap-space-md shrink-0">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-2.5 text-outline text-[18px]">search</span>
+<input class="bg-surface-container-low font-body-sm text-body-sm text-on-surface placeholder-outline pl-8 pr-4 py-1.5 rounded-lg w-72 focus:outline-none focus:ring-1 focus:ring-primary transition-all" placeholder="Search frames by couple, location, or tag..." type="text"/>
+</div>
+<div class="flex items-center gap-space-xs bg-surface-container-low px-3 py-1.5 rounded-lg">
+<div class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" id="gallery-live-toggle" type="checkbox"/>
+<div class="w-8 h-4 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface-container-lowest after:rounded-full after:h-3 after:w-3.5 after:transition-all peer-checked:bg-primary"></div>
+</div>
+<label class="font-label-md text-label-md text-on-surface cursor-pointer select-none" for="gallery-live-toggle">
+          Showcase Gallery Live
+        </label>
+</div>
+</div>
+</div>
+<!-- Bento Editorial Gallery Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-lg mb-space-xl">
+<!-- TILE 1: COVER PHOTO (Spans 2 cols on lg) -->
+<div class="lg:col-span-2 group relative bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm flex flex-col transition-all hover:shadow-md">
+<!-- Image frame (16:9 ratio) -->
+<div class="relative aspect-[16/9] w-full bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.01]" data-alt="Editorial wedding photograph of a bride in an intricate lace veil and groom in tailored black tuxedo smiling as they walk down the aisle of historic St. Aloysius Chapel with ornate painted vaulted stone arches and warm natural cathedral light cascading through tall stained glass windows in soft documentary grain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtO6DpCdhlWDqdfPoJMy1MT-9Fas0ubueiJgdLfo61Cp1Q9b1jy8o73uJbDY9HntK5pskVETvVFT1MilDBmVSo6pvvPKpwb4H6_JeqObb2vX2a-FvJTlqSGsLQdcBdpJAGs2AbfoW7GBYnbOrcd7Txh3mpqAqr_oYDhq96qI6rdwxYMkHaXv7XQBJ7ReKuyIrUxsy5cKwCUUCvR1i7poEv6Yi7xT75guA16pDyqJTl"/>
+<!-- Top Overlay Badges -->
+<div class="absolute top-space-md left-space-md right-space-md flex items-center justify-between pointer-events-none">
+<div class="flex items-center gap-space-xs">
+<span class="inline-flex items-center gap-1 font-label-sm text-label-sm font-semibold uppercase tracking-wider bg-primary text-on-primary px-2.5 py-1 rounded shadow-sm">
+<span class="material-symbols-outlined text-[14px]">star</span>
+              Cover Photo
+            </span>
+<span class="font-label-sm text-label-sm font-medium bg-surface-container-lowest/90 backdrop-blur-md text-on-surface px-2.5 py-1 rounded shadow-sm">
+              Nuptials
+            </span>
+</div>
+<div class="flex items-center gap-1.5 pointer-events-auto">
+<span class="inline-flex items-center gap-1 font-label-sm text-label-sm font-medium bg-secondary-fixed text-on-secondary-fixed px-2 py-0.5 rounded shadow-sm">
+<span class="material-symbols-outlined text-[14px] text-secondary">verified</span>
+              Verified NDA Release
+            </span>
+<button aria-label="Reorder handle" class="w-7 h-7 rounded bg-surface-container-lowest/90 backdrop-blur-md text-on-surface flex items-center justify-center cursor-grab hover:bg-surface-container transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[18px]">drag_indicator</span>
+</button>
+</div>
+</div>
+<!-- Frame sequence numeral -->
+<div class="absolute bottom-3 left-3 bg-inverse-surface/80 text-inverse-on-surface px-2 py-0.5 rounded text-[11px] font-mono tracking-widest">
+          POS #01 • HERO CANON
+        </div>
+</div>
+<!-- Tile Meta Details -->
+<div class="p-space-lg flex flex-col justify-between flex-1">
+<div class="flex items-start justify-between gap-space-sm mb-space-sm">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Derick &amp; Samantha</h2>
+<p class="font-label-md text-label-md text-outline">St. Aloysius Chapel • Mangalore, India • Medium Format 65mm Still</p>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="w-8 h-8 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container flex items-center justify-center transition-colors" title="Quick view preview">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="w-8 h-8 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container flex items-center justify-center transition-colors" title="Edit frame attributes">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+</button>
+</div>
+</div>
+<div class="bg-surface-container-low px-space-md py-2 rounded-lg flex items-center gap-space-sm">
+<span class="font-label-sm text-label-sm uppercase font-semibold text-outline shrink-0">Alt Text</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">
+            "Bride in lace veil walking down historic chapel aisle in Mangalore under warm morning skylight"
+          </span>
+<button class="font-label-sm text-label-sm text-primary hover:text-secondary ml-auto shrink-0 font-medium">Edit</button>
+</div>
+</div>
+</div>
+<!-- TILE 2: Ocean Cliff Sunset -->
+<div class="group relative bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm flex flex-col transition-all hover:shadow-md">
+<div class="relative aspect-[4/3] w-full bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.01]" data-alt="Cinematic wide-angle wedding photograph of an elegant couple silhouetted during golden hour at Cabo de Rama ocean cliffs South Goa with warm amber sunlight reflecting off rolling ocean waves below and soft wind blowing the bridal silk gown" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKwb1ln6U8lV6fqItot8BdBS1SHwkVnoMzfJv8e1MT8k8T1RY4kLAfgJBCQDNAWGvBWiLtdRkyI4S-PSOJnAHpIkYz_AudLMTpjyhg-Y9F7nSFAKoF6FB5ho3uOlhvzSfVTvJLWur-qqlufrMcduKv5seXenUuvzpnw-76Z7nD9YTvtPXyFPGgNnPz7yUHGVHR4hvlEidZmIrnYBVmXSej2SBSaNngri2g8SnJp8w_"/>
+<div class="absolute top-space-md left-space-md right-space-md flex items-center justify-between pointer-events-none">
+<span class="font-label-sm text-label-sm font-medium bg-surface-container-lowest/90 backdrop-blur-md text-on-surface px-2.5 py-1 rounded shadow-sm">
+            Pre-Wedding
+          </span>
+<button aria-label="Reorder handle" class="pointer-events-auto w-7 h-7 rounded bg-surface-container-lowest/90 backdrop-blur-md text-on-surface flex items-center justify-center cursor-grab hover:bg-surface-container transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[18px]">drag_indicator</span>
+</button>
+</div>
+<div class="absolute bottom-3 left-3 bg-inverse-surface/80 text-inverse-on-surface px-2 py-0.5 rounded text-[11px] font-mono tracking-widest">
+          POS #02
+        </div>
+</div>
+<div class="p-space-lg flex flex-col justify-between flex-1">
+<div class="mb-space-sm">
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate">Alister &amp; Michelle</h2>
+<p class="font-label-md text-label-md text-outline">Cabo de Rama Cliffs • South Goa</p>
+</div>
+<div class="bg-surface-container-low px-space-md py-1.5 rounded-lg flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm text-outline truncate">Alt: "Couple silhouette during golden hour overlooking South Goa sea cliffs"</span>
+</div>
+</div>
+</div>
+<!-- TILE 3: Champagne Toast Gala -->
+<div class="group relative bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm flex flex-col transition-all hover:shadow-md">
+<div class="relative aspect-[4/3] w-full bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.01]" data-alt="Atmospheric reception gala photograph inside a candlelit ballroom with couple raising vintage crystal champagne glasses under sparkling chandeliers with joyous blurred guests applauding in background in refined editorial style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrUnpybcwMl2j2pxjG1FJ9pYi_uf6UmcQNc2fAHCAbLg1SOI3xMLUT5M8VmUNnzwIGj9W66sveQ0j556RuWjyrwtBNr8VYoDr1OXttqua5j2JhRt2stU6BdEF0RKL5i1fsRK-f9VukargrBhX-u-fJYlP_bWAJRyFvEAyd5u85A2BFtgQi91br1yjyYoe8K-_CyasKwsSsB71j94bSdO135kvFjIP-50wJTUI_j4X7"/>
+<div class="absolute top-space-md left-space-md right-space-md flex items-center justify-between pointer-events-none">
+<span class="font-label-sm text-label-sm font-medium bg-surface-container-lowest/90 backdrop-blur-md text-on-surface px-2.5 py-1 rounded shadow-sm">
+            Reception
+          </span>
+<button aria-label="Reorder handle" class="pointer-events-auto w-7 h-7 rounded bg-surface-container-lowest/90 backdrop-blur-md text-on-surface flex items-center justify-center cursor-grab hover:bg-surface-container transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[18px]">drag_indicator</span>
+</button>
+</div>
+<div class="absolute bottom-3 left-3 bg-inverse-surface/80 text-inverse-on-surface px-2 py-0.5 rounded text-[11px] font-mono tracking-widest">
+          POS #03
+        </div>
+</div>
+<div class="p-space-lg flex flex-col justify-between flex-1">
+<div class="mb-space-sm">
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate">Grand Coastal Gala</h2>
+<p class="font-label-md text-label-md text-outline">The Ocean Pearl Ballroom • Evening Banquet</p>
+</div>
+<div class="bg-surface-container-low px-space-md py-1.5 rounded-lg flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm text-outline truncate">Alt: "Couple raising toast under crystal chandeliers during ballroom dinner"</span>
+</div>
+</div>
+</div>
+<!-- TILE 4: Intimate Black & White 35mm -->
+<div class="group relative bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm flex flex-col transition-all hover:shadow-md">
+<div class="relative aspect-[4/3] w-full bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.01]" data-alt="Monochrome black and white 35mm film still still life photograph of white jasmine bridal bouquet resting on antique lace veil beside heirloom diamond and emerald estate jewelry with soft deep contrast and timeless editorial intimacy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBdhasRpNyfbqZfCZLeL4ULlddCxc-6BYxEp1ehg7dx1o49WAOwiop4x0zaDn5oa6TMntXOJYcUsY7tR848sYTkiqOhfua2-BQQkhY0WMazb855g8DTtOB1oR1fFeA1tvcvDQr26yJXn-QzFa-EEEL3W0yH3oMtEdQVCQtdbwIex7zVXNvUh-fh0EZyDS94mFv6VMdFrlCibiMY9L3aYGBx_Qk-oTkOdTR1z0Vcwcq"/>
+<div class="absolute top-space-md left-space-md right-space-md flex items-center justify-between pointer-events-none">
+<span class="font-label-sm text-label-sm font-medium bg-surface-container-lowest/90 backdrop-blur-md text-on-surface px-2.5 py-1 rounded shadow-sm">
+            Editorial
+          </span>
+<button aria-label="Reorder handle" class="pointer-events-auto w-7 h-7 rounded bg-surface-container-lowest/90 backdrop-blur-md text-on-surface flex items-center justify-center cursor-grab hover:bg-surface-container transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[18px]">drag_indicator</span>
+</button>
+</div>
+<div class="absolute bottom-3 left-3 bg-inverse-surface/80 text-inverse-on-surface px-2 py-0.5 rounded text-[11px] font-mono tracking-widest">
+          POS #04
+        </div>
+</div>
+<div class="p-space-lg flex flex-col justify-between flex-1">
+<div class="mb-space-sm">
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate">Heirloom Monograph Details</h2>
+<p class="font-label-md text-label-md text-outline">Leica M6 • Tri-X 400 Grain • Suite Still</p>
+</div>
+<div class="bg-surface-container-low px-space-md py-1.5 rounded-lg flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm text-outline truncate">Alt: "Black and white 35mm analog capture of heirloom bridal jewelry"</span>
+</div>
+</div>
+</div>
+<!-- TILE 5: Haldi Blessing Floral -->
+<div class="group relative bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm flex flex-col transition-all hover:shadow-md">
+<div class="relative aspect-[4/3] w-full bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.01]" data-alt="Intimate authentic wedding documentary photograph of a joyful bride receiving floral water blessing during traditional Haldi ceremony showered with vibrant marigold and yellow petals in courtyard open courtyard garden" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9_KlTf3xozbfYJf2k26YdvdWzkqdx_DngAWdO1CCbX-o62K36dg4SngMqswbxPPz-n7aH7IyfdTCGm_LTK8GSIK2sC_oliiNCOBmxsWIN1aJGIgqbK5vDjb3y0hgYrSOVX8Ru5L7zpEQVuG_Kpzzz8BB5HWJSfuAbszw3c9w07ziGcrwSNr9IFEjN4RHqNBwn2NVDIvkoXdbYUx8Dp6jH0ktA8eFpugd62NCgsfIm"/>
+<div class="absolute top-space-md left-space-md right-space-md flex items-center justify-between pointer-events-none">
+<span class="font-label-sm text-label-sm font-medium bg-surface-container-lowest/90 backdrop-blur-md text-on-surface px-2.5 py-1 rounded shadow-sm">
+            Haldi
+          </span>
+<button aria-label="Reorder handle" class="pointer-events-auto w-7 h-7 rounded bg-surface-container-lowest/90 backdrop-blur-md text-on-surface flex items-center justify-center cursor-grab hover:bg-surface-container transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[18px]">drag_indicator</span>
+</button>
+</div>
+<div class="absolute bottom-3 left-3 bg-inverse-surface/80 text-inverse-on-surface px-2 py-0.5 rounded text-[11px] font-mono tracking-widest">
+          POS #05
+        </div>
+</div>
+<div class="p-space-lg flex flex-col justify-between flex-1">
+<div class="mb-space-sm">
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate">Samantha Pinto Blessing</h2>
+<p class="font-label-md text-label-md text-outline">Pinto Ancestral Estate • Morning Ceremony</p>
+</div>
+<div class="bg-surface-container-low px-space-md py-1.5 rounded-lg flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm text-outline truncate">Alt: "Bride smiling joyfully amidst marigold shower blessing ceremony"</span>
+</div>
+</div>
+</div>
+<!-- TILE 6: Drone Aerial Chapel Coast -->
+<div class="group relative bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm flex flex-col transition-all hover:shadow-md">
+<div class="relative aspect-[4/3] w-full bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.01]" data-alt="Cinematic high altitude aerial drone still of a whitewashed Portuguese coastal chapel surrounded by coconut palm groves with emerald ocean waves gently breaking on pristine shoreline under soft morning light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDERFbPNK3Glizjz4fWFJxz1gySnJXjzLKaAN1r4DLNWgL9ULxaWkESS8aNUlCSQ0IlGwTc1s3SJOnbYsY86nN6zlm0RFyd0N73y5b0QLiRUV5TblvmVOE8qYGvfanotult1VYU6ID6zppEaqKbENZm6ECu2cYCqo7DV1ad2SvL5jH_mizZx5nfmWe7kA3DyMmDSvEaX3Q90EghUwWHVEFehmOqlXigbgV3zC-RT294"/>
+<div class="absolute top-space-md left-space-md right-space-md flex items-center justify-between pointer-events-none">
+<span class="font-label-sm text-label-sm font-medium bg-surface-container-lowest/90 backdrop-blur-md text-on-surface px-2.5 py-1 rounded shadow-sm">
+            Nuptials
+          </span>
+<button aria-label="Reorder handle" class="pointer-events-auto w-7 h-7 rounded bg-surface-container-lowest/90 backdrop-blur-md text-on-surface flex items-center justify-center cursor-grab hover:bg-surface-container transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[18px]">drag_indicator</span>
+</button>
+</div>
+<div class="absolute bottom-3 left-3 bg-inverse-surface/80 text-inverse-on-surface px-2 py-0.5 rounded text-[11px] font-mono tracking-widest">
+          POS #06
+        </div>
+</div>
+<div class="p-space-lg flex flex-col justify-between flex-1">
+<div class="mb-space-sm">
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate">Coastal Chapel Aerial</h2>
+<p class="font-label-md text-label-md text-outline">Reis Magos Coastline • Master Establishing Angle</p>
+</div>
+<div class="bg-surface-container-low px-space-md py-1.5 rounded-lg flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm text-outline truncate">Alt: "Wide top-down aerial of historic seaside chapel and tropical coconut palms"</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Analytics & Status Tray -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-space-md p-space-lg bg-surface-container-lowest rounded-xl shadow-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed">
+<span class="material-symbols-outlined text-[22px]">photo_library</span>
+</div>
+<div>
+<div class="font-headline-sm text-headline-sm font-semibold text-on-surface">38 Frames</div>
+<div class="font-label-sm text-label-sm text-outline">6 Featured on Homepage</div>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[22px]">verified_user</span>
+</div>
+<div>
+<div class="font-headline-sm text-headline-sm font-semibold text-on-surface">100% Release</div>
+<div class="font-label-sm text-label-sm text-outline">All displayed stills cleared</div>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[22px]">speed</span>
+</div>
+<div>
+<div class="font-headline-sm text-headline-sm font-semibold text-on-surface">0.82s LCP</div>
+<div class="font-label-sm text-label-sm text-outline">NextGen AVIF compression</div>
+</div>
+</div>
+<div class="flex items-center justify-end">
+<button class="inline-flex items-center gap-space-xs text-primary hover:text-secondary font-label-md text-label-md font-medium transition-colors">
+<span>View Public Live Showcase</span>
+<span class="material-symbols-outlined text-[16px]">open_in_new</span>
+</button>
+</div>
+</div>
+<!-- MODAL DIALOG: CLIENT CONSENT & RELEASE CONFIRMATION -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-space-md bg-inverse-surface/40 backdrop-blur-sm transition-opacity duration-300" id="consent-modal">
+<div class="relative w-full max-w-xl bg-surface-container-lowest rounded-xl shadow-2xl p-space-xl flex flex-col gap-space-lg overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+<!-- Modal Accent Top Line -->
+<div class="absolute top-0 left-0 right-0 h-1.5 bg-primary"></div>
+<!-- Header with Close button -->
+<div class="flex items-start justify-between gap-space-md pt-space-xs">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]">assignment_turned_in</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold tracking-tight">
+              Confirm Client Publication Consent
+            </h3>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">
+              Legal Release Protocol • Studio Compliance
+            </span>
+</div>
+</div>
+<button aria-label="Close dialog" class="w-8 h-8 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container flex items-center justify-center transition-colors" id="close-consent-modal">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Description -->
+<p class="font-body-md text-body-md text-on-surface-variant">
+        Before publishing new imagery to the public VOWS Studio website, verify that the couple has executed a Studio Media &amp; Public Display Release.
+      </p>
+<!-- Commission Reference & Document Attachment Card -->
+<div class="bg-surface-container-low p-space-md rounded-lg space-y-space-sm">
+<div class="flex items-center justify-between text-on-surface">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Commission Reference</span>
+<span class="font-label-lg text-label-lg font-semibold">Derick D'Souza &amp; Samantha Pinto</span>
+</div>
+<span class="font-mono text-label-sm text-label-sm bg-surface-container px-2 py-0.5 rounded text-on-surface-variant font-medium">
+            BKG-2025-019
+          </span>
+</div>
+<div class="flex items-center gap-space-sm pt-space-xs border-t border-outline-variant/20">
+<span class="material-symbols-outlined text-secondary text-[20px]">description</span>
+<div class="min-w-0 flex-1">
+<span class="font-label-md text-label-md text-on-surface font-medium truncate block">
+              release_derick_sam_signed.pdf
+            </span>
+<span class="font-label-sm text-label-sm text-outline">
+              Verified Digital Signature • Nov 18, 2025
+            </span>
+</div>
+<button class="font-label-sm text-label-sm text-primary hover:text-secondary font-medium px-2 py-1 rounded hover:bg-surface-container transition-colors">
+            View PDF
+          </button>
+</div>
+</div>
+<!-- Checkbox Controls -->
+<div class="space-y-space-md">
+<label class="flex items-start gap-space-sm cursor-pointer select-none group">
+<div class="relative flex items-center pt-0.5">
+<input checked="" class="w-4 h-4 rounded text-primary bg-surface-container-lowest border-0 ring-1 ring-outline focus:ring-primary accent-primary cursor-pointer" type="checkbox"/>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface group-hover:text-primary transition-colors">
+            Couple has approved web showcase display of solemnization and reception stills.
+          </span>
+</label>
+<label class="flex items-start gap-space-sm cursor-pointer select-none group">
+<div class="relative flex items-center pt-0.5">
+<input checked="" class="w-4 h-4 rounded text-primary bg-surface-container-lowest border-0 ring-1 ring-outline focus:ring-primary accent-primary cursor-pointer" type="checkbox"/>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface group-hover:text-primary transition-colors">
+            Faces of minors and private guests are either excluded or consented.
+          </span>
+</label>
+<label class="flex items-start gap-space-sm cursor-pointer select-none group">
+<div class="relative flex items-center pt-0.5">
+<input class="w-4 h-4 rounded text-primary bg-surface-container-lowest border-0 ring-1 ring-outline focus:ring-primary accent-primary cursor-pointer" type="checkbox"/>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant group-hover:text-primary transition-colors">
+            Grant permission to cross-post to VOWS Studio Instagram &amp; Editorial Submissions.
+          </span>
+</label>
+</div>
+<!-- Compliance Warning Note -->
+<div class="bg-error-container text-on-error-container p-space-sm rounded-lg flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[20px] shrink-0">info</span>
+<span class="font-body-sm text-body-sm">
+          Publishing without consent violates client privacy agreement and SLA Section 8.4.
+        </span>
+</div>
+<!-- Action Buttons -->
+<div class="flex items-center justify-end gap-space-sm pt-space-xs">
+<button class="px-space-md py-2 rounded-lg bg-surface-container-low text-on-surface hover:bg-surface-container font-label-lg text-label-lg transition-colors" id="cancel-consent-modal" type="button">
+          Cancel
+        </button>
+<button class="inline-flex items-center gap-space-xs px-space-lg py-2 rounded-lg bg-primary text-on-primary hover:bg-secondary font-label-lg text-label-lg font-medium shadow-sm transition-all" id="confirm-publish-btn" type="button">
+<span class="material-symbols-outlined text-[18px]">cloud_upload</span>
+<span>Confirm &amp; Publish to Website</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Interactive script to toggle modal state cleanly -->
+<script>
+    (function() {
+      const modal = document.getElementById('consent-modal');
+      const openBtn = document.getElementById('open-consent-modal');
+      const closeBtn = document.getElementById('close-consent-modal');
+      const cancelBtn = document.getElementById('cancel-consent-modal');
+      const confirmBtn = document.getElementById('confirm-publish-btn');
+
+      function showModal() {
+        if (!modal) return;
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+
+      function hideModal() {
+        if (!modal) return;
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+
+      if (openBtn) openBtn.addEventListener('click', showModal);
+      if (closeBtn) closeBtn.addEventListener('click', hideModal);
+      if (cancelBtn) cancelBtn.addEventListener('click', hideModal);
+      
+      if (confirmBtn) {
+        confirmBtn.addEventListener('click', function() {
+          confirmBtn.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">refresh</span><span>Publishing to CDN...</span>';
+          setTimeout(function() {
+            hideModal();
+            confirmBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">cloud_upload</span><span>Confirm &amp; Publish to Website</span>';
+          }, 900);
+        });
+      }
+
+      // Close on escape
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) {
+          hideModal();
+        }
+      });
+    })();
+  </script>
+</div></main></div></div></body></html>

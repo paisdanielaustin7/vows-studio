@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"tertiary":"#5a605b","surface-container-high":"#e4eae3","on-surface":"#171d19","on-secondary-fixed":"#082011","on-tertiary-container":"#282f2a","tertiary-container":"#909690","outline":"#737972","secondary-fixed-dim":"#b2cdb6","inverse-on-surface":"#ecf2ec","error":"#ba1a1a","on-surface-variant":"#424843","surface-tint":"#4c6452","surface-bright":"#f5fbf4","secondary-container":"#ceead2","secondary-fixed":"#ceead2","on-tertiary":"#ffffff","surface-container-highest":"#dee4de","surface-variant":"#dee4de","secondary":"#4b6451","on-tertiary-fixed-variant":"#424843","on-tertiary-fixed":"#171d19","surface-dim":"#d6dcd5","primary-fixed":"#cfe9d3","on-primary":"#ffffff","background":"#f5fbf4","inverse-primary":"#b3cdb7","surface-container-lowest":"#ffffff","on-error-container":"#93000a","on-primary-fixed-variant":"#354c3b","surface-container-low":"#eff5ef","on-primary-fixed":"#092012","on-secondary":"#ffffff","primary-container":"#829b87","surface-container":"#eaefe9","error-container":"#ffdad6","tertiary-fixed-dim":"#c2c8c2","on-secondary-fixed-variant":"#344c3b","primary-fixed-dim":"#b3cdb7","outline-variant":"#c3c8c1","inverse-surface":"#2c322e","on-secondary-container":"#516a57","on-background":"#171d19","on-error":"#ffffff","on-primary-container":"#1c3223","tertiary-fixed":"#dee4dd","surface":"#f5fbf4","primary":"#4c6452"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"gutter":"1.5rem","space-xs":"0.25rem","gutter-mobile":"1rem","space-md":"1rem","margin":"3rem","margin-mobile":"1.25rem","space-xl":"2.5rem","space-sm":"0.5rem","space-lg":"1.5rem"},fontFamily:{"label-sm":["Inter"],"label-lg":["Inter"],"headline-lg":["Inter"],"headline-md":["Inter"],"display-mobile":["Inter"],"body-md":["Inter"],"headline-lg-mobile":["Inter"],"body-lg":["Inter"],"headline-sm":["Inter"],"label-md":["Inter"],"body-sm":["Inter"],"display":["Inter"]},fontSize:{"label-sm":["0.6875rem",{"lineHeight":"0.875rem","letterSpacing":"0.04em","fontWeight":"600"}],"label-lg":["0.875rem",{"lineHeight":"1.25rem","letterSpacing":"0.01em","fontWeight":"500"}],"headline-lg":["2rem",{"lineHeight":"2.5rem","letterSpacing":"-0.02em","fontWeight":"600"}],"headline-md":["1.375rem",{"lineHeight":"1.75rem","letterSpacing":"-0.015em","fontWeight":"600"}],"display-mobile":["2rem",{"lineHeight":"2.5rem","letterSpacing":"-0.02em","fontWeight":"600"}],"body-md":["0.875rem",{"lineHeight":"1.5rem","fontWeight":"400"}],"headline-lg-mobile":["1.5rem",{"lineHeight":"2rem","letterSpacing":"-0.015em","fontWeight":"600"}],"body-lg":["1rem",{"lineHeight":"1.625rem","fontWeight":"400"}],"headline-sm":["1.125rem",{"lineHeight":"1.5rem","letterSpacing":"-0.01em","fontWeight":"500"}],"label-md":["0.75rem",{"lineHeight":"1rem","letterSpacing":"0.02em","fontWeight":"500"}],"body-sm":["0.8125rem",{"lineHeight":"1.25rem","fontWeight":"400"}],"display":["2.75rem",{"lineHeight":"3.25rem","letterSpacing":"-0.03em","fontWeight":"600"}]}}}}</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-screen w-72 bg-surface-container-low flex flex-col z-50 shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-space-lg flex items-center justify-between"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[24px]">videocam</span><div class="flex flex-col"><span class="font-headline-sm text-headline-sm uppercase tracking-wider text-on-surface font-semibold">VOWS STUDIO</span><span class="font-label-sm text-label-sm uppercase tracking-widest text-outline">Cinematography & Stills</span></div></div></div><div class="flex-1 overflow-y-auto px-space-md py-space-sm space-y-space-md"><nav class="space-y-space-md" data-active-classes="bg-secondary-container text-on-secondary-container font-semibold rounded"><div class="space-y-1"><div class="px-space-sm py-1 font-label-sm text-label-sm uppercase tracking-wider text-outline">Sales</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="enquiries" href="#"><span class="material-symbols-outlined text-[18px]">inbox</span><span>Enquiries</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="clients" href="#"><span class="material-symbols-outlined text-[18px]">group</span><span>Clients</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-2 transition-colors bg-secondary-container text-on-secondary-container font-semibold rounded" data-path="quotations" href="#"><span class="material-symbols-outlined text-[18px]">receipt_long</span><span>Quotations</span></a></div><div class="space-y-1"><div class="px-space-sm py-1 font-label-sm text-label-sm uppercase tracking-wider text-outline">Operations</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="bookings" href="#"><span class="material-symbols-outlined text-[18px]">event_available</span><span>Bookings</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="schedule" href="#"><span class="material-symbols-outlined text-[18px]">calendar_today</span><span>Schedule</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="crew" href="#"><span class="material-symbols-outlined text-[18px]">badge</span><span>Crew</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="delivery" href="#"><span class="material-symbols-outlined text-[18px]">local_shipping</span><span>Delivery</span></a></div><div class="space-y-1"><div class="px-space-sm py-1 font-label-sm text-label-sm uppercase tracking-wider text-outline">Finance</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="invoices" href="#"><span class="material-symbols-outlined text-[18px]">description</span><span>Invoices</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="payments" href="#"><span class="material-symbols-outlined text-[18px]">payments</span><span>Payments</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="ledger" href="#"><span class="material-symbols-outlined text-[18px]">menu_book</span><span>Ledger</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="expenses" href="#"><span class="material-symbols-outlined text-[18px]">account_balance_wallet</span><span>Expenses</span></a></div><div class="space-y-1"><div class="px-space-sm py-1 font-label-sm text-label-sm uppercase tracking-wider text-outline">Catalogue</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="services" href="#"><span class="material-symbols-outlined text-[18px]">photo_camera</span><span>Services</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="packages" href="#"><span class="material-symbols-outlined text-[18px]">inventory_2</span><span>Packages</span></a></div><div class="space-y-1"><div class="px-space-sm py-1 font-label-sm text-label-sm uppercase tracking-wider text-outline">Website</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="portfolio" href="#"><span class="material-symbols-outlined text-[18px]">gallery_thumbnail</span><span>Portfolio</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="reviews" href="#"><span class="material-symbols-outlined text-[18px]">rate_review</span><span>Reviews</span></a></div><div class="space-y-1"><div class="px-space-sm py-1 font-label-sm text-label-sm uppercase tracking-wider text-outline">System</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="settings" href="#"><span class="material-symbols-outlined text-[18px]">settings</span><span>Settings</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="audit-log" href="#"><span class="material-symbols-outlined text-[18px]">history</span><span>Audit log</span></a></div></nav></div><div class="p-space-md bg-surface-container flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-2 h-2 rounded-full bg-primary"></div><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface font-semibold">Studio Node: Active</span><span class="font-label-sm text-label-sm text-on-surface-variant">v2.4 Production Engine</span></div></div><span class="material-symbols-outlined text-[16px] text-tertiary">cloud_done</span></div></aside><div class="pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-72 right-0 z-40 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-gutter flex items-center justify-between"><nav class="flex items-center gap-space-xs font-body-md text-body-md text-on-surface-variant"><a class="hover:text-on-surface transition-colors" data-path="studio-crm" href="#">Studio CRM</a><span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span><a class="hover:text-on-surface transition-colors" data-path="sales" href="#">Sales</a><span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span><a class="hover:text-on-surface transition-colors" data-path="quotations" href="#">Quotations</a><span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span><span class="font-semibold text-on-surface">QT-2025-089 v2</span></nav><div class="flex items-center gap-space-lg"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-[18px] text-outline">search</span><input class="w-64 pl-9 pr-4 py-1.5 rounded bg-surface-container-low text-on-surface placeholder-outline font-body-sm text-body-sm focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary" placeholder="Search records, clients, quotes..." type="text"/></div><div class="flex items-center gap-space-md"><button class="relative p-1.5 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-error"></span></button><div class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm"><span class="material-symbols-outlined text-[16px] text-secondary">light_mode</span><span>Light</span></div></div><div class="flex items-center gap-space-sm pl-space-sm"><div class="flex flex-col text-right"><span class="font-label-lg text-label-lg text-on-surface font-semibold">Reuben Serrao</span><span class="font-label-sm text-label-sm text-outline">Lead Cinematographer</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></div><div class="flex flex-col"><div class="bg-secondary-fixed text-on-secondary-fixed px-gutter py-2 flex items-center justify-between font-label-md text-label-md"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">info</span><span><strong>Demo Mode Active:</strong> You are viewing live workspace simulations. Actions will not affect production records.</span></div><button class="hover:underline font-semibold" type="button">Dismiss</button></div><div class="bg-error-container text-on-error-container px-gutter py-2 flex items-center justify-between font-label-md text-label-md"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">warning</span><span><strong>Gmail Integration Warning:</strong> API token renewal required in 48 hours to prevent quotation dispatch failure.</span></div><button class="hover:underline font-semibold" type="button">Reconnect Account</button></div></div></header><main class="relative pt-32 w-full px-gutter bg-surface flex-1"><div class="flex flex-col w-full pb-16">
+<!-- Page Header & Action Bar -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md mb-space-lg">
+<div class="flex flex-wrap items-center gap-space-md">
+<div class="flex items-center gap-space-sm">
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Edit Quotation: QT-2025-089</h1>
+</div>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-secondary-container text-on-secondary-container font-label-md text-label-md">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+          Draft • v2
+        </span>
+<button class="group flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high transition-colors text-on-surface-variant font-label-md text-label-md" id="version-drawer-toggle" type="button">
+<span class="material-symbols-outlined text-[16px] text-tertiary group-hover:text-on-surface">history</span>
+<span>View 3 versions</span>
+</button>
+</div>
+</div>
+<!-- Header Quick Actions -->
+<div class="flex items-center gap-space-sm">
+<button class="px-space-md py-2 rounded bg-surface-container-lowest hover:bg-surface-container text-on-surface font-label-lg text-label-lg transition-colors flex items-center gap-1.5 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px] text-tertiary">save</span>
+<span>Save Draft</span>
+</button>
+<button class="px-space-md py-2 rounded bg-surface-container-lowest hover:bg-surface-container text-on-surface font-label-lg text-label-lg transition-colors flex items-center gap-1.5 shadow-sm" title="Preview PDF" type="button">
+<span class="material-symbols-outlined text-[18px] text-secondary">visibility</span>
+<span>Preview PDF</span>
+</button>
+<button class="px-space-lg py-2 rounded bg-primary hover:bg-[#3d5242] text-on-primary font-label-lg text-label-lg transition-all flex items-center gap-2 shadow-sm" type="button">
+<span>Send to Client</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Two-Column Main Builder Architecture (70% Canvas / 30% Sticky Financials) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- LEFT COLUMN: Main Canvas (Col span 8 on 12-col grid = ~67-70%) -->
+<div class="lg:col-span-8 flex flex-col gap-space-lg">
+<!-- 1. Document & Client Meta Card -->
+<section class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="flex flex-col md:flex-row md:items-center justify-between pb-space-md mb-space-md bg-surface-container-low/50 -mx-space-lg -mt-space-lg p-space-lg rounded-t-xl">
+<div>
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Client Context & Booking Window</span>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-headline-sm text-headline-sm text-on-surface">Derick D'Souza & Samantha Pinto</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-outline font-label-sm text-label-sm">CLT-2025-019</span>
+</div>
+</div>
+<div class="relative mt-space-sm md:mt-0">
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md" id="template-btn" type="button">
+<span class="material-symbols-outlined text-[18px] text-secondary">auto_stories</span>
+<span>Template: Monograph Signature 3-Day</span>
+<span class="material-symbols-outlined text-[16px] text-tertiary">arrow_drop_down</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<!-- Client Contact Brief -->
+<div class="p-space-md rounded-lg bg-surface-container-low flex flex-col justify-between">
+<div>
+<span class="font-label-sm text-label-sm text-tertiary uppercase tracking-wider block mb-1">Contacts & Venue</span>
+<p class="font-body-sm text-body-sm text-on-surface font-medium truncate">+91 98452 11984</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">derick.dsouza@gmail.com</p>
+</div>
+<div class="mt-space-sm pt-space-xs flex items-center gap-1 text-on-secondary-container font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">church</span>
+<span>St. Aloysius Chapel, Mangalore</span>
+</div>
+</div>
+<!-- Event Date Range -->
+<div class="p-space-md rounded-lg bg-surface-container-low flex flex-col justify-between">
+<div>
+<span class="font-label-sm text-label-sm text-tertiary uppercase tracking-wider block mb-1">Event Date Window</span>
+<div class="flex items-center gap-1.5 text-on-surface font-headline-sm text-headline-sm leading-none mt-1">
+<span>Nov 18 – 20, 2025</span>
+</div>
+<p class="font-label-sm text-label-sm text-secondary font-semibold mt-1">3 Full Production Days</p>
+</div>
+<div class="mt-space-sm flex items-center gap-1 text-outline font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">event_repeat</span>
+<span>Roce, Nuptials, Coastal Reception</span>
+</div>
+</div>
+<!-- Validity Window -->
+<div class="p-space-md rounded-lg bg-surface-container-low flex flex-col justify-between">
+<div>
+<span class="font-label-sm text-label-sm text-tertiary uppercase tracking-wider block mb-1">Quotation Validity</span>
+<div class="flex items-center gap-1.5 text-on-surface font-headline-sm text-headline-sm leading-none mt-1">
+<span>Nov 10, 2025</span>
+</div>
+<p class="font-label-sm text-label-sm text-error font-medium mt-1">10 days remaining</p>
+</div>
+<div class="mt-space-sm flex items-center gap-1 text-outline font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span>Auto-locks date hold upon expiry</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 2. Line-Item Editor -->
+<section class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between pb-space-md mb-space-md gap-2">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Services & Deliverables</h2>
+<span class="font-label-sm text-label-sm text-outline">Drag line items to reorder chronological narrative in client presentation</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1.5 rounded bg-secondary-container text-on-secondary-container hover:bg-secondary-fixed transition-colors font-label-md text-label-md flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[16px]">add_circle</span>
+<span>From Catalogue</span>
+</button>
+<button class="px-3 py-1.5 rounded bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[16px]">add</span>
+<span>Custom Line</span>
+</button>
+</div>
+</div>
+<!-- Draggable Line Items Container -->
+<div class="space-y-space-md" id="line-items-container">
+<!-- Line Item 1 -->
+<div class="group relative flex flex-col md:flex-row md:items-center gap-space-md p-space-md rounded-lg bg-surface hover:bg-surface-container-low transition-all">
+<div class="cursor-grab text-outline-variant hover:text-outline flex items-center justify-center pt-1 md:pt-0">
+<span class="material-symbols-outlined text-[20px]">drag_indicator</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-label-md text-label-md px-2 py-0.5 rounded bg-primary-fixed text-on-primary-fixed uppercase tracking-wider">Cinematography</span>
+<h3 class="font-label-lg text-label-lg font-semibold text-on-surface">Dual Cinematographer 4K Cinema Package</h3>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+                Full multi-cam 4K coverage of Roce, Nuptial Mass at St. Aloysius & Grand Reception at Ocean Pearl. Includes licensed soundtrack score & 4K master archive.
+              </p>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-space-lg">
+<div class="flex items-center gap-space-xs text-center">
+<span class="font-label-sm text-label-sm text-outline uppercase md:hidden">Qty:</span>
+<span class="font-body-sm text-body-sm px-2.5 py-1 rounded bg-surface-container text-on-surface font-semibold">1</span>
+</div>
+<div class="text-right min-w-[110px]">
+<span class="font-label-sm text-label-sm text-outline uppercase block md:hidden">Total:</span>
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">₹2,80,000</span>
+<span class="font-label-sm text-label-sm text-outline block">₹2,80,000 ea</span>
+</div>
+<button class="p-1 rounded text-outline-variant hover:text-error hover:bg-surface-container transition-colors" title="Delete item" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Line Item 2 -->
+<div class="group relative flex flex-col md:flex-row md:items-center gap-space-md p-space-md rounded-lg bg-surface hover:bg-surface-container-low transition-all">
+<div class="cursor-grab text-outline-variant hover:text-outline flex items-center justify-center pt-1 md:pt-0">
+<span class="material-symbols-outlined text-[20px]">drag_indicator</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-label-md text-label-md px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant uppercase tracking-wider">Stills & Monograph</span>
+<h3 class="font-label-lg text-label-lg font-semibold text-on-surface">35mm Analog Film Monograph & Archival Stills</h3>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+                Principal coverage by Reuben Serrao with Leica SL2 & 35mm film emulation. 600 hand-graded raw prints in Japanese linen display box.
+              </p>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-space-lg">
+<div class="flex items-center gap-space-xs text-center">
+<span class="font-label-sm text-label-sm text-outline uppercase md:hidden">Qty:</span>
+<span class="font-body-sm text-body-sm px-2.5 py-1 rounded bg-surface-container text-on-surface font-semibold">1</span>
+</div>
+<div class="text-right min-w-[110px]">
+<span class="font-label-sm text-label-sm text-outline uppercase block md:hidden">Total:</span>
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">₹1,90,000</span>
+<span class="font-label-sm text-label-sm text-outline block">₹1,90,000 ea</span>
+</div>
+<button class="p-1 rounded text-outline-variant hover:text-error hover:bg-surface-container transition-colors" title="Delete item" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Line Item 3 -->
+<div class="group relative flex flex-col md:flex-row md:items-center gap-space-md p-space-md rounded-lg bg-surface hover:bg-surface-container-low transition-all">
+<div class="cursor-grab text-outline-variant hover:text-outline flex items-center justify-center pt-1 md:pt-0">
+<span class="material-symbols-outlined text-[20px]">drag_indicator</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-label-md text-label-md px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant uppercase tracking-wider">Aerial</span>
+<h3 class="font-label-lg text-label-lg font-semibold text-on-surface">Drone Aerial Cinematography Add-on</h3>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+                DGCA-certified drone pilot coverage for church courtyard & coastal reception.
+              </p>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-space-lg">
+<div class="flex items-center gap-space-xs text-center">
+<span class="font-label-sm text-label-sm text-outline uppercase md:hidden">Qty:</span>
+<span class="font-body-sm text-body-sm px-2.5 py-1 rounded bg-surface-container text-on-surface font-semibold">1</span>
+</div>
+<div class="text-right min-w-[110px]">
+<span class="font-label-sm text-label-sm text-outline uppercase block md:hidden">Total:</span>
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">₹45,000</span>
+<span class="font-label-sm text-label-sm text-outline block">₹45,000 ea</span>
+</div>
+<button class="p-1 rounded text-outline-variant hover:text-error hover:bg-surface-container transition-colors" title="Delete item" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Line Item 4 -->
+<div class="group relative flex flex-col md:flex-row md:items-center gap-space-md p-space-md rounded-lg bg-surface hover:bg-surface-container-low transition-all">
+<div class="cursor-grab text-outline-variant hover:text-outline flex items-center justify-center pt-1 md:pt-0">
+<span class="material-symbols-outlined text-[20px]">drag_indicator</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-label-md text-label-md px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant uppercase tracking-wider">Post-Production</span>
+<h3 class="font-label-lg text-label-lg font-semibold text-on-surface">4K Teaser Reel & Vertical Social Cut</h3>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+                60-second cinematic cut delivered within 72 hours of reception for immediate sharing.
+              </p>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-space-lg">
+<div class="flex items-center gap-space-xs text-center">
+<span class="font-label-sm text-label-sm text-outline uppercase md:hidden">Qty:</span>
+<span class="font-body-sm text-body-sm px-2.5 py-1 rounded bg-surface-container text-on-surface font-semibold">1</span>
+</div>
+<div class="text-right min-w-[110px]">
+<span class="font-label-sm text-label-sm text-outline uppercase block md:hidden">Total:</span>
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">₹35,000</span>
+<span class="font-label-sm text-label-sm text-outline block">₹35,000 ea</span>
+</div>
+<button class="p-1 rounded text-outline-variant hover:text-error hover:bg-surface-container transition-colors" title="Delete item" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Add Items Inline Footer -->
+<div class="mt-space-md pt-space-md flex flex-wrap items-center gap-space-sm bg-surface-container-low/40 p-space-sm rounded-lg">
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-surface-container-lowest hover:bg-surface-container text-secondary font-label-md text-label-md transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px]">library_add</span>
+<span>+ Add from Catalogue</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded bg-surface-container-lowest hover:bg-surface-container text-on-surface-variant font-label-md text-label-md transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px]">edit_note</span>
+<span>+ Add Custom Line Item</span>
+</button>
+</div>
+</section>
+<!-- 3. Additional Terms & Documentation Block -->
+<section class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm space-y-space-md">
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-space-sm">Terms & Client Documentation</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- Client Notes -->
+<div class="flex flex-col">
+<label class="font-label-md text-label-md text-tertiary mb-1 flex items-center justify-between">
+<span>Notes to Client (Visible on PDF & Portal)</span>
+<span class="text-outline text-[11px]">Markdown supported</span>
+</label>
+<textarea class="w-full p-3 rounded-lg bg-surface text-on-surface font-body-sm text-body-sm focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary leading-relaxed resize-none" rows="4">Thank you for inviting VOWS Studio to document your wedding in Mangalore. All 4K footage and 35mm scans will be preserved in cold archival storage for 10 years.</textarea>
+</div>
+<!-- Studio Internal Notes -->
+<div class="flex flex-col">
+<label class="font-label-md text-label-md text-secondary font-semibold mb-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+<span>Internal Notes (Studio Eyes Only)</span>
+</label>
+<textarea class="w-full p-3 rounded-lg bg-secondary-container/20 text-on-surface font-body-sm text-body-sm focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary leading-relaxed resize-none" rows="4">Client referred by Alister Coelho. High intent. 10% goodwill discount applied to lock dates before competing booking.</textarea>
+</div>
+</div>
+<!-- Milestones Accordion / Schedule Box -->
+<div class="p-space-md rounded-lg bg-surface-container-low flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[24px]">payments</span>
+<div>
+<span class="font-label-lg text-label-lg text-on-surface font-semibold block">Standard Production Payment Milestones</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">50% Advance retainer to lock dates • 35% on Day 1 shoot • 15% on final 4K master release.</span>
+</div>
+</div>
+<button class="px-3 py-1 rounded bg-surface-container-lowest hover:bg-surface-container text-on-surface font-label-md text-label-md whitespace-nowrap shadow-sm" type="button">
+            Edit Milestones
+          </button>
+</div>
+</section>
+</div>
+<!-- RIGHT COLUMN: Sticky Financials & Schedule Sidebar (Col span 4) -->
+<div class="lg:col-span-4 sticky top-20 flex flex-col gap-space-md">
+<!-- Sticky Totals Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col">
+<div class="flex items-center justify-between pb-space-sm mb-space-sm">
+<span class="font-label-md text-label-md uppercase tracking-wider text-outline">Quotation Summary</span>
+<span class="font-label-sm text-label-sm text-secondary font-semibold bg-secondary-container px-2 py-0.5 rounded">INR (₹)</span>
+</div>
+<!-- Financial Breakdown Lines -->
+<div class="space-y-space-sm font-body-sm text-body-sm py-space-sm">
+<div class="flex justify-between items-center text-on-surface">
+<span>Subtotal (4 items)</span>
+<span class="font-semibold">₹5,50,000</span>
+</div>
+<!-- Goodwill Discount Row -->
+<div class="p-space-sm rounded-lg bg-surface flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-secondary font-medium">Goodwill Discount</span>
+<div class="inline-flex rounded bg-surface-container p-0.5 text-label-sm">
+<button class="px-2 py-0.5 rounded bg-surface-container-lowest text-on-surface font-semibold shadow-xs" type="button">% Percent</button>
+<button class="px-2 py-0.5 rounded text-outline hover:text-on-surface" type="button">₹ Fixed</button>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="font-label-sm text-label-sm text-outline">Applied Rate: 10%</span>
+<span class="font-label-md text-label-md font-semibold text-secondary">- ₹55,000</span>
+</div>
+</div>
+<div class="flex justify-between items-center text-on-surface pt-1">
+<span>Taxable Amount</span>
+<span class="font-semibold">₹4,95,000</span>
+</div>
+<div class="flex justify-between items-center text-outline">
+<div class="flex items-center gap-1">
+<span>GST (18% SGST + CGST)</span>
+<span class="material-symbols-outlined text-[14px]" title="Standard wedding cinematography tax code">info</span>
+</div>
+<span>+ ₹89,100</span>
+</div>
+</div>
+<!-- Total Prominent Banner -->
+<div class="mt-space-md p-space-md rounded-xl bg-surface-container flex flex-col gap-1">
+<div class="flex items-baseline justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-tertiary">Total Quotation Value</span>
+<span class="font-label-sm text-label-sm text-outline">Incl. of all taxes</span>
+</div>
+<div class="font-headline-lg text-headline-lg font-semibold text-on-surface tracking-tight">
+            ₹5,84,100
+          </div>
+<span class="font-label-sm text-label-sm text-outline">Five Lakh Eighty Four Thousand One Hundred Only</span>
+</div>
+<!-- Deposit & Milestone Schedule Breakdown -->
+<div class="mt-space-lg pt-space-md space-y-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Payment Schedule</span>
+<span class="material-symbols-outlined text-[16px] text-tertiary">tune</span>
+</div>
+<div class="space-y-2">
+<div class="flex items-center justify-between p-2 rounded bg-surface font-body-sm text-body-sm">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>Milestone 1 (50% Retainer)</span>
+</div>
+<span class="font-semibold text-on-surface">₹2,92,050</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded bg-surface font-body-sm text-body-sm">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-container"></span>
+<span>Milestone 2 (35% Shoot Call)</span>
+</div>
+<span class="font-semibold text-on-surface">₹2,04,435</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded bg-surface font-body-sm text-body-sm">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+<span>Milestone 3 (15% Final Delivery)</span>
+</div>
+<span class="font-semibold text-on-surface">₹87,615</span>
+</div>
+</div>
+</div>
+<!-- Sidebar Call-to-Actions -->
+<div class="mt-space-lg pt-space-md space-y-space-sm">
+<button class="w-full py-2.5 px-space-md rounded bg-primary hover:bg-[#3d5242] text-on-primary font-label-lg text-label-lg font-medium transition-all flex items-center justify-center gap-2 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">forward_to_inbox</span>
+<span>Send Quotation to Samantha</span>
+</button>
+<button class="w-full py-2 px-space-md rounded bg-surface hover:bg-surface-container text-on-surface font-label-lg text-label-lg transition-colors flex items-center justify-center gap-2" type="button">
+<span class="material-symbols-outlined text-[18px] text-secondary">picture_as_pdf</span>
+<span>Preview Client PDF</span>
+</button>
+<button class="w-full py-1.5 text-center text-outline hover:text-on-surface font-label-md text-label-md transition-colors" type="button">
+            Save as Draft
+          </button>
+</div>
+</div>
+<!-- Live Sync & Audit Micro-Badge -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[20px]">sync</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">Auto-saved 2 mins ago</span>
+<span class="font-label-sm text-label-sm text-outline">Reuben Serrao (Lead)</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface font-label-sm text-label-sm text-outline">SSL Encrypted</span>
+</div>
+</div>
+</div>
+<!-- Slide-out Versions Drawer / Overlay Backdrop -->
+<div class="fixed inset-0 bg-inverse-surface/20 z-50 transition-opacity hidden" id="versions-backdrop"></div>
+<!-- Slide-out Drawer Panel -->
+<aside class="fixed top-0 right-0 h-screen w-96 bg-surface-container-lowest z-50 shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300 ease-in-out" id="versions-drawer">
+<!-- Drawer Header -->
+<div class="h-16 px-space-lg flex items-center justify-between bg-surface-container-low">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">history</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Version History</h2>
+</div>
+<button class="p-1.5 rounded-full hover:bg-surface-container text-outline hover:text-on-surface transition-colors" id="close-drawer-btn" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Drawer Body -->
+<div class="flex-1 overflow-y-auto p-space-lg space-y-space-md">
+<p class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Historical Snapshots for QT-2025-089</p>
+<!-- Active v2 Version -->
+<div class="p-space-md rounded-lg bg-secondary-container/30 flex flex-col gap-2 relative">
+<div class="flex items-center justify-between">
+<span class="px-2 py-0.5 rounded bg-secondary text-on-secondary font-label-sm text-label-sm font-semibold">v2 (Current Draft)</span>
+<span class="font-label-sm text-label-sm text-outline">Active</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Nov 01, 2025 • 11:24 AM</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">by Reuben Serrao</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+          Added DGCA drone aerial coverage line, configured 10% goodwill concession to secure dates before peak booking window.
+        </p>
+<div class="flex items-center justify-between pt-2">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">₹5,84,100</span>
+<span class="font-label-sm text-label-sm text-secondary font-medium">Currently Editing</span>
+</div>
+</div>
+<!-- Archived v1 Version -->
+<div class="p-space-md rounded-lg bg-surface hover:bg-surface-container-low transition-colors flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="px-2 py-0.5 rounded bg-surface-container text-outline font-label-sm text-label-sm">v1 (Dispatched)</span>
+<span class="flex items-center gap-1 font-label-sm text-label-sm text-primary font-medium">
+<span class="material-symbols-outlined text-[14px]">visibility</span>
+<span>Viewed by Client</span>
+</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Oct 28, 2025 • 04:12 PM</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">by Reuben Serrao</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+          Initial quotation dispatched. Contained baseline Cinema and Analog stills packages without drone or custom teaser.
+        </p>
+<div class="flex items-center justify-between pt-2">
+<span class="font-headline-sm text-headline-sm text-outline font-semibold">₹5,10,000</span>
+<div class="flex items-center gap-2">
+<button class="px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm transition-colors" type="button">
+              Compare
+            </button>
+<button class="px-2.5 py-1 rounded bg-surface-container-highest hover:bg-surface-container text-secondary font-label-sm text-label-sm font-semibold transition-colors" type="button">
+              Restore v1
+            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Drawer Footer Actions -->
+<div class="p-space-md bg-surface-container-low flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline">3 revisions tracked</span>
+<button class="px-3 py-1.5 rounded bg-surface-container-lowest hover:bg-surface-container text-on-surface font-label-md text-label-md shadow-sm" type="button">
+        Export Audit Log
+      </button>
+</div>
+</aside>
+<!-- Interactive Inline Script for Drawer Behavior -->
+<script>
+    (function initQuotationDrawer() {
+      const toggleBtn = document.getElementById('version-drawer-toggle');
+      const closeBtn = document.getElementById('close-drawer-btn');
+      const drawer = document.getElementById('versions-drawer');
+      const backdrop = document.getElementById('versions-backdrop');
+
+      function openDrawer() {
+        if (!drawer || !backdrop) return;
+        backdrop.classList.remove('hidden');
+        setTimeout(() => {
+          drawer.classList.remove('translate-x-full');
+        }, 10);
+      }
+
+      function closeDrawer() {
+        if (!drawer || !backdrop) return;
+        drawer.classList.add('translate-x-full');
+        setTimeout(() => {
+          backdrop.classList.add('hidden');
+        }, 300);
+      }
+
+      if (toggleBtn) toggleBtn.addEventListener('click', openDrawer);
+      if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+      if (backdrop) backdrop.addEventListener('click', closeDrawer);
+    })();
+  </script>
+</div></main></div></body></html>

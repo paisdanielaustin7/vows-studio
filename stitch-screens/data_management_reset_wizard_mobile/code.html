@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "tertiary-container": "#909690", "on-secondary-container": "#516a57", "inverse-on-surface": "#ecf2ec", "surface-container": "#eaefe9", "primary-fixed": "#cfe9d3", "background": "#f5fbf4", "on-background": "#171d19", "on-primary": "#ffffff", "surface-tint": "#4c6452", "secondary-fixed-dim": "#b2cdb6", "surface-container-lowest": "#ffffff", "on-error": "#ffffff", "surface-variant": "#dee4de", "on-tertiary-fixed-variant": "#424843", "on-tertiary": "#ffffff", "on-tertiary-fixed": "#171d19", "surface-container-highest": "#dee4de", "outline": "#737972", "on-surface": "#171d19", "inverse-surface": "#2c322e", "surface-container-high": "#e4eae3", "on-tertiary-container": "#282f2a", "primary-container": "#829b87", "on-primary-fixed": "#092012", "secondary-fixed": "#ceead2", "inverse-primary": "#b3cdb7", "on-secondary-fixed-variant": "#344c3b", "outline-variant": "#c3c8c1", "error-container": "#ffdad6", "on-primary-fixed-variant": "#354c3b", "on-surface-variant": "#424843", "surface": "#f5fbf4", "tertiary-fixed-dim": "#c2c8c2", "on-secondary-fixed": "#082011", "secondary": "#4b6451", "error": "#ba1a1a", "on-error-container": "#93000a", "tertiary": "#5a605b", "on-secondary": "#ffffff", "on-primary-container": "#1c3223", "secondary-container": "#ceead2", "tertiary-fixed": "#dee4dd", "primary": "#4c6452", "surface-container-low": "#eff5ef", "primary-fixed-dim": "#b3cdb7", "surface-bright": "#f5fbf4", "surface-dim": "#d6dcd5" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-sm": "0.5rem", "space-xl": "2.5rem", "gutter": "1.5rem", "gutter-mobile": "1rem", "margin": "3rem", "space-lg": "1.5rem", "margin-mobile": "1.25rem", "space-md": "1rem", "space-xs": "0.25rem" }, "fontFamily": { "headline-lg": ["Inter"], "body-sm": ["Inter"], "headline-lg-mobile": ["Inter"], "display": ["Inter"], "body-md": ["Inter"], "label-sm": ["Inter"], "headline-sm": ["Inter"], "headline-md": ["Inter"], "body-lg": ["Inter"], "label-md": ["Inter"], "label-lg": ["Inter"], "display-mobile": ["Inter"] }, "fontSize": { "headline-lg": ["2rem", {"lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600"}], "body-sm": ["0.8125rem", {"lineHeight": "1.25rem", "fontWeight": "400"}], "headline-lg-mobile": ["1.5rem", {"lineHeight": "2rem", "letterSpacing": "-0.015em", "fontWeight": "600"}], "display": ["2.75rem", {"lineHeight": "3.25rem", "letterSpacing": "-0.03em", "fontWeight": "600"}], "body-md": ["0.875rem", {"lineHeight": "1.5rem", "fontWeight": "400"}], "label-sm": ["0.6875rem", {"lineHeight": "0.875rem", "letterSpacing": "0.04em", "fontWeight": "600"}], "headline-sm": ["1.125rem", {"lineHeight": "1.5rem", "letterSpacing": "-0.01em", "fontWeight": "500"}], "headline-md": ["1.375rem", {"lineHeight": "1.75rem", "letterSpacing": "-0.015em", "fontWeight": "600"}], "body-lg": ["1rem", {"lineHeight": "1.625rem", "fontWeight": "400"}], "label-md": ["0.75rem", {"lineHeight": "1rem", "letterSpacing": "0.02em", "fontWeight": "500"}], "label-lg": ["0.875rem", {"lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "500"}], "display-mobile": ["2rem", {"lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600"}] } } } }</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface font-body-md antialiased"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-gutter-mobile flex items-center justify-between"><div class="flex items-center gap-space-xs min-w-0"><button aria-label="Back" class="w-11 h-11 -ml-space-xs flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors" onclick="history.back()"><span class="material-symbols-outlined text-[20px]">arrow_back</span></button><div class="flex items-baseline gap-1.5 truncate"><span class="font-label-md text-label-md uppercase tracking-wider text-secondary">vows</span><span class="font-label-md text-label-md text-outline-variant">/</span><h1 class="font-headline-sm text-headline-sm text-on-surface truncate">Admin Hub</h1></div></div><div class="flex items-center gap-space-xs flex-shrink-0"><button aria-label="Search" class="w-11 h-11 flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[22px]">search</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex flex-col relative w-full pt-16 pb-20 bg-surface min-h-screen"><div class="flex flex-col w-full pb-10">
+<!-- System Status Banner & SA Indicator -->
+<div class="px-gutter-mobile pt-space-md pb-space-sm flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="inline-block w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Production Database</span>
+</div>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[13px]" style="font-variation-settings: 'FILL' 1;">security</span>
+      SA ONLY
+    </span>
+</div>
+<!-- Section 1: Setup Management -->
+<div class="px-gutter-mobile space-y-space-md">
+<!-- Setup Mode Card -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm">
+<div class="flex items-start justify-between">
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">lock</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Setup Mode: LOCKED</h2>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Secured on Nov 12, 2025 by Reuben Serrao</p>
+</div>
+<span class="inline-flex items-center px-2 py-1 rounded bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">
+          ReadOnly Core
+        </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-space-sm leading-relaxed">
+        System architecture and studio identity parameters are sealed against non-administrative modifications.
+      </p>
+</div>
+<!-- First-Run Checklist (Collapsible) -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden" id="checklistContainer">
+<button aria-expanded="false" class="w-full p-space-md flex items-center justify-between text-left focus:outline-none transition-colors hover:bg-surface-container-low min-h-[44px]" onclick="toggleChecklist()" type="button">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+</div>
+<div>
+<h3 class="font-label-lg text-label-lg text-on-surface">First-Run Setup Checklist</h3>
+<p class="font-label-sm text-label-sm text-secondary font-medium">6/6 Completed (100%)</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant transition-transform duration-200" id="checklistCaret">
+          expand_more
+        </span>
+</button>
+<div class="hidden px-space-md pb-space-md pt-space-xs space-y-2.5 bg-surface-container-lowest" id="checklistItems">
+<div class="flex items-center justify-between py-1">
+<span class="font-body-sm text-body-sm text-on-surface">Studio Profile &amp; Legal Entity</span>
+<span class="material-symbols-outlined text-primary text-[18px]">check_circle</span>
+</div>
+<div class="flex items-center justify-between py-1">
+<span class="font-body-sm text-body-sm text-on-surface">Brand Identity &amp; Editorial Theme</span>
+<span class="material-symbols-outlined text-primary text-[18px]">check_circle</span>
+</div>
+<div class="flex items-center justify-between py-1">
+<span class="font-body-sm text-body-sm text-on-surface">Gmail Relay &amp; DKIM Dispatch</span>
+<span class="material-symbols-outlined text-primary text-[18px]">check_circle</span>
+</div>
+<div class="flex items-center justify-between py-1">
+<span class="font-body-sm text-body-sm text-on-surface">Cinematic Ratecard &amp; Catalogue</span>
+<span class="material-symbols-outlined text-primary text-[18px]">check_circle</span>
+</div>
+<div class="flex items-center justify-between py-1">
+<span class="font-body-sm text-body-sm text-on-surface">Principal Filmmakers &amp; Crew</span>
+<span class="material-symbols-outlined text-primary text-[18px]">check_circle</span>
+</div>
+<div class="flex items-center justify-between py-1">
+<span class="font-body-sm text-body-sm text-on-surface">Founding Client &amp; Retainer Ledger</span>
+<span class="material-symbols-outlined text-primary text-[18px]">check_circle</span>
+</div>
+</div>
+</div>
+<!-- Setup Quick Actions -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm space-y-space-md">
+<h3 class="font-label-md text-label-md uppercase tracking-wider text-outline">Administrative Actions</h3>
+<div class="space-y-space-sm">
+<!-- Disabled Load Sample Data -->
+<div class="relative">
+<button class="w-full h-11 px-4 rounded-lg bg-surface-container text-on-surface-variant/50 font-label-lg text-label-lg flex items-center justify-between cursor-not-allowed" disabled="" type="button">
+<span class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">library_add</span>
+              Load Sample Data
+            </span>
+<span class="material-symbols-outlined text-[16px]">block</span>
+</button>
+<span class="block mt-1 text-center font-label-sm text-label-sm text-outline">
+            Disabled in Locked Production mode
+          </span>
+</div>
+<!-- Lock Status Toggle -->
+<button class="w-full h-11 px-4 rounded-lg bg-surface-container text-on-surface font-label-lg text-label-lg flex items-center justify-between active:bg-surface-container-high transition-colors" type="button">
+<span class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">key</span>
+            Setup Lock Status
+          </span>
+<span class="px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm font-semibold">
+            Locked
+          </span>
+</button>
+<!-- Destructive Reset Action -->
+<button class="w-full h-12 px-4 rounded-lg bg-error-container text-on-error-container font-label-lg text-label-lg font-semibold flex items-center justify-center gap-2 transition-transform active:scale-[0.98]" onclick="openResetWizard()" type="button">
+<span class="material-symbols-outlined text-[20px]">restart_alt</span>
+          Launch Reset Wizard →
+        </button>
+</div>
+</div>
+</div>
+<!-- Section 2: Mobile Reset Wizard Sheet Modal -->
+<div class="fixed inset-0 z-50 bg-inverse-surface/40 backdrop-blur-sm flex flex-col justify-end transition-opacity duration-300 opacity-0 pointer-events-none" id="resetWizardModal">
+<div class="w-full max-h-[777px] bg-surface-container-lowest rounded-t-2xl shadow-xl flex flex-col overflow-hidden">
+<!-- Sheet Drag Handle & Header -->
+<div class="pt-3 pb-2 px-space-md flex flex-col items-center bg-surface-container-lowest">
+<div class="w-10 h-1 rounded-full bg-outline-variant mb-3"></div>
+<div class="w-full flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-error text-[20px]">warning</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Studio Data Reset Wizard</span>
+</div>
+<button aria-label="Close Reset Wizard" class="w-11 h-11 -mr-2 flex items-center justify-center text-on-surface-variant hover:text-on-surface" onclick="closeResetWizard()" type="button">
+<span class="material-symbols-outlined text-[22px]">close</span>
+</button>
+</div>
+</div>
+<!-- Segmented Step Indicator (4-Steps) -->
+<div class="px-gutter-mobile py-space-sm bg-surface-container-low">
+<div class="grid grid-cols-4 gap-1.5 items-center">
+<!-- Step 1 -->
+<button class="flex flex-col items-center gap-1 group focus:outline-none" onclick="goToStep(1)" type="button">
+<div class="w-full h-1 rounded-full bg-primary transition-colors" id="step-bar-1"></div>
+<span class="font-label-sm text-label-sm text-primary font-semibold" id="step-label-1">1. Scope</span>
+</button>
+<!-- Step 2 -->
+<button class="flex flex-col items-center gap-1 group focus:outline-none" onclick="goToStep(2)" type="button">
+<div class="w-full h-1 rounded-full bg-surface-container-highest transition-colors" id="step-bar-2"></div>
+<span class="font-label-sm text-label-sm text-outline" id="step-label-2">2. Preview</span>
+</button>
+<!-- Step 3 -->
+<button class="flex flex-col items-center gap-1 group focus:outline-none" onclick="goToStep(3)" type="button">
+<div class="w-full h-1 rounded-full bg-surface-container-highest transition-colors" id="step-bar-3"></div>
+<span class="font-label-sm text-label-sm text-outline" id="step-label-3">3. Safety</span>
+</button>
+<!-- Step 4 -->
+<div class="flex flex-col items-center gap-1 opacity-50">
+<div class="w-full h-1 rounded-full bg-surface-container-highest" id="step-bar-4"></div>
+<span class="font-label-sm text-label-sm text-outline" id="step-label-4">4. Done</span>
+</div>
+</div>
+</div>
+<!-- Scrollable Wizard Body -->
+<div class="flex-1 overflow-y-auto px-gutter-mobile py-space-md space-y-space-md">
+<!-- VIEW: STEP 1 (Scope Selection) -->
+<div class="space-y-space-md" id="wizardStep1">
+<div class="space-y-1">
+<h4 class="font-label-lg text-label-lg text-on-surface font-semibold">Select Purge Scopes</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Targeted sectors will be sanitized. System schemas and Master SuperAdmin credentials remain intact.
+            </p>
+</div>
+<!-- Scope Selection Checkbox List -->
+<div class="space-y-2">
+<!-- Scope 1: Clients & Dependent Records (Cascading) -->
+<label class="flex items-start gap-3 p-3 rounded-lg bg-surface-container cursor-pointer select-none active:bg-surface-container-high transition-colors min-h-[44px]">
+<input checked="" class="mt-0.5 h-5 w-5 rounded text-primary accent-primary" id="scopeClients" onchange="updateRecordMetrics()" type="checkbox"/>
+<div class="space-y-0.5">
+<span class="font-label-lg text-label-lg text-on-surface font-medium block">Clients &amp; Dependent Records</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant block">Cascades to bookings, production quotes, contracts &amp; invoices.</span>
+</div>
+</label>
+<!-- Scope 2: Finance only -->
+<label class="flex items-start gap-3 p-3 rounded-lg bg-surface-container-low cursor-pointer select-none active:bg-surface-container transition-colors min-h-[44px]">
+<input class="mt-0.5 h-5 w-5 rounded text-primary accent-primary" id="scopeFinance" onchange="updateRecordMetrics()" type="checkbox"/>
+<div class="space-y-0.5">
+<span class="font-label-lg text-label-lg text-on-surface font-medium block">Finance Only</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant block">Ledger balances, merchant settlement logs &amp; payout records.</span>
+</div>
+</label>
+<!-- Scope 3: Crew -->
+<label class="flex items-start gap-3 p-3 rounded-lg bg-surface-container-low cursor-pointer select-none active:bg-surface-container transition-colors min-h-[44px]">
+<input class="mt-0.5 h-5 w-5 rounded text-primary accent-primary" id="scopeCrew" onchange="updateRecordMetrics()" type="checkbox"/>
+<div class="space-y-0.5">
+<span class="font-label-lg text-label-lg text-on-surface font-medium block">Crew &amp; Freelance Roster</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant block">Filmmaker assignments, day-rates, and talent contact cards.</span>
+</div>
+</label>
+<!-- Scope 4: Catalogue -->
+<label class="flex items-start gap-3 p-3 rounded-lg bg-surface-container-low cursor-pointer select-none active:bg-surface-container transition-colors min-h-[44px]">
+<input class="mt-0.5 h-5 w-5 rounded text-primary accent-primary" id="scopeCatalogue" onchange="updateRecordMetrics()" type="checkbox"/>
+<div class="space-y-0.5">
+<span class="font-label-lg text-label-lg text-on-surface font-medium block">Catalogue &amp; Packages</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant block">Custom deliverables, tier bundles, and cinematography add-ons.</span>
+</div>
+</label>
+<!-- Scope 5: Portfolio & Website -->
+<label class="flex items-start gap-3 p-3 rounded-lg bg-surface-container-low cursor-pointer select-none active:bg-surface-container transition-colors min-h-[44px]">
+<input class="mt-0.5 h-5 w-5 rounded text-primary accent-primary" id="scopePortfolio" onchange="updateRecordMetrics()" type="checkbox"/>
+<div class="space-y-0.5">
+<span class="font-label-lg text-label-lg text-on-surface font-medium block">Portfolio &amp; Public Showcase</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant block">Featured client film stills, curated teaser reels, and public stories.</span>
+</div>
+</label>
+<!-- Scope 6: Notifications & Activity -->
+<label class="flex items-start gap-3 p-3 rounded-lg bg-surface-container-low cursor-pointer select-none active:bg-surface-container transition-colors min-h-[44px]">
+<input class="mt-0.5 h-5 w-5 rounded text-primary accent-primary" id="scopeActivity" onchange="updateRecordMetrics()" type="checkbox"/>
+<div class="space-y-0.5">
+<span class="font-label-lg text-label-lg text-on-surface font-medium block">Notifications &amp; Activity Feed</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant block">Internal team alerts, push queues, and transient notifications.</span>
+</div>
+</label>
+<!-- Scope 7: Sample Data Only -->
+<label class="flex items-start gap-3 p-3 rounded-lg bg-surface-container-low cursor-pointer select-none active:bg-surface-container transition-colors min-h-[44px]">
+<input class="mt-0.5 h-5 w-5 rounded text-primary accent-primary" id="scopeSample" onchange="updateRecordMetrics()" type="checkbox"/>
+<div class="space-y-0.5">
+<span class="font-label-lg text-label-lg text-on-surface font-medium block">Sample Data Only</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant block">Clear mock entries tagged during staging &amp; orientation phases.</span>
+</div>
+</label>
+</div>
+<!-- Distinct Sequence Options -->
+<div class="pt-space-sm space-y-2">
+<h5 class="font-label-md text-label-md uppercase tracking-wider text-outline">Sequence Modifiers</h5>
+<label class="flex items-center gap-3 p-3 rounded-lg bg-surface-container-lowest cursor-pointer min-h-[44px]">
+<input checked="" class="h-5 w-5 rounded text-primary accent-primary" id="restartSequence" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface">Restart auto-increment numbering at #000001</span>
+</label>
+<label class="flex items-start gap-3 p-3 rounded-lg bg-error-container/30 cursor-pointer min-h-[44px]">
+<input class="mt-0.5 h-5 w-5 rounded text-error accent-error" id="clearAudit" type="checkbox"/>
+<div class="space-y-0.5">
+<span class="font-label-lg text-label-lg text-on-surface font-medium block">Also clear studio audit log</span>
+<span class="font-body-sm text-body-sm text-error block">Permanent loss of compliance trail &amp; change-attribution history.</span>
+</div>
+</label>
+</div>
+</div>
+<!-- VIEW: STEP 2 (Dry Run Preview Summary) -->
+<div class="hidden space-y-space-md" id="wizardStep2">
+<div class="space-y-1">
+<h4 class="font-label-lg text-label-lg text-on-surface font-semibold">Dry-Run Impact Assessment</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              The engine executed an in-memory simulation against the production schema.
+            </p>
+</div>
+<!-- Dry-run preview summary card -->
+<div class="p-space-md rounded-xl bg-surface-container space-y-space-md">
+<div class="flex items-center justify-between">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline block">Calculated Blast Radius</span>
+<p class="font-headline-md text-headline-md text-on-surface font-semibold" id="dryRunRecords">Impact: 428 records</p>
+<span class="font-body-sm text-body-sm text-secondary font-medium" id="dryRunFiles">1,734 media assets &amp; raw files</span>
+</div>
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[24px]">database</span>
+</div>
+</div>
+<!-- Breakdown list -->
+<div class="space-y-2 pt-2">
+<div class="flex justify-between py-1 font-body-sm text-body-sm">
+<span class="text-on-surface-variant">Active Couple Portals:</span>
+<span class="font-semibold text-on-surface">34 accounts</span>
+</div>
+<div class="flex justify-between py-1 font-body-sm text-body-sm">
+<span class="text-on-surface-variant">Wedding Shoots &amp; Stills:</span>
+<span class="font-semibold text-on-surface">118 project folders</span>
+</div>
+<div class="flex justify-between py-1 font-body-sm text-body-sm">
+<span class="text-on-surface-variant">Stripe Invoices &amp; Receipts:</span>
+<span class="font-semibold text-on-surface">276 line entries</span>
+</div>
+<div class="flex justify-between py-1 font-body-sm text-body-sm">
+<span class="text-on-surface-variant">S3 / Wasabi Storage Reclaimed:</span>
+<span class="font-semibold text-on-surface">312.4 GB</span>
+</div>
+</div>
+</div>
+<div class="p-3 rounded-lg bg-surface-container-high flex items-start gap-2.5">
+<span class="material-symbols-outlined text-outline text-[18px] mt-0.5">info</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Backup snapshot <span class="font-mono text-on-surface">#VOWS-PROD-20251112</span> was queued. The rollback window is strictly 4 hours post-execution.
+            </p>
+</div>
+</div>
+<!-- VIEW: STEP 3 (Safety Verification) -->
+<div class="hidden space-y-space-md" id="wizardStep3">
+<div class="p-3 rounded-lg bg-error-container text-on-error-container flex items-start gap-2.5">
+<span class="material-symbols-outlined text-error text-[20px] mt-0.5">gavel</span>
+<div class="space-y-0.5">
+<h5 class="font-label-lg text-label-lg font-semibold">Irrevocable Administrative Command</h5>
+<p class="font-body-sm text-body-sm">
+                Execution will drop selected relational tables and clear client storage buckets.
+              </p>
+</div>
+</div>
+<!-- Safety verification inputs -->
+<div class="space-y-space-md">
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-1.5" for="adminAuthPass">
+                SuperAdmin Password Verification
+              </label>
+<div class="relative">
+<input class="w-full h-12 px-3 pr-10 rounded-lg bg-surface-container-lowest text-on-surface font-body-md text-body-md placeholder:text-outline focus:outline-none focus:bg-surface-container-low" id="adminAuthPass" oninput="validateSafetyStep()" placeholder="Enter your administrative password" type="password"/>
+<button class="absolute right-0 top-0 h-12 w-11 flex items-center justify-center text-outline hover:text-on-surface" onclick="togglePasswordVisibility('adminAuthPass', this)" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-1.5" for="safetyTokenInput">
+                Type exact confirmation phrase:
+                <span class="select-all font-mono font-bold text-error bg-error-container/40 px-1 py-0.5 rounded">RESET VOWS DATA</span>
+</label>
+<input autocomplete="off" class="w-full h-12 px-3 rounded-lg bg-surface-container-lowest text-on-surface font-mono font-semibold text-body-md placeholder:text-outline focus:outline-none focus:bg-surface-container-low uppercase tracking-wider" id="safetyTokenInput" oninput="validateSafetyStep()" placeholder="RESET VOWS DATA" type="text"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Persistent Wizard Bottom Navigation Footer -->
+<div class="p-gutter-mobile bg-surface-container-lowest flex items-center gap-space-sm pb-safe">
+<button class="h-12 px-4 rounded-lg bg-surface-container text-on-surface font-label-lg text-label-lg min-w-[80px] active:bg-surface-container-high transition-colors" id="btnWizardBack" onclick="stepBack()" type="button">
+          Cancel
+        </button>
+<button class="flex-1 h-12 px-4 rounded-lg bg-primary text-on-primary font-label-lg text-label-lg font-semibold flex items-center justify-center gap-2 active:bg-secondary transition-all" id="btnWizardNext" onclick="stepNext()" type="button">
+<span id="btnNextText">Run Impact Preview →</span>
+<span class="material-symbols-outlined text-[18px]" id="btnNextIcon">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Studio Media Micro-Gallery Footer (Serene Proofing Framing) -->
+<div class="mt-space-lg px-gutter-mobile space-y-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md uppercase tracking-wider text-outline">Verified Cloud Replicas</span>
+<span class="font-label-sm text-label-sm text-secondary font-medium">AWS eu-west-1 • Healthy</span>
+</div>
+<div class="grid grid-cols-2 gap-space-sm">
+<div class="relative rounded-lg overflow-hidden h-24 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Editorial wedding photography proof showcasing an elegant bridal bouquet with soft white roses and muted eucalyptus leaves in natural daylight, architectural monograph style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4cKtKXawqhhll7se7WwaUHG6GqXkzxdLHw7uQwG0gvwiiTJkbEgnekQv0XA_o1K8A7Rgt8Nl9Vv5Eg0Nbr4Z-E7EYrK6Bcyr7CobeglNghjNiKN2S7cXNCK5KbEtYrL1D8fdivu0yDcP5GoYBPoIlL56JO60WHjImZgp5fnkqK6mPoxp52kFGy84YMZworAOorIvkD4PwdxqMX51aBYaYKU7xci2oaP-MXK-H8d3O"/>
+<div class="absolute inset-0 bg-inverse-surface/30 p-2 flex flex-col justify-end">
+<span class="font-label-sm text-label-sm text-on-primary font-medium truncate">Archive Vol. 04</span>
+<span class="font-label-sm text-label-sm text-on-primary/80">38.2 GB Stored</span>
+</div>
+</div>
+<div class="relative rounded-lg overflow-hidden h-24 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Cinematic still from high-end wedding documentary featuring a newlywed couple standing in minimal modernist villa courtyard under serene warm golden hour lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2qlNUdNQGZtKRY3-toe0lwACDsslb241SQEuYhK1Leheenj1oSlD9qMIDJf-f6ancz5oAOLsyz9Yzx5J-42E2NZbl-2Vdefk2T3WXppiGJoeymvV5niJcj1ZgGs8S2LEtMNmIb-L-SyfpunTTD3a0cBp6lQ1KOVTToaGtwkkM09uShCmw8Bsrer9vy-tSf0yTetxkoNr4zXGni8NRdGV-4BXpL8F0w6_felaNQoMA"/>
+<div class="absolute inset-0 bg-inverse-surface/30 p-2 flex flex-col justify-end">
+<span class="font-label-sm text-label-sm text-on-primary font-medium truncate">Client Master Renders</span>
+<span class="font-label-sm text-label-sm text-on-primary/80">142.1 GB Stored</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  let currentWizardStep = 1;
+
+  function toggleChecklist() {
+    const list = document.getElementById('checklistItems');
+    const caret = document.getElementById('checklistCaret');
+    const isHidden = list.classList.contains('hidden');
+    
+    if (isHidden) {
+      list.classList.remove('hidden');
+      caret.style.transform = 'rotate(180deg)';
+    } else {
+      list.classList.add('hidden');
+      caret.style.transform = 'rotate(0deg)';
+    }
+  }
+
+  function openResetWizard() {
+    const modal = document.getElementById('resetWizardModal');
+    modal.classList.remove('pointer-events-none', 'opacity-0');
+    modal.classList.add('opacity-100');
+    goToStep(1);
+  }
+
+  function closeResetWizard() {
+    const modal = document.getElementById('resetWizardModal');
+    modal.classList.add('opacity-0', 'pointer-events-none');
+    modal.classList.remove('opacity-100');
+    resetInputs();
+  }
+
+  function resetInputs() {
+    const p = document.getElementById('adminAuthPass');
+    const t = document.getElementById('safetyTokenInput');
+    if (p) p.value = '';
+    if (t) t.value = '';
+  }
+
+  function goToStep(step) {
+    currentWizardStep = step;
+    const s1 = document.getElementById('wizardStep1');
+    const s2 = document.getElementById('wizardStep2');
+    const s3 = document.getElementById('wizardStep3');
+    
+    const bar1 = document.getElementById('step-bar-1');
+    const bar2 = document.getElementById('step-bar-2');
+    const bar3 = document.getElementById('step-bar-3');
+
+    const label1 = document.getElementById('step-label-1');
+    const label2 = document.getElementById('step-label-2');
+    const label3 = document.getElementById('step-label-3');
+
+    const btnBack = document.getElementById('btnWizardBack');
+    const btnNext = document.getElementById('btnWizardNext');
+    const btnNextText = document.getElementById('btnNextText');
+    const btnNextIcon = document.getElementById('btnNextIcon');
+
+    // Hide all
+    s1.classList.add('hidden');
+    s2.classList.add('hidden');
+    s3.classList.add('hidden');
+
+    // Reset styles
+    bar1.className = 'w-full h-1 rounded-full bg-surface-container-highest transition-colors';
+    bar2.className = 'w-full h-1 rounded-full bg-surface-container-highest transition-colors';
+    bar3.className = 'w-full h-1 rounded-full bg-surface-container-highest transition-colors';
+    label1.className = 'font-label-sm text-label-sm text-outline';
+    label2.className = 'font-label-sm text-label-sm text-outline';
+    label3.className = 'font-label-sm text-label-sm text-outline';
+
+    btnNext.disabled = false;
+    btnNext.className = 'flex-1 h-12 px-4 rounded-lg bg-primary text-on-primary font-label-lg text-label-lg font-semibold flex items-center justify-center gap-2 active:bg-secondary transition-all';
+
+    if (step === 1) {
+      s1.classList.remove('hidden');
+      bar1.classList.replace('bg-surface-container-highest', 'bg-primary');
+      label1.className = 'font-label-sm text-label-sm text-primary font-semibold';
+      btnBack.textContent = 'Cancel';
+      btnNextText.textContent = 'Run Impact Preview';
+      btnNextIcon.textContent = 'arrow_forward';
+    } else if (step === 2) {
+      s2.classList.remove('hidden');
+      bar1.classList.replace('bg-surface-container-highest', 'bg-primary');
+      bar2.classList.replace('bg-surface-container-highest', 'bg-primary');
+      label2.className = 'font-label-sm text-label-sm text-primary font-semibold';
+      btnBack.textContent = 'Back';
+      btnNextText.textContent = 'Proceed to Safety Authorization';
+      btnNextIcon.textContent = 'arrow_forward';
+    } else if (step === 3) {
+      s3.classList.remove('hidden');
+      bar1.classList.replace('bg-surface-container-highest', 'bg-primary');
+      bar2.classList.replace('bg-surface-container-highest', 'bg-primary');
+      bar3.classList.replace('bg-surface-container-highest', 'bg-error');
+      label3.className = 'font-label-sm text-label-sm text-error font-semibold';
+      btnBack.textContent = 'Back';
+      btnNextText.textContent = 'Permanently Purge Records';
+      btnNextIcon.textContent = 'delete_forever';
+      validateSafetyStep();
+    }
+  }
+
+  function stepNext() {
+    if (currentWizardStep === 1) {
+      goToStep(2);
+    } else if (currentWizardStep === 2) {
+      goToStep(3);
+    } else if (currentWizardStep === 3) {
+      executeResetAction();
+    }
+  }
+
+  function stepBack() {
+    if (currentWizardStep === 1) {
+      closeResetWizard();
+    } else if (currentWizardStep === 2) {
+      goToStep(1);
+    } else if (currentWizardStep === 3) {
+      goToStep(2);
+    }
+  }
+
+  function updateRecordMetrics() {
+    const clientsChecked = document.getElementById('scopeClients').checked;
+    const dryRun = document.getElementById('dryRunRecords');
+    const dryFiles = document.getElementById('dryRunFiles');
+    
+    if (clientsChecked) {
+      dryRun.textContent = "Impact: 428 records";
+      dryFiles.textContent = "1,734 media assets & raw files";
+    } else {
+      dryRun.textContent = "Impact: 62 records";
+      dryFiles.textContent = "142 media assets & raw files";
+    }
+  }
+
+  function validateSafetyStep() {
+    if (currentWizardStep !== 3) return;
+    const pass = document.getElementById('adminAuthPass').value.trim();
+    const token = document.getElementById('safetyTokenInput').value.trim();
+    const btnNext = document.getElementById('btnWizardNext');
+
+    const isValid = (pass.length >= 4) && (token === 'RESET VOWS DATA');
+
+    if (isValid) {
+      btnNext.disabled = false;
+      btnNext.className = 'flex-1 h-12 px-4 rounded-lg bg-error text-on-error font-label-lg text-label-lg font-semibold flex items-center justify-center gap-2 active:bg-on-error-container transition-all shadow-md';
+    } else {
+      btnNext.disabled = true;
+      btnNext.className = 'flex-1 h-12 px-4 rounded-lg bg-surface-container-highest text-on-surface-variant/40 font-label-lg text-label-lg font-semibold flex items-center justify-center gap-2 cursor-not-allowed';
+    }
+  }
+
+  function togglePasswordVisibility(inputId, btn) {
+    const input = document.getElementById(inputId);
+    const icon = btn.querySelector('.material-symbols-outlined');
+    if (input.type === 'password') {
+      input.type = 'text';
+      icon.textContent = 'visibility_off';
+    } else {
+      input.type = 'password';
+      icon.textContent = 'visibility';
+    }
+  }
+
+  function executeResetAction() {
+    const btnNext = document.getElementById('btnWizardNext');
+    btnNext.disabled = true;
+    btnNext.innerHTML = '<span class="material-symbols-outlined animate-spin text-[18px]">progress_activity</span> Purging Data...';
+    
+    setTimeout(() => {
+      alert('VOWS Studio Database has been safely reset to pristine initial state.');
+      closeResetWizard();
+      btnNext.innerHTML = '<span id="btnNextText">Permanently Purge Records</span><span class="material-symbols-outlined text-[18px]">delete_forever</span>';
+    }, 1200);
+  }
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]" data-active-classes="text-primary font-label-md font-semibold"><div class="h-16 px-space-xs flex items-center justify-around"><a class="flex flex-col items-center justify-center min-w-[56px] h-12 text-on-surface-variant transition-colors" data-path="bookings" href="#"><span class="material-symbols-outlined text-[22px]">event_available</span><span class="font-label-sm text-label-sm mt-0.5">Bookings</span></a><a class="flex flex-col items-center justify-center min-w-[56px] h-12 text-on-surface-variant transition-colors" data-path="enquiries" href="#"><span class="material-symbols-outlined text-[22px]">mail</span><span class="font-label-sm text-label-sm mt-0.5">Enquiries</span></a><a class="flex flex-col items-center justify-center min-w-[56px] h-12 text-on-surface-variant transition-colors" data-path="catalogue" href="#"><span class="material-symbols-outlined text-[22px]">photo_library</span><span class="font-label-sm text-label-sm mt-0.5">Catalogue</span></a><a class="flex flex-col items-center justify-center min-w-[56px] h-12 text-on-surface-variant transition-colors" data-path="settings" href="#"><span class="material-symbols-outlined text-[22px]">tune</span><span class="font-label-sm text-label-sm mt-0.5">Settings</span></a><a aria-current="page" class="flex flex-col items-center justify-center min-w-[56px] h-12 transition-colors text-primary font-label-md font-semibold" data-path="admin-hub" href="#"><span class="material-symbols-outlined text-[22px]">admin_panel_settings</span><span class="font-label-sm text-label-sm mt-0.5">Admin</span></a></div></nav></body></html>

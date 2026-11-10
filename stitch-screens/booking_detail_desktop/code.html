@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "tertiary": "#5a605b",
+        "on-secondary-fixed": "#082011",
+        "tertiary-fixed-dim": "#c2c8c2",
+        "on-tertiary-fixed": "#171d19",
+        "on-error-container": "#93000a",
+        "error": "#ba1a1a",
+        "on-tertiary-container": "#282f2a",
+        "on-surface": "#171d19",
+        "on-primary-fixed-variant": "#354c3b",
+        "secondary": "#4b6451",
+        "primary-container": "#829b87",
+        "on-surface-variant": "#424843",
+        "surface": "#f5fbf4",
+        "background": "#f5fbf4",
+        "on-tertiary": "#ffffff",
+        "on-primary": "#ffffff",
+        "surface-tint": "#4c6452",
+        "error-container": "#ffdad6",
+        "outline-variant": "#c3c8c1",
+        "secondary-fixed-dim": "#b2cdb6",
+        "surface-container": "#eaefe9",
+        "primary": "#4c6452",
+        "on-tertiary-fixed-variant": "#424843",
+        "surface-container-highest": "#dee4de",
+        "inverse-primary": "#b3cdb7",
+        "on-background": "#171d19",
+        "secondary-fixed": "#ceead2",
+        "surface-container-lowest": "#ffffff",
+        "on-error": "#ffffff",
+        "on-secondary-fixed-variant": "#344c3b",
+        "primary-fixed": "#cfe9d3",
+        "tertiary-container": "#909690",
+        "on-secondary": "#ffffff",
+        "inverse-surface": "#2c322e",
+        "secondary-container": "#ceead2",
+        "surface-variant": "#dee4de",
+        "inverse-on-surface": "#ecf2ec",
+        "primary-fixed-dim": "#b3cdb7",
+        "on-secondary-container": "#516a57",
+        "surface-container-low": "#eff5ef",
+        "surface-bright": "#f5fbf4",
+        "tertiary-fixed": "#dee4dd",
+        "surface-container-high": "#e4eae3",
+        "outline": "#737972",
+        "on-primary-fixed": "#092012",
+        "on-primary-container": "#1c3223",
+        "surface-dim": "#d6dcd5"
+      },
+      "borderRadius": {
+        "DEFAULT": "0.25rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "full": "9999px"
+      },
+      "spacing": {
+        "space-md": "1rem",
+        "gutter": "1.5rem",
+        "space-xs": "0.25rem",
+        "margin": "3rem",
+        "margin-mobile": "1.25rem",
+        "space-xl": "2.5rem",
+        "gutter-mobile": "1rem",
+        "space-sm": "0.5rem",
+        "space-lg": "1.5rem"
+      },
+      "fontFamily": {
+        "label-lg": ["Inter"],
+        "body-lg": ["Inter"],
+        "display-mobile": ["Inter"],
+        "label-md": ["Inter"],
+        "display": ["Inter"],
+        "label-sm": ["Inter"],
+        "body-sm": ["Inter"],
+        "headline-sm": ["Inter"],
+        "headline-md": ["Inter"],
+        "headline-lg-mobile": ["Inter"],
+        "headline-lg": ["Inter"],
+        "body-md": ["Inter"]
+      },
+      "fontSize": {
+        "label-lg": ["0.875rem", {"lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "500"}],
+        "body-lg": ["1rem", {"lineHeight": "1.625rem", "fontWeight": "400"}],
+        "display-mobile": ["2rem", {"lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+        "label-md": ["0.75rem", {"lineHeight": "1rem", "letterSpacing": "0.02em", "fontWeight": "500"}],
+        "display": ["2.75rem", {"lineHeight": "3.25rem", "letterSpacing": "-0.03em", "fontWeight": "600"}],
+        "label-sm": ["0.6875rem", {"lineHeight": "0.875rem", "letterSpacing": "0.04em", "fontWeight": "600"}],
+        "body-sm": ["0.8125rem", {"lineHeight": "1.25rem", "fontWeight": "400"}],
+        "headline-sm": ["1.125rem", {"lineHeight": "1.5rem", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+        "headline-md": ["1.375rem", {"lineHeight": "1.75rem", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+        "headline-lg-mobile": ["1.5rem", {"lineHeight": "2rem", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+        "headline-lg": ["2rem", {"lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+        "body-md": ["0.875rem", {"lineHeight": "1.5rem", "fontWeight": "400"}]
+      }
+    }
+  }
+}</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-50 flex flex-col justify-between"><div class="flex flex-col"><div class="h-16 flex items-center px-space-lg gap-space-sm"><span class="material-symbols-outlined text-primary text-[22px]">diamond</span><div class="flex flex-col"><span class="font-headline-sm text-headline-sm tracking-tight text-on-surface uppercase">Vows</span><span class="font-label-sm text-label-sm tracking-widest uppercase text-tertiary">Studio CRM</span></div></div><div class="px-space-md py-space-sm"><div class="px-space-sm mb-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Overview</span></div><nav class="flex flex-col gap-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-label-lg text-label-lg rounded-lg"><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="overview" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span class="font-label-lg text-label-lg">Studio Summary</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="calendar" href="#"><span class="material-symbols-outlined text-[20px]">calendar_today</span><span class="font-label-lg text-label-lg">Production Schedule</span></a></nav></div><div class="px-space-md py-space-sm"><div class="px-space-sm mb-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Operations</span></div><nav class="flex flex-col gap-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-label-lg text-label-lg rounded-lg"><a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-2 transition-colors bg-secondary-container text-on-secondary-container font-label-lg text-label-lg rounded-lg" data-path="booking-detail" href="#"><span class="material-symbols-outlined text-[20px]">book_online</span><span class="font-label-lg text-label-lg">Bookings</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="client-inquiries" href="#"><span class="material-symbols-outlined text-[20px]">contact_page</span><span class="font-label-lg text-label-lg">Inquiries & Leads</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="cinematography-stills" href="#"><span class="material-symbols-outlined text-[20px]">movie</span><span class="font-label-lg text-label-lg">Shoot Logistics</span></a></nav></div><div class="px-space-md py-space-sm"><div class="px-space-sm mb-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Client Galleries</span></div><nav class="flex flex-col gap-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-label-lg text-label-lg rounded-lg"><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="deliverables" href="#"><span class="material-symbols-outlined text-[20px]">perm_media</span><span class="font-label-lg text-label-lg">Master Vaults</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="invoices-contracts" href="#"><span class="material-symbols-outlined text-[20px]">description</span><span class="font-label-lg text-label-lg">Contracts & Billing</span></a></nav></div></div><div class="p-space-md"><div class="bg-surface-container-high rounded-xl p-space-sm flex items-center justify-between"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-secondary text-[20px]">auto_awesome</span><div class="flex flex-col"><span class="font-label-md text-label-md text-on-surface">Archive Storage</span><span class="font-label-sm text-label-sm text-on-surface-variant">8.4 TB of 12 TB</span></div></div></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-xl"><div class="flex items-center gap-space-xs font-label-md text-label-md text-on-surface-variant"><span class="text-tertiary">Studio CRM</span><span class="material-symbols-outlined text-[16px] text-outline-variant">chevron_right</span><span class="text-tertiary">Operations</span><span class="material-symbols-outlined text-[16px] text-outline-variant">chevron_right</span><span class="text-tertiary">Bookings</span><span class="material-symbols-outlined text-[16px] text-outline-variant">chevron_right</span><span class="text-on-surface font-label-lg text-label-lg">Booking Detail</span></div><div class="flex items-center gap-space-md"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-[18px] text-outline">search</span><input class="w-64 pl-9 pr-3 py-1.5 bg-surface-container-low rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-primary" placeholder="Search projects, couples..." type="text"/></div><button aria-label="Notifications" class="w-9 h-9 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span></button><button aria-label="Toggle theme" class="w-9 h-9 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">light_mode</span></button><div class="flex items-center gap-space-sm pl-space-sm"><div class="flex flex-col text-right"><span class="font-label-md text-label-md text-on-surface">Reuben Serrao</span><span class="font-label-sm text-label-sm text-tertiary">Executive Producer</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="relative pt-16 bg-surface w-full px-space-xl py-space-xl"><div class="flex flex-col w-full">
+<!-- Booking Header Banner & Meta Block -->
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-lg shadow-sm mb-space-lg flex flex-col gap-space-lg">
+<!-- Top Row: Identifiers, Status & Quick Action Buttons -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+<div class="flex flex-wrap items-center gap-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline px-2 py-0.5 bg-surface-container rounded">Project ID</span>
+<span class="font-headline-md text-headline-md text-on-surface tracking-tight">BKG-2025-019</span>
+</div>
+<span class="text-outline-variant font-label-md">|</span>
+<a class="font-headline-md text-headline-md text-on-surface hover:text-primary transition-colors flex items-center gap-1 group" href="#">
+<span>Derick D'Souza & Samantha Pinto</span>
+<span class="material-symbols-outlined text-[18px] text-tertiary group-hover:text-primary transition-colors">arrow_outward</span>
+</a>
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+<span class="font-label-sm text-label-sm">Confirmed & Active</span>
+</div>
+</div>
+<!-- Action Group -->
+<div class="flex flex-wrap items-center gap-space-sm">
+<button class="inline-flex items-center gap-space-xs px-3.5 py-2 rounded-lg bg-surface-container-lowest hover:bg-surface-container text-on-surface font-label-lg text-label-lg shadow-sm transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px] text-secondary">calendar_add_on</span>
+<span>Add Event</span>
+</button>
+<button class="inline-flex items-center gap-space-xs px-3.5 py-2 rounded-lg bg-surface-container-lowest hover:bg-surface-container text-on-surface font-label-lg text-label-lg shadow-sm transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px] text-secondary">receipt_long</span>
+<span>Create Invoice</span>
+</button>
+<button class="inline-flex items-center gap-space-xs px-3 py-2 rounded-lg bg-surface-container-low hover:bg-error-container hover:text-on-error-container text-outline font-label-lg text-label-lg transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">cancel</span>
+<span>Cancel Booking</span>
+</button>
+</div>
+</div>
+<!-- Editorial Accent Line / Quick Specs Grid -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-space-md pt-space-md bg-surface-container-low/60 rounded-lg p-space-md">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Client Reference</span>
+<span class="font-label-lg text-label-lg text-on-surface font-medium">CLT-2025-019 • Mangalore</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Production Window</span>
+<span class="font-label-lg text-label-lg text-on-surface font-medium">Nov 18 – 20, 2025 (3 Days)</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Deliverable Package</span>
+<span class="font-label-lg text-label-lg text-on-surface font-medium">Cinematic 4K + Fine-Art Monograph</span>
+</div>
+<div class="flex flex-col md:text-right">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Contract Valuation</span>
+<span class="font-headline-md text-headline-md text-secondary tracking-tight">₹11,48,730</span>
+</div>
+</div>
+</div>
+<!-- Editorial Navigation Tabs Bar -->
+<div class="w-full flex items-center justify-between overflow-x-auto pb-1 mb-space-lg">
+<div class="flex items-center gap-space-sm bg-surface-container-low p-1 rounded-xl">
+<button class="px-4 py-2 rounded-lg font-label-lg text-label-lg text-outline hover:text-on-surface transition-colors" type="button">Overview</button>
+<button class="px-4 py-2 rounded-lg font-label-lg text-label-lg bg-surface-container-lowest text-on-surface shadow-sm flex items-center gap-2" type="button">
+<span>Events</span>
+<span class="px-1.5 py-0.2 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm">3</span>
+</button>
+<button class="px-4 py-2 rounded-lg font-label-lg text-label-lg text-outline hover:text-on-surface transition-colors" type="button">Crew Registry</button>
+<button class="px-4 py-2 rounded-lg font-label-lg text-label-lg text-outline hover:text-on-surface transition-colors" type="button">Billing & Invoices</button>
+<button class="px-4 py-2 rounded-lg font-label-lg text-label-lg text-outline hover:text-on-surface transition-colors" type="button">Master Delivery</button>
+<button class="px-4 py-2 rounded-lg font-label-lg text-label-lg text-outline hover:text-on-surface transition-colors" type="button">Documents & Contracts</button>
+<button class="px-4 py-2 rounded-lg font-label-lg text-label-lg text-outline hover:text-on-surface transition-colors" type="button">Audit Trail</button>
+</div>
+<!-- Right Controls for view modes -->
+<div class="hidden sm:flex items-center gap-space-xs">
+<div class="bg-surface-container-low p-1 rounded-lg flex items-center">
+<button class="px-3 py-1.5 bg-surface-container-lowest shadow-sm rounded font-label-sm text-label-sm text-on-surface flex items-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[16px]">view_timeline</span>
+<span>Timeline</span>
+</button>
+<button class="px-3 py-1.5 text-outline hover:text-on-surface rounded font-label-sm text-label-sm flex items-center gap-1.5 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">calendar_view_week</span>
+<span>Calendar</span>
+</button>
+</div>
+<button class="px-3 py-1.5 bg-surface-container-low hover:bg-surface-container text-on-surface rounded-lg font-label-sm text-label-sm flex items-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">tune</span>
+<span>Assign Multiple</span>
+</button>
+</div>
+</div>
+<!-- Events Subheader / Metrics Section -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-md mb-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="font-headline-sm text-headline-sm text-on-surface">Production Schedule</span>
+<span class="text-outline font-body-sm text-body-sm">— 3 distinct shoot environments scheduled across South Canara Coast</span>
+</div>
+<div class="flex items-center gap-space-md text-tertiary font-label-sm text-label-sm">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span>2 Days Crew Ready</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-error animate-ping"></span>
+<span class="text-error font-medium">1 Day Action Needed</span>
+</div>
+</div>
+</div>
+<!-- Event Cards Stack -->
+<div class="flex flex-col gap-space-md mb-space-xl">
+<!-- EVENT 1: Confirmed -->
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-lg shadow-sm hover:shadow-md transition-shadow flex flex-col lg:flex-row gap-space-lg items-start">
+<!-- Media/Location Plate -->
+<div class="w-full lg:w-72 h-44 shrink-0 rounded-lg overflow-hidden relative bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Warm golden hour outdoor Indian Christian pre-wedding Roce ceremony with coconut palm canopies, rustic floral strings, wooden brass oil lamps, soft cinematic lighting, tranquil editorial aesthetic with muted sage green undertones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeOFdWLP8NI74pm4kiXEr6GIjO-pdsH93c4MYf4VtMIkg775LJoQALa_FlkYujqRQRYHb69NoEjI654SE77PdEGCOgTXpRhtiWxMo7oxYbE1Six-YmQa-huIeRdZXkVRV8v46Nol7zCFT6OAdtXbdzHSWpOK1j6T3AJgA2chdrDJrvTrhypCfVPKfbo3zudnjeDrcigbto095RrUTT2XJK-uqGSUIk9X7bxEbU5tnH"/>
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 via-transparent to-transparent"></div>
+<div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-on-primary">
+<span class="font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">location_on</span>
+            Kodialbail, Mangalore
+          </span>
+<span class="px-2 py-0.5 rounded bg-surface/20 backdrop-blur-md font-label-sm text-label-sm">Outdoor Lawns</span>
+</div>
+</div>
+<!-- Detail Spine -->
+<div class="flex flex-col justify-between flex-1 h-full w-full gap-space-md">
+<div>
+<div class="flex flex-wrap items-center justify-between gap-2 mb-1.5">
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-secondary">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span class="font-medium tracking-wide">Nov 18, 2025 • 04:00 PM – 10:30 PM IST</span>
+<span class="text-outline-variant">•</span>
+<span class="text-tertiary">Day 01 of 03</span>
+</div>
+<span class="px-2.5 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+              Crew Confirmed
+            </span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface tracking-tight mb-1">Roce & Nuptial Blessings</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-space-sm">Ancestral Manor & Courtyard Lawns, Kodialbail, Mangalore. Authentic traditional ceremony, candlelight evening feast & family toasts.</p>
+</div>
+<!-- Crew Strip -->
+<div class="pt-space-sm bg-surface-container-low/40 rounded-lg p-space-sm flex flex-wrap items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md flex-wrap">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Assigned Crew (3)</span>
+<div class="flex items-center gap-space-sm">
+<div class="flex items-center gap-2 bg-surface-container-lowest px-2 py-1 rounded shadow-sm">
+<div class="w-6 h-6 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-label-sm text-label-sm font-semibold">RS</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface">Reuben Serrao</span>
+<span class="font-label-sm text-label-sm text-outline text-[10px] leading-tight">Lead Cine</span>
+</div>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-lowest px-2 py-1 rounded shadow-sm">
+<div class="w-6 h-6 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-label-sm text-label-sm font-semibold">KV</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface">Kiran V.</span>
+<span class="font-label-sm text-label-sm text-outline text-[10px] leading-tight">2nd Cine</span>
+</div>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-lowest px-2 py-1 rounded shadow-sm">
+<div class="w-6 h-6 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-label-sm text-label-sm font-semibold">TR</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface">Tara Rao</span>
+<span class="font-label-sm text-label-sm text-outline text-[10px] leading-tight">Stills Specialist</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors flex items-center gap-0.5" type="button">
+<span>Modify Roster</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- EVENT 2: Confirmed -->
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-lg shadow-sm hover:shadow-md transition-shadow flex flex-col lg:flex-row gap-space-lg items-start">
+<!-- Media/Location Plate -->
+<div class="w-full lg:w-72 h-44 shrink-0 rounded-lg overflow-hidden relative bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Dramatic interior view of historic St. Aloysius Chapel Mangalore with frescoed renaissance ceiling murals, gentle morning sun rays piercing stained glass windows, serene wedding ceremony atmosphere in muted natural earth tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnmBaxqEacveAK_KKXZLtnokQuLgqahE2hROPAU2AX4SRWtMCeqnCwIFrEKdKOqoYbVuvN5CvnHc6nyzRpOSfSulyGJ6fcN9NkJjmF3SPSky2l5ymLEUCpH7oO8TOLZc6toqaHHo3WDy8sNSeN8UQzAIxxJwUttw4Wj143ZFAXgWfAInIag92i0kTBOa88JnhtomcWXeGoKWlmMxJNCKsbcpsmSynvRkHa6GT7cWHb"/>
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 via-transparent to-transparent"></div>
+<div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-on-primary">
+<span class="font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">church</span>
+            St. Aloysius Chapel
+          </span>
+<span class="px-2 py-0.5 rounded bg-surface/20 backdrop-blur-md font-label-sm text-label-sm">Historic Cathedral</span>
+</div>
+</div>
+<!-- Detail Spine -->
+<div class="flex flex-col justify-between flex-1 h-full w-full gap-space-md">
+<div>
+<div class="flex flex-wrap items-center justify-between gap-2 mb-1.5">
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-secondary">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span class="font-medium tracking-wide">Nov 19, 2025 • 09:30 AM – 02:00 PM IST</span>
+<span class="text-outline-variant">•</span>
+<span class="text-tertiary">Day 02 of 03</span>
+</div>
+<span class="px-2.5 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+              Crew Confirmed
+            </span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface tracking-tight mb-1">Solemn Nuptial Mass & Sacred Exchange</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-space-sm">St. Aloysius Chapel, Kodialbail, Mangalore. Choral accompaniment, ceremonial high altar vows, and architectural couple portraits.</p>
+</div>
+<!-- Crew Strip -->
+<div class="pt-space-sm bg-surface-container-low/40 rounded-lg p-space-sm flex flex-wrap items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md flex-wrap">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Assigned Crew (4)</span>
+<div class="flex items-center gap-space-sm">
+<div class="flex items-center gap-2 bg-surface-container-lowest px-2 py-1 rounded shadow-sm">
+<div class="w-6 h-6 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-label-sm text-label-sm font-semibold">RS</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface">Reuben Serrao</span>
+<span class="font-label-sm text-label-sm text-outline text-[10px] leading-tight">Lead Cine</span>
+</div>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-lowest px-2 py-1 rounded shadow-sm">
+<div class="w-6 h-6 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-label-sm text-label-sm font-semibold">KV</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface">Kiran V.</span>
+<span class="font-label-sm text-label-sm text-outline text-[10px] leading-tight">2nd Cine</span>
+</div>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-lowest px-2 py-1 rounded shadow-sm">
+<div class="w-6 h-6 rounded-full bg-tertiary-container text-on-tertiary-container flex items-center justify-center font-label-sm text-label-sm font-semibold">MT</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface">Milo Thorne</span>
+<span class="font-label-sm text-label-sm text-outline text-[10px] leading-tight">Aerial/Drone</span>
+</div>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-lowest px-2 py-1 rounded shadow-sm">
+<div class="w-6 h-6 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-label-sm text-label-sm font-semibold">TR</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface">Tara Rao</span>
+<span class="font-label-sm text-label-sm text-outline text-[10px] leading-tight">Stills Lead</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="font-label-sm text-label-sm text-secondary hover:text-primary transition-colors flex items-center gap-0.5" type="button">
+<span>Modify Roster</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- EVENT 3: UNASSIGNED WARNING STATE -->
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-lg shadow-md flex flex-col lg:flex-row gap-space-lg items-start relative overflow-hidden">
+<!-- Subtle side color bar indicator -->
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-error"></div>
+<!-- Media/Location Plate -->
+<div class="w-full lg:w-72 h-48 shrink-0 rounded-lg overflow-hidden relative bg-surface-container ml-1">
+<img class="w-full h-full object-cover" data-alt="Lavish grand ballroom setup with circular dinner tables, minimalist floral arrangements in white roses and eucalyptus, ambient warm chandelier spotlights, quiet luxury wedding reception aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtxnkGyyXygatlLpTI1AAdsC4N93mfRkpu7vzJ1pAfUcCOB_jhFcW1aPk5LeCExbrxv6ODZ-tXY9OronHQpoG3c42S17fxxtF0f6bNNJ6Qnd_EOvFFBc4bN1KvsZjzXlf0ls2PCNO_SVvQpPb1p15lN_IxnHv1KD6tTfAwq8s-2-41ggJfVrPB__MO3LaqYkedyHJGTQm7O6idCC2DeeXvP9hUpDXpa73f5q7JrIfb"/>
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 via-transparent to-transparent"></div>
+<div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-on-primary">
+<span class="font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">domain</span>
+            The Ocean Pearl
+          </span>
+<span class="px-2 py-0.5 rounded bg-surface/20 backdrop-blur-md font-label-sm text-label-sm">Grand Hall</span>
+</div>
+</div>
+<!-- Detail Spine -->
+<div class="flex flex-col justify-between flex-1 h-full w-full gap-space-md">
+<div>
+<div class="flex flex-wrap items-center justify-between gap-2 mb-1.5">
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-tertiary">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span class="font-medium tracking-wide">Nov 20, 2025 • 06:30 PM – Midnight IST</span>
+<span class="text-outline-variant">•</span>
+<span>Day 03 of 03 (Culmination)</span>
+</div>
+<span class="px-2.5 py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm flex items-center gap-1 font-semibold">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+              Crew Unassigned
+            </span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface tracking-tight mb-1">Grand Ballroom Coastal Reception & Gala</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-space-sm">The Ocean Pearl Grand Hall, Navabharath Circle, Mangalore. 650 guests, ballroom dance choreography, orchestral toasts & midnight champagne fountain.</p>
+</div>
+<!-- Prominent Warning Callout Card -->
+<div class="bg-error-container/40 p-space-md rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-error text-[22px] mt-0.5">notification_important</span>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-error-container font-semibold">Attention: No Production Crew Assigned</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Requires minimum 3 operators (Lead Cinematographer, 2nd Cinema, Stills Master). Shoot date in 14 days.</span>
+</div>
+</div>
+<button class="inline-flex items-center justify-center gap-space-xs px-5 py-2.5 rounded-lg bg-secondary text-on-secondary hover:bg-on-secondary-container transition-colors shadow-sm shrink-0" id="openAssignModalBtn" type="button">
+<span class="material-symbols-outlined text-[18px]">group_add</span>
+<span class="font-label-lg text-label-lg">Assign Crew</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Footnote Studio Metadata -->
+<div class="flex flex-col sm:flex-row items-center justify-between py-space-md text-outline font-label-sm text-label-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">lock</span>
+<span>Encrypted Studio Ledger • Vows Production Engine v4.8</span>
+</div>
+<span>Last updated today at 11:28 AM by Reuben Serrao</span>
+</div>
+<!-- MODAL DIALOG OVERLAY: ASSIGN CREW -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-inverse-surface/40 backdrop-blur-sm" id="assignCrewModal">
+<div class="w-full max-w-2xl bg-surface-container-lowest rounded-xl shadow-xl flex flex-col overflow-hidden max-h-[942px]">
+<!-- Modal Header -->
+<div class="px-space-xl py-space-lg bg-surface-container-low flex items-start justify-between">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs mb-1">
+<span class="material-symbols-outlined text-secondary text-[20px]">badge</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold tracking-tight">Assign Crew — Grand Ballroom Coastal Reception</h2>
+</div>
+<span class="font-label-sm text-label-sm text-tertiary">Event: Nov 20, 2025 • 06:30 PM – Midnight • The Ocean Pearl Grand Hall</span>
+</div>
+<button aria-label="Close modal" class="w-8 h-8 rounded-lg flex items-center justify-center text-outline hover:text-on-surface hover:bg-surface-container transition-colors" id="closeModalBtn" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Modal Body (Scrollable) -->
+<div class="p-space-xl overflow-y-auto flex flex-col gap-space-lg">
+<!-- Multi-select / Checkbox List -->
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between mb-1">
+<label class="font-label-md text-label-md text-tertiary uppercase tracking-wider">Select Available Crew Operators</label>
+<span class="font-label-sm text-label-sm text-outline">Selected: 4 of 4</span>
+</div>
+<!-- Member 1: Reuben Serrao -->
+<label class="flex items-center justify-between p-space-md rounded-lg bg-surface-container-low/70 hover:bg-surface-container-high transition-colors cursor-pointer">
+<div class="flex items-center gap-space-md">
+<input checked="" class="w-4 h-4 rounded text-secondary accent-primary focus:ring-0 cursor-pointer" type="checkbox"/>
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-label-sm text-label-sm font-semibold">RS</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface font-medium">Reuben Serrao</span>
+<span class="font-body-sm text-body-sm text-tertiary">Lead Cinematographer • Principal Master</span>
+</div>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded bg-secondary-container text-on-secondary-container font-label-sm text-label-sm">Free / Available</span>
+</label>
+<!-- Member 2: Kiran V. -->
+<label class="flex items-center justify-between p-space-md rounded-lg bg-surface-container-low/70 hover:bg-surface-container-high transition-colors cursor-pointer">
+<div class="flex items-center gap-space-md">
+<input checked="" class="w-4 h-4 rounded text-secondary accent-primary focus:ring-0 cursor-pointer" type="checkbox"/>
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-label-sm text-label-sm font-semibold">KV</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface font-medium">Kiran V.</span>
+<span class="font-body-sm text-body-sm text-tertiary">Senior Cinematographer • Gimbal Tech</span>
+</div>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded bg-secondary-container text-on-secondary-container font-label-sm text-label-sm">Free / Available</span>
+</label>
+<!-- Member 3: Milo Thorne -->
+<label class="flex items-center justify-between p-space-md rounded-lg bg-surface-container-low/70 hover:bg-surface-container-high transition-colors cursor-pointer">
+<div class="flex items-center gap-space-md">
+<input checked="" class="w-4 h-4 rounded text-secondary accent-primary focus:ring-0 cursor-pointer" type="checkbox"/>
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-tertiary-container text-on-tertiary-container flex items-center justify-center font-label-sm text-label-sm font-semibold">MT</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface font-medium">Milo Thorne</span>
+<span class="font-body-sm text-body-sm text-tertiary">Drone Specialist & Crane Operator</span>
+</div>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded bg-secondary-container text-on-secondary-container font-label-sm text-label-sm">Free / Available</span>
+</label>
+<!-- Member 4: Tara Rao (Showing Conflict State) -->
+<label class="flex items-center justify-between p-space-md rounded-lg bg-error-container/20 hover:bg-error-container/30 transition-colors cursor-pointer">
+<div class="flex items-center gap-space-md">
+<input checked="" class="w-4 h-4 rounded text-secondary accent-primary focus:ring-0 cursor-pointer" type="checkbox"/>
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-error-container text-on-error-container flex items-center justify-center font-label-sm text-label-sm font-semibold">TR</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface font-medium flex items-center gap-1.5">
+<span>Tara Rao</span>
+<span class="material-symbols-outlined text-[16px] text-error">error</span>
+</span>
+<span class="font-body-sm text-body-sm text-tertiary">Senior Stills Photographer • Leica Master</span>
+</div>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded bg-error-container text-on-error-container font-label-sm text-label-sm font-medium">Conflict Detected</span>
+</label>
+</div>
+<!-- Scheduling Conflict Warning Box -->
+<div class="bg-error-container/30 rounded-lg p-space-md flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs text-on-error-container font-label-lg text-label-lg font-semibold">
+<span class="material-symbols-outlined text-[18px] text-error">warning</span>
+<span>Scheduling Conflict Detected</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+<strong class="font-medium text-on-surface">Tara Rao</strong> is already assigned to <span class="italic font-medium text-on-surface">“Alister & Michelle Nuptials — Pre-Reception Sunset Shoot”</span> (Taj Exotica, Goa) overlapping <span class="font-medium text-on-surface">Nov 20, 05:00 PM – 09:00 PM</span>.
+          </p>
+</div>
+<!-- Override Reason Textarea -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-on-surface font-medium flex items-center justify-between" for="overrideReason">
+<span>Override Reason (Required when scheduling overlapping crew) <span class="text-error">*</span></span>
+<span class="font-label-sm text-label-sm text-tertiary">Mandatory Audit Field</span>
+</label>
+<textarea class="w-full p-3 bg-surface-container-lowest rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-primary shadow-sm resize-none" id="overrideReason" placeholder="e.g., Shoot split agreed with associate photographer, arriving at 07:30 PM via direct transport from Goa..." rows="3"></textarea>
+<span class="font-label-sm text-label-sm text-outline flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">info</span>
+            Overriding will log a conflict waiver in the studio audit timeline and trigger alert SMS to lead producer.
+          </span>
+</div>
+</div>
+<!-- Modal Footer -->
+<div class="px-space-xl py-space-md bg-surface-container-low flex items-center justify-end gap-space-sm">
+<button class="px-4 py-2 rounded-lg bg-surface-container-lowest hover:bg-surface-container text-on-surface font-label-lg text-label-lg transition-colors" id="cancelModalBtn" type="button">
+          Cancel
+        </button>
+<button class="px-5 py-2 rounded-lg bg-secondary text-on-secondary hover:bg-on-secondary-container transition-colors font-label-lg text-label-lg shadow-sm flex items-center gap-1.5" id="confirmOverrideBtn" type="button">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+<span>Confirm & Override Assignment</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Micro-interaction Script for Modal toggle -->
+<script>
+    (function() {
+      const modal = document.getElementById('assignCrewModal');
+      const openBtn = document.getElementById('openAssignModalBtn');
+      const closeBtn = document.getElementById('closeModalBtn');
+      const cancelBtn = document.getElementById('cancelModalBtn');
+      const confirmBtn = document.getElementById('confirmOverrideBtn');
+
+      function closeModal() {
+        if (modal) modal.classList.add('hidden');
+      }
+
+      function openModal() {
+        if (modal) modal.classList.remove('hidden');
+      }
+
+      if (openBtn) openBtn.addEventListener('click', openModal);
+      if (closeBtn) closeBtn.addEventListener('click', closeModal);
+      if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
+      if (confirmBtn) {
+        confirmBtn.addEventListener('click', function() {
+          const reasonInput = document.getElementById('overrideReason');
+          if (reasonInput && !reasonInput.value.trim()) {
+            reasonInput.focus();
+            reasonInput.classList.add('ring-1', 'ring-error');
+            return;
+          }
+          closeModal();
+        });
+      }
+    })();
+  </script>
+</div></main></div></body></html>

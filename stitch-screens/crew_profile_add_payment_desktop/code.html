@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "secondary-container": "#ceead2",
+        "on-primary-fixed": "#092012",
+        "on-error-container": "#93000a",
+        "on-tertiary-fixed-variant": "#424843",
+        "on-secondary": "#ffffff",
+        "error-container": "#ffdad6",
+        "secondary-fixed": "#ceead2",
+        "on-primary-container": "#1c3223",
+        "error": "#ba1a1a",
+        "surface-container-low": "#eff5ef",
+        "on-primary": "#ffffff",
+        "on-surface-variant": "#424843",
+        "secondary-fixed-dim": "#b2cdb6",
+        "outline-variant": "#c3c8c1",
+        "surface-container-lowest": "#ffffff",
+        "tertiary-fixed": "#dee4dd",
+        "secondary": "#4b6451",
+        "inverse-surface": "#2c322e",
+        "surface-variant": "#dee4de",
+        "on-background": "#171d19",
+        "surface-container-high": "#e4eae3",
+        "tertiary-container": "#909690",
+        "on-secondary-fixed-variant": "#344c3b",
+        "surface": "#f5fbf4",
+        "tertiary": "#5a605b",
+        "surface-dim": "#d6dcd5",
+        "tertiary-fixed-dim": "#c2c8c2",
+        "primary-container": "#829b87",
+        "on-secondary-fixed": "#082011",
+        "surface-tint": "#4c6452",
+        "on-secondary-container": "#516a57",
+        "on-surface": "#171d19",
+        "on-error": "#ffffff",
+        "background": "#f5fbf4",
+        "on-tertiary-container": "#282f2a",
+        "on-tertiary": "#ffffff",
+        "on-tertiary-fixed": "#171d19",
+        "surface-bright": "#f5fbf4",
+        "inverse-on-surface": "#ecf2ec",
+        "primary-fixed-dim": "#b3cdb7",
+        "inverse-primary": "#b3cdb7",
+        "surface-container": "#eaefe9",
+        "on-primary-fixed-variant": "#354c3b",
+        "outline": "#737972",
+        "primary": "#4c6452",
+        "primary-fixed": "#cfe9d3",
+        "surface-container-highest": "#dee4de"
+      },
+      "borderRadius": {
+        "DEFAULT": "0.25rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "full": "9999px"
+      },
+      "spacing": {
+        "space-xl": "2.5rem",
+        "gutter-mobile": "1rem",
+        "gutter": "1.5rem",
+        "space-xs": "0.25rem",
+        "space-sm": "0.5rem",
+        "margin": "3rem",
+        "space-lg": "1.5rem",
+        "space-md": "1rem",
+        "margin-mobile": "1.25rem"
+      },
+      "fontFamily": {
+        "body-md": ["Inter"],
+        "body-lg": ["Inter"],
+        "headline-lg": ["Inter"],
+        "display": ["Inter"],
+        "label-md": ["Inter"],
+        "headline-lg-mobile": ["Inter"],
+        "headline-md": ["Inter"],
+        "display-mobile": ["Inter"],
+        "label-sm": ["Inter"],
+        "body-sm": ["Inter"],
+        "label-lg": ["Inter"],
+        "headline-sm": ["Inter"]
+      },
+      "fontSize": {
+        "body-md": ["0.875rem", {"lineHeight": "1.5rem", "fontWeight": "400"}],
+        "body-lg": ["1rem", {"lineHeight": "1.625rem", "fontWeight": "400"}],
+        "headline-lg": ["2rem", {"lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+        "display": ["2.75rem", {"lineHeight": "3.25rem", "letterSpacing": "-0.03em", "fontWeight": "600"}],
+        "label-md": ["0.75rem", {"lineHeight": "1rem", "letterSpacing": "0.02em", "fontWeight": "500"}],
+        "headline-lg-mobile": ["1.5rem", {"lineHeight": "2rem", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+        "headline-md": ["1.375rem", {"lineHeight": "1.75rem", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+        "display-mobile": ["2rem", {"lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+        "label-sm": ["0.6875rem", {"lineHeight": "0.875rem", "letterSpacing": "0.04em", "fontWeight": "600"}],
+        "body-sm": ["0.8125rem", {"lineHeight": "1.25rem", "fontWeight": "400"}],
+        "label-lg": ["0.875rem", {"lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "500"}],
+        "headline-sm": ["1.125rem", {"lineHeight": "1.5rem", "letterSpacing": "-0.01em", "fontWeight": "500"}]
+      }
+    }
+  }
+}</script></head><body class="bg-background font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-screen w-72 bg-surface-container-low flex flex-col z-50 overflow-y-auto"><div class="h-16 px-space-lg flex items-center justify-between"><div class="flex flex-col"><span class="font-headline-sm text-headline-sm uppercase tracking-wider text-on-surface font-semibold">VOWS STUDIO</span><span class="font-label-sm text-label-sm tracking-widest text-outline uppercase">WEDDING CINEMATIC &amp; STILLS</span></div><button aria-label="Collapse sidebar" class="w-8 h-8 flex items-center justify-center rounded text-outline hover:text-on-surface hover:bg-surface-container transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">keyboard_double_arrow_left</span></button></div><div class="flex-1 px-space-md py-space-sm space-y-space-lg"><nav class="space-y-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-medium"><div class="px-space-sm py-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">Operations</span></div><div class="space-y-0.5"><a class="block px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="bookings" href="#">Bookings</a><a class="block px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="schedule" href="#">Schedule</a><a class="block px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="crew-directory" href="#">Crew Directory</a><a aria-current="page" class="block px-space-sm py-1.5 rounded transition-colors bg-secondary-container text-on-secondary-container font-medium" data-path="crew-profile" href="#">Crew Profile</a><a class="block px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="delivery" href="#">Delivery</a></div></nav><nav class="space-y-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-medium"><div class="px-space-sm py-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">Finance</span></div><div class="space-y-0.5"><a class="block px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="invoices" href="#">Invoices</a><a class="block px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="payments" href="#">Payments</a><a class="block px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="ledger" href="#">Ledger</a><a class="block px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="expenses" href="#">Expenses</a></div></nav><nav class="space-y-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-medium"><div class="px-space-sm py-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">Studio Tools</span></div><div class="space-y-0.5"><a class="block px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="services" href="#">Services</a><a class="block px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="packages" href="#">Packages</a><a class="block px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="portfolio" href="#">Portfolio</a><a class="block px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="reviews" href="#">Reviews</a></div></nav></div><div class="p-space-md mt-auto"><div class="bg-surface-container-lowest p-space-sm rounded-lg flex flex-col gap-space-xs shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="min-w-0 flex-1"><div class="flex items-center justify-between gap-1"><span class="font-label-lg text-label-lg text-on-surface truncate font-medium">Reuben Serrao</span><span class="font-label-sm text-label-sm px-1.5 py-0.2 rounded bg-secondary-fixed text-on-secondary-fixed font-medium">Active</span></div><span class="font-label-sm text-label-sm text-outline truncate block">reuben@vowsstudio.com</span></div></div><div class="pt-space-xs flex items-center justify-between font-label-sm text-label-sm text-outline"><button class="hover:text-primary transition-colors" type="button">Switch role</button><button class="hover:text-error transition-colors" type="button">Sign out</button></div></div></div></aside><div class="pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-72 right-0 h-16 z-40 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 w-full px-space-lg flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-xs font-label-md text-label-md text-outline"><span class="text-on-surface-variant">Studio CRM</span><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="text-on-surface-variant">Operations</span><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="text-on-surface font-semibold">Crew</span></div><div class="flex items-center gap-space-md"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-2.5 text-outline text-[18px]">search</span><input class="bg-surface-container-lowest font-body-sm text-body-sm text-on-surface placeholder-outline pl-8 pr-12 py-1.5 rounded-lg w-64 focus:outline-none focus:ring-1 focus:ring-primary shadow-[0_1px_4px_rgba(0,0,0,0.02)]" placeholder="Search studio, clients, events..." type="text"/><span class="absolute right-2 font-label-sm text-label-sm text-outline px-1 rounded bg-surface-container">⌘K</span></div><div class="flex items-center gap-space-xs"><button aria-label="Notifications" class="relative w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error"></span></button><button aria-label="Toggle appearance" class="w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">light_mode</span></button></div><div class="flex items-center pl-space-xs"><button class="flex items-center gap-space-xs hover:opacity-90 transition-opacity" type="button"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><span class="material-symbols-outlined text-outline text-[16px]">arrow_drop_down</span></button></div></div></div></header><div class="pt-16 flex flex-col flex-1"><div class="w-full flex flex-col"><div class="bg-secondary-fixed text-on-secondary-fixed px-space-lg py-2 flex items-center justify-between"><div class="flex items-center gap-space-sm font-label-md text-label-md"><span class="material-symbols-outlined text-[18px]">shield_person</span><span>Demo Mode Active — Currently viewing as Reuben Serrao (Owner). Changes are isolated in sandbox environment.</span></div><button class="font-label-sm text-label-sm font-semibold px- space-sm py-0.5 rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container transition-colors" type="button">Switch Role</button></div><div class="bg-error-container text-on-error-container px-space-lg py-2 flex items-center justify-between"><div class="flex items-center gap-space-sm font-label-md text-label-md"><span class="material-symbols-outlined text-[18px]">warning</span><span>Gmail integration needs reconnecting — Studio booking confirmations and client email synchronisation are currently paused.</span></div><div class="flex items-center gap-space-md"><button class="font-label-sm text-label-sm font-semibold px- space-sm py-0.5 rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container transition-colors" type="button">Reconnect Account</button><button aria-label="Dismiss alert" class="text-on-error-container hover:opacity-80 transition-opacity" type="button"><span class="material-symbols-outlined text-[18px]">close</span></button></div></div></div><main class="relative flex-1 bg-background px-space-lg py-space-xl max-w-[1280px] w-full mx-auto"><div class="flex flex-col w-full">
+<!-- Profile Masthead Section -->
+<div class="relative bg-surface-container-lowest rounded-xl p-space-lg shadow-sm mb-space-lg">
+<div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-space-lg">
+<div class="flex items-start md:items-center gap-space-lg">
+<!-- Monogram / Photo Badge -->
+<div class="relative">
+<div class="w-20 h-20 rounded-xl bg-surface-container flex items-center justify-center text-primary font-headline-lg font-semibold tracking-tight shadow-inner">
+            TR
+          </div>
+<span class="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-primary flex items-center justify-center text-on-primary text-[12px] shadow-sm">
+<span class="material-symbols-outlined text-[13px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</span>
+</div>
+<!-- Name & Core Info -->
+<div class="flex flex-col gap-0.5">
+<div class="flex flex-wrap items-center gap-space-sm">
+<h1 class="font-headline-lg text-headline-lg text-on-surface font-semibold tracking-tight">Tara Rao</h1>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-medium">
+              Active Crew • Senior Tier
+            </span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-medium">
+              Analog Specialist
+            </span>
+</div>
+<p class="font-label-lg text-label-lg text-on-surface-variant mt-0.5">
+            Stills Master (Solemn Rites &amp; Formals) • Analog Monograph Specialist
+          </p>
+<div class="flex flex-wrap items-center gap-x-space-md gap-y-1 mt-1 font-body-sm text-body-sm text-outline">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">mail</span>
+              tara.rao@vowsstudio.com
+            </span>
+<span>•</span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">call</span>
+              +91 98452 33110
+            </span>
+<span>•</span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">location_on</span>
+              Base: Mangalore / Goa Studio Node
+            </span>
+</div>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex items-center flex-wrap gap-space-sm w-full lg:w-auto pt-space-sm lg:pt-0">
+<button class="px-space-md py-2 rounded-lg bg-surface-container-lowest text-on-surface hover:bg-surface-container text-label-lg font-label-lg font-medium transition-colors shadow-sm flex items-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[18px] text-outline">edit</span>
+          Edit Profile
+        </button>
+<button class="px-space-md py-2 rounded-lg bg-surface-container-lowest text-on-surface hover:bg-surface-container text-label-lg font-label-lg font-medium transition-colors shadow-sm flex items-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[18px] text-outline">event_busy</span>
+          Schedule Blackout
+        </button>
+<button class="px-space-md py-2 rounded-lg bg-primary text-on-primary hover:bg-on-primary-container text-label-lg font-label-lg font-medium transition-all shadow-sm flex items-center gap-1.5" id="openModalBtn" type="button">
+<span class="material-symbols-outlined text-[18px]">add_card</span>
+          Record Disbursement
+        </button>
+</div>
+</div>
+<!-- Quick KPIs Strip -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-space-md mt-space-lg pt-space-md bg-surface-container-low rounded-lg p-space-md">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Completed Productions</span>
+<div class="flex items-baseline gap-2 mt-0.5">
+<span class="font-headline-md text-headline-md text-on-surface font-semibold">48</span>
+<span class="font-label-sm text-label-sm text-primary font-medium">Stills Lead</span>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Call Time Reliability</span>
+<div class="flex items-baseline gap-2 mt-0.5">
+<span class="font-headline-md text-headline-md text-on-surface font-semibold">100%</span>
+<span class="font-label-sm text-label-sm text-on-secondary-container font-medium">Zero Missed</span>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Client Satisfaction</span>
+<div class="flex items-baseline gap-2 mt-0.5">
+<span class="font-headline-md text-headline-md text-on-surface font-semibold">4.98</span>
+<span class="flex items-center text-primary text-[14px]">
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</span>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Day Rate Base</span>
+<div class="flex items-baseline gap-2 mt-0.5">
+<span class="font-headline-md text-headline-md text-on-surface font-semibold">₹14,000</span>
+<span class="font-label-sm text-label-sm text-outline font-normal">/ 10hr Shift</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Navigation Tabs -->
+<div class="flex items-center gap-space-xs mb-space-lg overflow-x-auto">
+<button class="px-space-md py-2 rounded-lg text-label-lg font-label-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors whitespace-nowrap" type="button">
+      Overview &amp; Details
+    </button>
+<button class="px-space-md py-2 rounded-lg text-label-lg font-label-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors whitespace-nowrap" type="button">
+      Assignments (Past &amp; Upcoming)
+    </button>
+<button class="px-space-md py-2 rounded-lg text-label-lg font-label-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors whitespace-nowrap" type="button">
+      Availability Calendar
+    </button>
+<button class="px-space-md py-2 rounded-lg text-label-lg font-label-lg bg-secondary-container text-on-secondary-container font-medium whitespace-nowrap shadow-sm" type="button">
+      Pay &amp; Disbursements
+    </button>
+</div>
+<!-- Role Authorization Banner -->
+<div class="bg-surface-container-high rounded-xl p-space-md flex items-center justify-between gap-space-md mb-space-lg shadow-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container-lowest flex items-center justify-center text-primary shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">lock</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg font-medium text-on-surface">Role Authorized: Reuben Serrao (Business Owner / Finance Access)</span>
+<span class="font-body-sm text-body-sm text-outline">Viewing restricted crew remuneration ledger, disbursement histories, and taxation compliance records.</span>
+</div>
+</div>
+<span class="hidden sm:inline-flex items-center gap-1 font-label-sm text-label-sm text-on-secondary-container bg-secondary-fixed px-2 py-1 rounded-md">
+<span class="material-symbols-outlined text-[14px]">shield_with_heart</span>
+      Encrypted Audit Log
+    </span>
+</div>
+<!-- Main Content Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- Left Column: Assignments & Availability Strip -->
+<div class="lg:col-span-5 flex flex-col gap-space-lg">
+<!-- November 2025 Availability Strip Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="flex items-center justify-between mb-space-md">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Availability Runway</h2>
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">November 2025</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary bg-secondary-container px-2 py-0.5 rounded font-medium">3 Booked Shifts</span>
+</div>
+<!-- Weekly/Monthly timeline bar -->
+<div class="space-y-space-sm">
+<div class="grid grid-cols-7 gap-1 text-center font-label-sm text-label-sm text-outline mb-1">
+<span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
+</div>
+<!-- Days grid miniature representation -->
+<div class="grid grid-cols-7 gap-1.5 font-label-sm text-label-sm">
+<div class="p-2 rounded bg-surface-container-low text-on-surface text-center">1</div>
+<div class="p-2 rounded bg-surface-container-low text-on-surface text-center">2</div>
+<div class="p-2 rounded bg-surface-container-low text-on-surface text-center">3</div>
+<div class="p-2 rounded bg-surface-container-low text-on-surface text-center">4</div>
+<div class="p-2 rounded bg-surface-container-low text-on-surface text-center">5</div>
+<div class="p-2 rounded bg-surface-container-low text-on-surface text-center">6</div>
+<div class="p-2 rounded bg-surface-container-low text-on-surface text-center">7</div>
+<div class="p-2 rounded bg-surface-container-low text-on-surface text-center">8</div>
+<div class="p-2 rounded bg-surface-container-low text-on-surface text-center">9</div>
+<div class="p-2 rounded bg-surface-container-low text-on-surface text-center">10</div>
+<div class="p-2 rounded bg-surface-container-low text-on-surface text-center">11</div>
+<div class="p-2 rounded bg-surface-container-low text-on-surface text-center">12</div>
+<div class="p-2 rounded bg-surface-container-low text-on-surface text-center">13</div>
+<div class="p-2 rounded bg-surface-container-low text-on-surface text-center">14</div>
+<div class="p-2 rounded bg-surface-container-low text-on-surface text-center">15</div>
+<div class="p-2 rounded bg-surface-container-low text-on-surface text-center">16</div>
+<div class="p-2 rounded bg-surface-container-low text-on-surface text-center">17</div>
+<div class="p-2 rounded bg-surface-container-high text-on-surface font-semibold text-center ring-1 ring-primary/20">18</div>
+<div class="p-2 rounded bg-primary text-on-primary font-semibold text-center shadow-xs">19</div>
+<div class="p-2 rounded bg-primary text-on-primary font-semibold text-center shadow-xs">20</div>
+<div class="p-2 rounded bg-primary text-on-primary font-semibold text-center shadow-xs">21</div>
+<div class="p-2 rounded bg-surface-dim text-outline text-center line-through">22</div>
+<div class="p-2 rounded bg-surface-dim text-outline text-center line-through">23</div>
+<div class="p-2 rounded bg-surface-dim text-outline text-center line-through">24</div>
+<div class="p-2 rounded bg-surface-container-low text-on-surface text-center">25</div>
+<div class="p-2 rounded bg-surface-container-low text-on-surface text-center">26</div>
+<div class="p-2 rounded bg-surface-container-low text-on-surface text-center">27</div>
+<div class="p-2 rounded bg-surface-container-low text-on-surface text-center">28</div>
+<div class="p-2 rounded bg-surface-container-low text-on-surface text-center">29</div>
+<div class="p-2 rounded bg-surface-container-low text-on-surface text-center">30</div>
+<div class="p-2 rounded bg-transparent opacity-0 text-center">-</div>
+<div class="p-2 rounded bg-transparent opacity-0 text-center">-</div>
+<div class="p-2 rounded bg-transparent opacity-0 text-center">-</div>
+<div class="p-2 rounded bg-transparent opacity-0 text-center">-</div>
+<div class="p-2 rounded bg-transparent opacity-0 text-center">-</div>
+</div>
+</div>
+<!-- Legend breakdown -->
+<div class="grid grid-cols-2 gap-2 mt-space-md pt-space-sm font-label-sm text-label-sm text-on-surface-variant">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
+<span>Nov 19-21: Confirmed Shoot</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-surface-container-high ring-1 ring-primary/30"></span>
+<span>Nov 18: Gear Prep (Mangalore)</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-surface-dim"></span>
+<span>Nov 22-24: Post-Production Off</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-surface-container-low"></span>
+<span>Open Studio Retainer Days</span>
+</div>
+</div>
+</div>
+<!-- Assignments Section -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="flex items-center justify-between mb-space-md">
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Active &amp; Recent Assignments</h2>
+<span class="font-label-sm text-label-sm text-outline">5 Total Displayed</span>
+</div>
+<div class="space-y-space-md">
+<!-- Upcoming 1 -->
+<div class="p-space-md rounded-lg bg-surface-container-low hover:bg-surface-container transition-all">
+<div class="flex items-start justify-between gap-space-sm mb-1">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-primary font-semibold">Upcoming Shoot</span>
+<span class="font-label-sm text-label-sm px-2 py-0.2 rounded bg-secondary-fixed text-on-secondary-fixed font-medium">Confirmed Call</span>
+</div>
+<h3 class="font-label-lg text-label-lg font-semibold text-on-surface">Derick &amp; Samantha Nuptials</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+              Nov 19, 2025 • 09:30 AM – St. Aloysius Chapel
+            </p>
+<div class="flex items-center justify-between text-outline font-label-sm text-label-sm mt-2 pt-2 bg-surface-container-lowest/60 px-2 py-1 rounded">
+<span>Assigned: Principal Stills Master</span>
+<span class="text-on-surface font-medium">Call: 08:30 AM (T-60m)</span>
+</div>
+</div>
+<!-- Upcoming 2 -->
+<div class="p-space-md rounded-lg bg-surface-container-low hover:bg-surface-container transition-all">
+<div class="flex items-start justify-between gap-space-sm mb-1">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-semibold">Upcoming Shoot</span>
+<span class="font-label-sm text-label-sm px-2 py-0.2 rounded bg-surface-container-high text-on-surface font-medium">Conflict Cleared</span>
+</div>
+<h3 class="font-label-lg text-label-lg font-semibold text-on-surface">Grand Coastal Gala</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+              Nov 20, 2025 • Ocean Pearl Grand Ballroom
+            </p>
+<div class="flex items-center justify-between text-outline font-label-sm text-label-sm mt-2 pt-2 bg-surface-container-lowest/60 px-2 py-1 rounded">
+<span>Role: Stills &amp; Lighting Lead</span>
+<span class="text-on-surface font-medium">Call: 04:00 PM</span>
+</div>
+</div>
+<!-- Upcoming 3 -->
+<div class="p-space-md rounded-lg bg-surface-container-low hover:bg-surface-container transition-all">
+<div class="flex items-start justify-between gap-space-sm mb-1">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-semibold">Upcoming Shoot</span>
+<span class="font-label-sm text-label-sm px-2 py-0.2 rounded bg-surface-container-high text-on-surface font-medium">Logistics Sent</span>
+</div>
+<h3 class="font-label-lg text-label-lg font-semibold text-on-surface">Alister &amp; Michelle Pre-Wedding Monograph</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+              Nov 21, 2025 • Cabo de Rama Cliffs, Goa
+            </p>
+<div class="flex items-center justify-between text-outline font-label-sm text-label-sm mt-2 pt-2 bg-surface-container-lowest/60 px-2 py-1 rounded">
+<span>Analog 120mm &amp; 35mm Lead</span>
+<span class="text-on-surface font-medium">Call: 05:15 AM Sunrise</span>
+</div>
+</div>
+<!-- Past Finished -->
+<div class="pt-space-xs">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider mb-space-sm block">Concluded Production Archives</span>
+<div class="space-y-space-sm">
+<div class="p-space-sm rounded-lg bg-surface-container-lowest shadow-xs flex items-center justify-between">
+<div>
+<h4 class="font-body-sm text-body-sm font-semibold text-on-surface">Mehta Ring Ceremony</h4>
+<span class="font-label-sm text-label-sm text-outline">Nov 01, 2025 • Vivanta Goa</span>
+</div>
+<div class="text-right">
+<span class="font-label-sm text-label-sm text-primary font-semibold block">₹28,000</span>
+<span class="font-label-sm text-label-sm text-outline">Disbursed</span>
+</div>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-lowest shadow-xs flex items-center justify-between">
+<div>
+<h4 class="font-body-sm text-body-sm font-semibold text-on-surface">Joshua &amp; Priya Nuptials</h4>
+<span class="font-label-sm text-label-sm text-outline">Oct 24, 2025 • Bangalore Palace</span>
+</div>
+<div class="text-right">
+<span class="font-label-sm text-label-sm text-primary font-semibold block">₹42,000</span>
+<span class="font-label-sm text-label-sm text-outline">Disbursed</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Financial Overview & Disbursements Ledger -->
+<div class="lg:col-span-7 flex flex-col gap-space-lg">
+<!-- Financial Summary Metric Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between">
+<div>
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">YTD Total Earnings</span>
+<h3 class="font-headline-md text-headline-md text-on-surface font-semibold mt-1">₹4,12,000</h3>
+</div>
+<span class="font-label-sm text-label-sm text-primary mt-space-md flex items-center gap-1 font-medium">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+            FY 2025–26 Confirmed
+          </span>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between">
+<div>
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Pending Settlement</span>
+<h3 class="font-headline-md text-headline-md text-on-surface font-semibold mt-1">₹14,000</h3>
+</div>
+<span class="font-label-sm text-label-sm text-error mt-space-md flex items-center gap-1 font-medium">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+            Derick &amp; Sam Nuptials
+          </span>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between">
+<div>
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Last Disbursement</span>
+<h3 class="font-headline-md text-headline-md text-on-surface font-semibold mt-1">₹28,000</h3>
+</div>
+<span class="font-label-sm text-label-sm text-outline mt-space-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+            Nov 10, 2025 via UPI
+          </span>
+</div>
+</div>
+<!-- Pay Records Table -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col">
+<div class="flex items-center justify-between pb-space-md">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Compensation &amp; Disbursements</h2>
+<span class="font-label-sm text-label-sm text-outline">Direct Ledger Entries &amp; Verified Remittances</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-space-sm py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm transition-colors flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[16px]">filter_list</span>
+              Filter (FY25)
+            </button>
+<button class="px-space-sm py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm transition-colors flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[16px]">file_download</span>
+              Export CSV
+            </button>
+</div>
+</div>
+<div class="overflow-x-auto -mx-space-lg px-space-lg">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead>
+<tr class="text-outline font-label-sm text-label-sm uppercase bg-surface-container-low">
+<th class="py-2.5 px-3 rounded-l">Date</th>
+<th class="py-2.5 px-3">TXN / Voucher</th>
+<th class="py-2.5 px-3">Shoot / Reference</th>
+<th class="py-2.5 px-3">Role &amp; Days</th>
+<th class="py-2.5 px-3">Amount</th>
+<th class="py-2.5 px-3">Method</th>
+<th class="py-2.5 px-3">Status</th>
+<th class="py-2.5 px-3 rounded-r text-right">Receipt</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container">
+<!-- Pending Row -->
+<tr class="hover:bg-surface-container-low transition-colors bg-surface-container-lowest">
+<td class="py-3 px-3 font-medium text-on-surface whitespace-nowrap">Nov 15, 2025</td>
+<td class="py-3 px-3 text-outline whitespace-nowrap">VCH-2025-884</td>
+<td class="py-3 px-3">
+<span class="font-medium text-on-surface block">Derick &amp; Samantha Nuptials</span>
+<span class="font-label-sm text-label-sm text-outline">BKG-2025-019</span>
+</td>
+<td class="py-3 px-3 text-on-surface-variant whitespace-nowrap">Stills Lead (1 Day)</td>
+<td class="py-3 px-3 font-semibold text-on-surface whitespace-nowrap">₹14,000</td>
+<td class="py-3 px-3 text-outline whitespace-nowrap">UPI Pending</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-medium">
+                    Scheduled
+                  </span>
+</td>
+<td class="py-3 px-3 text-right whitespace-nowrap">
+<span class="text-outline cursor-not-allowed">
+<span class="material-symbols-outlined text-[18px]">pending</span>
+</span>
+</td>
+</tr>
+<!-- Settled Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-3 font-medium text-on-surface whitespace-nowrap">Nov 10, 2025</td>
+<td class="py-3 px-3 text-outline whitespace-nowrap">VCH-2025-812</td>
+<td class="py-3 px-3">
+<span class="font-medium text-on-surface block">Mehta Ring Ceremony</span>
+<span class="font-label-sm text-label-sm text-outline">BKG-2025-011</span>
+</td>
+<td class="py-3 px-3 text-on-surface-variant whitespace-nowrap">Principal Stills (2 Days)</td>
+<td class="py-3 px-3 font-semibold text-on-surface whitespace-nowrap">₹28,000</td>
+<td class="py-3 px-3 text-outline whitespace-nowrap">UPI (Ref: 8810239)</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-medium">
+                    Settled
+                  </span>
+</td>
+<td class="py-3 px-3 text-right whitespace-nowrap">
+<a class="text-primary hover:text-on-primary-container inline-flex items-center" href="#" title="Download Voucher PDF">
+<span class="material-symbols-outlined text-[18px]">download_for_offline</span>
+</a>
+</td>
+</tr>
+<!-- Settled Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-3 font-medium text-on-surface whitespace-nowrap">Oct 26, 2025</td>
+<td class="py-3 px-3 text-outline whitespace-nowrap">VCH-2025-765</td>
+<td class="py-3 px-3">
+<span class="font-medium text-on-surface block">Joshua &amp; Priya Nuptials</span>
+<span class="font-label-sm text-label-sm text-outline">BKG-2025-004</span>
+</td>
+<td class="py-3 px-3 text-on-surface-variant whitespace-nowrap">Senior Stills (3 Days)</td>
+<td class="py-3 px-3 font-semibold text-on-surface whitespace-nowrap">₹42,000</td>
+<td class="py-3 px-3 text-outline whitespace-nowrap">Direct NEFT</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-medium">
+                    Settled
+                  </span>
+</td>
+<td class="py-3 px-3 text-right whitespace-nowrap">
+<a class="text-primary hover:text-on-primary-container inline-flex items-center" href="#" title="Download Voucher PDF">
+<span class="material-symbols-outlined text-[18px]">download_for_offline</span>
+</a>
+</td>
+</tr>
+<!-- Settled Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-3 font-medium text-on-surface whitespace-nowrap">Oct 12, 2025</td>
+<td class="py-3 px-3 text-outline whitespace-nowrap">VCH-2025-690</td>
+<td class="py-3 px-3">
+<span class="font-medium text-on-surface block">Kapur Sangeet Celebration</span>
+<span class="font-label-sm text-label-sm text-outline">BKG-2024-988</span>
+</td>
+<td class="py-3 px-3 text-on-surface-variant whitespace-nowrap">Analog Monograph (2 Days)</td>
+<td class="py-3 px-3 font-semibold text-on-surface whitespace-nowrap">₹32,000</td>
+<td class="py-3 px-3 text-outline whitespace-nowrap">Direct NEFT</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-medium">
+                    Settled
+                  </span>
+</td>
+<td class="py-3 px-3 text-right whitespace-nowrap">
+<a class="text-primary hover:text-on-primary-container inline-flex items-center" href="#" title="Download Voucher PDF">
+<span class="material-symbols-outlined text-[18px]">download_for_offline</span>
+</a>
+</td>
+</tr>
+<!-- Settled Row 4 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-3 px-3 font-medium text-on-surface whitespace-nowrap">Sep 28, 2025</td>
+<td class="py-3 px-3 text-outline whitespace-nowrap">VCH-2025-611</td>
+<td class="py-3 px-3">
+<span class="font-medium text-on-surface block">Fernandes Vow Renewal</span>
+<span class="font-label-sm text-label-sm text-outline">BKG-2024-912</span>
+</td>
+<td class="py-3 px-3 text-on-surface-variant whitespace-nowrap">Lead Photographer (1 Day)</td>
+<td class="py-3 px-3 font-semibold text-on-surface whitespace-nowrap">₹14,000</td>
+<td class="py-3 px-3 text-outline whitespace-nowrap">UPI Transfer</td>
+<td class="py-3 px-3 whitespace-nowrap">
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-medium">
+                    Settled
+                  </span>
+</td>
+<td class="py-3 px-3 text-right whitespace-nowrap">
+<a class="text-primary hover:text-on-primary-container inline-flex items-center" href="#" title="Download Voucher PDF">
+<span class="material-symbols-outlined text-[18px]">download_for_offline</span>
+</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Ledger Footer note -->
+<div class="mt-space-md pt-space-sm flex flex-col sm:flex-row items-center justify-between text-outline font-label-sm text-label-sm gap-2">
+<span>Displaying 5 of 48 total disbursements for FY 2025–26</span>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span>TDS withheld at 1% Section 194C aggregated under PAN: </span>
+<span class="font-medium font-mono text-on-surface">AAAPR9821C</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Modal Overlay Dialog (Add Payment / Record Crew Disbursement) -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-space-md bg-inverse-surface/40 backdrop-blur-xs transition-opacity" id="paymentModal">
+<div class="bg-surface-container-lowest rounded-xl shadow-xl w-full max-w-xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+<!-- Modal Header -->
+<div class="px-space-lg py-space-md bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm font-semibold text-on-surface">Record Crew Disbursement</h3>
+<span class="font-label-sm text-label-sm text-outline">Tara Rao • Analog Stills Master</span>
+</div>
+</div>
+<button aria-label="Close dialog" class="w-8 h-8 rounded-full flex items-center justify-center text-outline hover:text-on-surface hover:bg-surface-container transition-colors" id="closeModalBtn" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Modal Body / Form -->
+<form class="p-space-lg space-y-space-md" onsubmit="event.preventDefault(); document.getElementById('paymentModal').classList.add('hidden');">
+<!-- Field 1: Linked Commission / Shoot -->
+<div>
+<label class="block font-label-md text-label-md text-outline mb-1.5">Linked Production / Commission</label>
+<div class="relative">
+<select class="w-full bg-surface-container-low text-on-surface font-body-sm text-body-sm px-space-md py-2.5 rounded-lg appearance-none focus:outline-none focus:bg-surface-container-lowest focus:ring-1 focus:ring-primary transition-all">
+<option selected="">Derick &amp; Samantha Nuptials (BKG-2025-019)</option>
+<option>Grand Coastal Gala (BKG-2025-021)</option>
+<option>Alister &amp; Michelle Monograph (BKG-2025-023)</option>
+<option>General Studio Retainer / Prep Day (RET-NOV)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-outline pointer-events-none text-[18px]">expand_more</span>
+</div>
+</div>
+<!-- Field 2: Payment Type & Amount (2 col) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+<div>
+<label class="block font-label-md text-label-md text-outline mb-1.5">Disbursement Nature</label>
+<div class="relative">
+<select class="w-full bg-surface-container-low text-on-surface font-body-sm text-body-sm px-space-md py-2.5 rounded-lg appearance-none focus:outline-none focus:bg-surface-container-lowest focus:ring-1 focus:ring-primary transition-all">
+<option selected="">Day Rate Stipend (Principal)</option>
+<option>Production Fee</option>
+<option>Travel &amp; Logistics Allowance</option>
+<option>Film Stock Processing Reimbursement</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-outline pointer-events-none text-[18px]">expand_more</span>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-outline mb-1.5">Amount (INR)</label>
+<div class="relative">
+<span class="absolute left-3 top-2 text-outline font-label-lg text-label-lg">₹</span>
+<input class="w-full bg-surface-container-low text-on-surface font-headline-sm text-headline-sm font-semibold pl-7 pr-space-md py-1.5 rounded-lg focus:outline-none focus:bg-surface-container-lowest focus:ring-1 focus:ring-primary transition-all" type="text" value="14,000.00"/>
+</div>
+</div>
+</div>
+<!-- Field 3: Payment Date & TDS Deduction (2 col) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+<div>
+<label class="block font-label-md text-label-md text-outline mb-1.5">Disbursement Date</label>
+<input class="w-full bg-surface-container-low text-on-surface font-body-sm text-body-sm px-space-md py-2.5 rounded-lg focus:outline-none focus:bg-surface-container-lowest focus:ring-1 focus:ring-primary transition-all" type="date" value="2025-11-15"/>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-outline mb-1.5">Statutory TDS (Sec 194C)</label>
+<div class="relative">
+<select class="w-full bg-surface-container-low text-on-surface font-body-sm text-body-sm px-space-md py-2.5 rounded-lg appearance-none focus:outline-none focus:bg-surface-container-lowest focus:ring-1 focus:ring-primary transition-all">
+<option selected="">1% Sec 194C (Individual Contractor - ₹140.00)</option>
+<option>Nil / 197 Exemption Certificate</option>
+<option>2% Sec 194J (Technical / Creative)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-outline pointer-events-none text-[18px]">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Field 4: Payment Mode Segmented Control -->
+<div>
+<label class="block font-label-md text-label-md text-outline mb-1.5">Disbursement Gateway</label>
+<div class="grid grid-cols-4 gap-2 bg-surface-container-low p-1 rounded-lg">
+<button class="py-1.5 px-2 rounded-md bg-surface-container-lowest text-on-surface font-label-sm text-label-sm font-medium shadow-xs text-center" type="button">
+              UPI
+            </button>
+<button class="py-1.5 px-2 rounded-md hover:bg-surface-container text-outline hover:text-on-surface font-label-sm text-label-sm transition-colors text-center" type="button">
+              NEFT / IMPS
+            </button>
+<button class="py-1.5 px-2 rounded-md hover:bg-surface-container text-outline hover:text-on-surface font-label-sm text-label-sm transition-colors text-center" type="button">
+              Corp Card
+            </button>
+<button class="py-1.5 px-2 rounded-md hover:bg-surface-container text-outline hover:text-on-surface font-label-sm text-label-sm transition-colors text-center" type="button">
+              Petty Cash
+            </button>
+</div>
+<span class="font-label-sm text-label-sm text-outline mt-1 block">Beneficiary VPA: tara.rao@okhdfcbank (Verified)</span>
+</div>
+<!-- Field 5: Voucher Attachment Chip -->
+<div>
+<label class="block font-label-md text-label-md text-outline mb-1.5">Voucher or Expense Documentation</label>
+<div class="flex items-center justify-between p-space-sm rounded-lg bg-surface-container-low">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="material-symbols-outlined text-primary text-[20px]">description</span>
+<span class="font-body-sm text-body-sm text-on-surface truncate font-medium">voucher_tara_nov15.pdf</span>
+<span class="font-label-sm text-label-sm text-outline shrink-0">(142 KB)</span>
+</div>
+<button class="text-outline hover:text-error transition-colors p-1" title="Remove file" type="button">
+<span class="material-symbols-outlined text-[18px]">cancel</span>
+</button>
+</div>
+</div>
+<!-- Field 6: Ledger Notes -->
+<div>
+<label class="block font-label-md text-label-md text-outline mb-1.5">Audit Note</label>
+<textarea class="w-full bg-surface-container-low text-on-surface font-body-sm text-body-sm p-space-md rounded-lg focus:outline-none focus:bg-surface-container-lowest focus:ring-1 focus:ring-primary transition-all" rows="2">Stills master day rate for solemnization prep and on-site coverage</textarea>
+</div>
+<!-- Modal Actions -->
+<div class="pt-space-sm flex items-center justify-end gap-space-sm">
+<button class="px-space-md py-2 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface text-label-lg font-label-lg font-medium transition-colors" id="cancelModalBtn" type="button">
+            Cancel
+          </button>
+<button class="px-space-lg py-2 rounded-lg bg-primary text-on-primary hover:bg-on-primary-container text-label-lg font-label-lg font-medium transition-all shadow-sm flex items-center gap-1.5" type="submit">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+            Disburse &amp; Record in Ledger
+          </button>
+</div>
+</form>
+</div>
+</div>
+</div>
+<script>
+  (function() {
+    const modal = document.getElementById('paymentModal');
+    const openBtn = document.getElementById('openModalBtn');
+    const closeBtn = document.getElementById('closeModalBtn');
+    const cancelBtn = document.getElementById('cancelModalBtn');
+
+    if (openBtn && modal) {
+      openBtn.addEventListener('click', () => {
+        modal.classList.remove('hidden');
+      });
+    }
+
+    const hideModal = () => {
+      if (modal) modal.classList.add('hidden');
+    };
+
+    if (closeBtn) closeBtn.addEventListener('click', hideModal);
+    if (cancelBtn) cancelBtn.addEventListener('click', hideModal);
+
+    // Optional: allow ESC key to close modal
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) {
+        hideModal();
+      }
+    });
+  })();
+</script></main></div></div></body></html>

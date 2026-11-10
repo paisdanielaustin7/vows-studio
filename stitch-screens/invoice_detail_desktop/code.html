@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "tertiary": "#5a605b",
+        "on-secondary-fixed": "#082011",
+        "tertiary-fixed-dim": "#c2c8c2",
+        "on-tertiary-fixed": "#171d19",
+        "on-error-container": "#93000a",
+        "error": "#ba1a1a",
+        "on-tertiary-container": "#282f2a",
+        "on-surface": "#171d19",
+        "on-primary-fixed-variant": "#354c3b",
+        "secondary": "#4b6451",
+        "primary-container": "#829b87",
+        "on-surface-variant": "#424843",
+        "surface": "#f5fbf4",
+        "background": "#f5fbf4",
+        "on-tertiary": "#ffffff",
+        "on-primary": "#ffffff",
+        "surface-tint": "#4c6452",
+        "error-container": "#ffdad6",
+        "outline-variant": "#c3c8c1",
+        "secondary-fixed-dim": "#b2cdb6",
+        "surface-container": "#eaefe9",
+        "primary": "#4c6452",
+        "on-tertiary-fixed-variant": "#424843",
+        "surface-container-highest": "#dee4de",
+        "inverse-primary": "#b3cdb7",
+        "on-background": "#171d19",
+        "secondary-fixed": "#ceead2",
+        "surface-container-lowest": "#ffffff",
+        "on-error": "#ffffff",
+        "on-secondary-fixed-variant": "#344c3b",
+        "primary-fixed": "#cfe9d3",
+        "tertiary-container": "#909690",
+        "on-secondary": "#ffffff",
+        "inverse-surface": "#2c322e",
+        "secondary-container": "#ceead2",
+        "surface-variant": "#dee4de",
+        "inverse-on-surface": "#ecf2ec",
+        "primary-fixed-dim": "#b3cdb7",
+        "on-secondary-container": "#516a57",
+        "surface-container-low": "#eff5ef",
+        "surface-bright": "#f5fbf4",
+        "tertiary-fixed": "#dee4dd",
+        "surface-container-high": "#e4eae3",
+        "outline": "#737972",
+        "on-primary-fixed": "#092012",
+        "on-primary-container": "#1c3223",
+        "surface-dim": "#d6dcd5"
+      },
+      "borderRadius": {
+        "DEFAULT": "0.25rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "full": "9999px"
+      },
+      "spacing": {
+        "space-md": "1rem",
+        "gutter": "1.5rem",
+        "space-xs": "0.25rem",
+        "margin": "3rem",
+        "margin-mobile": "1.25rem",
+        "space-xl": "2.5rem",
+        "gutter-mobile": "1rem",
+        "space-sm": "0.5rem",
+        "space-lg": "1.5rem"
+      },
+      "fontFamily": {
+        "label-lg": ["Inter"],
+        "body-lg": ["Inter"],
+        "display-mobile": ["Inter"],
+        "label-md": ["Inter"],
+        "display": ["Inter"],
+        "label-sm": ["Inter"],
+        "body-sm": ["Inter"],
+        "headline-sm": ["Inter"],
+        "headline-md": ["Inter"],
+        "headline-lg-mobile": ["Inter"],
+        "headline-lg": ["Inter"],
+        "body-md": ["Inter"]
+      },
+      "fontSize": {
+        "label-lg": ["0.875rem", {"lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "500"}],
+        "body-lg": ["1rem", {"lineHeight": "1.625rem", "fontWeight": "400"}],
+        "display-mobile": ["2rem", {"lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+        "label-md": ["0.75rem", {"lineHeight": "1rem", "letterSpacing": "0.02em", "fontWeight": "500"}],
+        "display": ["2.75rem", {"lineHeight": "3.25rem", "letterSpacing": "-0.03em", "fontWeight": "600"}],
+        "label-sm": ["0.6875rem", {"lineHeight": "0.875rem", "letterSpacing": "0.04em", "fontWeight": "600"}],
+        "body-sm": ["0.8125rem", {"lineHeight": "1.25rem", "fontWeight": "400"}],
+        "headline-sm": ["1.125rem", {"lineHeight": "1.5rem", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+        "headline-md": ["1.375rem", {"lineHeight": "1.75rem", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+        "headline-lg-mobile": ["1.5rem", {"lineHeight": "2rem", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+        "headline-lg": ["2rem", {"lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+        "body-md": ["0.875rem", {"lineHeight": "1.5rem", "fontWeight": "400"}]
+      }
+    }
+  }
+}</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-50 flex flex-col justify-between"><div class="flex flex-col"><div class="h-16 flex items-center px-space-lg gap-space-sm"><span class="material-symbols-outlined text-primary text-[22px]">diamond</span><div class="flex flex-col"><span class="font-headline-sm text-headline-sm tracking-tight text-on-surface uppercase">Vows</span><span class="font-label-sm text-label-sm tracking-widest uppercase text-tertiary">Studio CRM</span></div></div><div class="px-space-md py-space-sm"><div class="px-space-sm mb-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Overview</span></div><nav class="flex flex-col gap-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-label-lg text-label-lg rounded-lg"><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="overview" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span class="font-label-lg text-label-lg">Studio Summary</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="calendar" href="#"><span class="material-symbols-outlined text-[20px]">calendar_today</span><span class="font-label-lg text-label-lg">Production Schedule</span></a></nav></div><div class="px-space-md py-space-sm"><div class="px-space-sm mb-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Operations</span></div><nav class="flex flex-col gap-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-label-lg text-label-lg rounded-lg"><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="booking-detail" href="#"><span class="material-symbols-outlined text-[20px]">book_online</span><span class="font-label-lg text-label-lg">Bookings</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="client-inquiries" href="#"><span class="material-symbols-outlined text-[20px]">contact_page</span><span class="font-label-lg text-label-lg">Inquiries &amp; Leads</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="cinematography-stills" href="#"><span class="material-symbols-outlined text-[20px]">movie</span><span class="font-label-lg text-label-lg">Shoot Logistics</span></a></nav></div><div class="px-space-md py-space-sm"><div class="px-space-sm mb-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Client Galleries</span></div><nav class="flex flex-col gap-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-label-lg text-label-lg rounded-lg"><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="deliverables" href="#"><span class="material-symbols-outlined text-[20px]">perm_media</span><span class="font-label-lg text-label-lg">Master Vaults</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="invoices-contracts" href="#"><span class="material-symbols-outlined text-[20px]">description</span><span class="font-label-lg text-label-lg">Contracts &amp; Billing</span></a></nav></div></div><div class="p-space-md"><div class="bg-surface-container-high rounded-xl p-space-sm flex items-center justify-between"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-secondary text-[20px]">auto_awesome</span><div class="flex flex-col"><span class="font-label-md text-label-md text-on-surface">Archive Storage</span><span class="font-label-sm text-label-sm text-on-surface-variant">8.4 TB of 12 TB</span></div></div></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-xl"><div class="flex items-center gap-space-xs font-label-md text-label-md text-on-surface-variant"><span class="text-tertiary">Studio CRM</span><span class="material-symbols-outlined text-[16px] text-outline-variant">chevron_right</span><span class="text-tertiary">Operations</span><span class="material-symbols-outlined text-[16px] text-outline-variant">chevron_right</span><span class="text-tertiary">Bookings</span><span class="material-symbols-outlined text-[16px] text-outline-variant">chevron_right</span><span class="text-on-surface font-label-lg text-label-lg">Booking Detail</span></div><div class="flex items-center gap-space-md"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-[18px] text-outline">search</span><input class="w-64 pl-9 pr-3 py-1.5 bg-surface-container-low rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-primary" placeholder="Search projects, couples..." type="text"/></div><button aria-label="Notifications" class="w-9 h-9 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span></button><button aria-label="Toggle theme" class="w-9 h-9 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">light_mode</span></button><div class="flex items-center gap-space-sm pl-space-sm"><div class="flex flex-col text-right"><span class="font-label-md text-label-md text-on-surface">Reuben Serrao</span><span class="font-label-sm text-label-sm text-tertiary">Executive Producer</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="relative pt-16 bg-surface w-full px-space-xl py-space-xl"><div class="flex flex-col w-full">
+<!-- Top Meta Breadcrumb & Stage Status Bar -->
+<div class="flex flex-col gap-space-md mb-space-xl">
+<div class="flex flex-wrap items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-tertiary">Finance Archive</span>
+<span class="text-outline-variant">•</span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-primary font-medium">Tax Invoicing</span>
+<span class="text-outline-variant">•</span>
+<span class="font-label-sm text-label-sm tracking-wider text-outline">FY 2025–26</span>
+</div>
+<!-- Primary Action Bar -->
+<div class="flex items-center gap-space-sm">
+<button class="px-space-md py-2 rounded-lg bg-surface-container-low text-error hover:bg-error-container hover:text-on-error-container transition-colors font-label-md text-label-md flex items-center gap-1.5" id="btn-void-trigger" type="button">
+<span class="material-symbols-outlined text-[16px]">cancel</span>
+<span>Void Invoice</span>
+</button>
+<button class="px-space-md py-2 rounded-lg bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md flex items-center gap-1.5 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px]">receipt_long</span>
+<span>Issue Credit Note</span>
+</button>
+<button class="px-space-md py-2 rounded-lg bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md flex items-center gap-1.5 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px]">download</span>
+<span>Download PDF</span>
+</button>
+<button class="px-space-md py-2 rounded-lg bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md flex items-center gap-1.5 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px]">forward_to_inbox</span>
+<span>Send Invoice</span>
+</button>
+<button class="px-space-lg py-2 rounded-lg bg-primary text-on-primary hover:bg-on-secondary-container transition-colors font-label-md text-label-md flex items-center gap-2 shadow-sm" id="btn-record-payment-primary" type="button">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span>Record Payment</span>
+</button>
+</div>
+</div>
+<!-- Editorial Title & Status Strip -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-space-lg relative overflow-hidden">
+<div class="absolute -right-8 -bottom-10 w-44 h-44 rounded-full bg-primary/5 pointer-events-none blur-2xl"></div>
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center gap-space-sm flex-wrap">
+<span class="font-headline-lg text-headline-lg text-on-surface tracking-tight">INV-2025-140</span>
+<!-- Subtle ochre/amber pill for Partially Paid -->
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#fbf3db] text-[#8c6b1f]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#cfa137]"></span>
+            Partially Paid
+          </span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline px-2 py-0.5 rounded bg-surface-container">Milestone 2 Call</span>
+</div>
+<div class="flex items-center gap-space-md flex-wrap text-tertiary font-body-sm text-body-sm">
+<span class="flex items-center gap-1 text-on-surface font-medium">
+<span class="material-symbols-outlined text-[18px] text-primary">person_outline</span>
+            Derick D'Souza &amp; Samantha Pinto
+          </span>
+<span class="text-outline-variant">/</span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px] text-tertiary">diamond</span>
+            3-Day Catholic Nuptials (BKG-2025-019)
+          </span>
+<span class="text-outline-variant">/</span>
+<span class="font-label-md text-label-md text-tertiary">Client ID: CLT-2025-019</span>
+</div>
+</div>
+<!-- Key Dates Snapshot -->
+<div class="flex items-center gap-space-lg border-l-0 md:border-l md:pl-space-lg border-surface-container">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Issue Date</span>
+<span class="font-label-lg text-label-lg text-on-surface">Oct 15, 2025</span>
+<span class="font-label-sm text-label-sm text-tertiary">Generated 10:45 AM</span>
+</div>
+<div class="w-px h-8 bg-surface-container hidden md:block"></div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Payment Due</span>
+<span class="font-label-lg text-label-lg text-[#9a4b16] font-medium flex items-center gap-1">
+            Nov 01, 2025
+            <span class="material-symbols-outlined text-[14px]">event_upcoming</span>
+</span>
+<span class="font-label-sm text-label-sm text-tertiary">Shoot Retainer Stage</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Two-Column Editorial Split Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- LEFT COLUMN: Main Invoicing Document & Payment Ledger (8 Cols) -->
+<div class="lg:col-span-8 flex flex-col gap-space-lg">
+<!-- 1. Invoice Header Dossier Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-lg">
+<!-- Monograph Style Monogram & Studio Header -->
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-space-md pb-space-md bg-surface-container-low/50 -mx-space-lg -mt-space-lg p-space-lg rounded-t-xl">
+<div class="flex items-start gap-space-md">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[26px]">camera</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm uppercase tracking-tight text-on-surface font-semibold">VOWS Studio</span>
+<span class="font-label-sm text-label-sm text-tertiary tracking-widest uppercase">Cinematic &amp; Stills Atelier</span>
+<div class="flex items-center gap-space-sm mt-1 text-tertiary font-body-sm text-body-sm">
+<span>Mangalore Studio, Karnataka</span>
+<span>•</span>
+<span>GSTIN: <span class="font-label-md text-label-md text-on-surface">29AAACV1234F1Z8</span></span>
+</div>
+</div>
+</div>
+<div class="text-left md:text-right flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Tax Document Classification</span>
+<span class="font-label-lg text-label-lg text-on-surface">Original for Recipient</span>
+<span class="font-label-sm text-label-sm text-tertiary">SAC Code: 998381 (Still &amp; Motion Media)</span>
+</div>
+</div>
+<!-- Billing Entity Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-lg pt-space-xs">
+<!-- Billed To -->
+<div class="flex flex-col gap-1.5 p-space-md rounded-lg bg-surface-container-low">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-outline">Billed To</span>
+<span class="font-label-sm text-label-sm text-secondary font-medium">Private Client</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface">Derick D'Souza &amp; Samantha Pinto</span>
+<div class="flex flex-col font-body-sm text-body-sm text-on-surface-variant gap-0.5">
+<span>Villa Palm Haven, 4th Cross Road</span>
+<span>Kodialbail, Mangalore 575003, Karnataka</span>
+<span class="mt-1 flex items-center gap-1.5 text-tertiary">
+<span class="material-symbols-outlined text-[14px]">mail</span>
+                derick.sam.nuptials@example.com
+              </span>
+<span class="flex items-center gap-1.5 text-tertiary">
+<span class="material-symbols-outlined text-[14px]">call</span>
+                +91 98450 83921
+              </span>
+</div>
+</div>
+<!-- Production Context & Scope -->
+<div class="flex flex-col gap-1.5 p-space-md rounded-lg bg-surface-container-low">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-outline">Production Milestone</span>
+<span class="font-label-sm text-label-sm text-primary font-medium">BKG-2025-019</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface">Milestone 2 of 4</span>
+<div class="flex flex-col font-body-sm text-body-sm text-on-surface-variant gap-1">
+<span>Pre-Production Rollout &amp; 50% Production Call</span>
+<span class="text-tertiary">Coverage Window: Dec 28 – Dec 30, 2025</span>
+<div class="flex items-center gap-space-sm mt-1">
+<span class="px-2 py-0.5 rounded bg-surface-container text-tertiary font-label-sm text-label-sm">Solemn Mass</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-tertiary font-label-sm text-label-sm">Roce Ceremony</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-tertiary font-label-sm text-label-sm">Coastal Reception</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 2. Line Items Table -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">art_track</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Deliverables &amp; Service Ledger</span>
+</div>
+<span class="font-label-sm text-label-sm text-tertiary uppercase tracking-wider">Currency: INR (₹)</span>
+</div>
+<!-- Table Structure with serene styling -->
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container-low text-tertiary font-label-sm text-label-sm uppercase tracking-wider">
+<th class="py-2.5 px-space-md rounded-l-lg">Description &amp; Deliverable Spec</th>
+<th class="py-2.5 px-space-md">HSN/SAC</th>
+<th class="py-2.5 px-space-md text-center">Qty</th>
+<th class="py-2.5 px-space-md text-right">Unit Price</th>
+<th class="py-2.5 px-space-md text-right rounded-r-lg">Net Amount</th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm divide-y-0">
+<!-- Line Item 1 -->
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-space-md px-space-md">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface">Principal Cinematography Multi-cam Coverage</span>
+<span class="text-tertiary">3-Day On-site Direction: Roce ritual, St. Aloysius Chapel Solemn Nuptial High Mass, and Grand Coastal Pavilion Reception. Dual Sony FX6 + Cooke Prime Cine Glass package.</span>
+</div>
+</td>
+<td class="py-space-md px-space-md text-tertiary font-label-md text-label-md align-top">998381</td>
+<td class="py-space-md px-space-md text-center text-on-surface align-top font-medium">1</td>
+<td class="py-space-md px-space-md text-right text-on-surface align-top">₹1,40,000.00</td>
+<td class="py-space-md px-space-md text-right font-label-lg text-label-lg text-on-surface align-top">₹1,40,000.00</td>
+</tr>
+<!-- Line Item 2 -->
+<tr class="bg-surface-container-low/20 hover:bg-surface-container-low/50 transition-colors">
+<td class="py-space-md px-space-md">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface">35mm Analog Film Stock &amp; Hand-processing Batch</span>
+<span class="text-tertiary">12 Rolls Kodak Portra 400 + 4 Rolls Tri-X 400, dedicated Leica M-A archival shooting, archival lab push-processing and high-resolution Noritsu scans.</span>
+</div>
+</td>
+<td class="py-space-md px-space-md text-tertiary font-label-md text-label-md align-top">998381</td>
+<td class="py-space-md px-space-md text-center text-on-surface align-top font-medium">1</td>
+<td class="py-space-md px-space-md text-right text-on-surface align-top">₹45,000.00</td>
+<td class="py-space-md px-space-md text-right font-label-lg text-label-lg text-on-surface align-top">₹45,000.00</td>
+</tr>
+<!-- Line Item 3 -->
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-space-md px-space-md">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface">Aerial Drone Licensed Flight Clearance &amp; Coastal Permitting</span>
+<span class="text-tertiary">DGCA-certified pilot, Panambur &amp; Ullal coastal zone flight manifests, dual-battery twilight golden hour cinematic establishing passes.</span>
+</div>
+</td>
+<td class="py-space-md px-space-md text-tertiary font-label-md text-label-md align-top">998381</td>
+<td class="py-space-md px-space-md text-center text-on-surface align-top font-medium">1</td>
+<td class="py-space-md px-space-md text-right text-on-surface align-top">₹15,000.00</td>
+<td class="py-space-md px-space-md text-right font-label-lg text-label-lg text-on-surface align-top">₹15,000.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Inline Calculation Sub-panel -->
+<div class="flex flex-col md:flex-row justify-between items-start pt-space-md bg-surface-container-low rounded-lg p-space-md mt-space-xs">
+<div class="flex flex-col gap-1 max-w-sm mb- space-sm md:mb-0">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Notes &amp; Inclusions</span>
+<p class="font-body-sm text-body-sm text-tertiary">All audio is captured via dual wireless redundant 32-bit float recorders. Travel &amp; transit inside Mangalore Metropolitan Area included.</p>
+</div>
+<div class="w-full md:w-72 flex flex-col gap-1.5 font-body-sm text-body-sm">
+<div class="flex justify-between items-center text-tertiary">
+<span>Gross Subtotal</span>
+<span class="text-on-surface font-medium">₹2,00,000.00</span>
+</div>
+<div class="flex justify-between items-center text-[#276a3c]">
+<span class="flex items-center gap-1">
+                Courtesy Studio Benefit (10%)
+              </span>
+<span>-₹20,000.00</span>
+</div>
+<div class="flex justify-between items-center text-tertiary pt-1 border-t border-surface-container">
+<span>Taxable Base</span>
+<span class="text-on-surface font-medium">₹1,80,000.00</span>
+</div>
+<div class="flex justify-between items-center text-tertiary">
+<span>Integrated GST (IGST @ 18%)</span>
+<span class="text-on-surface font-medium">+₹32,400.00</span>
+</div>
+<div class="flex justify-between items-center text-on-surface font-label-lg text-label-lg pt-1.5 border-t border-surface-container-highest">
+<span>Invoice Total</span>
+<span class="font-headline-sm text-headline-sm font-semibold text-primary">₹2,12,400.00</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 3. Payments Received Table & Receipts -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[20px]">payments</span>
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-on-surface">Recorded Payments &amp; Receipts</span>
+<span class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-medium">₹1,00,000.00 Settled</span>
+</div>
+</div>
+<button class="px-space-md py-1.5 rounded-lg bg-surface-container text-primary hover:bg-primary hover:text-on-primary transition-colors font-label-sm text-label-sm flex items-center gap-1 self-start sm:self-auto" onclick="document.getElementById('record-payment-modal').classList.remove('hidden')" type="button">
+<span class="material-symbols-outlined text-[16px]">add</span>
+<span>Record New Voucher</span>
+</button>
+</div>
+<!-- Receipt Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container-low text-tertiary font-label-sm text-label-sm uppercase tracking-wider">
+<th class="py-2.5 px-space-md rounded-l-lg">Receipt #</th>
+<th class="py-2.5 px-space-md">Date</th>
+<th class="py-2.5 px-space-md">Method &amp; Reference</th>
+<th class="py-2.5 px-space-md">Allocation Note</th>
+<th class="py-2.5 px-space-md text-right">Amount Received</th>
+<th class="py-2.5 px-space-md text-center rounded-r-lg">Receipts</th>
+</tr>
+</thead>
+<tbody class="font-body-sm text-body-sm">
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-space-md px-space-md font-label-md text-label-md text-primary font-medium">REC-2025-084</td>
+<td class="py-space-md px-space-md text-on-surface">Oct 20, 2025</td>
+<td class="py-space-md px-space-md">
+<div class="flex flex-col">
+<span class="text-on-surface font-medium">Bank Transfer (NEFT/RTGS)</span>
+<span class="text-tertiary font-label-sm text-label-sm">UTR: HDFC902837411</span>
+</div>
+</td>
+<td class="py-space-md px-space-md text-tertiary">Initial Milestone Advance</td>
+<td class="py-space-md px-space-md text-right font-label-lg text-label-lg text-on-surface font-semibold">₹1,00,000.00</td>
+<td class="py-space-md px-space-md text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="p-1 rounded text-tertiary hover:text-primary hover:bg-surface-container" title="View Receipt PDF" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="p-1 rounded text-tertiary hover:text-primary hover:bg-surface-container" title="Email Receipt" type="button">
+<span class="material-symbols-outlined text-[18px]">send</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pending Milestone Callout Strip -->
+<div class="p-space-md rounded-lg bg-surface-container-low flex items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[#cfa137] text-[20px]">hourglass_top</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface">Remaining Outstanding Balance</span>
+<span class="font-body-sm text-body-sm text-tertiary">Milestone 2 finalization due upon camera prep call (Nov 01, 2025)</span>
+</div>
+</div>
+<div class="text-right">
+<span class="font-label-sm text-label-sm text-tertiary block">Unpaid Balance</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">₹1,12,400.00</span>
+</div>
+</div>
+</div>
+<!-- 4. Credit Notes & Adjustments Section -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-tertiary text-[20px]">assignment_return</span>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface">Credit Notes &amp; Studio Adjustments</span>
+<span class="font-body-sm text-body-sm text-tertiary">No credit adjustments or discount write-backs applied to INV-2025-140</span>
+</div>
+</div>
+<div class="flex items-center gap-space-md">
+<span class="px-2.5 py-1 rounded bg-surface-container text-outline font-label-md text-label-md font-medium">Applied: ₹0.00</span>
+<button class="px-space-md py-1.5 rounded-lg bg-surface-container-high text-on-surface hover:bg-surface-container-highest transition-colors font-label-sm text-label-sm" type="button">
+            Draft Adjustment
+          </button>
+</div>
+</div>
+<!-- Production Narrative & Sign-off Footer -->
+<div class="bg-surface-container-low rounded-xl p-space-lg flex flex-col md:flex-row items-start justify-between gap-space-lg">
+<div class="flex flex-col gap-1 max-w-md">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-outline">Authorised Production Sign-off</span>
+<p class="font-body-sm text-body-sm text-tertiary">
+            This invoice is generated in strict accordance with the VOWS Studio Master Services Agreement signed on Aug 12, 2025. Milestone deliverables are tagged under digital hash verification.
+          </p>
+</div>
+<div class="flex flex-col items-start md:items-end gap-1">
+<div class="w-32 h-10 border-b border-outline-variant flex items-end justify-center pb-1">
+<span class="font-label-md text-label-md italic text-primary font-serif">Reuben Serrao</span>
+</div>
+<span class="font-label-sm text-label-sm uppercase text-outline">Executive Producer, VOWS Studio</span>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: Sticky Totals & Financial Workflow Actions (4 Cols) -->
+<div class="lg:col-span-4 flex flex-col gap-space-lg sticky top-20">
+<!-- Primary Financial Summary Bento Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md relative overflow-hidden">
+<div class="flex items-center justify-between pb-space-xs border-b border-surface-container">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-outline">Financial Reconciliation</span>
+<span class="font-label-sm text-label-sm text-primary font-medium">INR Ledger</span>
+</div>
+<!-- Breakdown List -->
+<div class="flex flex-col gap-2 font-body-sm text-body-sm">
+<div class="flex justify-between items-center text-tertiary">
+<span>Gross Subtotal</span>
+<span class="text-on-surface font-medium">₹2,00,000.00</span>
+</div>
+<div class="flex justify-between items-center text-[#276a3c]">
+<span>Goodwill Discount (10%)</span>
+<span>-₹20,000.00</span>
+</div>
+<div class="flex justify-between items-center text-tertiary">
+<span>Taxable Amount</span>
+<span class="text-on-surface font-medium">₹1,80,000.00</span>
+</div>
+<div class="flex justify-between items-center text-tertiary">
+<span>Integrated GST (18%)</span>
+<span class="text-on-surface font-medium">+₹32,400.00</span>
+</div>
+<div class="py-2 border-t border-b border-surface-container flex justify-between items-center">
+<span class="font-label-lg text-label-lg text-on-surface">Total Invoice Value</span>
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface">₹2,12,400.00</span>
+</div>
+<div class="flex justify-between items-center text-tertiary">
+<span>Credit Notes Applied</span>
+<span class="text-outline">₹0.00</span>
+</div>
+<div class="flex justify-between items-center text-[#276a3c]">
+<span class="flex items-center gap-1 font-medium">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+              Total Paid to Date
+            </span>
+<span class="font-semibold text-[#276a3c]">₹1,00,000.00</span>
+</div>
+</div>
+<!-- Prominent Dignified Balance Due Display -->
+<div class="bg-surface-container-high rounded-xl p-space-md flex flex-col gap-1 text-right mt-1">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Net Balance Due</span>
+<span class="font-display text-display tracking-tight text-on-surface font-semibold">₹1,12,400.00</span>
+<span class="font-label-sm text-label-sm text-[#9a4b16]">Milestone 2 Deadline: Nov 01, 2025</span>
+</div>
+<!-- Action Command Stack -->
+<div class="flex flex-col gap-space-xs mt-space-xs">
+<button class="w-full py-2.5 px-space-md rounded-lg bg-primary text-on-primary hover:bg-on-secondary-container transition-colors font-label-md text-label-md flex items-center justify-center gap-2 shadow-sm" onclick="document.getElementById('record-payment-modal').classList.remove('hidden')" type="button">
+<span class="material-symbols-outlined text-[18px]">account_balance_wallet</span>
+<span>Record Payment</span>
+</button>
+<button class="w-full py-2 px-space-md rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md flex items-center justify-center gap-2" type="button">
+<span class="material-symbols-outlined text-[18px]">mail</span>
+<span>Send Invoice via Email</span>
+</button>
+<button class="w-full py-2 px-space-md rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md flex items-center justify-center gap-2" type="button">
+<span class="material-symbols-outlined text-[18px]">picture_as_pdf</span>
+<span>Download Tax Invoice PDF</span>
+</button>
+<div class="grid grid-cols-2 gap-space-xs pt-1">
+<button class="py-1.5 px-space-sm rounded-lg bg-surface-container-low text-tertiary hover:bg-surface-container hover:text-on-surface transition-colors font-label-sm text-label-sm flex items-center justify-center gap-1" type="button">
+<span class="material-symbols-outlined text-[14px]">credit_card</span>
+<span>Credit Note</span>
+</button>
+<button class="py-1.5 px-space-sm rounded-lg bg-surface-container-low text-error hover:bg-error-container hover:text-on-error-container transition-colors font-label-sm text-label-sm flex items-center justify-center gap-1" id="btn-void-secondary" type="button">
+<span class="material-symbols-outlined text-[14px]">block</span>
+<span>Void Invoice</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Client Open Invoices Snapshot -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-space-xs border-b border-surface-container">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-outline">Derick &amp; Samantha</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Related Project Invoices</span>
+</div>
+<span class="font-label-sm text-label-sm text-tertiary">3 Invoices</span>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Item 1: Settled -->
+<div class="flex items-center justify-between p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface">INV-2025-102 (M1)</span>
+<span class="font-label-sm text-label-sm text-tertiary">Contract Signing Retainer</span>
+</div>
+<div class="text-right">
+<span class="font-label-md text-label-md text-[#276a3c] block font-medium">₹1,50,000</span>
+<span class="font-label-sm text-label-sm text-outline">Paid • Aug 14</span>
+</div>
+</div>
+<!-- Item 2: Current (Active) -->
+<div class="flex items-center justify-between p-space-sm rounded-lg bg-secondary-container/40">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-secondary-container font-semibold">INV-2025-140 (M2)</span>
+<span class="font-label-sm text-label-sm text-secondary">Pre-Prod &amp; 50% Call (Current)</span>
+</div>
+<div class="text-right">
+<span class="font-label-md text-label-md text-on-secondary-container font-semibold block">₹2,12,400</span>
+<span class="font-label-sm text-label-sm text-[#8c6b1f] font-medium">Due Nov 01</span>
+</div>
+</div>
+<!-- Item 3: Future Draft -->
+<div class="flex items-center justify-between p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface">INV-2025-188 (M3)</span>
+<span class="font-label-sm text-label-sm text-tertiary">Post-Production &amp; Vaults</span>
+</div>
+<div class="text-right">
+<span class="font-label-md text-label-md text-tertiary block">₹1,20,000</span>
+<span class="font-label-sm text-label-sm text-outline">Scheduled Jan 2026</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Terms of Payment & Bank Settlement Details -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center gap-space-sm pb-space-xs border-b border-surface-container">
+<span class="material-symbols-outlined text-primary text-[20px]">account_balance</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Bank Settlement Details</span>
+</div>
+<div class="flex flex-col gap-2 font-body-sm text-body-sm">
+<div class="flex justify-between items-center text-tertiary">
+<span>Bank Name</span>
+<span class="text-on-surface font-medium">HDFC Bank Limited</span>
+</div>
+<div class="flex justify-between items-center text-tertiary">
+<span>Branch</span>
+<span class="text-on-surface font-medium">Mangalore Main, Kodialbail</span>
+</div>
+<div class="flex justify-between items-center text-tertiary">
+<span>Account Title</span>
+<span class="text-on-surface font-medium">VOWS STUDIO LLP</span>
+</div>
+<div class="flex justify-between items-center text-tertiary">
+<span>Current A/c #</span>
+<span class="text-on-surface font-mono font-medium">5020 0081 9283 41</span>
+</div>
+<div class="flex justify-between items-center text-tertiary">
+<span>IFSC Code</span>
+<span class="text-on-surface font-mono font-medium">HDFC0001234</span>
+</div>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-low text-tertiary font-label-sm text-label-sm flex items-start gap-2">
+<span class="material-symbols-outlined text-[16px] text-outline mt-0.5">info</span>
+<span>Please reference <strong>INV-2025-140</strong> on NEFT/RTGS transaction remarks for automatic ledger clearing.</span>
+</div>
+</div>
+</div>
+</div>
+<!-- MODAL: Record Payment Voucher -->
+<div class="fixed inset-0 z-50 bg-inverse-surface/40 backdrop-blur-sm hidden flex items-center justify-center p-space-md" id="record-payment-modal">
+<div class="bg-surface-container-lowest rounded-xl max-w-lg w-full p-space-xl shadow-xl flex flex-col gap-space-lg relative animate-in fade-in zoom-in-95 duration-150">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-outline">Treasury Ledger</span>
+<span class="font-headline-md text-headline-md text-on-surface">Record Client Payment</span>
+<span class="font-body-sm text-body-sm text-tertiary">INV-2025-140 • Derick D'Souza &amp; Samantha Pinto</span>
+</div>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-tertiary hover:bg-surface-container hover:text-on-surface" onclick="document.getElementById('record-payment-modal').classList.add('hidden')" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<form class="flex flex-col gap-space-md" id="record-payment-form" onsubmit="event.preventDefault(); document.getElementById('record-payment-modal').classList.add('hidden');">
+<div class="grid grid-cols-2 gap-space-md">
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-tertiary">Payment Amount (₹)</label>
+<input class="w-full px-space-md py-2 bg-surface-container-low rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:ring-1 focus:ring-primary" type="text" value="1,12,400.00"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-tertiary">Settlement Date</label>
+<input class="w-full px-space-md py-2 bg-surface-container-low rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:ring-1 focus:ring-primary" type="date" value="2025-10-25"/>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-space-md">
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-tertiary">Payment Channel</label>
+<select class="w-full px-space-md py-2 bg-surface-container-low rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:ring-1 focus:ring-primary">
+<option>NEFT / RTGS Wire</option>
+<option>UPI / Instant Gateway</option>
+<option>Cheque / Demand Draft</option>
+<option>Studio Client Terminal</option>
+</select>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-tertiary">Bank Reference / UTR #</label>
+<input class="w-full px-space-md py-2 bg-surface-container-low rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:ring-1 focus:ring-primary" placeholder="e.g. HDFC987654321" type="text"/>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-tertiary">Ledger Notes</label>
+<input class="w-full px-space-md py-2 bg-surface-container-low rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:ring-1 focus:ring-primary" placeholder="Optional audit memo" type="text" value="Milestone 2 closing settlement"/>
+</div>
+<div class="flex items-center gap-2 pt-1">
+<input checked="" class="w-4 h-4 rounded text-primary focus:ring-primary" id="email-receipt-check" type="checkbox"/>
+<label class="font-body-sm text-body-sm text-on-surface" for="email-receipt-check">Auto-generate and email stamped payment receipt to client</label>
+</div>
+<div class="flex items-center justify-end gap-space-sm pt-space-sm border-t border-surface-container">
+<button class="px-space-md py-2 rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md" onclick="document.getElementById('record-payment-modal').classList.add('hidden')" type="button">
+            Cancel
+          </button>
+<button class="px-space-lg py-2 rounded-lg bg-primary text-on-primary hover:bg-on-secondary-container transition-colors font-label-md text-label-md shadow-sm" type="submit">
+            Confirm &amp; Issue Voucher
+          </button>
+</div>
+</form>
+</div>
+</div>
+<!-- MODAL: Void Invoice Confirmation -->
+<div class="fixed inset-0 z-50 bg-inverse-surface/40 backdrop-blur-sm hidden flex items-center justify-center p-space-md" id="void-modal">
+<div class="bg-surface-container-lowest rounded-xl max-w-md w-full p-space-xl shadow-xl flex flex-col gap-space-md relative">
+<div class="w-12 h-12 rounded-full bg-error-container text-on-error-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">warning</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Void Invoice INV-2025-140?</span>
+<p class="font-body-sm text-body-sm text-tertiary">
+          This invoice has recorded payments of <strong>₹1,00,000.00</strong>. Voiding this tax invoice will necessitate issuing a full credit ledger or reversing the transaction audit trail in accordance with GST regulations.
+        </p>
+</div>
+<div class="flex flex-col gap-1.5 bg-surface-container-low p-space-sm rounded-lg">
+<label class="font-label-sm text-label-sm text-tertiary">Mandatory Audit Reason</label>
+<select class="w-full px-space-sm py-1.5 bg-surface-container-lowest rounded text-body-sm text-on-surface focus:outline-none">
+<option>Milestone scope revised / renegotiated</option>
+<option>Clerical duplicate entry</option>
+<option>Client cancellation under mutual consent</option>
+</select>
+</div>
+<div class="flex items-center justify-end gap-space-sm pt-space-xs">
+<button class="px-space-md py-2 rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high font-label-md text-label-md" onclick="document.getElementById('void-modal').classList.add('hidden')" type="button">
+          Dismiss
+        </button>
+<button class="px-space-md py-2 rounded-lg bg-error text-on-error hover:bg-red-700 font-label-md text-label-md shadow-sm" onclick="document.getElementById('void-modal').classList.add('hidden')" type="button">
+          Confirm Void
+        </button>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Simple micro-interactions for modals
+  document.getElementById('btn-void-trigger')?.addEventListener('click', () => {
+    document.getElementById('void-modal')?.classList.remove('hidden');
+  });
+  document.getElementById('btn-void-secondary')?.addEventListener('click', () => {
+    document.getElementById('void-modal')?.classList.remove('hidden');
+  });
+  document.getElementById('btn-record-payment-primary')?.addEventListener('click', () => {
+    document.getElementById('record-payment-modal')?.classList.remove('hidden');
+  });
+</script></main></div></body></html>

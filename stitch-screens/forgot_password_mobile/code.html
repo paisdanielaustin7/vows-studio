@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><title>Reset Security Key</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-tertiary": "#ffffff", "on-primary": "#ffffff", "tertiary-fixed": "#dee4dd", "on-background": "#171d19", "on-error-container": "#93000a", "background": "#f5fbf4", "inverse-primary": "#b3cdb7", "primary-fixed": "#cfe9d3", "surface-container": "#eaefe9", "on-secondary-fixed-variant": "#344c3b", "surface-container-highest": "#dee4de", "primary-fixed-dim": "#b3cdb7", "error-container": "#ffdad6", "on-surface-variant": "#424843", "on-secondary-container": "#516a57", "surface-tint": "#4c6452", "on-surface": "#171d19", "on-tertiary-fixed": "#171d19", "surface-variant": "#dee4de", "tertiary-container": "#909690", "inverse-surface": "#2c322e", "surface-dim": "#d6dcd5", "secondary-container": "#ceead2", "secondary-fixed-dim": "#b2cdb6", "primary-container": "#829b87", "on-tertiary-fixed-variant": "#424843", "tertiary": "#5a605b", "surface-container-high": "#e4eae3", "secondary-fixed": "#ceead2", "on-primary-fixed-variant": "#354c3b", "surface-bright": "#f5fbf4", "on-primary-container": "#1c3223", "outline": "#737972", "surface": "#f5fbf4", "inverse-on-surface": "#ecf2ec", "secondary": "#4b6451", "outline-variant": "#c3c8c1", "tertiary-fixed-dim": "#c2c8c2", "surface-container-low": "#eff5ef", "primary": "#4c6452", "on-primary-fixed": "#092012", "surface-container-lowest": "#ffffff", "on-secondary": "#ffffff", "error": "#ba1a1a", "on-secondary-fixed": "#082011", "on-tertiary-container": "#282f2a", "on-error": "#ffffff" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "gutter": "1.5rem", "space-md": "1rem", "space-lg": "1.5rem", "space-xs": "0.25rem", "gutter-mobile": "1rem", "space-sm": "0.5rem", "margin": "3rem", "margin-mobile": "1.25rem", "space-xl": "2.5rem" }, fontFamily: { "display": ["Inter"], "headline-sm": ["Inter"], "headline-lg": ["Inter"], "body-md": ["Inter"], "label-sm": ["Inter"], "display-mobile": ["Inter"], "headline-lg-mobile": ["Inter"], "label-lg": ["Inter"], "body-sm": ["Inter"], "headline-md": ["Inter"], "body-lg": ["Inter"], "label-md": ["Inter"] }, fontSize: { "display": ["2.75rem", { "lineHeight": "3.25rem", "letterSpacing": "-0.03em", "fontWeight": "600" }], "headline-sm": ["1.125rem", { "lineHeight": "1.5rem", "letterSpacing": "-0.01em", "fontWeight": "500" }], "headline-lg": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600" }], "body-md": ["0.875rem", { "lineHeight": "1.5rem", "fontWeight": "400" }], "label-sm": ["0.6875rem", { "lineHeight": "0.875rem", "letterSpacing": "0.04em", "fontWeight": "600" }], "display-mobile": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600" }], "headline-lg-mobile": ["1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.015em", "fontWeight": "600" }], "label-lg": ["0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "500" }], "body-sm": ["0.8125rem", { "lineHeight": "1.25rem", "fontWeight": "400" }], "headline-md": ["1.375rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.015em", "fontWeight": "600" }], "body-lg": ["1rem", { "lineHeight": "1.625rem", "fontWeight": "400" }], "label-md": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.02em", "fontWeight": "500" }] } } } }</script><style>@layer base{html,body{width:100%;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface min-h-screen flex flex-col"><header class="fixed top-0 inset-x-0 z-50 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-safe"><div class="h-16 px-margin-mobile flex items-center justify-between"><button aria-label="Go back" class="w-11 h-11 -ml-2 flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors" onclick="history.back()"><span class="material-symbols-outlined text-[22px]">arrow_back</span></button><h2 class="font-label-lg text-label-lg tracking-wider uppercase text-on-surface font-semibold">Reset Security Key</h2><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="flex flex-col relative w-full px-margin-mobile pt-16 pb-safe bg-surface max-w-[420px] mx-auto min-h-screen"><div class="flex flex-col w-full pb-8">
+<!-- Status Bar / Security Credential Strip -->
+<div class="flex items-center justify-between py-2 text-on-surface-variant font-label-sm text-label-sm tracking-wider uppercase">
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+<span class="tracking-widest">AUTHENTICATION</span>
+<span class="text-outline-variant">•</span>
+<span class="text-primary font-semibold">RECOVERY</span>
+</div>
+<div class="flex items-center gap-1 text-on-surface-variant font-medium">
+<span class="material-symbols-outlined text-[14px] text-primary">lock</span>
+<span>256-Bit SSL</span>
+</div>
+</div>
+<!-- Interactive State Switcher Pill Tabs -->
+<div class="p-1 my-3 bg-surface-container rounded-full flex items-center justify-between">
+<button class="flex-1 py-1.5 px-3 rounded-full text-center font-label-md text-label-md transition-all duration-200 bg-surface-container-lowest text-on-surface shadow-sm font-semibold" id="btn-tab-form" onclick="switchState('form')" type="button">
+      Request Form
+    </button>
+<button class="flex-1 py-1.5 px-3 rounded-full text-center font-label-md text-label-md transition-all duration-200 text-on-surface-variant hover:text-on-surface" id="btn-tab-sent" onclick="switchState('sent')" type="button">
+      Sent State
+    </button>
+</div>
+<!-- Main Interaction Container -->
+<div class="relative w-full">
+<!-- VIEW 1: Request Form -->
+<div class="transition-opacity duration-300" id="view-form">
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col">
+<!-- Key Icon Badge -->
+<div class="w-11 h-11 rounded-lg bg-surface-container-low flex items-center justify-center text-primary mb-4">
+<span class="material-symbols-outlined text-[22px]">vpn_key</span>
+</div>
+<!-- Typography & Header -->
+<span class="font-label-sm text-label-sm tracking-widest text-secondary font-semibold uppercase mb-1">Account Security</span>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-2">Reset your password</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed mb-6">
+          Enter the email address associated with your VOWS Studio account. We will send a secure single-use recovery link.
+        </p>
+<!-- Form Elements -->
+<form class="flex flex-col gap-4" id="recovery-form" onsubmit="event.preventDefault(); switchState('sent');">
+<div class="flex flex-col">
+<label class="font-label-md text-label-md text-on-surface-variant mb-1.5 font-medium" for="email-input">
+              Studio Account Email
+            </label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3.5 text-outline text-[18px]">alternate_email</span>
+<input class="w-full h-12 pl-10 pr-3 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md outline-none transition-all placeholder:text-outline focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary/20" id="email-input" required="" type="email" value="reuben@vowsstudio.com"/>
+</div>
+</div>
+<!-- Directory Verification Indicator -->
+<div class="flex items-center gap-2 px-3 py-2 rounded-lg bg-secondary-container/40 text-on-secondary-container">
+<span class="material-symbols-outlined text-[16px] text-secondary">check_circle</span>
+<span class="font-label-md text-label-md font-medium tracking-tight">Authorized studio personnel directory</span>
+</div>
+<!-- Action Button -->
+<button class="w-full h-12 mt-2 rounded-lg bg-secondary text-on-secondary font-label-lg text-label-lg font-medium flex items-center justify-center gap-2 hover:bg-primary transition-colors shadow-sm active:scale-[0.99]" type="submit">
+<span>Send Recovery Link</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</form>
+<!-- Secondary Actions & Rate Limit Tag -->
+<div class="flex items-center justify-between pt-5 mt-4">
+<a class="inline-flex items-center gap-1 font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" href="#" onclick="event.preventDefault();">
+<span class="material-symbols-outlined text-[16px]">arrow_back</span>
+<span>Back to studio sign in</span>
+</a>
+<div class="flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[13px] text-outline">lock_clock</span>
+<span>Rate-limited</span>
+</div>
+</div>
+<!-- Security Callout Banner -->
+<div class="mt-6 p-3 rounded-lg bg-surface-container-low flex items-start gap-2.5">
+<span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">verified_user</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-snug">
+            Protected by encrypted TLS &amp; rate-limited studio authentication protocol.
+          </p>
+</div>
+</div>
+</div>
+<!-- VIEW 2: Sent State -->
+<div class="hidden opacity-0 transition-opacity duration-300" id="view-sent">
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col text-left">
+<!-- Mail Sent Icon Badge -->
+<div class="w-11 h-11 rounded-lg bg-secondary-container flex items-center justify-center text-on-secondary-container mb-4">
+<span class="material-symbols-outlined text-[22px]">mark_email_read</span>
+</div>
+<span class="font-label-sm text-label-sm tracking-widest text-secondary font-semibold uppercase mb-1">Link Dispatched</span>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-2">Check your inbox</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed mb-4">
+          A single-use authentication link was dispatched to:
+        </p>
+<!-- Target Recipient Box -->
+<div class="p-3 bg-surface-container-low rounded-lg flex items-center justify-between mb-4">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold truncate" id="target-email">reuben@vowsstudio.com</span>
+<span class="material-symbols-outlined text-primary text-[18px]">verified</span>
+</div>
+<!-- Expiration Timer Countdown Box -->
+<div class="p-4 rounded-lg bg-surface-container flex items-center justify-between mb-5">
+<div class="flex items-center gap-2 text-on-surface">
+<span class="material-symbols-outlined text-[20px] text-primary">timer</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-medium">Link Expiration</span>
+<span class="font-label-lg text-label-lg font-bold text-on-surface tracking-wide" id="countdown">14:59</span>
+</div>
+</div>
+<span class="text-primary font-label-sm text-label-sm px-2 py-1 bg-surface-container-lowest rounded font-semibold">Active Session</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed mb-5">
+          Didn't receive the dispatch? Verify your spam quarantine or re-trigger transmission once the countdown finishes.
+        </p>
+<!-- Resend Action Button -->
+<button class="w-full h-12 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-lg text-label-lg font-medium flex items-center justify-center gap-2 transition-all active:scale-[0.99]" id="btn-resend" onclick="handleResend()" type="button">
+<span class="material-symbols-outlined text-[18px] text-primary">send</span>
+<span id="resend-label">Resend Recovery Email</span>
+</button>
+<!-- Return Action -->
+<div class="flex items-center justify-center pt-5 mt-4">
+<button class="inline-flex items-center gap-1 font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" onclick="switchState('form')" type="button">
+<span class="material-symbols-outlined text-[16px]">arrow_back</span>
+<span>Try an alternate email</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Studio Verification Details / Footer Strip -->
+<div class="mt-8 pt-4 flex flex-col items-center justify-center gap-2 text-center">
+<div class="flex items-center gap-2 text-outline font-label-sm text-label-sm">
+<span>VOWS ID Portal v4.18</span>
+<span>•</span>
+<a class="text-on-surface-variant hover:underline" href="#" onclick="event.preventDefault();">Incident Support</a>
+<span>•</span>
+<a class="text-on-surface-variant hover:underline" href="#" onclick="event.preventDefault();">Hardware Tokens</a>
+</div>
+<div class="flex items-center gap-1.5 text-outline text-label-sm font-label-sm">
+<span class="w-1 h-1 rounded-full bg-outline"></span>
+<span>VOWS Production Stills &amp; Cinema Ops</span>
+</div>
+</div>
+</div>
+<script>
+  let timerInterval = null;
+  let remainingSeconds = 899; // 14m 59s
+
+  function startCountdown() {
+    if (timerInterval) clearInterval(timerInterval);
+    const countdownEl = document.getElementById('countdown');
+    timerInterval = setInterval(() => {
+      if (remainingSeconds <= 0) {
+        clearInterval(timerInterval);
+        countdownEl.textContent = 'Expired';
+        return;
+      }
+      remainingSeconds--;
+      const m = Math.floor(remainingSeconds / 60);
+      const s = remainingSeconds % 60;
+      countdownEl.textContent = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }, 1000);
+  }
+
+  function switchState(targetState) {
+    const viewForm = document.getElementById('view-form');
+    const viewSent = document.getElementById('view-sent');
+    const btnTabForm = document.getElementById('btn-tab-form');
+    const btnTabSent = document.getElementById('btn-tab-sent');
+    const inputEmail = document.getElementById('email-input');
+    const targetEmail = document.getElementById('target-email');
+
+    if (targetState === 'form') {
+      viewSent.classList.add('opacity-0');
+      setTimeout(() => {
+        viewSent.classList.add('hidden');
+        viewForm.classList.remove('hidden');
+        setTimeout(() => viewForm.classList.remove('opacity-0'), 20);
+      }, 150);
+
+      btnTabForm.className = "flex-1 py-1.5 px-3 rounded-full text-center font-label-md text-label-md transition-all duration-200 bg-surface-container-lowest text-on-surface shadow-sm font-semibold";
+      btnTabSent.className = "flex-1 py-1.5 px-3 rounded-full text-center font-label-md text-label-md transition-all duration-200 text-on-surface-variant hover:text-on-surface";
+    } else {
+      if (inputEmail && inputEmail.value) {
+        targetEmail.textContent = inputEmail.value;
+      }
+      viewForm.classList.add('opacity-0');
+      setTimeout(() => {
+        viewForm.classList.add('hidden');
+        viewSent.classList.remove('hidden');
+        setTimeout(() => viewSent.classList.remove('opacity-0'), 20);
+        startCountdown();
+      }, 150);
+
+      btnTabSent.className = "flex-1 py-1.5 px-3 rounded-full text-center font-label-md text-label-md transition-all duration-200 bg-surface-container-lowest text-on-surface shadow-sm font-semibold";
+      btnTabForm.className = "flex-1 py-1.5 px-3 rounded-full text-center font-label-md text-label-md transition-all duration-200 text-on-surface-variant hover:text-on-surface";
+    }
+  }
+
+  function handleResend() {
+    const btn = document.getElementById('btn-resend');
+    const label = document.getElementById('resend-label');
+    const originalText = label.textContent;
+
+    btn.disabled = true;
+    label.textContent = "Dispatched!";
+    btn.classList.add('bg-secondary-container', 'text-on-secondary-container');
+
+    remainingSeconds = 900;
+    startCountdown();
+
+    setTimeout(() => {
+      label.textContent = originalText;
+      btn.disabled = false;
+      btn.classList.remove('bg-secondary-container', 'text-on-secondary-container');
+    }, 2500);
+  }
+</script></main></body></html>

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "tertiary-container": "#909690", "surface-container": "#eaefe9", "secondary-container": "#ceead2", "on-tertiary-container": "#282f2a", "on-primary-fixed-variant": "#354c3b", "surface-container-lowest": "#ffffff", "tertiary-fixed": "#dee4dd", "secondary-fixed-dim": "#b2cdb6", "on-primary-container": "#1c3223", "on-secondary-fixed-variant": "#344c3b", "outline": "#737972", "secondary-fixed": "#ceead2", "secondary": "#4b6451", "primary-fixed": "#cfe9d3", "on-background": "#171d19", "on-tertiary-fixed": "#171d19", "on-primary-fixed": "#092012", "on-surface": "#171d19", "on-surface-variant": "#424843", "on-secondary-fixed": "#082011", "outline-variant": "#c3c8c1", "on-tertiary-fixed-variant": "#424843", "on-error-container": "#93000a", "on-primary": "#ffffff", "on-secondary": "#ffffff", "error": "#ba1a1a", "on-error": "#ffffff", "surface-dim": "#d6dcd5", "surface-bright": "#f5fbf4", "on-secondary-container": "#516a57", "surface-container-high": "#e4eae3", "error-container": "#ffdad6", "inverse-on-surface": "#ecf2ec", "surface-variant": "#dee4de", "inverse-primary": "#b3cdb7", "surface-tint": "#4c6452", "surface-container-low": "#eff5ef", "tertiary": "#5a605b", "tertiary-fixed-dim": "#c2c8c2", "surface-container-highest": "#dee4de", "on-tertiary": "#ffffff", "background": "#f5fbf4", "inverse-surface": "#2c322e", "primary": "#4c6452", "surface": "#f5fbf4", "primary-container": "#829b87", "primary-fixed-dim": "#b3cdb7" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-md": "1rem", "margin-mobile": "1.25rem", "gutter": "1.5rem", "space-xl": "2.5rem", "gutter-mobile": "1rem", "space-lg": "1.5rem", "space-sm": "0.5rem", "margin": "3rem", "space-xs": "0.25rem" }, "fontFamily": { "body-md": ["Inter"], "headline-lg": ["Inter"], "body-lg": ["Inter"], "headline-lg-mobile": ["Inter"], "headline-sm": ["Inter"], "label-md": ["Inter"], "label-lg": ["Inter"], "label-sm": ["Inter"], "display": ["Inter"], "body-sm": ["Inter"], "display-mobile": ["Inter"], "headline-md": ["Inter"] }, "fontSize": { "body-md": ["0.875rem", { "lineHeight": "1.5rem", "fontWeight": "400" }], "headline-lg": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600" }], "body-lg": ["1rem", { "lineHeight": "1.625rem", "fontWeight": "400" }], "headline-lg-mobile": ["1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.015em", "fontWeight": "600" }], "headline-sm": ["1.125rem", { "lineHeight": "1.5rem", "letterSpacing": "-0.01em", "fontWeight": "500" }], "label-md": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.02em", "fontWeight": "500" }], "label-lg": ["0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "500" }], "label-sm": ["0.6875rem", { "lineHeight": "0.875rem", "letterSpacing": "0.04em", "fontWeight": "600" }], "display": ["2.75rem", { "lineHeight": "3.25rem", "letterSpacing": "-0.03em", "fontWeight": "600" }], "body-sm": ["0.8125rem", { "lineHeight": "1.25rem", "fontWeight": "400" }], "display-mobile": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600" }], "headline-md": ["1.375rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.015em", "fontWeight": "600" }] } } } };</script></head><body class="bg-surface font-body-md text-on-surface antialiased selection:bg-secondary-container selection:text-on-secondary-container"><aside class="fixed left-0 top-0 h-screen w-64 bg-surface-container-low border-r border-outline-variant/50 z-50 flex flex-col justify-between overflow-y-auto"><div class="flex flex-col"><div class="h-16 px-space-lg flex items-center justify-between border-b border-outline-variant/40"><div class="flex items-center gap-space-sm"><div class="w-7 h-7 rounded-lg bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[16px]">movie_filter</span></div><span class="font-headline-sm text-headline-sm tracking-tight text-on-surface font-semibold">VOWS STUDIO</span></div><span class="font-label-sm text-label-sm uppercase px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant font-medium tracking-wider">PRO</span></div><div class="px-space-md py-space-lg space-y-space-lg"><nav class="space-y-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-semibold rounded-lg shadow-none"><div class="px-space-sm pb-space-xs font-label-sm text-label-sm text-outline uppercase tracking-wider">Operations</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="bookings" href="#"><span class="material-symbols-outlined text-[18px]">calendar_today</span>Bookings</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="schedule" href="#"><span class="material-symbols-outlined text-[18px]">event_available</span>Schedule</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="crew-directory" href="#"><span class="material-symbols-outlined text-[18px]">groups</span>Crew Directory</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="crew-profile" href="#"><span class="material-symbols-outlined text-[18px]">badge</span>Crew Profile</a><a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-2 transition-colors bg-secondary-container text-on-secondary-container font-semibold rounded-lg shadow-none" data-path="delivery-pipeline" href="#"><span class="material-symbols-outlined text-[18px]">local_shipping</span>Delivery</a></nav><nav class="space-y-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-semibold rounded-lg shadow-none"><div class="px-space-sm pb-space-xs font-label-sm text-label-sm text-outline uppercase tracking-wider">Finance</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="invoices" href="#"><span class="material-symbols-outlined text-[18px]">receipt_long</span>Invoices</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="payments" href="#"><span class="material-symbols-outlined text-[18px]">payments</span>Payments</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="ledger" href="#"><span class="material-symbols-outlined text-[18px]">menu_book</span>Ledger</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="expenses" href="#"><span class="material-symbols-outlined text-[18px]">account_balance_wallet</span>Expenses</a></nav><nav class="space-y-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-semibold rounded-lg shadow-none"><div class="px-space-sm pb-space-xs font-label-sm text-label-sm text-outline uppercase tracking-wider">Studio Tools</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="services" href="#"><span class="material-symbols-outlined text-[18px]">photo_camera</span>Services</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="packages" href="#"><span class="material-symbols-outlined text-[18px]">inventory_2</span>Packages</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="portfolio" href="#"><span class="material-symbols-outlined text-[18px]">collections</span>Portfolio</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="reviews" href="#"><span class="material-symbols-outlined text-[18px]">star_rate</span>Reviews</a></nav></div></div><div class="p-space-md border-t border-outline-variant/40 bg-surface-container-low"><div class="p-space-sm rounded-lg bg-surface-container flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-primary"></span><span class="font-label-sm text-label-sm text-on-surface font-medium">Cloud Sync</span></div><span class="font-label-sm text-label-sm text-outline">Real-time</span></div></div></aside><div class="pl-64 flex flex-col min-h-screen"><header class="fixed top-0 left-64 right-0 h-16 bg-surface/90 backdrop-blur-xl border-b border-outline-variant/40 z-40 px-space-lg flex items-center justify-between"><div class="flex items-center gap-space-xs font-label-md text-label-md text-outline"><span class="hover:text-on-surface cursor-pointer transition-colors">Studio CRM</span><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="hover:text-on-surface cursor-pointer transition-colors">Operations</span><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="font-semibold text-on-surface">Delivery Pipeline</span></div><div class="flex items-center gap-space-md"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-space-sm text-outline text-[18px]">search</span><input class="w-72 h-9 pl-9 pr-14 rounded-lg bg-surface-container-lowest border border-outline-variant/60 font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:border-primary-container focus:ring-2 focus:ring-surface-container-high transition-all" placeholder="Search projects, couples, crew..." type="text"/><kbd class="absolute right-space-sm font-label-sm text-label-sm text-outline bg-surface-container px-1.5 py-0.5 rounded border border-outline-variant/40">⌘K</kbd></div><div class="h-5 w-px bg-outline-variant/50"></div><div class="flex items-center gap-space-xs"><button class="w-9 h-9 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span></button><button class="w-9 h-9 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[20px]">light_mode</span></button></div><div class="h-5 w-px bg-outline-variant/50"></div><div class="flex items-center gap-space-sm pl-space-xs"><div class="text-right"><div class="font-label-md text-label-md font-semibold text-on-surface leading-tight">Reuben Serrao</div><div class="font-label-sm text-label-sm text-outline leading-tight">Executive Producer / Owner</div></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 pt-16 bg-surface"><div class="flex flex-col w-full relative">
+<!-- DASHBOARD CANVAS (Delivery Pipeline Tracker Context) -->
+<div class="px-margin py-space-xl max-w-[1280px] w-full mx-auto space-y-space-xl pointer-events-none select-none opacity-40 blur-[1.5px] transition-all">
+<!-- Header Block -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+<div>
+<div class="flex items-center gap-space-xs mb-space-xs">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">Production Post-Suite</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Client Delivery Pipeline</h1>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="px-space-md py-2 rounded-lg bg-surface-container text-on-surface-variant font-label-md text-label-md flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">sync</span>
+          Storage: 4.8 TB / 12 TB (High-Speed NVMe)
+        </div>
+<div class="px-space-md py-2 rounded-lg bg-primary text-on-primary font-label-md text-label-md flex items-center gap-2 font-medium">
+<span class="material-symbols-outlined text-[16px]">add_circle</span>
+          New Deliverable
+        </div>
+</div>
+</div>
+<!-- Metrics Row -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<span class="font-label-sm text-label-sm uppercase text-outline">Under Review</span>
+<div class="mt-space-md flex items-baseline justify-between">
+<span class="font-display text-display text-on-surface leading-none">04</span>
+<span class="font-label-sm text-label-sm text-primary font-medium">92% on schedule</span>
+</div>
+</div>
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<span class="font-label-sm text-label-sm uppercase text-outline">Active Shared Links</span>
+<div class="mt-space-md flex items-baseline justify-between">
+<span class="font-display text-display text-on-surface leading-none">12</span>
+<span class="font-label-sm text-label-sm text-outline font-medium">Across 8 Weddings</span>
+</div>
+</div>
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<span class="font-label-sm text-label-sm uppercase text-outline">Pending Approvals</span>
+<div class="mt-space-md flex items-baseline justify-between">
+<span class="font-display text-display text-on-surface leading-none">02</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">Color Grade passes</span>
+</div>
+</div>
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<span class="font-label-sm text-label-sm uppercase text-outline">Dispatched This Month</span>
+<div class="mt-space-md flex items-baseline justify-between">
+<span class="font-display text-display text-on-surface leading-none">18</span>
+<span class="font-label-sm text-label-sm text-primary font-medium">All 4K Masters</span>
+</div>
+</div>
+</div>
+<!-- Active Deliverable Main Card -->
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm space-y-space-lg">
+<div class="flex items-center justify-between pb-space-md">
+<div class="flex items-center gap-space-md">
+<div class="w-16 h-12 rounded-lg bg-cover bg-center overflow-hidden" data-alt="Cinematic still from an elegant seaside destination wedding, warm sunset backlight casting golden reflections on the bride and groom standing beside coastal stone arches, natural muted tones." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDyN65_jydqxGYqizf6GZ9QB6xUAxKswfwrlq1863N_G6UluttNf4OUpOFuu55kzbaBfk1dFMIWa1WI7l3pMlzMuO7fiffr1mU8z49-2PcvWyeVxFRdcJCoRn3S9xrgpfAd2B21Q8Q38vutFq4IzX4OIG5lTUybfEiA1d7SeKd4bCakffInR5Z-KIfW1UIAgRN53bRIIjGgue6wccvIGo2K6ZKyUNlXAKIjrHF1GA01')"></div>
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface">Derick D'Souza & Samantha Pinto</span>
+<span class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm">In Review</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline">Ceremony & Reception at The St. Regis Goa • Master Package Tier I</p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="px-4 py-2 rounded-lg bg-surface-container font-label-md text-label-md text-on-surface">Inspect Files</button>
+<button class="px-4 py-2 rounded-lg bg-primary text-on-primary font-label-md text-label-md">Share with Client</button>
+</div>
+</div>
+<!-- Pipeline Stages Visualizer -->
+<div class="grid grid-cols-5 gap-space-md pt-space-xs">
+<div class="p-space-md rounded-lg bg-surface-container-low space-y-2">
+<div class="flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-outline uppercase">Ingest & Proxy</span>
+<span class="material-symbols-outlined text-[16px] text-primary">check_circle</span>
+</div>
+<p class="font-label-md text-label-md text-on-surface font-semibold">100% Verified</p>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-low space-y-2">
+<div class="flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-outline uppercase">Editorial Cut</span>
+<span class="material-symbols-outlined text-[16px] text-primary">check_circle</span>
+</div>
+<p class="font-label-md text-label-md text-on-surface font-semibold">Rough Cut Approved</p>
+</div>
+<div class="p-space-md rounded-lg bg-secondary-container/40 space-y-2">
+<div class="flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-on-secondary-container uppercase font-semibold">Grade & Sound</span>
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+</div>
+<p class="font-label-md text-label-md text-on-surface font-semibold">Fine Pass v2.4</p>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-low space-y-2">
+<div class="flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-outline uppercase">Client Stream</span>
+<span class="material-symbols-outlined text-[16px] text-outline">lock_open</span>
+</div>
+<p class="font-label-md text-label-md text-on-surface font-semibold">Live Access Token</p>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-low space-y-2">
+<div class="flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-outline uppercase">Archival Delivery</span>
+<span class="material-symbols-outlined text-[16px] text-outline">schedule</span>
+</div>
+<p class="font-label-md text-label-md text-on-surface font-semibold">ProRes 4444 Vault</p>
+</div>
+</div>
+</div>
+</div>
+<!-- MODAL BACKDROP (High-depth scrim) -->
+<div class="fixed inset-0 top-16 left-64 bg-inverse-surface/40 backdrop-blur-sm z-50 flex items-center justify-center p-space-lg transition-opacity duration-300" id="modalOverlay">
+<!-- MODAL CONTAINER (Level 2 Surface) -->
+<div class="relative w-full max-w-[680px] bg-surface-container-lowest rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[calc(100vh-6rem)] animate-in fade-in zoom-in-95 duration-200">
+<!-- Modal Header -->
+<div class="px-space-xl pt-space-xl pb-space-lg flex items-start justify-between bg-surface-container-lowest">
+<div class="space-y-1 pr-space-md">
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">
+<span class="material-symbols-outlined text-[15px] text-primary">verified_user</span>
+            Cinematic Portal Distribution
+          </div>
+<h2 class="font-headline-md text-headline-md text-on-surface font-semibold tracking-tight">Share Delivery with Client</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+            Generate secure access link for <span class="font-medium text-on-surface">Derick D'Souza & Samantha Pinto</span> to stream and review active wedding deliverables.
+          </p>
+</div>
+<button aria-label="Close dialog" class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors flex-shrink-0" id="closeModalBtn">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Modal Body (Scrollable if needed) -->
+<div class="px-space-xl py-space-md overflow-y-auto space-y-space-lg flex-1">
+<!-- Public Link Section -->
+<div class="space-y-space-xs">
+<div class="flex items-center justify-between">
+<label class="font-label-md text-label-md text-outline font-medium">Secure Client Access URL</label>
+<a class="inline-flex items-center gap-1 font-label-sm text-label-sm text-primary hover:text-on-primary-container transition-colors group font-semibold" href="#">
+<span>Open Preview</span>
+<span class="material-symbols-outlined text-[14px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">north_east</span>
+</a>
+</div>
+<div class="flex items-center gap-space-xs p-1.5 rounded-lg bg-surface-container-low focus-within:ring-2 focus-within:ring-secondary-container transition-all">
+<div class="pl-2 pr-1 text-outline">
+<span class="material-symbols-outlined text-[18px]">link</span>
+</div>
+<input class="w-full bg-transparent font-body-sm text-body-sm text-on-surface focus:outline-none select-all truncate font-mono text-[13px]" id="clientUrlInput" readonly="" type="text" value="https://vowsstudio.com/delivery/view/vows-bkg2025-019-d3f98a"/>
+<button class="flex-shrink-0 px-space-md py-2 rounded-lg bg-primary hover:bg-on-primary-container text-on-primary font-label-md text-label-md font-medium transition-colors flex items-center gap-1.5 shadow-sm" id="copyUrlBtn">
+<span class="material-symbols-outlined text-[16px]" id="copyIcon">content_copy</span>
+<span id="copyText">Copy Link</span>
+</button>
+</div>
+</div>
+<!-- Access & Security Settings Card -->
+<div class="p-space-lg rounded-xl bg-surface-container-low space-y-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[18px] text-secondary">tune</span>
+<span class="font-headline-sm text-[15px] font-semibold text-on-surface">Access & Security Controls</span>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-medium">Encrypted SSL</span>
+</div>
+<!-- Controls Grid -->
+<div class="space-y-space-md pt-space-xs">
+<!-- Expiry Control Row -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-xs py-1">
+<div>
+<div class="font-label-lg text-label-lg text-on-surface font-medium">Link Expiration Date</div>
+<div class="font-body-sm text-body-sm text-outline">Revokes streaming permissions automatically</div>
+</div>
+<div class="relative min-w-[220px]">
+<select class="w-full h-9 pl-3 pr-8 rounded-lg bg-surface-container-lowest font-body-sm text-body-sm text-on-surface appearance-none focus:outline-none focus:ring-2 focus:ring-secondary-container transition-all cursor-pointer shadow-sm">
+<option value="7">7 Days (Dec 12, 2025)</option>
+<option value="14">14 Days (Dec 19, 2025)</option>
+<option selected="" value="30">30 Days (Expires Jan 04, 2026)</option>
+<option value="never">Never (Indefinite Access)</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-2.5 text-outline text-[18px] pointer-events-none">expand_more</span>
+</div>
+</div>
+<div class="h-px bg-surface-container-high w-full"></div>
+<!-- Passcode Protection -->
+<div class="flex items-center justify-between py-1">
+<div class="space-y-0.5 pr-space-md">
+<div class="flex items-center gap-2">
+<span class="font-label-lg text-label-lg text-on-surface font-medium">Passcode Protection</span>
+<span class="font-label-sm text-[10px] tracking-wider uppercase px-1.5 py-0.2 rounded bg-secondary-container text-on-secondary-container font-semibold">Active</span>
+</div>
+<div class="font-body-sm text-body-sm text-outline">Passcode requested prior to video stream playback</div>
+</div>
+<div class="flex items-center gap-space-sm flex-shrink-0">
+<div class="font-mono text-[12px] px-2.5 py-1 rounded bg-surface-container text-on-surface font-medium tracking-widest select-all">
+                  VOWS-DERICK-SAM
+                </div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-surface-container-lowest after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface-container-lowest after:border-surface-container-highest after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+<div class="h-px bg-surface-container-high w-full"></div>
+<!-- Download Permissions Toggle -->
+<div class="flex items-center justify-between py-1">
+<div class="space-y-0.5 pr-space-md">
+<div class="font-label-lg text-label-lg text-on-surface font-medium">Allow 4K Master Downloads</div>
+<div class="font-body-sm text-body-sm text-outline">Enables direct download of ProRes and 4K MP4 deliverables</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer flex-shrink-0">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-surface-container-lowest after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface-container-lowest after:border-surface-container-highest after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="h-px bg-surface-container-high w-full"></div>
+<!-- Watermark Toggle -->
+<div class="flex items-center justify-between py-1">
+<div class="space-y-0.5 pr-space-md">
+<div class="font-label-lg text-label-lg text-on-surface font-medium">Review Watermark</div>
+<div class="font-body-sm text-body-sm text-outline">Burn studio monogram watermark over video preview</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer flex-shrink-0">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-surface-container-lowest after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface-container-lowest after:border-surface-container-highest after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</div>
+<!-- Link Metadata & Danger Revoke Panel -->
+<div class="p-space-md rounded-xl bg-surface-container-low flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-md">
+<div class="space-y-1">
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-on-surface">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-semibold text-secondary">Active Link</span>
+<span class="text-outline">•</span>
+<span class="text-outline">Created Dec 01, 2025 by Reuben Serrao</span>
+</div>
+<div class="font-body-sm text-[12px] text-outline flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px]">visibility</span>
+<span>3 visits recorded (Last accessed today, 10:14 AM from Safari macOS)</span>
+</div>
+</div>
+<button class="flex-shrink-0 px-3 py-1.5 rounded-lg bg-surface-container-lowest hover:bg-error-container text-error hover:text-on-error-container font-label-md text-label-md font-semibold transition-colors flex items-center gap-1 shadow-sm" id="revokeBtn">
+<span class="material-symbols-outlined text-[16px]">link_off</span>
+            Revoke Link
+          </button>
+</div>
+<p class="font-label-sm text-[11px] text-outline px-1">
+          Revoking this link will immediately disable access for all active client sessions and shared URLs across this booking.
+        </p>
+</div>
+<!-- Modal Footer CTAs -->
+<div class="px-space-xl py-space-md bg-surface-container flex items-center justify-between">
+<button class="px-space-lg py-2.5 rounded-lg bg-surface-container-lowest hover:bg-surface text-on-surface font-label-md text-label-md font-medium transition-colors shadow-sm" id="cancelModalBtn">
+          Cancel
+        </button>
+<div class="flex items-center gap-space-sm">
+<button class="px-space-lg py-2.5 rounded-lg bg-primary hover:bg-on-primary-container text-on-primary font-label-md text-label-md font-semibold transition-all flex items-center gap-2 shadow-sm" id="saveShareBtn">
+<span class="material-symbols-outlined text-[18px]">send</span>
+            Update & Copy Link
+          </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  (function initModalInteraction() {
+    const copyUrlBtn = document.getElementById('copyUrlBtn');
+    const clientUrlInput = document.getElementById('clientUrlInput');
+    const copyText = document.getElementById('copyText');
+    const copyIcon = document.getElementById('copyIcon');
+    const saveShareBtn = document.getElementById('saveShareBtn');
+    const revokeBtn = document.getElementById('revokeBtn');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const cancelModalBtn = document.getElementById('cancelModalBtn');
+    const modalOverlay = document.getElementById('modalOverlay');
+
+    // Clipboard copy helper
+    function handleCopy(label) {
+      if (!clientUrlInput) return;
+      clientUrlInput.select();
+      navigator.clipboard?.writeText(clientUrlInput.value);
+
+      if (copyText && copyIcon) {
+        copyText.textContent = 'Copied!';
+        copyIcon.textContent = 'check';
+        setTimeout(() => {
+          copyText.textContent = label || 'Copy Link';
+          copyIcon.textContent = 'content_copy';
+        }, 2200);
+      }
+    }
+
+    if (copyUrlBtn) {
+      copyUrlBtn.addEventListener('click', () => handleCopy('Copy Link'));
+    }
+
+    if (saveShareBtn) {
+      saveShareBtn.addEventListener('click', () => {
+        handleCopy('Copy Link');
+        saveShareBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">done_all</span> Updated & Copied';
+        setTimeout(() => {
+          saveShareBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">send</span> Update & Copy Link';
+        }, 2000);
+      });
+    }
+
+    if (revokeBtn) {
+      revokeBtn.addEventListener('click', () => {
+        const confirmed = window.confirm("Are you sure you want to revoke this secure deliverable link? The couple won't be able to view their film until a new link is issued.");
+        if (confirmed) {
+          revokeBtn.textContent = 'Revoked';
+          revokeBtn.classList.add('opacity-50', 'pointer-events-none');
+          if (clientUrlInput) {
+            clientUrlInput.value = 'Link revoked - generate a new access token';
+          }
+        }
+      });
+    }
+
+    function closeModal() {
+      if (modalOverlay) {
+        modalOverlay.style.opacity = '0';
+        modalOverlay.style.pointerEvents = 'none';
+        setTimeout(() => {
+          modalOverlay.classList.add('hidden');
+        }, 300);
+      }
+    }
+
+    if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+    if (cancelModalBtn) cancelModalBtn.addEventListener('click', closeModal);
+
+    // Escape key listener to close modal
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+  })();
+</script></main></div></body></html>

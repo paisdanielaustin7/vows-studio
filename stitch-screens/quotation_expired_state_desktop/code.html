@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"tertiary":"#5a605b","surface-container-high":"#e4eae3","on-surface":"#171d19","on-secondary-fixed":"#082011","on-tertiary-container":"#282f2a","tertiary-container":"#909690","outline":"#737972","secondary-fixed-dim":"#b2cdb6","inverse-on-surface":"#ecf2ec","error":"#ba1a1a","on-surface-variant":"#424843","surface-tint":"#4c6452","surface-bright":"#f5fbf4","secondary-container":"#ceead2","secondary-fixed":"#ceead2","on-tertiary":"#ffffff","surface-container-highest":"#dee4de","surface-variant":"#dee4de","secondary":"#4b6451","on-tertiary-fixed-variant":"#424843","on-tertiary-fixed":"#171d19","surface-dim":"#d6dcd5","primary-fixed":"#cfe9d3","on-primary":"#ffffff","background":"#f5fbf4","inverse-primary":"#b3cdb7","surface-container-lowest":"#ffffff","on-error-container":"#93000a","on-primary-fixed-variant":"#354c3b","surface-container-low":"#eff5ef","on-primary-fixed":"#092012","on-secondary":"#ffffff","primary-container":"#829b87","surface-container":"#eaefe9","error-container":"#ffdad6","tertiary-fixed-dim":"#c2c8c2","on-secondary-fixed-variant":"#344c3b","primary-fixed-dim":"#b3cdb7","outline-variant":"#c3c8c1","inverse-surface":"#2c322e","on-secondary-container":"#516a57","on-background":"#171d19","on-error":"#ffffff","on-primary-container":"#1c3223","tertiary-fixed":"#dee4dd","surface":"#f5fbf4","primary":"#4c6452"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"gutter":"1.5rem","space-xs":"0.25rem","gutter-mobile":"1rem","space-md":"1rem","margin":"3rem","margin-mobile":"1.25rem","space-xl":"2.5rem","space-sm":"0.5rem","space-lg":"1.5rem"},fontFamily:{"label-sm":["Inter"],"label-lg":["Inter"],"headline-lg":["Inter"],"headline-md":["Inter"],"display-mobile":["Inter"],"body-md":["Inter"],"headline-lg-mobile":["Inter"],"body-lg":["Inter"],"headline-sm":["Inter"],"label-md":["Inter"],"body-sm":["Inter"],"display":["Inter"]},fontSize:{"label-sm":["0.6875rem",{"lineHeight":"0.875rem","letterSpacing":"0.04em","fontWeight":"600"}],"label-lg":["0.875rem",{"lineHeight":"1.25rem","letterSpacing":"0.01em","fontWeight":"500"}],"headline-lg":["2rem",{"lineHeight":"2.5rem","letterSpacing":"-0.02em","fontWeight":"600"}],"headline-md":["1.375rem",{"lineHeight":"1.75rem","letterSpacing":"-0.015em","fontWeight":"600"}],"display-mobile":["2rem",{"lineHeight":"2.5rem","letterSpacing":"-0.02em","fontWeight":"600"}],"body-md":["0.875rem",{"lineHeight":"1.5rem","fontWeight":"400"}],"headline-lg-mobile":["1.5rem",{"lineHeight":"2rem","letterSpacing":"-0.015em","fontWeight":"600"}],"body-lg":["1rem",{"lineHeight":"1.625rem","fontWeight":"400"}],"headline-sm":["1.125rem",{"lineHeight":"1.5rem","letterSpacing":"-0.01em","fontWeight":"500"}],"label-md":["0.75rem",{"lineHeight":"1rem","letterSpacing":"0.02em","fontWeight":"500"}],"body-sm":["0.8125rem",{"lineHeight":"1.25rem","fontWeight":"400"}],"display":["2.75rem",{"lineHeight":"3.25rem","letterSpacing":"-0.03em","fontWeight":"600"}]}}}}</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-screen w-72 bg-surface-container-low flex flex-col z-50 shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-space-lg flex items-center justify-between"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[24px]">videocam</span><div class="flex flex-col"><span class="font-headline-sm text-headline-sm uppercase tracking-wider text-on-surface font-semibold">VOWS STUDIO</span><span class="font-label-sm text-label-sm uppercase tracking-widest text-outline">Cinematography & Stills</span></div></div></div><div class="flex-1 overflow-y-auto px-space-md py-space-sm space-y-space-md"><nav class="space-y-space-md" data-active-classes="bg-secondary-container text-on-secondary-container font-semibold rounded"><div class="space-y-1"><div class="px-space-sm py-1 font-label-sm text-label-sm uppercase tracking-wider text-outline">Sales</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="enquiries" href="#"><span class="material-symbols-outlined text-[18px]">inbox</span><span>Enquiries</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="clients" href="#"><span class="material-symbols-outlined text-[18px]">group</span><span>Clients</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-2 transition-colors bg-secondary-container text-on-secondary-container font-semibold rounded" data-path="quotations" href="#"><span class="material-symbols-outlined text-[18px]">receipt_long</span><span>Quotations</span></a></div><div class="space-y-1"><div class="px-space-sm py-1 font-label-sm text-label-sm uppercase tracking-wider text-outline">Operations</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="bookings" href="#"><span class="material-symbols-outlined text-[18px]">event_available</span><span>Bookings</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="schedule" href="#"><span class="material-symbols-outlined text-[18px]">calendar_today</span><span>Schedule</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="crew" href="#"><span class="material-symbols-outlined text-[18px]">badge</span><span>Crew</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="delivery" href="#"><span class="material-symbols-outlined text-[18px]">local_shipping</span><span>Delivery</span></a></div><div class="space-y-1"><div class="px-space-sm py-1 font-label-sm text-label-sm uppercase tracking-wider text-outline">Finance</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="invoices" href="#"><span class="material-symbols-outlined text-[18px]">description</span><span>Invoices</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="payments" href="#"><span class="material-symbols-outlined text-[18px]">payments</span><span>Payments</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="ledger" href="#"><span class="material-symbols-outlined text-[18px]">menu_book</span><span>Ledger</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="expenses" href="#"><span class="material-symbols-outlined text-[18px]">account_balance_wallet</span><span>Expenses</span></a></div><div class="space-y-1"><div class="px-space-sm py-1 font-label-sm text-label-sm uppercase tracking-wider text-outline">Catalogue</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="services" href="#"><span class="material-symbols-outlined text-[18px]">photo_camera</span><span>Services</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="packages" href="#"><span class="material-symbols-outlined text-[18px]">inventory_2</span><span>Packages</span></a></div><div class="space-y-1"><div class="px-space-sm py-1 font-label-sm text-label-sm uppercase tracking-wider text-outline">Website</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="portfolio" href="#"><span class="material-symbols-outlined text-[18px]">gallery_thumbnail</span><span>Portfolio</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="reviews" href="#"><span class="material-symbols-outlined text-[18px]">rate_review</span><span>Reviews</span></a></div><div class="space-y-1"><div class="px-space-sm py-1 font-label-sm text-label-sm uppercase tracking-wider text-outline">System</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="settings" href="#"><span class="material-symbols-outlined text-[18px]">settings</span><span>Settings</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="audit-log" href="#"><span class="material-symbols-outlined text-[18px]">history</span><span>Audit log</span></a></div></nav></div><div class="p-space-md bg-surface-container flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-2 h-2 rounded-full bg-primary"></div><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface font-semibold">Studio Node: Active</span><span class="font-label-sm text-label-sm text-on-surface-variant">v2.4 Production Engine</span></div></div><span class="material-symbols-outlined text-[16px] text-tertiary">cloud_done</span></div></aside><div class="pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-72 right-0 z-40 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-gutter flex items-center justify-between"><nav class="flex items-center gap-space-xs font-body-md text-body-md text-on-surface-variant"><a class="hover:text-on-surface transition-colors" data-path="studio-crm" href="#">Studio CRM</a><span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span><a class="hover:text-on-surface transition-colors" data-path="sales" href="#">Sales</a><span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span><a class="hover:text-on-surface transition-colors" data-path="quotations" href="#">Quotations</a><span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span><span class="font-semibold text-on-surface">QT-2025-089 v2</span></nav><div class="flex items-center gap-space-lg"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-[18px] text-outline">search</span><input class="w-64 pl-9 pr-4 py-1.5 rounded bg-surface-container-low text-on-surface placeholder-outline font-body-sm text-body-sm focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary" placeholder="Search records, clients, quotes..." type="text"/></div><div class="flex items-center gap-space-md"><button class="relative p-1.5 rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-error"></span></button><div class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm"><span class="material-symbols-outlined text-[16px] text-secondary">light_mode</span><span>Light</span></div></div><div class="flex items-center gap-space-sm pl-space-sm"><div class="flex flex-col text-right"><span class="font-label-lg text-label-lg text-on-surface font-semibold">Reuben Serrao</span><span class="font-label-sm text-label-sm text-outline">Lead Cinematographer</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></div><div class="flex flex-col"><div class="bg-secondary-fixed text-on-secondary-fixed px-gutter py-2 flex items-center justify-between font-label-md text-label-md"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">info</span><span><strong>Demo Mode Active:</strong> You are viewing live workspace simulations. Actions will not affect production records.</span></div><button class="hover:underline font-semibold" type="button">Dismiss</button></div><div class="bg-error-container text-on-error-container px-gutter py-2 flex items-center justify-between font-label-md text-label-md"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">warning</span><span><strong>Gmail Integration Warning:</strong> API token renewal required in 48 hours to prevent quotation dispatch failure.</span></div><button class="hover:underline font-semibold" type="button">Reconnect Account</button></div></div></header><main class="relative pt-32 w-full px-gutter bg-surface flex-1"><div class="flex flex-col w-full pb-space-xl">
+<!-- Top Expiration Announcement Banner -->
+<div class="w-full bg-error-container text-on-error-container rounded-lg px-space-lg py-space-md shadow-sm mb-space-lg flex items-center justify-between">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-full bg-error/15 flex items-center justify-center shrink-0 text-error">
+<span class="material-symbols-outlined text-[22px]">event_busy</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-error font-semibold">Quote Lapsed</span>
+<span class="w-1 h-1 rounded-full bg-error"></span>
+<span class="font-body-sm text-body-sm font-medium">Valid until Oct 25, 2025</span>
+<span class="text-error font-semibold text-body-sm">(Expired 8 days ago)</span>
+</div>
+<p class="font-body-md text-body-md text-on-error-container/90 mt-0.5">
+          Pricing and studio crew calendar availability are no longer guaranteed for this sequence. Dispatch locks have been applied.
+        </p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm shrink-0">
+<button class="px-space-md py-2 rounded bg-primary text-on-primary font-label-lg text-label-lg hover:bg-secondary transition-colors flex items-center gap-1.5 shadow-sm" onclick="document.getElementById('reactivate-modal').classList.remove('hidden')" type="button">
+<span class="material-symbols-outlined text-[18px]">restore</span>
+<span>Reactivate & Extend</span>
+</button>
+<button class="px-space-md py-2 rounded bg-surface-container-lowest text-on-surface font-label-lg text-label-lg hover:bg-surface-container-high transition-colors" type="button">
+        Dismiss
+      </button>
+</div>
+</div>
+<!-- Editorial Meta Bar & Studio Canvas Navigation -->
+<div class="flex items-center justify-between gap-space-md mb-space-xl">
+<div class="flex items-baseline gap-space-md">
+<div>
+<div class="flex items-center gap-space-sm mb-1">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-outline">Production Package Proposal</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant font-medium">Doc ID: #QT-2025-076</span>
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-error/10 text-error font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-error animate-pulse"></span>
+            Expired • v1
+          </span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Eleanor Vance & Julian Sterling</h1>
+</div>
+</div>
+<!-- Editorial Actions Toolbar -->
+<div class="flex items-center gap-space-sm">
+<button class="px-space-md py-2.5 rounded bg-surface-container-low text-on-surface hover:bg-surface-container-high transition-colors font-label-lg text-label-lg flex items-center gap-2" id="toggle-drawer-btn" type="button">
+<span class="material-symbols-outlined text-[18px] text-tertiary">history</span>
+<span>Version History (3)</span>
+</button>
+<button class="px-space-md py-2.5 rounded bg-surface-container-low text-on-surface hover:bg-surface-container-high transition-colors font-label-lg text-label-lg flex items-center gap-2" type="button">
+<span class="material-symbols-outlined text-[18px] text-tertiary">edit_document</span>
+<span>Revise as v2</span>
+</button>
+<button class="px-space-md py-2.5 rounded bg-surface-container-low text-error hover:bg-error-container transition-colors font-label-lg text-label-lg flex items-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[18px]">archive</span>
+<span>Archive Quote</span>
+</button>
+<button class="px-space-lg py-2.5 rounded bg-primary text-on-primary font-label-lg text-label-lg hover:bg-secondary transition-colors flex items-center gap-2 shadow-sm" onclick="document.getElementById('reactivate-modal').classList.remove('hidden')" type="button">
+<span class="material-symbols-outlined text-[20px]">autorenew</span>
+<span>Reactivate & Extend Validity</span>
+</button>
+</div>
+</div>
+<!-- Primary Split Grid Layout -->
+<div class="grid grid-cols-12 gap-space-lg items-start">
+<!-- Left Section: Subdued Interactive Itemized Canvas (8 Cols) -->
+<div class="col-span-8 flex flex-col gap-space-lg">
+<!-- Operational Dispatch Capacity Advisory -->
+<div class="w-full bg-surface-container-high rounded-lg p-space-md flex items-center justify-between">
+<div class="flex items-center gap-space-md">
+<div class="w-9 h-9 rounded bg-surface-container-lowest flex items-center justify-center text-tertiary shrink-0">
+<span class="material-symbols-outlined text-[20px]">event_seat</span>
+</div>
+<div>
+<div class="font-label-lg text-label-lg text-on-surface font-semibold flex items-center gap-2">
+<span>Crew Allocation Capacity Alert</span>
+<span class="px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider bg-error/15 text-error">80% Booked</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Target weekend (Nov 14–16, 2025) has reached critical booking threshold. Master cinematographers are reserved on 3 competing inquiries. Rate schedules may require re-calculation.
+            </p>
+</div>
+</div>
+<div class="shrink-0 pl-space-md">
+<button class="px-space-sm py-1 rounded bg-surface-container-lowest hover:bg-surface-container text-on-surface text-label-sm font-label-sm font-medium transition-colors" type="button">
+            Audit Crew Schedule
+          </button>
+</div>
+</div>
+<!-- Line-Item Studio Inventory (Locked/Subdued State) -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden opacity-90 relative">
+<!-- Watermark/Lapsed Lock Visual Badge -->
+<div class="px-space-lg py-space-md bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-outline text-[20px]">lock_clock</span>
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">Scope of Cinematic Coverage & Deliverables</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline px-2 py-0.5 rounded bg-surface-container">Read Only</span>
+</div>
+<span class="font-body-sm text-body-sm text-outline">Items locked on Oct 25, 2025 23:59 UTC</span>
+</div>
+<div class="p-space-lg flex flex-col gap-space-lg">
+<!-- Item 01: Principal Cinematography -->
+<div class="p-space-md rounded-lg bg-surface-container-low/60 flex items-start justify-between gap-space-md">
+<div class="w-24 h-24 rounded-lg overflow-hidden shrink-0 relative bg-surface-container">
+<img class="w-full h-full object-cover grayscale contrast-125 opacity-75" data-alt="Understated cinematic frame of two wedding subjects walking softly through an open misted meadow in Lake Como, soft natural chiaroscuro light, muted organic tones of sage green and linen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKXWmOCOvpYFaNOVczRel5MVhAf_zU3OPUhIqxd77mAbUgwBoWFlJcmkGwg_JmGbKY2aURnokem_1ahic7EmgGCIF7tWZMm3A_i00Em2jGTISkVzxo0sSvA8jBmPVDNB68GZ9Jrvo-sOXaxs0ZWi1_RRrOeeclDG6le2OpxL9Eykrzc8ASlBWzNiofTPSum8r7rhQug9mZCs5zWUodVSq4Lud7AHz5Hzjg6ZMrQbTx"/>
+<div class="absolute inset-0 bg-surface-container-highest/20 mix-blend-multiply"></div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Production Package</span>
+<span class="w-1 h-1 rounded-full bg-outline"></span>
+<span class="font-label-sm text-label-sm text-error font-medium">Rate expired</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface-variant font-medium mt-0.5">The Sovereign Monograph (3-Day Narrative)</h3>
+<p class="font-body-sm text-body-sm text-outline mt-1 line-clamp-2">
+                Complete principal photography & cinematography. Includes Lead Cinematographer (Reuben Serrao), 2 Secondary Camera Operators, 1 Sound Engineer, and aerial drone capture permits.
+              </p>
+<div class="flex items-center gap-space-md mt-3 font-label-sm text-label-sm text-tertiary">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[15px]">movie</span> 4K ProRes RAW</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[15px]">timer</span> 28 Operating Hours</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[15px]">person_pin</span> 4 Crew Members</span>
+</div>
+</div>
+<div class="text-right shrink-0">
+<div class="font-headline-sm text-headline-sm text-outline line-through">$14,800.00</div>
+<span class="font-label-sm text-label-sm text-error bg-error-container/40 px-2 py-0.5 rounded inline-block mt-1">Pending Indexing</span>
+</div>
+</div>
+<!-- Item 02: Editorial Photography & Archival Stills -->
+<div class="p-space-md rounded-lg bg-surface-container-low/60 flex items-start justify-between gap-space-md">
+<div class="w-24 h-24 rounded-lg overflow-hidden shrink-0 relative bg-surface-container">
+<img class="w-full h-full object-cover grayscale contrast-125 opacity-75" data-alt="Editorial still photograph of bespoke wedding table setting with raw linen napkins, artisan ceramic plates, olive branches, and soft golden candle glow in an Italian villa courtyard" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCciv4iXds0NZsedIMtBDp6ymdmJUqiLqLOCT6ZGmTztIuAUAn0rgCb-oTASiU6-p7ux72CtjzGNznpmdDHnMRltuMBDzdMuLuioa1NB6OzNLy3HcLs8T509zAlqrPMYknsvadY1rCcnwOUH28lJR9XyxnytQ7AwfkBVuhqCMVrZRUxFCfc076nCC2-JyhPgSzoe1E_8BjmEn12jpqqC6wDLWCxGPkhS-zRQNoZdFqU"/>
+<div class="absolute inset-0 bg-surface-container-highest/20 mix-blend-multiply"></div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Stills Gallery</span>
+<span class="w-1 h-1 rounded-full bg-outline"></span>
+<span class="font-label-sm text-label-sm text-outline">35mm & Medium Format</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface-variant font-medium mt-0.5">Archival Stills Edition & Fine Art Box</h3>
+<p class="font-body-sm text-body-sm text-outline mt-1 line-clamp-2">
+                Curated 800+ proof gallery, 12x12 handcrafted Belgian linen heirloom monograph with debossed typography, and master digital negatives with perpetual copyright release.
+              </p>
+<div class="flex items-center gap-space-md mt-3 font-label-sm text-label-sm text-tertiary">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[15px]">auto_stories</span> 120-Page Hardcover</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[15px]">cloud_sync</span> Cloud Archive (10 Yrs)</span>
+</div>
+</div>
+<div class="text-right shrink-0">
+<div class="font-headline-sm text-headline-sm text-outline line-through">$4,200.00</div>
+<span class="font-label-sm text-label-sm text-outline px-2 py-0.5 rounded bg-surface-container inline-block mt-1">Fixed Item</span>
+</div>
+</div>
+<!-- Item 03: Post-Production & Sound Design (Add-on) -->
+<div class="p-space-md rounded-lg bg-surface-container-low/60 flex items-start justify-between gap-space-md">
+<div class="w-24 h-24 rounded-lg overflow-hidden shrink-0 relative bg-surface-container flex items-center justify-center bg-surface-container-high">
+<span class="material-symbols-outlined text-outline text-[32px]">graphic_eq</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Post-Production</span>
+<span class="w-1 h-1 rounded-full bg-outline"></span>
+<span class="font-label-sm text-label-sm text-outline">Studio Edit</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface-variant font-medium mt-0.5">Orchestral Score Licensing & Surround Master</h3>
+<p class="font-body-sm text-body-sm text-outline mt-1 line-clamp-2">
+                Custom string quartet licensing and 5.1 spatial sound mastering for the 18-minute director cut documentary film.
+              </p>
+<div class="flex items-center gap-space-md mt-3 font-label-sm text-label-sm text-tertiary">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[15px]">surround_sound</span> Dolby Atmos</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[15px]">verified</span> Sync Licensing</span>
+</div>
+</div>
+<div class="text-right shrink-0">
+<div class="font-headline-sm text-headline-sm text-outline line-through">$1,850.00</div>
+<span class="font-label-sm text-label-sm text-outline px-2 py-0.5 rounded bg-surface-container inline-block mt-1">Fixed Item</span>
+</div>
+</div>
+</div>
+<!-- Locked Notification Footer inside Editor -->
+<div class="px-space-lg py-space-md bg-surface-container-low text-on-surface-variant flex items-center justify-between font-label-sm text-label-sm">
+<div class="flex items-center gap-space-sm text-tertiary">
+<span class="material-symbols-outlined text-[16px]">info</span>
+<span>To modify line-items or apply custom promotional studio credits, first reactivate the quote or mint v2.</span>
+</div>
+<button class="text-primary hover:underline font-semibold flex items-center gap-1" type="button">
+<span>Clone to editable draft</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Historical Client Interactions Log -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<h4 class="font-headline-sm text-headline-sm text-on-surface mb-space-md">Dispatch & Client Timeline</h4>
+<div class="space-y-space-md">
+<div class="flex items-start gap-space-md">
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-outline shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">send</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg text-on-surface font-medium">Dispatched to Julian Sterling (julian@sterling.co)</span>
+<span class="font-label-sm text-label-sm text-outline">Oct 11, 2025 • 14:22</span>
+</div>
+<p class="font-body-sm text-body-sm text-tertiary">Interactive web link delivered with 14-day standard studio validity window.</p>
+</div>
+</div>
+<div class="flex items-start gap-space-md">
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-outline shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg text-on-surface font-medium">Quote Viewed by Client</span>
+<span class="font-label-sm text-label-sm text-outline">Oct 18, 2025 • 09:15</span>
+</div>
+<p class="font-body-sm text-body-sm text-tertiary">Opened in London, UK (Safari Desktop, macOS). Total viewing duration: 11 mins.</p>
+</div>
+</div>
+<div class="flex items-start gap-space-md">
+<div class="w-8 h-8 rounded-full bg-error/10 flex items-center justify-center text-error shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">timer_off</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg text-error font-semibold">Automatic System Expiration Triggered</span>
+<span class="font-label-sm text-label-sm text-error">Oct 25, 2025 • 23:59</span>
+</div>
+<p class="font-body-sm text-body-sm text-tertiary">Calendar tentative hold released. Lead photographer auto-reassigned to queue.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Section: Totals, Expired Stamp & Validity Extension Controls (4 Cols) -->
+<div class="col-span-4 flex flex-col gap-space-lg">
+<!-- Primary Summary Card with Editorial 'VALIDITY EXPIRED' Stamp -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm relative overflow-hidden">
+<!-- Large Editorial Watermark Stamp -->
+<div class="absolute -right-6 top-8 pointer-events-none select-none rotate-12 z-10 opacity-80">
+<div class="px-6 py-2 rounded bg-error-container text-on-error-container font-headline-md text-headline-md font-bold uppercase tracking-widest text-center shadow-sm">
+            VALIDITY EXPIRED
+            <div class="text-[10px] tracking-normal font-medium text-error opacity-90 -mt-1">Oct 25, 2025 • 8 Days Lapsed</div>
+</div>
+</div>
+<div class="flex items-center justify-between mb-space-md">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Statement Breakdown</span>
+<span class="font-label-sm text-label-sm text-tertiary">USD ($)</span>
+</div>
+<!-- Ledger Calculation Details -->
+<div class="space-y-space-sm pt-space-sm">
+<div class="flex justify-between font-body-md text-body-md text-on-surface-variant">
+<span>Subtotal (3 Deliverables)</span>
+<span>$20,850.00</span>
+</div>
+<div class="flex justify-between font-body-md text-body-md text-on-surface-variant">
+<span>Destination Travel (Lake Como)</span>
+<span>$2,400.00</span>
+</div>
+<div class="flex justify-between font-body-md text-body-md text-secondary">
+<span>Early Booking Consideration</span>
+<span>-$1,250.00</span>
+</div>
+<div class="flex justify-between font-body-md text-body-md text-on-surface-variant">
+<span>Regional Production Tax (8.25%)</span>
+<span>$1,815.00</span>
+</div>
+<div class="my-space-md h-px bg-surface-container-highest"></div>
+<!-- Total Due -->
+<div class="flex items-baseline justify-between">
+<div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Total Proposed</span>
+<div class="font-label-sm text-label-sm text-outline mt-0.5">Non-binding after expiration</div>
+</div>
+<div class="text-right">
+<span class="font-headline-lg text-headline-lg text-outline line-through tracking-tight font-semibold">$23,815.00</span>
+</div>
+</div>
+</div>
+<!-- Quick Validity Extension Selector Card -->
+<div class="mt-space-lg p-space-md rounded-lg bg-surface-container-low">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-md text-label-md text-on-surface font-semibold flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary">update</span>
+              Quick Validity Extension
+            </span>
+<span class="font-label-sm text-label-sm text-outline">Reactivation</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">
+            Select a new deadline to immediately re-lock calendar slots and unblock the client web portal:
+          </p>
+<div class="grid grid-cols-3 gap-space-xs mb-space-md">
+<button class="extension-chip active px-2 py-2 rounded text-center transition-all bg-secondary-container text-on-secondary-container font-label-md text-label-md font-semibold hover:bg-secondary-fixed" type="button">
+              +7 Days
+              <span class="block text-[10px] font-normal text-tertiary">Nov 09</span>
+</button>
+<button class="extension-chip px-2 py-2 rounded text-center transition-all bg-surface-container text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-high" type="button">
+              +14 Days
+              <span class="block text-[10px] font-normal text-tertiary">Nov 16</span>
+</button>
+<button class="extension-chip px-2 py-2 rounded text-center transition-all bg-surface-container text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-high" type="button">
+              Custom
+              <span class="block text-[10px] font-normal text-tertiary">Pick Date</span>
+</button>
+</div>
+<div class="space-y-space-sm">
+<label class="flex items-center gap-space-xs cursor-pointer">
+<input checked="" class="rounded text-primary focus:ring-primary w-4 h-4 bg-surface" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface">Auto-notify client via email & SMS</span>
+</label>
+<label class="flex items-center gap-space-xs cursor-pointer">
+<input class="rounded text-primary focus:ring-primary w-4 h-4 bg-surface" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface">Retain 2024 season rate guarantee</span>
+</label>
+</div>
+<button class="w-full mt-space-md py-2.5 rounded bg-primary text-on-primary font-label-lg text-label-lg hover:bg-secondary transition-colors flex items-center justify-center gap-2 shadow-sm" onclick="document.getElementById('reactivate-modal').classList.remove('hidden')" type="button">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span>Confirm & Extend to Nov 09</span>
+</button>
+</div>
+</div>
+<!-- Studio Production Notes & Risk Assessment -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="flex items-center gap-space-sm mb-space-sm">
+<span class="material-symbols-outlined text-secondary text-[20px]">assignment_turned_in</span>
+<h4 class="font-label-lg text-label-lg text-on-surface font-semibold">Producer Review Notes</h4>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+          "Client communicated interest during the London trunk show but delayed signature awaiting venue contract finalization. If reviving without rate hike, obtain coordinator sign-off before 12:00 PM tomorrow."
+        </p>
+<div class="mt-space-md pt-space-md flex items-center justify-between font-label-sm text-label-sm text-outline">
+<span>Logged by: Reuben S.</span>
+<span>Lead Cinematographer</span>
+</div>
+</div>
+<!-- Quick Client Summary Miniature -->
+<div class="bg-surface-container-low rounded-xl p-space-md flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-full overflow-hidden shrink-0 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Portrait photo of bride and groom in black tie evening wedding wear, smiling subtly in natural monochrome tone, intimate high fashion style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGuJ7sLRgFKTSy-8yGaZbAyKaNaR0Vt0MTjW0Nbec-z_Y7DyRPF0fESTznzZ_iXq_oOf0oT9c0FkoEatrU1m3YCZFCzzbrve1JRHD6Ap7SwMl_p5bJr2PZL_6dwjOrN_2rse3OUjk9kgN-HNu-Cwe5VugofHq83w28f3XaAxMWjJpJIiksv7I9KRgAUY-3cmhwXyrmsTtBhqk7WY0899wgAhxz_rTSZtFv5cGCaKf7"/>
+</div>
+<div class="flex-1 min-w-0">
+<span class="font-label-md text-label-md text-on-surface font-semibold block truncate">Eleanor Vance & Julian Sterling</span>
+<span class="font-body-sm text-body-sm text-tertiary block truncate">Villa Balbiano, Como • 220 Guests</span>
+</div>
+<a class="w-8 h-8 rounded bg-surface-container-lowest hover:bg-surface-container flex items-center justify-center text-on-surface transition-colors shrink-0" href="#">
+<span class="material-symbols-outlined text-[18px]">open_in_new</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Modal: Reactivate & Extend Confirmation Dialog (Hidden by Default) -->
+<div class="hidden fixed inset-0 z-50 flex items-center justify-center bg-inverse-surface/40 backdrop-blur-sm p-gutter" id="reactivate-modal">
+<div class="bg-surface-container-lowest rounded-xl shadow-2xl max-w-lg w-full p-space-xl overflow-hidden relative">
+<div class="flex items-center justify-between pb-space-md mb-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined text-[20px]">restore_page</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Reactivate QT-2025-076</h3>
+<span class="font-label-sm text-label-sm text-outline">Extends validity without changing quotation reference</span>
+</div>
+</div>
+<button class="text-tertiary hover:text-on-surface" onclick="document.getElementById('reactivate-modal').classList.add('hidden')" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<div class="space-y-space-md font-body-md text-body-md text-on-surface-variant">
+<p>
+          Reactivating this quote will clear the <span class="text-error font-semibold">EXPIRED</span> flag, restore interactive client booking capabilities, and automatically reserve provisional production team equipment through:
+        </p>
+<div class="p-space-md rounded-lg bg-surface-container-low flex items-center justify-between">
+<div>
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider block">New Proposed Expiry</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">November 09, 2025 (23:59 UTC)</span>
+</div>
+<span class="px-2.5 py-1 rounded bg-secondary-container text-on-secondary-container font-label-md text-label-md font-medium">+7 Days Added</span>
+</div>
+<div class="p-space-md rounded-lg bg-error-container/30 text-on-error-container flex items-start gap-space-sm text-body-sm">
+<span class="material-symbols-outlined text-error text-[18px] shrink-0 mt-0.5">info</span>
+<span>Please note that Lead Cinematographer availability will be provisionally held for 48 hours awaiting client signature.</span>
+</div>
+</div>
+<div class="flex items-center justify-end gap-space-sm mt-space-xl pt-space-md">
+<button class="px-space-md py-2.5 rounded bg-surface-container text-on-surface font-label-lg text-label-lg hover:bg-surface-container-high transition-colors" onclick="document.getElementById('reactivate-modal').classList.add('hidden')" type="button">
+          Cancel
+        </button>
+<button class="px-space-lg py-2.5 rounded bg-primary text-on-primary font-label-lg text-label-lg hover:bg-secondary transition-colors flex items-center gap-2" onclick="document.getElementById('reactivate-modal').classList.add('hidden'); alert('Quotation QT-2025-076 successfully reactivated until Nov 09, 2025.');" type="button">
+<span class="material-symbols-outlined text-[18px]">done</span>
+<span>Confirm Reactivation</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Slide-out Versions Drawer (Hidden by default, toggleable) -->
+<div class="hidden fixed inset-y-0 right-0 z-50 w-96 bg-surface-container-lowest shadow-2xl flex flex-col" id="versions-drawer">
+<div class="p-space-lg bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">history</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Version History</h3>
+</div>
+<button class="p-1 rounded hover:bg-surface-container text-tertiary" id="close-drawer-btn" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto p-space-lg space-y-space-lg">
+<!-- Current Version (Lapsed) -->
+<div class="p-space-md rounded-lg bg-surface-container-low relative">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">Version 1 (Original)</span>
+<span class="px-2 py-0.5 rounded bg-error-container text-error text-[11px] font-bold uppercase tracking-wider">Expired</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline block mb-2">Created Oct 11, 2025 by Reuben Serrao</span>
+<p class="font-body-sm text-body-sm text-tertiary">
+          Initial proposal dispatch with full 3-day Villa Balbiano package and orchestra score sync.
+        </p>
+<div class="mt-3 flex items-center justify-between font-label-sm text-label-sm pt-2">
+<span class="font-semibold text-on-surface">$23,815.00</span>
+<span class="text-tertiary font-medium">Viewing Now</span>
+</div>
+</div>
+<!-- Pre-dispatch Draft Iteration -->
+<div class="p-space-md rounded-lg hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">v0.9 Draft Prep</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-outline text-[11px] font-medium uppercase tracking-wider">Internal</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline block mb-2">Created Oct 09, 2025 by Sarah Lin</span>
+<p class="font-body-sm text-body-sm text-tertiary">
+          Early estimate including 2-day coverage prior to client requesting rehearsal dinner stills.
+        </p>
+<div class="mt-3 flex items-center justify-between font-label-sm text-label-sm pt-2">
+<span class="font-semibold text-on-surface">$18,400.00</span>
+<span class="text-primary hover:underline">Compare Diff</span>
+</div>
+</div>
+<!-- Architectural Concept Initial Inquiry -->
+<div class="p-space-md rounded-lg hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">v0.1 Inquiry Rough</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-outline text-[11px] font-medium uppercase tracking-wider">Archived</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline block mb-2">Created Oct 04, 2025</span>
+<p class="font-body-sm text-body-sm text-tertiary">
+          Automatic system quote generated from website pricing calculator questionnaire.
+        </p>
+<div class="mt-3 flex items-center justify-between font-label-sm text-label-sm pt-2">
+<span class="font-semibold text-on-surface">$16,500.00</span>
+<span class="text-primary hover:underline">View Spec</span>
+</div>
+</div>
+</div>
+<!-- Drawer Footer: Branching Action -->
+<div class="p-space-lg bg-surface-container-low">
+<button class="w-full py-2.5 rounded bg-surface-container-highest hover:bg-surface-container text-on-surface font-label-lg text-label-lg font-semibold flex items-center justify-center gap-2 transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span>Branch to Clean Draft (v2)</span>
+</button>
+</div>
+</div>
+<script>
+    // Interaction Handlers for Versions Drawer and Quick Selection Chips
+    const toggleDrawerBtn = document.getElementById('toggle-drawer-btn');
+    const closeDrawerBtn = document.getElementById('close-drawer-btn');
+    const versionsDrawer = document.getElementById('versions-drawer');
+
+    if (toggleDrawerBtn && versionsDrawer) {
+      toggleDrawerBtn.addEventListener('click', () => {
+        versionsDrawer.classList.toggle('hidden');
+      });
+    }
+
+    if (closeDrawerBtn && versionsDrawer) {
+      closeDrawerBtn.addEventListener('click', () => {
+        versionsDrawer.classList.add('hidden');
+      });
+    }
+
+    // Toggle chip selections in Validity Extension Card
+    const chips = document.querySelectorAll('.extension-chip');
+    chips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        chips.forEach(c => {
+          c.classList.remove('bg-secondary-container', 'text-on-secondary-container', 'font-semibold');
+          c.classList.add('bg-surface-container', 'text-on-surface-variant');
+        });
+        chip.classList.add('bg-secondary-container', 'text-on-secondary-container', 'font-semibold');
+        chip.classList.remove('bg-surface-container', 'text-on-surface-variant');
+      });
+    });
+  </script>
+</div></main></div></body></html>

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "secondary-container": "#ceead2", "on-primary-fixed": "#092012", "on-error-container": "#93000a", "on-tertiary-fixed-variant": "#424843", "on-secondary": "#ffffff", "error-container": "#ffdad6", "secondary-fixed": "#ceead2", "on-primary-container": "#1c3223", "error": "#ba1a1a", "surface-container-low": "#eff5ef", "on-primary": "#ffffff", "on-surface-variant": "#424843", "secondary-fixed-dim": "#b2cdb6", "outline-variant": "#c3c8c1", "surface-container-lowest": "#ffffff", "tertiary-fixed": "#dee4dd", "secondary": "#4b6451", "inverse-surface": "#2c322e", "surface-variant": "#dee4de", "on-background": "#171d19", "surface-container-high": "#e4eae3", "tertiary-container": "#909690", "on-secondary-fixed-variant": "#344c3b", "surface": "#f5fbf4", "tertiary": "#5a605b", "surface-dim": "#d6dcd5", "tertiary-fixed-dim": "#c2c8c2", "primary-container": "#829b87", "on-secondary-fixed": "#082011", "surface-tint": "#4c6452", "on-secondary-container": "#516a57", "on-surface": "#171d19", "on-error": "#ffffff", "background": "#f5fbf4", "on-tertiary-container": "#282f2a", "on-tertiary": "#ffffff", "on-tertiary-fixed": "#171d19", "surface-bright": "#f5fbf4", "inverse-on-surface": "#ecf2ec", "primary-fixed-dim": "#b3cdb7", "inverse-primary": "#b3cdb7", "surface-container": "#eaefe9", "on-primary-fixed-variant": "#354c3b", "outline": "#737972", "primary": "#4c6452", "primary-fixed": "#cfe9d3", "surface-container-highest": "#dee4de" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-xl": "2.5rem", "gutter-mobile": "1rem", "gutter": "1.5rem", "space-xs": "0.25rem", "space-sm": "0.5rem", "margin": "3rem", "space-lg": "1.5rem", "space-md": "1rem", "margin-mobile": "1.25rem" }, fontFamily: { "body-md": ["Inter"], "body-lg": ["Inter"], "headline-lg": ["Inter"], "display": ["Inter"], "label-md": ["Inter"], "headline-lg-mobile": ["Inter"], "headline-md": ["Inter"], "display-mobile": ["Inter"], "label-sm": ["Inter"], "body-sm": ["Inter"], "label-lg": ["Inter"], "headline-sm": ["Inter"] }, fontSize: { "body-md": ["0.875rem", { "lineHeight": "1.5rem", "fontWeight": "400" }], "body-lg": ["1rem", { "lineHeight": "1.625rem", "fontWeight": "400" }], "headline-lg": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600" }], "display": ["2.75rem", { "lineHeight": "3.25rem", "letterSpacing": "-0.03em", "fontWeight": "600" }], "label-md": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.02em", "fontWeight": "500" }], "headline-lg-mobile": ["1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.015em", "fontWeight": "600" }], "headline-md": ["1.375rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.015em", "fontWeight": "600" }], "display-mobile": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600" }], "label-sm": ["0.6875rem", { "lineHeight": "0.875rem", "letterSpacing": "0.04em", "fontWeight": "600" }], "body-sm": ["0.8125rem", { "lineHeight": "1.25rem", "fontWeight": "400" }], "label-lg": ["0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "500" }], "headline-sm": ["1.125rem", { "lineHeight": "1.5rem", "letterSpacing": "-0.01em", "fontWeight": "500" }] } } } }</script><style>@layer base{html,body{width:100%;margin:0;padding:0;background-color:#f5fbf4;}body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-on-surface min-h-full flex flex-col antialiased selection:bg-secondary-container"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.03)]"><div class="h-14 px-gutter-mobile flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm overflow-hidden"><span class="font-headline-sm text-headline-sm font-semibold tracking-wider text-on-surface shrink-0">VOWS</span><span class="font-label-sm text-label-sm text-outline-variant shrink-0">/</span><span class="font-label-lg text-label-lg text-on-surface truncate">Crew Directory</span></div><div class="flex items-center gap-1 shrink-0"><button aria-label="Global Search" class="w-11 h-11 flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[20px]">search</span></button><button aria-label="Notifications" class="w-11 h-11 flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors relative"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-3 right-3 w-1.5 h-1.5 rounded-full bg-primary"></span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center ml-1"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div><div class="flex flex-col"><div class="px-gutter-mobile py-1 bg-surface-container-low flex items-center justify-between text-on-surface-variant"><div class="flex items-center gap-space-xs"><span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span><span class="font-label-sm text-label-sm">Demo Mode • Reuben Serrao</span></div><span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant font-medium">Owner</span></div><div class="px-gutter-mobile py-1.5 bg-error-container/50 flex items-center justify-between gap-space-sm text-on-error-container"><div class="flex items-center gap-1.5 min-w-0"><span class="material-symbols-outlined text-[15px] shrink-0 text-error">sync_problem</span><span class="font-label-sm text-label-sm truncate">Gmail needs reconnecting — sync paused</span></div><button class="font-label-sm text-label-sm font-semibold underline shrink-0 px-2 py-1 text-on-error-container active:opacity-75">Reconnect</button></div></div></header><main class="flex-1 flex flex-col relative w-full pt-[114px] pb-24 bg-surface min-h-screen"><div class="flex flex-col w-full pb-8">
+<!-- Directory Header & Stats Sub-strip -->
+<section class="px-gutter-mobile pt-3 pb-2 flex flex-col gap-1">
+<div class="flex items-baseline justify-between">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface tracking-tight">Crew Directory</h1>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-ping"></span>
+        14 Active Operators
+      </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Vows Studio Production Network • Certified Gear &amp; Sync</p>
+</section>
+<!-- Search & Quick Filter Box -->
+<section class="px-gutter-mobile py-2">
+<div class="relative w-full flex items-center bg-surface-container-lowest rounded-xl shadow-sm">
+<span class="material-symbols-outlined absolute left-3.5 text-outline text-[20px] pointer-events-none">search</span>
+<input class="w-full h-12 pl-11 pr-10 bg-transparent text-on-surface placeholder:text-outline font-body-md text-body-md focus:outline-none" id="crewSearch" placeholder="Search name, skill, kit..." type="text"/>
+<button aria-label="Clear Search" class="absolute right-2.5 w-8 h-8 flex items-center justify-center text-outline hover:text-on-surface active:scale-95 transition-transform" id="clearSearch" type="button">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+</button>
+</div>
+</section>
+<!-- Filter Strip 1: Availability Status -->
+<section class="px-gutter-mobile pt-2 pb-1.5 flex items-center justify-between gap-2">
+<div class="inline-flex p-1 bg-surface-container rounded-xl w-full justify-between shadow-inner">
+<button class="status-toggle-btn flex-1 py-1.5 px-2 rounded-lg font-label-sm text-label-sm font-semibold transition-all text-center bg-surface-container-lowest text-on-surface shadow-xs" data-status="all" type="button">
+        All
+      </button>
+<button class="status-toggle-btn flex-1 py-1.5 px-2 rounded-lg font-label-sm text-label-sm font-semibold transition-all text-center text-on-surface-variant hover:text-on-surface" data-status="available" type="button">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-primary mr-1 align-middle"></span>Available Now
+      </button>
+<button class="status-toggle-btn flex-1 py-1.5 px-2 rounded-lg font-label-sm text-label-sm font-semibold transition-all text-center text-on-surface-variant hover:text-on-surface" data-status="booked" type="button">
+        Booked
+      </button>
+</div>
+</section>
+<!-- Filter Strip 2: Horizontally Scrollable Roles -->
+<section class="w-full overflow-x-auto no-scrollbar py-2 px-gutter-mobile flex items-center gap-2">
+<button class="role-pill shrink-0 px-3.5 py-1.5 rounded-full bg-primary text-on-primary font-label-sm text-label-sm font-semibold transition-colors flex items-center gap-1.5 shadow-xs" data-role="all">
+<span>All</span>
+<span class="px-1.5 py-0.2 rounded-full bg-on-primary/20 text-[10px]">14</span>
+</button>
+<button class="role-pill shrink-0 px-3.5 py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm font-semibold transition-colors flex items-center gap-1.5" data-role="stills">
+<span>Stills Masters</span>
+<span class="px-1.5 py-0.2 rounded-full bg-surface-container-high text-[10px] text-on-surface-variant">4</span>
+</button>
+<button class="role-pill shrink-0 px-3.5 py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm font-semibold transition-colors flex items-center gap-1.5" data-role="lead-cine">
+<span>Lead Cine</span>
+<span class="px-1.5 py-0.2 rounded-full bg-surface-container-high text-[10px] text-on-surface-variant">3</span>
+</button>
+<button class="role-pill shrink-0 px-3.5 py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm font-semibold transition-colors flex items-center gap-1.5" data-role="second-cine">
+<span>2nd Cine</span>
+<span class="px-1.5 py-0.2 rounded-full bg-surface-container-high text-[10px] text-on-surface-variant">3</span>
+</button>
+<button class="role-pill shrink-0 px-3.5 py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm font-semibold transition-colors flex items-center gap-1.5" data-role="drone">
+<span>Drone</span>
+<span class="px-1.5 py-0.2 rounded-full bg-surface-container-high text-[10px] text-on-surface-variant">2</span>
+</button>
+<button class="role-pill shrink-0 px-3.5 py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm font-semibold transition-colors flex items-center gap-1.5" data-role="sound">
+<span>Sound</span>
+<span class="px-1.5 py-0.2 rounded-full bg-surface-container-high text-[10px] text-on-surface-variant">2</span>
+</button>
+</section>
+<!-- Editorial Film Strip Header Callout -->
+<div class="px-gutter-mobile pt-3 pb-1 flex items-center justify-between text-on-surface-variant">
+<span class="font-label-sm text-label-sm tracking-wider uppercase font-semibold">Allocated Roster</span>
+<span class="font-label-sm text-label-sm text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">tune</span> Filtered by readiness
+    </span>
+</div>
+<!-- Crew Stack Section -->
+<section class="px-gutter-mobile flex flex-col gap-3.5 pt-1" id="crewCardList">
+<!-- Card 1: Tara Rao -->
+<article class="crew-card flex flex-col bg-surface-container-lowest rounded-xl p-4 shadow-sm transition-all relative overflow-hidden" data-role="stills" data-status="available">
+<div class="flex items-start justify-between gap-3">
+<div class="flex items-center gap-3">
+<!-- Monogram Avatar with Available Badge -->
+<div class="relative shrink-0">
+<div class="w-13 h-13 rounded-full bg-secondary-container text-on-secondary-container font-headline-sm text-headline-sm font-semibold flex items-center justify-center p-3">
+              TR
+            </div>
+<span class="absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full bg-primary ring-2 ring-surface-container-lowest" title="Available"></span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-2">
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate">Tara Rao</h2>
+<span class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-medium">Stills Master</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Stills Master &amp; 35mm Analog Specialist</p>
+</div>
+</div>
+<span class="shrink-0 inline-flex items-center gap-1 px-2 py-1 rounded bg-surface-container-low text-primary font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Available
+        </span>
+</div>
+<!-- Quick Metrics Ribbon -->
+<div class="mt-3.5 pt-3 bg-surface-container-low/60 rounded-lg p-2.5 flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline">Day Rate</span>
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">₹14,000 <span class="text-on-surface-variant font-normal text-body-sm">/ day</span></span>
+</div>
+<div class="h-6 w-px bg-outline-variant/30"></div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline">Experience</span>
+<span class="font-label-lg text-label-lg text-on-surface font-semibold flex items-center gap-1">
+            48 Shoots 
+            <span class="inline-flex items-center text-primary text-[12px] font-medium">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span> 4.98
+            </span>
+</span>
+</div>
+</div>
+<!-- Gear Kit Spec & Schedule Meta -->
+<div class="mt-3 flex flex-col gap-1.5 font-body-sm text-body-sm">
+<div class="flex items-center gap-2 text-on-surface-variant min-w-0">
+<span class="material-symbols-outlined text-[16px] text-tertiary shrink-0">photo_camera</span>
+<span class="truncate">Primary Kit: <strong class="text-on-surface font-medium">Leica M-A &amp; SL2 Dual Prime</strong></span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant min-w-0">
+<span class="material-symbols-outlined text-[16px] text-primary shrink-0">event_available</span>
+<span class="truncate">Next Shoot: <strong class="text-on-surface font-medium">Nov 19</strong> (Derick &amp; Samantha)</span>
+</div>
+</div>
+<!-- CTA Touch Targets (min 44px) -->
+<div class="mt-4 pt-3 flex items-center gap-2">
+<button class="flex-1 h-11 px-4 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-lg text-label-lg font-medium transition-colors flex items-center justify-center gap-2 active:scale-98" type="button">
+<span class="material-symbols-outlined text-[18px]">person</span>
+          View Profile
+        </button>
+<button aria-label="Call Tara Rao" class="w-11 h-11 rounded-lg bg-primary hover:bg-on-primary-container text-on-primary transition-colors flex items-center justify-center shrink-0 active:scale-95 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[20px]">call</span>
+</button>
+<button aria-label="Message Tara Rao" class="w-11 h-11 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface-variant transition-colors flex items-center justify-center shrink-0 active:scale-95" type="button">
+<span class="material-symbols-outlined text-[20px]">chat</span>
+</button>
+</div>
+</article>
+<!-- Card 2: Reuben Serrao -->
+<article class="crew-card flex flex-col bg-surface-container-lowest rounded-xl p-4 shadow-sm transition-all relative overflow-hidden" data-role="lead-cine" data-status="booked">
+<div class="flex items-start justify-between gap-3">
+<div class="flex items-center gap-3">
+<!-- Monogram Avatar with Busy Badge -->
+<div class="relative shrink-0">
+<div class="w-13 h-13 rounded-full bg-surface-container-high text-on-surface font-headline-sm text-headline-sm font-semibold flex items-center justify-center p-3">
+              RS
+            </div>
+<span class="absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full bg-tertiary-container ring-2 ring-surface-container-lowest" title="Booked"></span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-2">
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate">Reuben Serrao</h2>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm font-medium">EP</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Lead Cine &amp; Executive Producer</p>
+</div>
+</div>
+<span class="shrink-0 inline-flex items-center gap-1 px-2 py-1 rounded bg-surface-container text-tertiary font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-container"></span> Booked
+        </span>
+</div>
+<!-- Quick Metrics Ribbon -->
+<div class="mt-3.5 pt-3 bg-surface-container-low/60 rounded-lg p-2.5 flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline">Day Rate</span>
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">₹22,000 <span class="text-on-surface-variant font-normal text-body-sm">/ day</span></span>
+</div>
+<div class="h-6 w-px bg-outline-variant/30"></div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline">Production Run</span>
+<span class="font-label-lg text-label-lg text-on-surface font-semibold flex items-center gap-1">
+            112 Shoots
+            <span class="inline-flex items-center text-primary text-[12px] font-medium">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span> 5.0
+            </span>
+</span>
+</div>
+</div>
+<!-- Gear Kit Spec & Schedule Meta -->
+<div class="mt-3 flex flex-col gap-1.5 font-body-sm text-body-sm">
+<div class="flex items-center gap-2 text-on-surface-variant min-w-0">
+<span class="material-symbols-outlined text-[16px] text-tertiary shrink-0">videocam</span>
+<span class="truncate">Primary Kit: <strong class="text-on-surface font-medium">Sony FX6 / Cooke Primes Set</strong></span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant min-w-0">
+<span class="material-symbols-outlined text-[16px] text-tertiary-container shrink-0">event_busy</span>
+<span class="truncate">On Location: <strong class="text-on-surface font-medium">Nov 18–20</strong> (The Oberoi Udaivilas)</span>
+</div>
+</div>
+<!-- CTA Touch Targets -->
+<div class="mt-4 pt-3 flex items-center gap-2">
+<button class="flex-1 h-11 px-4 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-lg text-label-lg font-medium transition-colors flex items-center justify-center gap-2 active:scale-98" type="button">
+<span class="material-symbols-outlined text-[18px]">person</span>
+          View Profile
+        </button>
+<button aria-label="Call Reuben Serrao" class="w-11 h-11 rounded-lg bg-surface-container-high text-on-surface transition-colors flex items-center justify-center shrink-0 active:scale-95" type="button">
+<span class="material-symbols-outlined text-[20px]">call</span>
+</button>
+<button aria-label="Reassign or swap shoot dates" class="w-11 h-11 rounded-lg bg-surface-container text-on-surface-variant transition-colors flex items-center justify-center shrink-0 active:scale-95" type="button">
+<span class="material-symbols-outlined text-[20px]">calendar_month</span>
+</button>
+</div>
+</article>
+<!-- Card 3: Kiran Varma -->
+<article class="crew-card flex flex-col bg-surface-container-lowest rounded-xl p-4 shadow-sm transition-all relative overflow-hidden" data-role="second-cine" data-status="available">
+<div class="flex items-start justify-between gap-3">
+<div class="flex items-center gap-3">
+<!-- Monogram Avatar -->
+<div class="relative shrink-0">
+<div class="w-13 h-13 rounded-full bg-secondary-fixed text-on-secondary-fixed font-headline-sm text-headline-sm font-semibold flex items-center justify-center p-3">
+              KV
+            </div>
+<span class="absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full bg-primary ring-2 ring-surface-container-lowest" title="Available"></span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-2">
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate">Kiran Varma</h2>
+<span class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-medium">Gimbal Tech</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">2nd Cine &amp; Gimbal Specialist</p>
+</div>
+</div>
+<span class="shrink-0 inline-flex items-center gap-1 px-2 py-1 rounded bg-surface-container-low text-primary font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Available
+        </span>
+</div>
+<!-- Quick Metrics Ribbon -->
+<div class="mt-3.5 pt-3 bg-surface-container-low/60 rounded-lg p-2.5 flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline">Day Rate</span>
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">₹15,000 <span class="text-on-surface-variant font-normal text-body-sm">/ day</span></span>
+</div>
+<div class="h-6 w-px bg-outline-variant/30"></div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline">Past Shoots</span>
+<span class="font-label-lg text-label-lg text-on-surface font-semibold flex items-center gap-1">
+            64 Shoots
+            <span class="inline-flex items-center text-primary text-[12px] font-medium">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span> 4.92
+            </span>
+</span>
+</div>
+</div>
+<!-- Gear Kit Spec & Schedule Meta -->
+<div class="mt-3 flex flex-col gap-1.5 font-body-sm text-body-sm">
+<div class="flex items-center gap-2 text-on-surface-variant min-w-0">
+<span class="material-symbols-outlined text-[16px] text-tertiary shrink-0">sports_esports</span>
+<span class="truncate">Primary Kit: <strong class="text-on-surface font-medium">Sony FX3 / Ronin RS3 Pro</strong></span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant min-w-0">
+<span class="material-symbols-outlined text-[16px] text-primary shrink-0">speed</span>
+<span class="truncate">Availability: <strong class="text-on-surface font-medium">Immediate deployment</strong></span>
+</div>
+</div>
+<!-- CTA Touch Targets -->
+<div class="mt-4 pt-3 flex items-center gap-2">
+<button class="flex-1 h-11 px-4 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-lg text-label-lg font-medium transition-colors flex items-center justify-center gap-2 active:scale-98" type="button">
+<span class="material-symbols-outlined text-[18px]">person</span>
+          View Profile
+        </button>
+<button aria-label="Call Kiran Varma" class="w-11 h-11 rounded-lg bg-primary hover:bg-on-primary-container text-on-primary transition-colors flex items-center justify-center shrink-0 active:scale-95 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[20px]">call</span>
+</button>
+<button aria-label="Message Kiran Varma" class="w-11 h-11 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface-variant transition-colors flex items-center justify-center shrink-0 active:scale-95" type="button">
+<span class="material-symbols-outlined text-[20px]">chat</span>
+</button>
+</div>
+</article>
+<!-- Card 4: Milo Thorne -->
+<article class="crew-card flex flex-col bg-surface-container-lowest rounded-xl p-4 shadow-sm transition-all relative overflow-hidden" data-role="drone" data-status="booked">
+<div class="flex items-start justify-between gap-3">
+<div class="flex items-center gap-3">
+<!-- Monogram Avatar -->
+<div class="relative shrink-0">
+<div class="w-13 h-13 rounded-full bg-surface-container-high text-on-surface font-headline-sm text-headline-sm font-semibold flex items-center justify-center p-3">
+              MT
+            </div>
+<span class="absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full bg-tertiary-container ring-2 ring-surface-container-lowest" title="Booked"></span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-2">
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate">Milo Thorne</h2>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm font-medium">Drone</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Aerial Drone Specialist &amp; FPV Pilot</p>
+</div>
+</div>
+<span class="shrink-0 inline-flex items-center gap-1 px-2 py-1 rounded bg-surface-container text-tertiary font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-container"></span> Booked (Nov 19)
+        </span>
+</div>
+<!-- Quick Metrics Ribbon -->
+<div class="mt-3.5 pt-3 bg-surface-container-low/60 rounded-lg p-2.5 flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline">Day Rate</span>
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">₹16,500 <span class="text-on-surface-variant font-normal text-body-sm">/ day</span></span>
+</div>
+<div class="h-6 w-px bg-outline-variant/30"></div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline">Past Shoots</span>
+<span class="font-label-lg text-label-lg text-on-surface font-semibold flex items-center gap-1">
+            52 Shoots
+            <span class="inline-flex items-center text-primary text-[12px] font-medium">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span> 4.96
+            </span>
+</span>
+</div>
+</div>
+<!-- Gear Kit Spec & Schedule Meta -->
+<div class="mt-3 flex flex-col gap-1.5 font-body-sm text-body-sm">
+<div class="flex items-center gap-2 text-on-surface-variant min-w-0">
+<span class="material-symbols-outlined text-[16px] text-tertiary shrink-0">flight_takeoff</span>
+<span class="truncate">Primary Kit: <strong class="text-on-surface font-medium">DJI Inspire 3 / Custom 5” FPV</strong></span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant min-w-0">
+<span class="material-symbols-outlined text-[16px] text-tertiary-container shrink-0">verified_user</span>
+<span class="truncate">Permits: <strong class="text-on-surface font-medium">DGCA Category 1 Certified</strong></span>
+</div>
+</div>
+<!-- CTA Touch Targets -->
+<div class="mt-4 pt-3 flex items-center gap-2">
+<button class="flex-1 h-11 px-4 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-lg text-label-lg font-medium transition-colors flex items-center justify-center gap-2 active:scale-98" type="button">
+<span class="material-symbols-outlined text-[18px]">person</span>
+          View Profile
+        </button>
+<button aria-label="Call Milo Thorne" class="w-11 h-11 rounded-lg bg-surface-container-high text-on-surface transition-colors flex items-center justify-center shrink-0 active:scale-95" type="button">
+<span class="material-symbols-outlined text-[20px]">call</span>
+</button>
+<button aria-label="Inspect Drone Flight Log" class="w-11 h-11 rounded-lg bg-surface-container text-on-surface-variant transition-colors flex items-center justify-center shrink-0 active:scale-95" type="button">
+<span class="material-symbols-outlined text-[20px]">description</span>
+</button>
+</div>
+</article>
+</section>
+<!-- Empty State Fallback (Hidden by default, triggered by JS) -->
+<div class="hidden px-gutter-mobile py-12 flex-col items-center justify-center text-center" id="noResultsState">
+<div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center text-outline mb-3">
+<span class="material-symbols-outlined text-[32px]">groups_3</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">No crew operators found</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 max-w-[260px]">Try adjusting your search criteria or resetting filters to show all active studio crew.</p>
+<button class="mt-4 px-4 py-2 rounded-lg bg-secondary-container text-on-secondary-container font-label-md text-label-md font-semibold" id="resetFiltersBtn" type="button">
+      Reset All Filters
+    </button>
+</div>
+<!-- Operational Floating Action Bar for Studio Owner (Quick Dispatch & Add) -->
+<div class="sticky bottom-4 z-20 px-gutter-mobile mt-4 flex items-center justify-between">
+<div class="w-full flex items-center gap-2 bg-inverse-surface/90 backdrop-blur-md p-2 rounded-2xl shadow-xl text-inverse-on-surface">
+<div class="flex items-center gap-2.5 pl-2">
+<span class="w-2 h-2 rounded-full bg-secondary-fixed animate-pulse"></span>
+<span class="font-label-sm text-label-sm font-medium">Dispatch Desk Active</span>
+</div>
+<div class="ml-auto flex items-center gap-1.5">
+<button class="h-9 px-3 rounded-xl bg-primary text-on-primary font-label-sm text-label-sm font-semibold flex items-center gap-1 shadow-xs active:scale-95 transition-transform" type="button">
+<span class="material-symbols-outlined text-[16px]">person_add</span>
+          Add Crew
+        </button>
+<button aria-label="Ops Export" class="w-9 h-9 rounded-xl bg-inverse-surface hover:bg-surface-container-highest/20 text-inverse-on-surface flex items-center justify-center active:scale-95" type="button">
+<span class="material-symbols-outlined text-[18px]">ios_share</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<script>
+  (function initCrewDirectory() {
+    const searchInput = document.getElementById('crewSearch');
+    const cards = Array.from(document.querySelectorAll('.crew-card'));
+    const rolePills = Array.from(document.querySelectorAll('.role-pill'));
+    const statusBtns = Array.from(document.querySelectorAll('.status-toggle-btn'));
+    const noResults = document.getElementById('noResultsState');
+    const resetBtn = document.getElementById('resetFiltersBtn');
+
+    let currentRole = 'all';
+    let currentStatus = 'all';
+    let searchQuery = '';
+
+    function filterCards() {
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const role = card.getAttribute('data-role');
+        const status = card.getAttribute('data-status');
+        const textContent = card.innerText.toLowerCase();
+
+        const matchesRole = (currentRole === 'all' || role === currentRole);
+        const matchesStatus = (currentStatus === 'all' || status === currentStatus);
+        const matchesSearch = !searchQuery || textContent.includes(searchQuery);
+
+        if (matchesRole && matchesStatus && matchesSearch) {
+          card.classList.remove('hidden');
+          visibleCount++;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      if (visibleCount === 0) {
+        noResults.classList.remove('hidden');
+        noResults.classList.add('flex');
+      } else {
+        noResults.classList.add('hidden');
+        noResults.classList.remove('flex');
+      }
+    }
+
+    // Role selection
+    rolePills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        rolePills.forEach(p => {
+          p.classList.remove('bg-primary', 'text-on-primary', 'shadow-xs');
+          p.classList.add('bg-surface-container-lowest', 'text-on-surface-variant');
+        });
+        pill.classList.remove('bg-surface-container-lowest', 'text-on-surface-variant');
+        pill.classList.add('bg-primary', 'text-on-primary', 'shadow-xs');
+        currentRole = pill.getAttribute('data-role');
+        filterCards();
+      });
+    });
+
+    // Status selection
+    statusBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        statusBtns.forEach(b => {
+          b.classList.remove('bg-surface-container-lowest', 'text-on-surface', 'shadow-xs');
+          b.classList.add('text-on-surface-variant');
+        });
+        btn.classList.add('bg-surface-container-lowest', 'text-on-surface', 'shadow-xs');
+        btn.classList.remove('text-on-surface-variant');
+        currentStatus = btn.getAttribute('data-status');
+        filterCards();
+      });
+    });
+
+    // Search bar listener
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value.trim().toLowerCase();
+      filterCards();
+    });
+
+    // Reset button
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        searchQuery = '';
+        currentRole = 'all';
+        currentStatus = 'all';
+
+        // reset status buttons
+        statusBtns.forEach((b, i) => {
+          if (i === 0) {
+            b.classList.add('bg-surface-container-lowest', 'text-on-surface', 'shadow-xs');
+            b.classList.remove('text-on-surface-variant');
+          } else {
+            b.classList.remove('bg-surface-container-lowest', 'text-on-surface', 'shadow-xs');
+            b.classList.add('text-on-surface-variant');
+          }
+        });
+
+        // reset role pills
+        rolePills.forEach((p, i) => {
+          if (i === 0) {
+            p.classList.add('bg-primary', 'text-on-primary', 'shadow-xs');
+            p.classList.remove('bg-surface-container-lowest', 'text-on-surface-variant');
+          } else {
+            p.classList.remove('bg-primary', 'text-on-primary', 'shadow-xs');
+            p.classList.add('bg-surface-container-lowest', 'text-on-surface-variant');
+          }
+        });
+
+        filterCards();
+      });
+    }
+  })();
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-2px_12px_rgba(0,0,0,0.03)]" data-active-classes="text-primary font-semibold"><div class="flex justify-around items-center h-16 px-1"><a class="flex-1 flex flex-col items-center justify-center h-12 text-on-surface-variant hover:text-on-surface transition-colors" data-path="enquiries" href="#"><span class="material-symbols-outlined text-[22px]">mark_email_unread</span><span class="font-label-sm text-label-sm mt-0.5">Enquiries</span></a><a class="flex-1 flex flex-col items-center justify-center h-12 text-on-surface-variant hover:text-on-surface transition-colors" data-path="bookings" href="#"><span class="material-symbols-outlined text-[22px]">book_online</span><span class="font-label-sm text-label-sm mt-0.5">Bookings</span></a><a class="flex-1 flex flex-col items-center justify-center h-12 text-on-surface-variant hover:text-on-surface transition-colors" data-path="schedule" href="#"><span class="material-symbols-outlined text-[22px]">calendar_today</span><span class="font-label-sm text-label-sm mt-0.5">Schedule</span></a><a aria-current="page" class="flex-1 flex flex-col items-center justify-center h-12 transition-colors text-primary font-semibold" data-path="crew-directory" href="#"><span class="material-symbols-outlined text-[22px]">groups</span><span class="font-label-sm text-label-sm mt-0.5">Crew</span></a><a class="flex-1 flex flex-col items-center justify-center h-12 text-on-surface-variant hover:text-on-surface transition-colors" data-path="more-menu" href="#"><span class="material-symbols-outlined text-[22px]">grid_view</span><span class="font-label-sm text-label-sm mt-0.5">More</span></a></div></nav></body></html>

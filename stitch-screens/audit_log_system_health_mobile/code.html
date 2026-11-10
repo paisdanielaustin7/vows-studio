@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-tertiary": "#ffffff", "surface-dim": "#d6dcd5", "on-tertiary-container": "#282f2a", "tertiary": "#5a605b", "on-tertiary-fixed-variant": "#424843", "inverse-surface": "#2c322e", "surface-container-low": "#eff5ef", "error-container": "#ffdad6", "primary": "#4c6452", "surface": "#f5fbf4", "on-primary": "#ffffff", "tertiary-fixed": "#dee4dd", "on-secondary-container": "#516a57", "on-primary-fixed-variant": "#354c3b", "on-primary-fixed": "#092012", "surface-container": "#eaefe9", "surface-bright": "#f5fbf4", "secondary-fixed": "#ceead2", "inverse-primary": "#b3cdb7", "on-primary-container": "#1c3223", "secondary-container": "#ceead2", "tertiary-container": "#909690", "surface-container-lowest": "#ffffff", "secondary-fixed-dim": "#b2cdb6", "outline-variant": "#c3c8c1", "on-surface-variant": "#424843", "tertiary-fixed-dim": "#c2c8c2", "primary-container": "#829b87", "outline": "#737972", "on-tertiary-fixed": "#171d19", "secondary": "#4b6451", "error": "#ba1a1a", "surface-container-highest": "#dee4de", "inverse-on-surface": "#ecf2ec", "surface-variant": "#dee4de", "on-error": "#ffffff", "on-background": "#171d19", "surface-tint": "#4c6452", "on-error-container": "#93000a", "primary-fixed-dim": "#b3cdb7", "background": "#f5fbf4", "surface-container-high": "#e4eae3", "on-surface": "#171d19", "primary-fixed": "#cfe9d3", "on-secondary-fixed": "#082011", "on-secondary": "#ffffff", "on-secondary-fixed-variant": "#344c3b" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-xl": "2.5rem", "gutter-mobile": "1rem", "gutter": "1.5rem", "margin-mobile": "1.25rem", "margin": "3rem", "space-sm": "0.5rem", "space-lg": "1.5rem", "space-xs": "0.25rem", "space-md": "1rem" }, "fontFamily": { "body-sm": ["Inter"], "label-md": ["Inter"], "display-mobile": ["Inter"], "headline-md": ["Inter"], "headline-lg-mobile": ["Inter"], "label-sm": ["Inter"], "headline-lg": ["Inter"], "display": ["Inter"], "body-md": ["Inter"], "label-lg": ["Inter"], "body-lg": ["Inter"], "headline-sm": ["Inter"] }, "fontSize": { "body-sm": ["0.8125rem", { "lineHeight": "1.25rem", "fontWeight": "400" }], "label-md": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.02em", "fontWeight": "500" }], "display-mobile": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600" }], "headline-md": ["1.375rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.015em", "fontWeight": "600" }], "headline-lg-mobile": ["1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.015em", "fontWeight": "600" }], "label-sm": ["0.6875rem", { "lineHeight": "0.875rem", "letterSpacing": "0.04em", "fontWeight": "600" }], "headline-lg": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600" }], "display": ["2.75rem", { "lineHeight": "3.25rem", "letterSpacing": "-0.03em", "fontWeight": "600" }], "body-md": ["0.875rem", { "lineHeight": "1.5rem", "fontWeight": "400" }], "label-lg": ["0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "500" }], "body-lg": ["1rem", { "lineHeight": "1.625rem", "fontWeight": "400" }], "headline-sm": ["1.125rem", { "lineHeight": "1.5rem", "letterSpacing": "-0.01em", "fontWeight": "500" }] } } } };</script><style>@layer base { html, body { width: 100%; margin: 0; padding: 0; } .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); } .pt-safe { padding-top: env(safe-area-inset-top, 0px); } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-background font-body-md text-on-surface antialiased flex flex-col min-h-screen selection:bg-secondary-container selection:text-on-secondary-container"><header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl pt-safe shadow-[0_1px_8px_rgba(0,0,0,0.03)]"><div class="h-16 px-margin-mobile flex items-center justify-between gap-space-sm"><div class="flex items-center min-w-0 flex-1 pr-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-tertiary select-none mr-1.5">VOWS /</span><h1 class="font-headline-sm text-headline-sm text-on-surface truncate tracking-tight">Admin And More</h1></div><div class="flex items-center gap-1 shrink-0"><button aria-label="Search" class="w-11 h-11 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container transition-colors" type="button"><span class="material-symbols-outlined text-[22px]">search</span></button><button aria-label="Notifications" class="w-11 h-11 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container transition-colors relative" type="button"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-2.5 right-2.5 w-1.5 h-1.5 rounded-full bg-primary"></span></button><div class="ml-1"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center ring-2 ring-surface"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></div></header><main class="flex flex-col relative w-full pt-16 pb-20 bg-background flex-1 px-margin-mobile"><div class="flex flex-col w-full pb-8">
+<!-- Segmented Control Bar -->
+<section class="w-full pt-1 pb-4">
+<div class="p-1 rounded-xl bg-surface-container flex items-center justify-between text-center select-none shadow-sm">
+<button class="flex-1 py-2 px-1 text-center rounded-lg text-tertiary font-label-md text-label-md transition-colors hover:text-on-surface" type="button">
+        Users
+      </button>
+<button class="flex-1 py-2 px-1 text-center rounded-lg bg-surface-container-lowest text-on-surface font-label-md text-label-md shadow-sm transition-all flex items-center justify-center gap-1.5" type="button">
+<span class="w-1.5 h-1.5 rounded-full bg-primary inline-block"></span>
+        Audit Log
+      </button>
+<button class="flex-1 py-2 px-1 text-center rounded-lg text-tertiary font-label-md text-label-md transition-colors hover:text-on-surface" type="button">
+        Health
+      </button>
+</div>
+</section>
+<!-- Filter Ribbon (Horizontal Scrollable) -->
+<section class="w-full mb-4">
+<div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
+<button class="flex items-center gap-1.5 px-3 py-2 bg-surface-container-lowest rounded-full shadow-sm shrink-0 min-h-[44px] active:scale-95 transition-transform text-on-surface" type="button">
+<span class="material-symbols-outlined text-[18px] text-tertiary">person</span>
+<span class="font-label-md text-label-md">All Users</span>
+<span class="material-symbols-outlined text-[16px] text-tertiary">arrow_drop_down</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-2 bg-secondary-container text-on-secondary-container rounded-full shadow-sm shrink-0 min-h-[44px] active:scale-95 transition-transform" type="button">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="font-label-md text-label-md">Action: All (3)</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-2 bg-surface-container-lowest rounded-full shadow-sm shrink-0 min-h-[44px] active:scale-95 transition-transform text-on-surface" type="button">
+<span class="material-symbols-outlined text-[18px] text-tertiary">calendar_month</span>
+<span class="font-label-md text-label-md">Oct 2025</span>
+<span class="material-symbols-outlined text-[16px] text-tertiary">expand_more</span>
+</button>
+<button aria-label="Reset filters" class="w-11 h-11 flex items-center justify-center bg-surface-container-lowest rounded-full shadow-sm shrink-0 active:scale-95 transition-transform text-tertiary" type="button">
+<span class="material-symbols-outlined text-[20px]">filter_list_off</span>
+</button>
+</div>
+</section>
+<!-- Section Header -->
+<div class="flex items-center justify-between mb-3 px-1">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-on-surface">Recent Stream</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-surface-container text-tertiary">Live Sync</span>
+</div>
+<span class="font-label-sm text-label-sm text-tertiary">Showing 24 events</span>
+</div>
+<!-- Audit Stream Cards -->
+<div class="flex flex-col gap-3 mb-6">
+<!-- Card 1: Expandable Diff -->
+<article class="bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col gap-3">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-center gap-2 min-w-0">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-label-sm text-label-sm font-semibold text-primary">AUD-2025-99824</span>
+<span class="text-tertiary font-label-sm text-label-sm">•</span>
+<span class="font-label-sm text-label-sm text-tertiary truncate">Reuben Serrao</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface truncate">RATE_REVISION on <span class="font-medium">SRV-CIN-01</span></p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-tertiary shrink-0">14:32</span>
+</div>
+<!-- Pill Row -->
+<div class="flex flex-wrap items-center gap-1.5">
+<span class="px-2 py-0.5 rounded-md bg-surface-container text-on-surface-variant font-label-sm text-label-sm">Cinema Package Tier</span>
+<span class="px-2 py-0.5 rounded-md bg-secondary-container text-on-secondary-container font-label-sm text-label-sm">Catalogue Update</span>
+</div>
+<!-- Collapsible JSON Diff -->
+<div class="rounded-lg bg-surface-container-low overflow-hidden">
+<button class="w-full flex items-center justify-between px-3 py-2.5 text-left text-on-surface-variant hover:bg-surface-container transition-colors min-h-[44px]" id="toggle-diff-btn" type="button">
+<span class="font-label-md text-label-md flex items-center gap-1.5 text-tertiary">
+<span class="material-symbols-outlined text-[18px]">data_object</span>
+            Payload Diff (3 fields)
+          </span>
+<div class="flex items-center gap-1">
+<span class="font-label-sm text-label-sm text-tertiary" id="diff-status-label">Collapse</span>
+<span class="material-symbols-outlined text-[18px] transition-transform rotate-180" id="diff-icon">expand_more</span>
+</div>
+</button>
+<div class="px-3 pb-3 pt-1 space-y-1 font-mono text-[11px] leading-relaxed transition-all" id="diff-panel">
+<div class="flex items-start gap-2 p-1.5 rounded bg-error-container/40 text-on-error-container">
+<span class="font-bold select-none text-error">-</span>
+<code class="break-all font-body-sm text-body-sm leading-tight text-on-error-container font-mono">base_rate_inr: 125,000</code>
+</div>
+<div class="flex items-start gap-2 p-1.5 rounded bg-secondary-container/60 text-on-secondary-container">
+<span class="font-bold select-none text-primary">+</span>
+<code class="break-all font-body-sm text-body-sm leading-tight text-on-secondary-container font-mono">base_rate_inr: 140,000</code>
+</div>
+<div class="flex items-start gap-2 p-1.5 rounded bg-secondary-container/60 text-on-secondary-container">
+<span class="font-bold select-none text-primary">+</span>
+<code class="break-all font-body-sm text-body-sm leading-tight text-on-secondary-container font-mono">rationale: 'Added Cooke Cine Prime kit'</code>
+</div>
+</div>
+</div>
+</article>
+<!-- Card 2: Security Alert -->
+<article class="bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col gap-3">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-center gap-2 min-w-0">
+<div class="w-8 h-8 rounded-full bg-error-container/60 flex items-center justify-center text-error shrink-0">
+<span class="material-symbols-outlined text-[18px]">lock_reset</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-label-sm text-label-sm font-semibold text-error">AUD-2025-99818</span>
+<span class="text-tertiary font-label-sm text-label-sm">•</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-error-container text-on-error-container font-medium">Security Alert</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface truncate">ACCOUNT_LOCKED • Melvin Dias</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-tertiary shrink-0">11:05</span>
+</div>
+<div class="p-3 rounded-lg bg-surface-container-low flex flex-col gap-1 text-on-surface-variant">
+<div class="flex items-center gap-1.5 text-error">
+<span class="material-symbols-outlined text-[16px]">warning</span>
+<span class="font-label-md text-label-md font-semibold">5 failed auth handshakes detected</span>
+</div>
+<p class="font-body-sm text-body-sm text-tertiary">Origin IP: 104.28.214.92 (Bandra Studio Hub / Dedicated Fiber)</p>
+</div>
+<!-- Quick Action CTA -->
+<div class="flex items-center gap-2 pt-0.5">
+<button class="flex-1 min-h-[44px] px-4 py-2.5 rounded-lg bg-primary text-on-primary font-label-lg text-label-lg font-medium flex items-center justify-center gap-2 active:bg-on-primary-fixed-variant transition-colors shadow-sm" id="unlock-btn" type="button">
+<span class="material-symbols-outlined text-[18px]">lock_open</span>
+<span>Unlock Account</span>
+</button>
+<button aria-label="Incident details" class="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg bg-surface-container text-on-surface-variant hover:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">more_horiz</span>
+</button>
+</div>
+</article>
+</div>
+<!-- System Health & Storage Mobile Card Section -->
+<div class="flex items-center justify-between mb-3 px-1">
+<span class="font-headline-sm text-headline-sm text-on-surface">System Health &amp; Storage</span>
+<span class="font-label-sm text-label-sm text-primary font-medium">Node: BOM-01</span>
+</div>
+<section class="bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col gap-4 mb-4">
+<!-- Overall Status Header -->
+<div class="flex items-center justify-between p-3 rounded-xl bg-surface-container-low">
+<div class="flex items-center gap-2.5 min-w-0">
+<span class="relative flex h-3 w-3 shrink-0">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
+</span>
+<div class="min-w-0">
+<p class="font-label-lg text-label-lg text-on-surface font-semibold truncate">All Systems Healthy</p>
+<p class="font-label-sm text-label-sm text-tertiary">SLA 99.98% • Past 30 days</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary text-[22px]">verified</span>
+</div>
+<!-- Live Telemetry Badges (Wrap Grid) -->
+<div class="grid grid-cols-3 gap-2">
+<div class="p-2.5 rounded-lg bg-surface-container flex flex-col gap-0.5">
+<div class="flex items-center gap-1 text-tertiary">
+<span class="material-symbols-outlined text-[14px]">database</span>
+<span class="font-label-sm text-label-sm">DB Latency</span>
+</div>
+<p class="font-headline-sm text-headline-sm text-on-surface">8.4ms</p>
+<span class="font-label-sm text-label-sm text-primary">Normal</span>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container flex flex-col gap-0.5">
+<div class="flex items-center gap-1 text-tertiary">
+<span class="material-symbols-outlined text-[14px]">forward_to_inbox</span>
+<span class="font-label-sm text-label-sm">Gmail Relay</span>
+</div>
+<p class="font-headline-sm text-headline-sm text-on-surface">Online</p>
+<span class="font-label-sm text-label-sm text-primary">Zero drops</span>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container flex flex-col gap-0.5">
+<div class="flex items-center gap-1 text-tertiary">
+<span class="material-symbols-outlined text-[14px]">speed</span>
+<span class="font-label-sm text-label-sm">CDN Cache</span>
+</div>
+<p class="font-headline-sm text-headline-sm text-on-surface">94.2%</p>
+<span class="font-label-sm text-label-sm text-primary">Edge hit</span>
+</div>
+</div>
+<!-- Storage Utilization -->
+<div class="flex flex-col gap-2 pt-1">
+<div class="flex items-baseline justify-between">
+<div>
+<span class="font-label-md text-label-md text-tertiary">Primary RAW &amp; Stills Vault</span>
+<p class="font-headline-md text-headline-md text-on-surface">4.8 TB <span class="font-body-md text-body-md text-tertiary">/ 10 TB (48%)</span></p>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-1 rounded bg-secondary-container text-on-secondary-container">5.2 TB Free</span>
+</div>
+<!-- Segmented Multi-tier Bar -->
+<div class="w-full h-3 rounded-full bg-surface-container overflow-hidden flex">
+<div class="h-full bg-primary" style="width: 18%;" title="Hot SSD: 1.8 TB"></div>
+<div class="h-full bg-primary-container" style="width: 24%;" title="Warm RAID-10: 2.4 TB"></div>
+<div class="h-full bg-tertiary-container" style="width: 6%;" title="System &amp; Indexes: 0.6 TB"></div>
+</div>
+<!-- Storage Legend Details -->
+<div class="flex items-center justify-between text-tertiary pt-1">
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-primary inline-block"></span>
+<span class="font-label-sm text-label-sm text-on-surface">Hot SSD (1.8 TB)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container inline-block"></span>
+<span class="font-label-sm text-label-sm text-on-surface">Warm RAID-10 (2.4 TB)</span>
+</div>
+</div>
+</div>
+<!-- Maintenance Trigger Buttons -->
+<div class="grid grid-cols-2 gap-2 pt-1">
+<button class="min-h-[44px] px-3 py-2.5 rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high transition-all flex items-center justify-center gap-1.5 text-center active:scale-[0.98]" id="prune-btn" type="button">
+<span class="material-symbols-outlined text-[18px] text-tertiary">cleaning_services</span>
+<span class="font-label-md text-label-md">Prune Proxies</span>
+</button>
+<button class="min-h-[44px] px-3 py-2.5 rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high transition-all flex items-center justify-center gap-1.5 text-center active:scale-[0.98]" id="integrity-btn" type="button">
+<span class="material-symbols-outlined text-[18px] text-tertiary">security_update_good</span>
+<span class="font-label-md text-label-md">Integrity Check</span>
+</button>
+</div>
+</section>
+<!-- Studio Snapshot Footer Badge -->
+<div class="flex items-center justify-center gap-2 py-2 text-tertiary">
+<span class="material-symbols-outlined text-[16px]">sync</span>
+<span class="font-label-sm text-label-sm">Auditing engine running on edge replica #3</span>
+</div>
+</div>
+<script>
+  // Simple micro-interactions for Mobile
+  const toggleBtn = document.getElementById('toggle-diff-btn');
+  const diffPanel = document.getElementById('diff-panel');
+  const diffIcon = document.getElementById('diff-icon');
+  const diffStatusLabel = document.getElementById('diff-status-label');
+
+  if (toggleBtn && diffPanel) {
+    let isOpen = true;
+    toggleBtn.addEventListener('click', () => {
+      isOpen = !isOpen;
+      if (isOpen) {
+        diffPanel.style.display = 'block';
+        diffIcon.style.transform = 'rotate(180deg)';
+        diffStatusLabel.textContent = 'Collapse';
+      } else {
+        diffPanel.style.display = 'none';
+        diffIcon.style.transform = 'rotate(0deg)';
+        diffStatusLabel.textContent = 'Expand';
+      }
+    });
+  }
+
+  const unlockBtn = document.getElementById('unlock-btn');
+  if (unlockBtn) {
+    unlockBtn.addEventListener('click', () => {
+      unlockBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">check</span><span>Unlocked</span>';
+      unlockBtn.classList.remove('bg-primary');
+      unlockBtn.classList.add('bg-secondary-container', 'text-on-secondary-container');
+    });
+  }
+
+  const pruneBtn = document.getElementById('prune-btn');
+  if (pruneBtn) {
+    pruneBtn.addEventListener('click', () => {
+      const originalText = pruneBtn.innerHTML;
+      pruneBtn.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">refresh</span><span>Pruning...</span>';
+      setTimeout(() => {
+        pruneBtn.innerHTML = '<span class="material-symbols-outlined text-[18px] text-primary">done</span><span>120 GB Freed</span>';
+      }, 1200);
+    });
+  }
+
+  const integrityBtn = document.getElementById('integrity-btn');
+  if (integrityBtn) {
+    integrityBtn.addEventListener('click', () => {
+      integrityBtn.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-pulse">shield</span><span>Verifying...</span>';
+      setTimeout(() => {
+        integrityBtn.innerHTML = '<span class="material-symbols-outlined text-[18px] text-primary">check_circle</span><span>Passed 100%</span>';
+      }, 1400);
+    });
+  }
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-2px_12px_rgba(0,0,0,0.03)]" data-active-classes="text-primary font-semibold"><div class="flex items-center justify-around h-16 px-space-xs"><a class="flex flex-col items-center justify-center min-w-[56px] h-12 text-on-surface-variant hover:text-on-surface transition-colors" data-path="bookings" href="#"><span class="material-symbols-outlined text-[22px]">calendar_today</span><span class="font-label-sm text-label-sm mt-0.5">Bookings</span></a><a class="flex flex-col items-center justify-center min-w-[56px] h-12 text-on-surface-variant hover:text-on-surface transition-colors" data-path="enquiries" href="#"><span class="material-symbols-outlined text-[22px]">mail</span><span class="font-label-sm text-label-sm mt-0.5">Enquiries</span></a><a class="flex flex-col items-center justify-center min-w-[56px] h-12 text-on-surface-variant hover:text-on-surface transition-colors" data-path="catalogue" href="#"><span class="material-symbols-outlined text-[22px]">photo_library</span><span class="font-label-sm text-label-sm mt-0.5">Catalogue</span></a><a class="flex flex-col items-center justify-center min-w-[56px] h-12 text-on-surface-variant hover:text-on-surface transition-colors" data-path="settings" href="#"><span class="material-symbols-outlined text-[22px]">tune</span><span class="font-label-sm text-label-sm mt-0.5">Settings</span></a><a aria-current="page" class="flex flex-col items-center justify-center min-w-[56px] h-12 transition-colors text-primary font-semibold" data-path="admin-and-more" href="#"><span class="material-symbols-outlined text-[22px]">grid_view</span><span class="font-label-sm text-label-sm mt-0.5">Admin</span></a></div></nav></body></html>

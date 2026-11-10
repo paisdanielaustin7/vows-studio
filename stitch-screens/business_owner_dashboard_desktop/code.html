@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "secondary-container": "#ceead2",
+        "on-primary-fixed": "#092012",
+        "on-error-container": "#93000a",
+        "on-tertiary-fixed-variant": "#424843",
+        "on-secondary": "#ffffff",
+        "error-container": "#ffdad6",
+        "secondary-fixed": "#ceead2",
+        "on-primary-container": "#1c3223",
+        "error": "#ba1a1a",
+        "surface-container-low": "#eff5ef",
+        "on-primary": "#ffffff",
+        "on-surface-variant": "#424843",
+        "secondary-fixed-dim": "#b2cdb6",
+        "outline-variant": "#c3c8c1",
+        "surface-container-lowest": "#ffffff",
+        "tertiary-fixed": "#dee4dd",
+        "secondary": "#4b6451",
+        "inverse-surface": "#2c322e",
+        "surface-variant": "#dee4de",
+        "on-background": "#171d19",
+        "surface-container-high": "#e4eae3",
+        "tertiary-container": "#909690",
+        "on-secondary-fixed-variant": "#344c3b",
+        "surface": "#f5fbf4",
+        "tertiary": "#5a605b",
+        "surface-dim": "#d6dcd5",
+        "tertiary-fixed-dim": "#c2c8c2",
+        "primary-container": "#829b87",
+        "on-secondary-fixed": "#082011",
+        "surface-tint": "#4c6452",
+        "on-secondary-container": "#516a57",
+        "on-surface": "#171d19",
+        "on-error": "#ffffff",
+        "background": "#f5fbf4",
+        "on-tertiary-container": "#282f2a",
+        "on-tertiary": "#ffffff",
+        "on-tertiary-fixed": "#171d19",
+        "surface-bright": "#f5fbf4",
+        "inverse-on-surface": "#ecf2ec",
+        "primary-fixed-dim": "#b3cdb7",
+        "inverse-primary": "#b3cdb7",
+        "surface-container": "#eaefe9",
+        "on-primary-fixed-variant": "#354c3b",
+        "outline": "#737972",
+        "primary": "#4c6452",
+        "primary-fixed": "#cfe9d3",
+        "surface-container-highest": "#dee4de"
+      },
+      "borderRadius": {
+        "DEFAULT": "0.25rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "full": "9999px"
+      },
+      "spacing": {
+        "space-xl": "2.5rem",
+        "gutter-mobile": "1rem",
+        "gutter": "1.5rem",
+        "space-xs": "0.25rem",
+        "space-sm": "0.5rem",
+        "margin": "3rem",
+        "space-lg": "1.5rem",
+        "space-md": "1rem",
+        "margin-mobile": "1.25rem"
+      },
+      "fontFamily": {
+        "body-md": ["Inter"],
+        "body-lg": ["Inter"],
+        "headline-lg": ["Inter"],
+        "display": ["Inter"],
+        "label-md": ["Inter"],
+        "headline-lg-mobile": ["Inter"],
+        "headline-md": ["Inter"],
+        "display-mobile": ["Inter"],
+        "label-sm": ["Inter"],
+        "body-sm": ["Inter"],
+        "label-lg": ["Inter"],
+        "headline-sm": ["Inter"]
+      },
+      "fontSize": {
+        "body-md": ["0.875rem", {"lineHeight": "1.5rem", "fontWeight": "400"}],
+        "body-lg": ["1rem", {"lineHeight": "1.625rem", "fontWeight": "400"}],
+        "headline-lg": ["2rem", {"lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+        "display": ["2.75rem", {"lineHeight": "3.25rem", "letterSpacing": "-0.03em", "fontWeight": "600"}],
+        "label-md": ["0.75rem", {"lineHeight": "1rem", "letterSpacing": "0.02em", "fontWeight": "500"}],
+        "headline-lg-mobile": ["1.5rem", {"lineHeight": "2rem", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+        "headline-md": ["1.375rem", {"lineHeight": "1.75rem", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+        "display-mobile": ["2rem", {"lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+        "label-sm": ["0.6875rem", {"lineHeight": "0.875rem", "letterSpacing": "0.04em", "fontWeight": "600"}],
+        "body-sm": ["0.8125rem", {"lineHeight": "1.25rem", "fontWeight": "400"}],
+        "label-lg": ["0.875rem", {"lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "500"}],
+        "headline-sm": ["1.125rem", {"lineHeight": "1.5rem", "letterSpacing": "-0.01em", "fontWeight": "500"}]
+      }
+    }
+  }
+}</script></head><body class="bg-background font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-screen w-72 bg-surface-container-low flex flex-col z-50 overflow-y-auto"><div class="h-16 px-space-lg flex items-center justify-between"><div class="flex flex-col"><span class="font-headline-sm text-headline-sm uppercase tracking-wider text-on-surface font-semibold">VOWS STUDIO</span><span class="font-label-sm text-label-sm tracking-widest text-outline uppercase">WEDDING CINEMATIC &amp; STILLS</span></div><button aria-label="Collapse sidebar" class="w-8 h-8 flex items-center justify-center rounded text-outline hover:text-on-surface hover:bg-surface-container transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">keyboard_double_arrow_left</span></button></div><div class="flex-1 px-space-md py-space-sm space-y-space-lg"><nav class="space-y-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-medium"><div class="px-space-sm py-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">Sales</span></div><div class="space-y-0.5"><a class="flex items-center justify-between px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="enquiries" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[18px]">inbox</span><span class="font-body-sm text-body-sm">Enquiries</span></div><span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-semibold">4</span></a><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="clients" href="#"><span class="material-symbols-outlined text-[18px]">contacts</span><span class="font-body-sm text-body-sm">Clients</span></a><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="quotations" href="#"><span class="material-symbols-outlined text-[18px]">request_quote</span><span class="font-body-sm text-body-sm">Quotations</span></a></div></nav><nav class="space-y-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-medium"><div class="px-space-sm py-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">Operations</span></div><div class="space-y-0.5"><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="bookings" href="#"><span class="material-symbols-outlined text-[18px]">event_available</span><span class="font-body-sm text-body-sm">Bookings</span></a><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="schedule" href="#"><span class="material-symbols-outlined text-[18px]">calendar_today</span><span class="font-body-sm text-body-sm">Schedule</span></a><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="crew" href="#"><span class="material-symbols-outlined text-[18px]">badge</span><span class="font-body-sm text-body-sm">Crew</span></a><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="delivery" href="#"><span class="material-symbols-outlined text-[18px]">local_shipping</span><span class="font-body-sm text-body-sm">Delivery</span></a></div></nav><nav class="space-y-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-medium"><div class="px-space-sm py-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">Finance</span></div><div class="space-y-0.5"><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="invoices" href="#"><span class="material-symbols-outlined text-[18px]">receipt_long</span><span class="font-body-sm text-body-sm">Invoices</span></a><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="payments" href="#"><span class="material-symbols-outlined text-[18px]">payments</span><span class="font-body-sm text-body-sm">Payments</span></a><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="ledger" href="#"><span class="material-symbols-outlined text-[18px]">menu_book</span><span class="font-body-sm text-body-sm">Ledger</span></a><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="expenses" href="#"><span class="material-symbols-outlined text-[18px]">trending_down</span><span class="font-body-sm text-body-sm">Expenses</span></a></div></nav><nav class="space-y-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-medium"><div class="px-space-sm py-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">Catalogue</span></div><div class="space-y-0.5"><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="services" href="#"><span class="material-symbols-outlined text-[18px]">photo_camera</span><span class="font-body-sm text-body-sm">Services</span></a><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="packages" href="#"><span class="material-symbols-outlined text-[18px]">inventory_2</span><span class="font-body-sm text-body-sm">Packages</span></a></div></nav><nav class="space-y-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-medium"><div class="px-space-sm py-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">Website</span></div><div class="space-y-0.5"><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="portfolio" href="#"><span class="material-symbols-outlined text-[18px]">gallery_thumbnail</span><span class="font-body-sm text-body-sm">Portfolio</span></a><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="reviews" href="#"><span class="material-symbols-outlined text-[18px]">rate_review</span><span class="font-body-sm text-body-sm">Reviews</span></a></div></nav><nav class="space-y-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-medium"><div class="px-space-sm py-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">System</span></div><div class="space-y-0.5"><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="settings" href="#"><span class="material-symbols-outlined text-[18px]">settings</span><span class="font-body-sm text-body-sm">Settings</span></a><a class="flex items-center gap-space-sm px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="audit-log" href="#"><span class="material-symbols-outlined text-[18px]">history</span><span class="font-body-sm text-body-sm">Audit log</span></a></div></nav></div><div class="p-space-md mt-auto"><div class="bg-surface-container-lowest p-space-sm rounded-lg flex flex-col gap-space-xs shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="min-w-0 flex-1"><div class="flex items-center justify-between gap-1"><span class="font-label-lg text-label-lg text-on-surface truncate font-medium">Reuben Serrao</span><span class="font-label-sm text-label-sm px-1.5 py-0.2 rounded bg-secondary-fixed text-on-secondary-fixed font-medium">Active</span></div><span class="font-label-sm text-label-sm text-outline truncate block">reuben@vowsstudio.com</span></div></div><div class="pt-space-xs flex items-center justify-between font-label-sm text-label-sm text-outline"><button class="hover:text-primary transition-colors" type="button">Switch role</button><button class="hover:text-error transition-colors" type="button">Sign out</button></div></div></div></aside><div class="pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-72 right-0 h-16 z-40 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 w-full px-space-lg flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-xs font-label-md text-label-md text-outline"><span class="text-on-surface-variant">Studio CRM</span><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="text-on-surface-variant">Operations</span><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="text-on-surface-variant">Bookings</span><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="text-on-surface font-semibold">2025 Calendar</span></div><div class="flex items-center gap-space-md"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-2.5 text-outline text-[18px]">search</span><input class="bg-surface-container-lowest font-body-sm text-body-sm text-on-surface placeholder-outline pl-8 pr-12 py-1.5 rounded-lg w-64 focus:outline-none focus:ring-1 focus:ring-primary shadow-[0_1px_4px_rgba(0,0,0,0.02)]" placeholder="Search studio, clients, events..." type="text"/><span class="absolute right-2 font-label-sm text-label-sm text-outline px-1 rounded bg-surface-container">⌘K</span></div><div class="flex items-center gap-space-xs"><button aria-label="Notifications" class="relative w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error"></span></button><button aria-label="Toggle appearance" class="w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">light_mode</span></button></div><div class="flex items-center pl-space-xs"><button class="flex items-center gap-space-xs hover:opacity-90 transition-opacity" type="button"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><span class="material-symbols-outlined text-outline text-[16px]">arrow_drop_down</span></button></div></div></div></header><div class="pt-16 flex flex-col flex-1"><div class="w-full flex flex-col"><div class="bg-secondary-fixed text-on-secondary-fixed px-space-lg py-2 flex items-center justify-between"><div class="flex items-center gap-space-sm font-label-md text-label-md"><span class="material-symbols-outlined text-[18px]">shield_person</span><span>Demo Mode Active — Currently viewing as Reuben Serrao (Owner). Changes are isolated in sandbox environment.</span></div><button class="font-label-sm text-label-sm font-semibold px- space-sm py-0.5 rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container transition-colors" type="button">Switch Role</button></div><div class="bg-error-container text-on-error-container px-space-lg py-2 flex items-center justify-between"><div class="flex items-center gap-space-sm font-label-md text-label-md"><span class="material-symbols-outlined text-[18px]">warning</span><span>Gmail integration needs reconnecting — Studio booking confirmations and client email synchronisation are currently paused.</span></div><div class="flex items-center gap-space-md"><button class="font-label-sm text-label-sm font-semibold px- space-sm py-0.5 rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container transition-colors" type="button">Reconnect Account</button><button aria-label="Dismiss alert" class="text-on-error-container hover:opacity-80 transition-opacity" type="button"><span class="material-symbols-outlined text-[18px]">close</span></button></div></div></div><main class="relative flex-1 bg-background px-space-lg py-space-xl max-w-[1280px] w-full mx-auto"><div class="flex flex-col w-full">
+<!-- Top Command & Filter Deck -->
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-lg pb-space-lg">
+<div class="space-y-space-xs">
+<div class="flex items-center gap-space-xs text-outline font-label-sm text-label-sm uppercase tracking-wider">
+<span>Executive Dashboard</span>
+<span>•</span>
+<span class="text-primary font-semibold">FY 2024–25 Active Slate</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Studio Overview &amp; Performance</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">
+        Strategic metrics, financial health, and active production slate for Reuben Serrao (Business Owner).
+      </p>
+</div>
+<!-- Controls & Quick Actions -->
+<div class="flex flex-col sm:flex-row items-start sm:items-center gap-space-md shrink-0">
+<!-- Time Horizon Filter Tabs -->
+<div class="flex items-center bg-surface-container-low p-1 rounded-lg">
+<button class="px-3 py-1.5 rounded font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" type="button">Today</button>
+<button class="px-3 py-1.5 rounded font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" type="button">This week</button>
+<button class="px-3 py-1.5 rounded font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" type="button">This month</button>
+<button class="px-3 py-1.5 rounded bg-surface-container-lowest text-primary font-semibold shadow-sm transition-all" type="button">This financial year</button>
+<button class="px-2.5 py-1.5 rounded font-label-md text-label-md text-outline hover:text-on-surface flex items-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">calendar_today</span>
+<span>Custom</span>
+</button>
+</div>
+<!-- Action Buttons -->
+<div class="flex items-center gap-space-xs">
+<button class="px-3.5 py-2 rounded-lg bg-surface-container-lowest text-on-surface hover:bg-surface-container transition-colors flex items-center gap-2 font-label-lg text-label-lg" type="button">
+<span class="material-symbols-outlined text-[18px] text-outline">file_download</span>
+<span>Export Financial Report</span>
+</button>
+<button class="px-3.5 py-2 rounded-lg bg-primary text-on-primary hover:bg-primary-container transition-colors flex items-center gap-2 font-label-lg text-label-lg font-medium shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span>New Wedding Booking</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Primary Metric Grid (6-Tile Bento Matrix) -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-space-md mb-space-xl">
+<!-- Tile 1: Revenue Collected -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.02)]">
+<div class="flex items-start justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-medium">Revenue Collected</span>
+<span class="w-6 h-6 rounded flex items-center justify-center bg-surface-container-low text-primary">
+<span class="material-symbols-outlined text-[15px]">payments</span>
+</span>
+</div>
+<div class="mt-space-md space-y-1">
+<div class="font-display-mobile text-display-mobile tracking-tight text-on-surface font-semibold">₹38.4L</div>
+<div class="flex items-center gap-1.5 pt-1">
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[12px]">arrow_upward</span>
+            +14.2%
+          </span>
+<span class="font-label-sm text-label-sm text-outline">vs last FY</span>
+</div>
+</div>
+</div>
+<!-- Tile 2: Revenue Expected -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.02)]">
+<div class="flex items-start justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-medium">Revenue Expected</span>
+<span class="w-6 h-6 rounded flex items-center justify-center bg-surface-container-low text-primary">
+<span class="material-symbols-outlined text-[15px]">trending_up</span>
+</span>
+</div>
+<div class="mt-space-md space-y-1">
+<div class="font-display-mobile text-display-mobile tracking-tight text-on-surface font-semibold">₹18.6L</div>
+<div class="flex items-center gap-1.5 pt-1">
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[12px]">arrow_upward</span>
+            +8.5%
+          </span>
+<span class="font-label-sm text-label-sm text-outline">pipeline forecast</span>
+</div>
+</div>
+</div>
+<!-- Tile 3: Confirmed Bookings -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.02)]">
+<div class="flex items-start justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-medium">Confirmed Bookings</span>
+<span class="w-6 h-6 rounded flex items-center justify-center bg-surface-container-low text-primary">
+<span class="material-symbols-outlined text-[15px]">event_seat</span>
+</span>
+</div>
+<div class="mt-space-md space-y-1">
+<div class="font-display-mobile text-display-mobile tracking-tight text-on-surface font-semibold">24</div>
+<div class="flex items-center gap-1.5 pt-1">
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[12px]">arrow_upward</span>
+            +20.0%
+          </span>
+<span class="font-label-sm text-label-sm text-outline">YoY growth</span>
+</div>
+</div>
+</div>
+<!-- Tile 4: Pending Enquiries -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.02)]">
+<div class="flex items-start justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-medium">Pending Enquiries</span>
+<span class="w-6 h-6 rounded flex items-center justify-center bg-surface-container-low text-primary">
+<span class="material-symbols-outlined text-[15px]">mark_email_unread</span>
+</span>
+</div>
+<div class="mt-space-md space-y-1">
+<div class="font-display-mobile text-display-mobile tracking-tight text-on-surface font-semibold">11</div>
+<div class="flex items-center gap-1.5 pt-1">
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[12px]">speed</span>
+            -5.2%
+          </span>
+<span class="font-label-sm text-label-sm text-outline">faster lead cycle</span>
+</div>
+</div>
+</div>
+<!-- Tile 5: Upcoming Events (30 Days) -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.02)]">
+<div class="flex items-start justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-medium">Next 30 Days</span>
+<span class="w-6 h-6 rounded flex items-center justify-center bg-surface-container-low text-primary">
+<span class="material-symbols-outlined text-[15px]">calendar_clock</span>
+</span>
+</div>
+<div class="mt-space-md space-y-1">
+<div class="font-display-mobile text-display-mobile tracking-tight text-on-surface font-semibold">7</div>
+<div class="flex items-center gap-1.5 pt-1">
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[12px]">north_east</span>
+            +16.7%
+          </span>
+<span class="font-label-sm text-label-sm text-outline">season peak</span>
+</div>
+</div>
+</div>
+<!-- Tile 6: Outstanding Invoices -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.02)]">
+<div class="flex items-start justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-medium">Overdue Balance</span>
+<span class="w-6 h-6 rounded flex items-center justify-center bg-error-container text-on-error-container">
+<span class="material-symbols-outlined text-[15px]">error_outline</span>
+</span>
+</div>
+<div class="mt-space-md space-y-1">
+<div class="font-display-mobile text-display-mobile tracking-tight text-on-surface font-semibold">₹4.85L</div>
+<div class="flex items-center gap-1.5 pt-1">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm font-semibold">
+            3 Invoices
+          </span>
+<span class="font-label-sm text-label-sm text-outline">-12.4% aging</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Editorial Visualizations Section (2-Column Grid) -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg mb-space-xl">
+<!-- Left: Grouped Bar Chart of Monthly Revenue (7 Cols) -->
+<div class="lg:col-span-7 bg-surface-container-lowest p-space-lg rounded-lg shadow-[0_1px_8px_rgba(0,0,0,0.02)] flex flex-col justify-between">
+<div>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-xs mb-space-md">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-outline">Fiscal Ledger Snapshot</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Collected vs. Invoiced Revenue</h2>
+</div>
+<div class="flex items-center gap-space-md font-label-sm text-label-sm">
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
+<span class="text-on-surface-variant">Collected (Dark Sage)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container"></span>
+<span class="text-on-surface-variant">Invoiced (Muted Sage)</span>
+</div>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-lg">
+          Values expressed in Lakhs (INR). Comparison traces billing run-rate against confirmed studio ledger deposits over past 6 calendar months.
+        </p>
+</div>
+<!-- Clean SVG Grouped Bar Chart -->
+<div class="w-full h-64 relative flex items-end">
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 640 220">
+<defs>
+<lineargradient id="sageDark" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#4C6452"></stop>
+<stop offset="100%" stop-color="#3D5041"></stop>
+</lineargradient>
+<lineargradient id="sageSoft" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#829B87"></stop>
+<stop offset="100%" stop-color="#9CB3A1"></stop>
+</lineargradient>
+</defs>
+<!-- Horizontal Soft Guides -->
+<line stroke="#E4EAE3" stroke-dasharray="3 3" stroke-width="1" x1="30" x2="630" y1="20" y2="20"></line>
+<text fill="#737972" font-family="Inter" font-size="10" font-weight="500" x="5" y="24">₹10L</text>
+<line stroke="#E4EAE3" stroke-dasharray="3 3" stroke-width="1" x1="30" x2="630" y1="70" y2="70"></line>
+<text fill="#737972" font-family="Inter" font-size="10" font-weight="500" x="10" y="74">₹7.5L</text>
+<line stroke="#E4EAE3" stroke-dasharray="3 3" stroke-width="1" x1="30" x2="630" y1="120" y2="120"></line>
+<text fill="#737972" font-family="Inter" font-size="10" font-weight="500" x="10" y="124">₹5.0L</text>
+<line stroke="#E4EAE3" stroke-dasharray="3 3" stroke-width="1" x1="30" x2="630" y1="170" y2="170"></line>
+<text fill="#737972" font-family="Inter" font-size="10" font-weight="500" x="10" y="174">₹2.5L</text>
+<line stroke="#C3C8C1" stroke-width="1" x1="30" x2="630" y1="195" y2="195"></line>
+<!-- Month 1: Oct (Collected: 4.8L, Invoiced: 6.2L) -->
+<g class="transition-all hover:opacity-90">
+<rect fill="url(#sageDark)" height="96" rx="2" width="22" x="58" y="99"></rect>
+<rect fill="url(#sageSoft)" height="124" rx="2" width="22" x="84" y="71"></rect>
+<text fill="#737972" font-family="Inter" font-size="11" text-anchor="middle" x="82" y="212">Oct '24</text>
+</g>
+<!-- Month 2: Nov (Collected: 6.5L, Invoiced: 7.8L) -->
+<g class="transition-all hover:opacity-90">
+<rect fill="url(#sageDark)" height="130" rx="2" width="22" x="156" y="65"></rect>
+<rect fill="url(#sageSoft)" height="156" rx="2" width="22" x="182" y="39"></rect>
+<text fill="#737972" font-family="Inter" font-size="11" text-anchor="middle" x="180" y="212">Nov '24</text>
+</g>
+<!-- Month 3: Dec (Collected: 9.1L, Invoiced: 9.4L) -->
+<g class="transition-all hover:opacity-90">
+<rect fill="url(#sageDark)" height="182" rx="2" width="22" x="254" y="13"></rect>
+<rect fill="url(#sageSoft)" height="188" rx="2" width="22" x="280" y="7"></rect>
+<text fill="#737972" font-family="Inter" font-size="11" text-anchor="middle" x="278" y="212">Dec '24</text>
+</g>
+<!-- Month 4: Jan (Collected: 7.2L, Invoiced: 8.5L) -->
+<g class="transition-all hover:opacity-90">
+<rect fill="url(#sageDark)" height="144" rx="2" width="22" x="352" y="51"></rect>
+<rect fill="url(#sageSoft)" height="170" rx="2" width="22" x="378" y="25"></rect>
+<text fill="#737972" font-family="Inter" font-size="11" text-anchor="middle" x="376" y="212">Jan '25</text>
+</g>
+<!-- Month 5: Feb (Collected: 5.6L, Invoiced: 6.0L) -->
+<g class="transition-all hover:opacity-90">
+<rect fill="url(#sageDark)" height="112" rx="2" width="22" x="450" y="83"></rect>
+<rect fill="url(#sageSoft)" height="120" rx="2" width="22" x="476" y="75"></rect>
+<text fill="#737972" font-family="Inter" font-size="11" text-anchor="middle" x="474" y="212">Feb '25</text>
+</g>
+<!-- Month 6: Mar (Collected: 5.2L, Invoiced: 8.9L pipeline) -->
+<g class="transition-all hover:opacity-90">
+<rect fill="url(#sageDark)" height="104" rx="2" width="22" x="548" y="91"></rect>
+<rect fill="url(#sageSoft)" height="178" rx="2" width="22" x="574" y="17"></rect>
+<text fill="#737972" font-family="Inter" font-size="11" text-anchor="middle" x="572" y="212">Mar '25</text>
+</g>
+</svg>
+</div>
+<div class="pt-space-md mt-space-sm flex items-center justify-between font-label-sm text-label-sm text-outline">
+<span>Quarterly target realization: <strong class="text-on-surface font-semibold">91.4%</strong></span>
+<span>Average transaction size: <strong class="text-on-surface font-semibold">₹1.60L</strong></span>
+</div>
+</div>
+<!-- Right: Donut Chart of Bookings by Event Type (5 Cols) -->
+<div class="lg:col-span-5 bg-surface-container-lowest p-space-lg rounded-lg shadow-[0_1px_8px_rgba(0,0,0,0.02)] flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-outline">Portfolio Composition</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-medium">2024–2025</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Bookings by Event Type</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+          Distribution across ceremony formats showing demand concentration for multi-day coverage.
+        </p>
+</div>
+<!-- Donut Visual + Center Count -->
+<div class="my-space-md flex flex-col sm:flex-row items-center justify-center gap-space-lg">
+<div class="relative w-44 h-44 flex items-center justify-center shrink-0">
+<svg class="w-full h-full -rotate-90" viewbox="0 0 160 160">
+<!-- Background base ring -->
+<circle cx="80" cy="80" fill="none" r="64" stroke="#EAEDE8" stroke-width="18"></circle>
+<!-- 1. Catholic Church Ceremonies: 45% (Circumference ~ 402) -> 180.9 dash -->
+<circle cx="80" cy="80" fill="none" r="64" stroke="#4C6452" stroke-dasharray="180.9 402" stroke-dashoffset="0" stroke-linecap="round" stroke-width="18"></circle>
+<!-- 2. Grand Receptions: 30% -> 120.6 dash -->
+<circle cx="80" cy="80" fill="none" r="64" stroke="#829B87" stroke-dasharray="120.6 402" stroke-dashoffset="-185" stroke-linecap="round" stroke-width="18"></circle>
+<!-- 3. Pre-Wedding Shoots: 15% -> 60.3 dash -->
+<circle cx="80" cy="80" fill="none" r="64" stroke="#B3CDB7" stroke-dasharray="60.3 402" stroke-dashoffset="-309" stroke-linecap="round" stroke-width="18"></circle>
+<!-- 4. Monograph / Engagements: 10% -> 40.2 dash -->
+<circle cx="80" cy="80" fill="none" r="64" stroke="#5A605B" stroke-dasharray="35 402" stroke-dashoffset="-372" stroke-linecap="round" stroke-width="18"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+<span class="font-headline-lg text-headline-lg font-semibold text-on-surface leading-none">24</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline mt-1 font-medium">Total Events</span>
+</div>
+</div>
+<!-- Metric Legend List -->
+<div class="flex-1 w-full space-y-2.5 font-label-sm text-label-sm">
+<div class="flex items-center justify-between p-1.5 rounded hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-primary shrink-0"></span>
+<span class="text-on-surface font-medium truncate">Catholic Ceremonies</span>
+</div>
+<div class="text-right shrink-0">
+<span class="font-semibold text-on-surface">11 events</span>
+<span class="text-outline ml-1.5">45%</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-1.5 rounded hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container shrink-0"></span>
+<span class="text-on-surface font-medium truncate">Grand Receptions</span>
+</div>
+<div class="text-right shrink-0">
+<span class="font-semibold text-on-surface">7 events</span>
+<span class="text-outline ml-1.5">30%</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-1.5 rounded hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-fixed-dim shrink-0"></span>
+<span class="text-on-surface font-medium truncate">Pre-Wedding Shoots</span>
+</div>
+<div class="text-right shrink-0">
+<span class="font-semibold text-on-surface">4 events</span>
+<span class="text-outline ml-1.5">15%</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-1.5 rounded hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary shrink-0"></span>
+<span class="text-on-surface font-medium truncate">Engagements / Mono</span>
+</div>
+<div class="text-right shrink-0">
+<span class="font-semibold text-on-surface">2 events</span>
+<span class="text-outline ml-1.5">10%</span>
+</div>
+</div>
+</div>
+</div>
+<div class="pt-space-xs font-label-sm text-label-sm text-outline flex items-center justify-between">
+<span>Highest Margin: Catholic Ceremonies (48.2%)</span>
+<button class="text-primary hover:underline" type="button">View segment report →</button>
+</div>
+</div>
+</section>
+<!-- Operational Triple-Deck Section -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg mb-space-lg">
+<!-- Col 1: Upcoming Events in 30 Days (5 Cols) -->
+<div class="lg:col-span-5 bg-surface-container-lowest p-space-lg rounded-lg shadow-[0_1px_8px_rgba(0,0,0,0.02)] flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-xs">
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-outline">Production Horizon</span>
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+</div>
+<a class="font-label-sm text-label-sm text-primary hover:underline" href="#">Full Schedule</a>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold mb-space-md">Upcoming Events (Next 30 Days)</h2>
+<!-- Event 1 -->
+<div class="p-space-md rounded-lg bg-surface-container-low mb-space-sm space-y-space-xs transition-colors hover:bg-surface-container">
+<div class="flex items-center justify-between">
+<h3 class="font-label-lg text-label-lg font-semibold text-on-surface">Alister &amp; Michelle</h3>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed font-semibold">Confirmed</span>
+</div>
+<div class="flex items-center gap-1.5 font-label-md text-label-md text-outline">
+<span class="material-symbols-outlined text-[15px]">event</span>
+<span>Feb 14–16, 2025</span>
+<span>•</span>
+<span class="material-symbols-outlined text-[15px]">place</span>
+<span class="truncate">St. Aloysius Chapel &amp; Ocean Pearl, Mangalore</span>
+</div>
+<div class="pt-1 flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-on-surface-variant">Full Cinema + 35mm Stills</span>
+<span class="text-primary font-medium">Lead: Reuben Serrao</span>
+</div>
+</div>
+<!-- Event 2 -->
+<div class="p-space-md rounded-lg bg-surface-container-low mb-space-sm space-y-space-xs transition-colors hover:bg-surface-container">
+<div class="flex items-center justify-between">
+<h3 class="font-label-lg text-label-lg font-semibold text-on-surface">Rohan &amp; Sneha</h3>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-primary-fixed text-on-primary-fixed font-semibold">Crew Assigned</span>
+</div>
+<div class="flex items-center gap-1.5 font-label-md text-label-md text-outline">
+<span class="material-symbols-outlined text-[15px]">event</span>
+<span>Mar 02–04, 2025</span>
+<span>•</span>
+<span class="material-symbols-outlined text-[15px]">place</span>
+<span class="truncate">Tamarind Tree, Bangalore</span>
+</div>
+<div class="pt-1 flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-on-surface-variant">3-Day Feature Film + Candid Stills</span>
+<span class="text-primary font-medium">Lead: Arjun V.</span>
+</div>
+</div>
+<!-- Event 3 -->
+<div class="p-space-md rounded-lg bg-surface-container-low space-y-space-xs transition-colors hover:bg-surface-container">
+<div class="flex items-center justify-between">
+<h3 class="font-label-lg text-label-lg font-semibold text-on-surface">Kevin &amp; Rachel</h3>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-semibold">In Prep</span>
+</div>
+<div class="flex items-center gap-1.5 font-label-md text-label-md text-outline">
+<span class="material-symbols-outlined text-[15px]">event</span>
+<span>Mar 18, 2025</span>
+<span>•</span>
+<span class="material-symbols-outlined text-[15px]">place</span>
+<span class="truncate">Milagres Cathedral, Kallianpur</span>
+</div>
+<div class="pt-1 flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-on-surface-variant">Candid Monograph + Highlights</span>
+<span class="text-primary font-medium">Lead: Reuben Serrao</span>
+</div>
+</div>
+</div>
+<div class="mt-space-md pt-space-xs flex items-center justify-between font-label-sm text-label-sm text-outline">
+<span>3 of 7 upcoming projects listed</span>
+<span class="text-on-surface font-medium">4 crew members mobilised</span>
+</div>
+</div>
+<!-- Col 2: Recent Enquiries Pipeline (4 Cols) -->
+<div class="lg:col-span-4 bg-surface-container-lowest p-space-lg rounded-lg shadow-[0_1px_8px_rgba(0,0,0,0.02)] flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-outline">Intake Stage</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-semibold">3 New</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold mb-space-md">Recent Enquiries</h2>
+<div class="space-y-space-sm">
+<!-- Enquiry 1 -->
+<div class="p-space-md rounded-lg bg-surface-container-low transition-colors hover:bg-surface-container">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">Derick &amp; Samantha</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.2 rounded bg-secondary-container text-on-secondary-container font-medium">New Enquiry</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Nov 2025 Wedding • Kodialbail, Mangalore</p>
+<div class="mt-2 flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-on-surface font-semibold">Budget: ₹3.5L</span>
+<span class="text-outline">Received 2h ago</span>
+</div>
+</div>
+<!-- Enquiry 2 -->
+<div class="p-space-md rounded-lg bg-surface-container-low transition-colors hover:bg-surface-container">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">Joshua &amp; Priya</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.2 rounded bg-surface-container text-on-surface-variant font-medium">Quote Sent</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Dec 2025 (2-Day) • Taj West End, Bangalore</p>
+<div class="mt-2 flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-on-surface font-semibold">Budget: ₹6.0L</span>
+<span class="text-outline">Received Yesterday</span>
+</div>
+</div>
+<!-- Enquiry 3 -->
+<div class="p-space-md rounded-lg bg-surface-container-low transition-colors hover:bg-surface-container">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">Neil &amp; Andrea</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.2 rounded bg-surface-container text-on-surface-variant font-medium">Consultation Set</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Jan 2026 Wedding • Country Inn, Manipal</p>
+<div class="mt-2 flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-on-surface font-semibold">Budget: ₹2.8L</span>
+<span class="text-outline">Received 2d ago</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-space-md pt-space-xs flex items-center justify-between font-label-sm text-label-sm text-outline">
+<span>Conversion rate this quarter: <strong class="text-on-surface">64%</strong></span>
+<a class="text-primary hover:underline" href="#">View Pipeline →</a>
+</div>
+</div>
+<!-- Col 3: Overdue Invoices & Operational Watch (3 Cols) -->
+<div class="lg:col-span-3 bg-surface-container-lowest p-space-lg rounded-lg shadow-[0_1px_8px_rgba(0,0,0,0.02)] flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-outline">Accounts Aging</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-error-container text-on-error-container font-semibold">₹4.85L Due</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold mb-space-md">Overdue Invoices</h2>
+<div class="space-y-space-sm">
+<!-- Overdue 1 -->
+<div class="p-space-sm rounded-lg bg-surface-container-low transition-colors hover:bg-surface-container">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md font-semibold text-on-surface">INV-2025-084</span>
+<span class="font-label-sm text-label-sm text-error font-semibold">15d overdue</span>
+</div>
+<div class="flex items-center justify-between my-1">
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Rohan &amp; Sneha</span>
+<span class="font-label-md text-label-md font-semibold text-on-surface">₹1,50,000</span>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="font-label-sm text-label-sm text-outline truncate">Pre-shoot advance</span>
+<button class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-surface-container-lowest text-primary hover:bg-primary hover:text-on-primary transition-colors font-medium" type="button">Send Reminder</button>
+</div>
+</div>
+<!-- Overdue 2 -->
+<div class="p-space-sm rounded-lg bg-surface-container-low transition-colors hover:bg-surface-container">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md font-semibold text-on-surface">INV-2025-072</span>
+<span class="font-label-sm text-label-sm text-error font-semibold">10d overdue</span>
+</div>
+<div class="flex items-center justify-between my-1">
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Kenneth &amp; Maria</span>
+<span class="font-label-md text-label-md font-semibold text-on-surface">₹85,000</span>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="font-label-sm text-label-sm text-outline truncate">Album delivery retainer</span>
+<button class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-surface-container-lowest text-primary hover:bg-primary hover:text-on-primary transition-colors font-medium" type="button">Follow Up</button>
+</div>
+</div>
+<!-- Overdue 3 -->
+<div class="p-space-sm rounded-lg bg-surface-container-low transition-colors hover:bg-surface-container">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md font-semibold text-on-surface">INV-2025-091</span>
+<span class="font-label-sm text-label-sm text-error font-semibold">4d overdue</span>
+</div>
+<div class="flex items-center justify-between my-1">
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Shawn &amp; Clarissa</span>
+<span class="font-label-md text-label-md font-semibold text-on-surface">₹2,50,000</span>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="font-label-sm text-label-sm text-outline truncate">Final cinema delivery</span>
+<button class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-surface-container-lowest text-primary hover:bg-primary hover:text-on-primary transition-colors font-medium" type="button">Send Reminder</button>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-space-md pt-space-xs font-label-sm text-label-sm text-outline flex items-center justify-between">
+<span>Payment Gateway: Razorpay Studio</span>
+<a class="text-primary hover:underline" href="#">Ledger →</a>
+</div>
+</div>
+</section>
+<!-- Alerts & Critical Operational Flags Panel (Full Width) -->
+<section class="bg-surface-container-lowest p-space-lg rounded-lg shadow-[0_1px_8px_rgba(0,0,0,0.02)] mb-space-md">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm mb-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="w-7 h-7 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[17px]">notifications_active</span>
+</span>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Operational Alerts &amp; Direct Actions</h2>
+<span class="font-label-sm text-label-sm text-outline">Real-time studio bottlenecks requiring owner or production lead attention</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-outline self-start md:self-auto">Synchronized 4 mins ago</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- Alert Item 1: Blocked Production -->
+<div class="p-space-md rounded-lg bg-surface-container-low flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-error text-[20px] shrink-0 mt-0.5">report_problem</span>
+<div class="min-w-0 flex-1">
+<div class="flex items-center justify-between gap-2">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">Blocked Delivery Stage</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.2 rounded bg-error-container text-on-error-container font-medium">2 Days Blocked</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+<strong>Kevin &amp; Rachel:</strong> Color grading stalled awaiting 48kHz audio stems mastering from Bombay Sound Lab.
+          </p>
+<div class="mt-space-sm flex items-center gap-space-sm font-label-sm text-label-sm">
+<button class="px-2.5 py-1 rounded bg-surface-container-lowest text-primary hover:bg-surface-container transition-colors font-medium" type="button">Contact Sound Lab</button>
+<button class="text-outline hover:text-on-surface transition-colors" type="button">Reassign Post Timeline</button>
+</div>
+</div>
+</div>
+<!-- Alert Item 2: Follow-ups Due Today -->
+<div class="p-space-md rounded-lg bg-surface-container-low flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0 mt-0.5">task_alt</span>
+<div class="min-w-0 flex-1">
+<div class="flex items-center justify-between gap-2">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">Owner Follow-ups Due Today</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.2 rounded bg-secondary-fixed text-on-secondary-fixed font-medium">2 Urgent</span>
+</div>
+<ul class="font-body-sm text-body-sm text-on-surface-variant mt-1 space-y-1">
+<li class="flex items-center justify-between">
+<span>• Send revised milestone contract to <strong>Derick &amp; Samantha</strong></span>
+<button class="font-label-sm text-label-sm text-primary hover:underline" type="button">Draft Now</button>
+</li>
+<li class="flex items-center justify-between">
+<span>• Verify DGCA drone clearance permit for <strong>Tamarind Tree venue</strong></span>
+<button class="font-label-sm text-label-sm text-primary hover:underline" type="button">Verify</button>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- Editorial Visual Proofing Footer Banner -->
+<section class="p-space-md rounded-lg bg-surface-container flex flex-col sm:flex-row items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<div class="w-12 h-12 rounded bg-surface-container-lowest flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[24px] text-primary">movie_filter</span>
+</div>
+<div>
+<h4 class="font-label-lg text-label-lg font-semibold text-on-surface">VOWS Studio Archival Master &amp; Cloud Stills Cache</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+          Storage utilization at 68.4% (8.2 TB of 12.0 TB). Synced across Mangalore and Bangalore NAS servers.
+        </p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm shrink-0">
+<span class="font-label-sm text-label-sm text-outline">Last incremental backup: 14:02 IST</span>
+<button class="px-3 py-1.5 rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md font-medium" type="button">Manage Storage</button>
+</div>
+</section>
+</div></main></div></div></body></html>

@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "secondary-container": "#ceead2",
+        "on-primary-fixed": "#092012",
+        "on-error-container": "#93000a",
+        "on-tertiary-fixed-variant": "#424843",
+        "on-secondary": "#ffffff",
+        "error-container": "#ffdad6",
+        "secondary-fixed": "#ceead2",
+        "on-primary-container": "#1c3223",
+        "error": "#ba1a1a",
+        "surface-container-low": "#eff5ef",
+        "on-primary": "#ffffff",
+        "on-surface-variant": "#424843",
+        "secondary-fixed-dim": "#b2cdb6",
+        "outline-variant": "#c3c8c1",
+        "surface-container-lowest": "#ffffff",
+        "tertiary-fixed": "#dee4dd",
+        "secondary": "#4b6451",
+        "inverse-surface": "#2c322e",
+        "surface-variant": "#dee4de",
+        "on-background": "#171d19",
+        "surface-container-high": "#e4eae3",
+        "tertiary-container": "#909690",
+        "on-secondary-fixed-variant": "#344c3b",
+        "surface": "#f5fbf4",
+        "tertiary": "#5a605b",
+        "surface-dim": "#d6dcd5",
+        "tertiary-fixed-dim": "#c2c8c2",
+        "primary-container": "#829b87",
+        "on-secondary-fixed": "#082011",
+        "surface-tint": "#4c6452",
+        "on-secondary-container": "#516a57",
+        "on-surface": "#171d19",
+        "on-error": "#ffffff",
+        "background": "#f5fbf4",
+        "on-tertiary-container": "#282f2a",
+        "on-tertiary": "#ffffff",
+        "on-tertiary-fixed": "#171d19",
+        "surface-bright": "#f5fbf4",
+        "inverse-on-surface": "#ecf2ec",
+        "primary-fixed-dim": "#b3cdb7",
+        "inverse-primary": "#b3cdb7",
+        "surface-container": "#eaefe9",
+        "on-primary-fixed-variant": "#354c3b",
+        "outline": "#737972",
+        "primary": "#4c6452",
+        "primary-fixed": "#cfe9d3",
+        "surface-container-highest": "#dee4de"
+      },
+      "borderRadius": {
+        "DEFAULT": "0.25rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "full": "9999px"
+      },
+      "spacing": {
+        "space-xl": "2.5rem",
+        "gutter-mobile": "1rem",
+        "gutter": "1.5rem",
+        "space-xs": "0.25rem",
+        "space-sm": "0.5rem",
+        "margin": "3rem",
+        "space-lg": "1.5rem",
+        "space-md": "1rem",
+        "margin-mobile": "1.25rem"
+      },
+      "fontFamily": {
+        "body-md": ["Inter"],
+        "body-lg": ["Inter"],
+        "headline-lg": ["Inter"],
+        "display": ["Inter"],
+        "label-md": ["Inter"],
+        "headline-lg-mobile": ["Inter"],
+        "headline-md": ["Inter"],
+        "display-mobile": ["Inter"],
+        "label-sm": ["Inter"],
+        "body-sm": ["Inter"],
+        "label-lg": ["Inter"],
+        "headline-sm": ["Inter"]
+      },
+      "fontSize": {
+        "body-md": ["0.875rem", {"lineHeight": "1.5rem", "fontWeight": "400"}],
+        "body-lg": ["1rem", {"lineHeight": "1.625rem", "fontWeight": "400"}],
+        "headline-lg": ["2rem", {"lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+        "display": ["2.75rem", {"lineHeight": "3.25rem", "letterSpacing": "-0.03em", "fontWeight": "600"}],
+        "label-md": ["0.75rem", {"lineHeight": "1rem", "letterSpacing": "0.02em", "fontWeight": "500"}],
+        "headline-lg-mobile": ["1.5rem", {"lineHeight": "2rem", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+        "headline-md": ["1.375rem", {"lineHeight": "1.75rem", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+        "display-mobile": ["2rem", {"lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+        "label-sm": ["0.6875rem", {"lineHeight": "0.875rem", "letterSpacing": "0.04em", "fontWeight": "600"}],
+        "body-sm": ["0.8125rem", {"lineHeight": "1.25rem", "fontWeight": "400"}],
+        "label-lg": ["0.875rem", {"lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "500"}],
+        "headline-sm": ["1.125rem", {"lineHeight": "1.5rem", "letterSpacing": "-0.01em", "fontWeight": "500"}]
+      }
+    }
+  }
+}</script></head><body class="bg-background font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-screen w-72 bg-surface-container-low flex flex-col z-50 overflow-y-auto"><div class="h-16 px-space-lg flex items-center justify-between"><div class="flex flex-col"><span class="font-headline-sm text-headline-sm uppercase tracking-wider text-on-surface font-semibold">VOWS STUDIO</span><span class="font-label-sm text-label-sm tracking-widest text-outline uppercase">WEDDING CINEMATIC &amp; STILLS</span></div><button aria-label="Collapse sidebar" class="w-8 h-8 flex items-center justify-center rounded text-outline hover:text-on-surface hover:bg-surface-container transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">keyboard_double_arrow_left</span></button></div><div class="flex-1 px-space-md py-space-sm space-y-space-lg"><nav class="space-y-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-medium"><div class="px-space-sm py-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">Operations</span></div><div class="space-y-0.5"><a class="block px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="bookings" href="#">Bookings</a><a class="block px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="schedule" href="#">Schedule</a><a aria-current="page" class="block px-space-sm py-1.5 rounded transition-colors bg-secondary-container text-on-secondary-container font-medium" data-path="crew-directory" href="#">Crew Directory</a><a class="block px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="crew-profile" href="#">Crew Profile</a><a class="block px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="delivery" href="#">Delivery</a></div></nav><nav class="space-y-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-medium"><div class="px-space-sm py-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">Finance</span></div><div class="space-y-0.5"><a class="block px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="invoices" href="#">Invoices</a><a class="block px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="payments" href="#">Payments</a><a class="block px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="ledger" href="#">Ledger</a><a class="block px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="expenses" href="#">Expenses</a></div></nav><nav class="space-y-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-medium"><div class="px-space-sm py-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">Studio Tools</span></div><div class="space-y-0.5"><a class="block px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="services" href="#">Services</a><a class="block px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="packages" href="#">Packages</a><a class="block px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="portfolio" href="#">Portfolio</a><a class="block px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-body-sm text-body-sm" data-path="reviews" href="#">Reviews</a></div></nav></div><div class="p-space-md mt-auto"><div class="bg-surface-container-lowest p-space-sm rounded-lg flex flex-col gap-space-xs shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="min-w-0 flex-1"><div class="flex items-center justify-between gap-1"><span class="font-label-lg text-label-lg text-on-surface truncate font-medium">Reuben Serrao</span><span class="font-label-sm text-label-sm px-1.5 py-0.2 rounded bg-secondary-fixed text-on-secondary-fixed font-medium">Active</span></div><span class="font-label-sm text-label-sm text-outline truncate block">reuben@vowsstudio.com</span></div></div><div class="pt-space-xs flex items-center justify-between font-label-sm text-label-sm text-outline"><button class="hover:text-primary transition-colors" type="button">Switch role</button><button class="hover:text-error transition-colors" type="button">Sign out</button></div></div></div></aside><div class="pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-72 right-0 h-16 z-40 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 w-full px-space-lg flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-xs font-label-md text-label-md text-outline"><span class="text-on-surface-variant">Studio CRM</span><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="text-on-surface-variant">Operations</span><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="text-on-surface font-semibold">Crew</span></div><div class="flex items-center gap-space-md"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-2.5 text-outline text-[18px]">search</span><input class="bg-surface-container-lowest font-body-sm text-body-sm text-on-surface placeholder-outline pl-8 pr-12 py-1.5 rounded-lg w-64 focus:outline-none focus:ring-1 focus:ring-primary shadow-[0_1px_4px_rgba(0,0,0,0.02)]" placeholder="Search studio, clients, events..." type="text"/><span class="absolute right-2 font-label-sm text-label-sm text-outline px-1 rounded bg-surface-container">⌘K</span></div><div class="flex items-center gap-space-xs"><button aria-label="Notifications" class="relative w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error"></span></button><button aria-label="Toggle appearance" class="w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">light_mode</span></button></div><div class="flex items-center pl-space-xs"><button class="flex items-center gap-space-xs hover:opacity-90 transition-opacity" type="button"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><span class="material-symbols-outlined text-outline text-[16px]">arrow_drop_down</span></button></div></div></div></header><div class="pt-16 flex flex-col flex-1"><div class="w-full flex flex-col"><div class="bg-secondary-fixed text-on-secondary-fixed px-space-lg py-2 flex items-center justify-between"><div class="flex items-center gap-space-sm font-label-md text-label-md"><span class="material-symbols-outlined text-[18px]">shield_person</span><span>Demo Mode Active — Currently viewing as Reuben Serrao (Owner). Changes are isolated in sandbox environment.</span></div><button class="font-label-sm text-label-sm font-semibold px- space-sm py-0.5 rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container transition-colors" type="button">Switch Role</button></div><div class="bg-error-container text-on-error-container px-space-lg py-2 flex items-center justify-between"><div class="flex items-center gap-space-sm font-label-md text-label-md"><span class="material-symbols-outlined text-[18px]">warning</span><span>Gmail integration needs reconnecting — Studio booking confirmations and client email synchronisation are currently paused.</span></div><div class="flex items-center gap-space-md"><button class="font-label-sm text-label-sm font-semibold px- space-sm py-0.5 rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container transition-colors" type="button">Reconnect Account</button><button aria-label="Dismiss alert" class="text-on-error-container hover:opacity-80 transition-opacity" type="button"><span class="material-symbols-outlined text-[18px]">close</span></button></div></div></div><main class="relative flex-1 bg-background px-space-lg py-space-xl max-w-[1280px] w-full mx-auto"><div class="flex flex-col w-full">
+<!-- Architectural Hero & Title Bar -->
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-lg pb-space-lg border-b border-surface-container-high">
+<div class="space-y-space-xs max-w-2xl">
+<div class="flex items-center gap-space-xs text-label-sm font-label-sm uppercase tracking-widest text-outline">
+<span>Directory Index</span>
+<span>/</span>
+<span>Roster 2024–2025</span>
+</div>
+<h1 class="text-display font-display text-on-surface tracking-tight">Crew Directory &amp; Roster</h1>
+<p class="text-body-md font-body-md text-on-surface-variant max-w-xl">
+        Manage studio operators, cinematographers, stills masters, sound engineers, and equipment technicians across upcoming bridal productions.
+      </p>
+</div>
+<!-- Primary Quick Actions -->
+<div class="flex flex-wrap items-center gap-space-sm self-start lg:self-auto">
+<button class="inline-flex items-center gap-space-xs px-space-md py-2.5 rounded-lg bg-surface-container-lowest text-on-surface font-label-lg text-label-lg shadow-sm hover:bg-surface-container-low transition-colors duration-200" type="button">
+<span class="material-symbols-outlined text-[18px] text-outline">file_download</span>
+<span>Export Crew Roster (CSV)</span>
+</button>
+<button class="inline-flex items-center gap-space-xs px-space-md py-2.5 rounded-lg bg-primary text-on-primary font-label-lg text-label-lg shadow-sm hover:bg-primary-container hover:text-on-primary-container transition-all duration-200" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>Add Crew Member</span>
+</button>
+</div>
+</div>
+<!-- Operational Metrics & Production Capacity Strip -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-space-md py-space-lg">
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex items-center justify-between">
+<div>
+<p class="text-label-sm font-label-sm uppercase tracking-wider text-outline">Total Active Roster</p>
+<p class="text-headline-lg font-headline-lg text-on-surface mt-1">14 <span class="text-label-md font-label-md text-outline font-normal">Personnel</span></p>
+</div>
+<div class="w-10 h-10 rounded-lg bg-secondary-container text-on-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">groups</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex items-center justify-between">
+<div>
+<p class="text-label-sm font-label-sm uppercase tracking-wider text-outline">Available Now</p>
+<p class="text-headline-lg font-headline-lg text-primary mt-1">8 <span class="text-label-md font-label-md text-outline font-normal">Ready for Call</span></p>
+</div>
+<div class="w-10 h-10 rounded-lg bg-primary-fixed text-on-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">event_available</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex items-center justify-between">
+<div>
+<p class="text-label-sm font-label-sm uppercase tracking-wider text-outline">Assigned This Week</p>
+<p class="text-headline-lg font-headline-lg text-on-surface mt-1">5 <span class="text-label-md font-label-md text-outline font-normal">Shoots Active</span></p>
+</div>
+<div class="w-10 h-10 rounded-lg bg-surface-container text-on-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">videocam</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex items-center justify-between">
+<div>
+<p class="text-label-sm font-label-sm uppercase tracking-wider text-outline">Avg Client Rating</p>
+<p class="text-headline-lg font-headline-lg text-on-surface mt-1">4.96 <span class="text-label-md font-label-md text-outline font-normal">/ 5.0</span></p>
+</div>
+<div class="w-10 h-10 rounded-lg bg-tertiary-fixed text-on-tertiary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">hotel_class</span>
+</div>
+</div>
+</div>
+<!-- Filtration & Search Matrix -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm space-y-space-md mb-space-lg">
+<!-- Top Row: Search and View Mode -->
+<div class="flex flex-col md:flex-row gap-space-md items-center justify-between">
+<div class="relative w-full md:w-96">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[20px] text-outline">search</span>
+<input class="w-full bg-surface-container-low text-on-surface placeholder:text-outline font-body-sm text-body-sm pl-10 pr-4 py-2.5 rounded-lg focus:outline-none focus:bg-surface-container-lowest focus:ring-1 focus:ring-primary shadow-inner" placeholder="Search crew by name, skill, equipment..." type="text"/>
+</div>
+<!-- Segmented Status Filter -->
+<div class="flex items-center overflow-x-auto w-full md:w-auto p-1 bg-surface-container-low rounded-lg text-label-sm font-label-sm">
+<button class="px-space-sm py-1.5 rounded-md bg-surface-container-lowest text-on-surface font-medium shadow-sm whitespace-nowrap" type="button">
+          All Statuses
+        </button>
+<button class="px-space-sm py-1.5 rounded-md text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap flex items-center gap-1.5" type="button">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+          Available Now (8)
+        </button>
+<button class="px-space-sm py-1.5 rounded-md text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap flex items-center gap-1.5" type="button">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+          Booked This Week (5)
+        </button>
+<button class="px-space-sm py-1.5 rounded-md text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap flex items-center gap-1.5" type="button">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+          On Leave (1)
+        </button>
+</div>
+</div>
+<!-- Role Filter Pills -->
+<div class="flex items-center gap-space-xs overflow-x-auto pb-1 text-label-sm font-label-sm">
+<span class="text-outline uppercase text-[10px] tracking-wider pr-2 select-none">Discipline:</span>
+<button class="px-space-sm py-1 rounded-full bg-secondary-container text-on-secondary-container font-semibold whitespace-nowrap" type="button">
+        All (14)
+      </button>
+<button class="px-space-sm py-1 rounded-full bg-surface-container-low text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors whitespace-nowrap" type="button">
+        Lead Cinematographer (3)
+      </button>
+<button class="px-space-sm py-1 rounded-full bg-surface-container-low text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors whitespace-nowrap" type="button">
+        2nd Cine / Gimbal (3)
+      </button>
+<button class="px-space-sm py-1 rounded-full bg-surface-container-low text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors whitespace-nowrap" type="button">
+        Stills Master / Analog (4)
+      </button>
+<button class="px-space-sm py-1 rounded-full bg-surface-container-low text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors whitespace-nowrap" type="button">
+        Drone Specialist (2)
+      </button>
+<button class="px-space-sm py-1 rounded-full bg-surface-container-low text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors whitespace-nowrap" type="button">
+        Audio Recordist (2)
+      </button>
+</div>
+</div>
+<!-- Editorial Crew Gallery Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-lg mb-space-xl">
+<!-- 1. Tara Rao (Featured Principal Stills Master) -->
+<article class="bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col justify-between overflow-hidden relative">
+<!-- Ambient Visual Header Banner -->
+<div class="h-28 relative overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover opacity-80" data-alt="Editorial close-up of a vintage Leica 35mm rangefinder camera resting on an aged linen production slate with soft warm morning light casting tranquil shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuiW7SIXDs6dQiA7A6W7nWR4RF51H_BFaVlTbJBkl_KXmpQMzXvC-e5bWkbheMZjTX-BmrlTjgzcO4xFQGcllY4M_VO50BvJ-wZzprE9GKc8N74HhWJdPzLfdS7UEl-jfwrqIPfxiD3di4mTy2h-uJekZtyQxWwsTfxnnm1wlAYmw3mJKU8X-ixULXXGezV27r-p_XDqhO__JKxQ7bUQ0ruE9VLrJehryD6YG3NnT7"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent"></div>
+<div class="absolute top-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed text-label-sm font-label-sm font-medium shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+<span>Available Now</span>
+</div>
+</div>
+<div class="p-space-lg pt-0 flex-1 flex flex-col justify-between">
+<div>
+<!-- Avatar Overlap -->
+<div class="flex items-end justify-between -mt-9 mb-space-sm">
+<div class="w-16 h-16 rounded-xl bg-surface-container-lowest p-1 shadow-sm">
+<div class="w-full h-full rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center font-headline-sm text-headline-sm font-semibold">
+                TR
+              </div>
+</div>
+<div class="text-right">
+<span class="text-label-sm font-label-sm text-outline uppercase tracking-wider block">Standard Rate</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">₹14,000 <span class="font-label-sm text-label-sm text-outline font-normal">/ day</span></span>
+</div>
+</div>
+<!-- Name & Role -->
+<div class="mb-space-md">
+<div class="flex items-center gap-2">
+<h2 class="text-headline-sm font-headline-sm text-on-surface font-semibold">Tara Rao</h2>
+<span class="material-symbols-outlined text-[16px] text-primary" title="Verified Master">verified</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant font-medium mt-0.5">Principal Stills Master &amp; 35mm Analog Specialist</p>
+<div class="mt-2 text-label-sm font-label-sm text-outline flex items-center gap-1.5 bg-surface-container-low px-2.5 py-1.5 rounded-lg">
+<span class="material-symbols-outlined text-[16px] text-primary">calendar_clock</span>
+<span>Next booked Nov 19: <strong class="text-on-surface font-medium">Derick &amp; Samantha</strong></span>
+</div>
+</div>
+<!-- Equipment Palette -->
+<div class="space-y-1.5 mb-space-md">
+<span class="text-label-sm font-label-sm uppercase tracking-widest text-outline">Primary Kit:</span>
+<div class="flex flex-wrap gap-1">
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant text-label-sm font-label-sm">Leica M-A</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant text-label-sm font-label-sm">Leica SL2 Dual Prime</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant text-label-sm font-label-sm">Portra 400</span>
+</div>
+</div>
+<!-- Operational History -->
+<div class="grid grid-cols-2 gap-space-sm pt-space-sm border-t border-surface-container-high text-label-sm font-label-sm mb-space-md">
+<div>
+<span class="text-outline block">Commissions</span>
+<span class="text-on-surface font-medium text-body-sm">48 Shoots Delivered</span>
+</div>
+<div>
+<span class="text-outline block">Review Index</span>
+<span class="text-on-surface font-medium text-body-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span>4.98 (39 reviews)</span>
+</span>
+</div>
+</div>
+<div class="text-body-sm font-body-sm text-outline space-y-1 mb-space-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[15px]">call</span>
+<span class="text-on-surface-variant font-body-sm">+91 98452 33110</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[15px]">mail</span>
+<span class="text-on-surface-variant font-body-sm">tara.rao@vowsstudio.com</span>
+</div>
+</div>
+</div>
+<!-- Action Row -->
+<div class="flex items-center gap-space-xs pt-space-sm border-t border-surface-container-high">
+<button class="flex-1 py-2 px-3 rounded-lg bg-surface-container text-on-surface font-label-md text-label-md hover:bg-surface-container-high transition-colors text-center" type="button">
+            View Profile
+          </button>
+<button class="flex-1 py-2 px-3 rounded-lg bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-container hover:text-on-primary-container transition-colors text-center font-medium" type="button">
+            Assign Booking
+          </button>
+</div>
+</div>
+</article>
+<!-- 2. Reuben Serrao (Lead Cinematographer) -->
+<article class="bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col justify-between overflow-hidden relative">
+<div class="h-28 relative overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover opacity-80" data-alt="Cinematic production studio setting showing a matte black cinema camera rigged on carbon fiber rails with pristine anamorphic lenses and soft moody ambient amber rim lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcGJGm8wZuD6bq9B42tX0Bb1movROPqieclwMA_--ZnT-rnys_ABLGk9zt5Bl6Yc95zUOHUAfwX_lzpVZ0AaadunpgrSVKT7C6ZfQdf7VPGAh3ocMfXib4wxTnRklcQ-P2kNE7DYq3whQgVFeGIDq6SUh21gVzBlziTmKNZliQ_ymKf8VGIU3YG_OCkx2zkawLfdCpAL4dMV-Cputl5SHSf00N3ncX4IYIBMT6bBtw"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent"></div>
+<div class="absolute top-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant text-label-sm font-label-sm font-medium shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span>Booked on Set</span>
+</div>
+</div>
+<div class="p-space-lg pt-0 flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-end justify-between -mt-9 mb-space-sm">
+<div class="w-16 h-16 rounded-xl bg-surface-container-lowest p-1 shadow-sm">
+<div class="w-full h-full rounded-lg bg-secondary text-on-secondary flex items-center justify-center font-headline-sm text-headline-sm font-semibold">
+                RS
+              </div>
+</div>
+<div class="text-right">
+<span class="text-label-sm font-label-sm text-outline uppercase tracking-wider block">Day Rate</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">₹22,000 <span class="font-label-sm text-label-sm text-outline font-normal">/ day</span></span>
+</div>
+</div>
+<div class="mb-space-md">
+<div class="flex items-center gap-2">
+<h2 class="text-headline-sm font-headline-sm text-on-surface font-semibold">Reuben Serrao</h2>
+<span class="text-label-sm font-label-sm px-1.5 py-0.5 rounded bg-secondary-container text-on-secondary-container font-semibold uppercase tracking-wider">Owner</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant font-medium mt-0.5">Executive Producer &amp; Lead Cinematographer</p>
+<div class="mt-2 text-label-sm font-label-sm text-tertiary flex items-center gap-1.5 bg-surface-container-low px-2.5 py-1.5 rounded-lg">
+<span class="material-symbols-outlined text-[16px] text-tertiary">theater_comedy</span>
+<span>Engaged: Nov 18–20 (Derick &amp; Samantha)</span>
+</div>
+</div>
+<div class="space-y-1.5 mb-space-md">
+<span class="text-label-sm font-label-sm uppercase tracking-widest text-outline">Primary Kit:</span>
+<div class="flex flex-wrap gap-1">
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant text-label-sm font-label-sm">Sony FX6 / FX3 Rig</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant text-label-sm font-label-sm">Cooke Primes</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant text-label-sm font-label-sm">SmallHD Cine 7</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-space-sm pt-space-sm border-t border-surface-container-high text-label-sm font-label-sm mb-space-md">
+<div>
+<span class="text-outline block">Commissions</span>
+<span class="text-on-surface font-medium text-body-sm">112 Productions</span>
+</div>
+<div>
+<span class="text-outline block">Review Index</span>
+<span class="text-on-surface font-medium text-body-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span>5.0 (94 reviews)</span>
+</span>
+</div>
+</div>
+<div class="text-body-sm font-body-sm text-outline space-y-1 mb-space-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[15px]">call</span>
+<span class="text-on-surface-variant font-body-sm">+91 98200 44521</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[15px]">mail</span>
+<span class="text-on-surface-variant font-body-sm">reuben@vowsstudio.com</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-xs pt-space-sm border-t border-surface-container-high">
+<button class="w-full py-2 px-3 rounded-lg bg-surface-container text-on-surface font-label-md text-label-md hover:bg-surface-container-high transition-colors text-center font-medium" type="button">
+            View Profile &amp; Reel
+          </button>
+</div>
+</div>
+</article>
+<!-- 3. Kiran Varma (Senior Cinematographer & Gimbal Tech) -->
+<article class="bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col justify-between overflow-hidden relative">
+<div class="h-28 relative overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover opacity-80" data-alt="Three-axis camera gimbal balancing a lightweight mirrorless cinema setup in an airy minimalist architectural corridor with natural daylight." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtlE8lL_w-wpbN-_0Ged6MS5b1v3b2ZXoUBDHFq4CVhKmppEaj_xlw0FYf7-_E5BqS8Sp9Gq46yaVaxbOekCXuEnh8JSjL98A8FvxrzohO2eqiwn4uvo4FI7QJ6zcBXggsj1iGdVTofjphc987TvLqFohWHtQMVVUQZWEMqtbwMVAyRbTawQIzohZdFpFHG_HULJz4uTxrCE8FHPFbvzOZSoNSTxecqlVYKNRmmbhI"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent"></div>
+<div class="absolute top-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed text-label-sm font-label-sm font-medium shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+<span>Available Now</span>
+</div>
+</div>
+<div class="p-space-lg pt-0 flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-end justify-between -mt-9 mb-space-sm">
+<div class="w-16 h-16 rounded-xl bg-surface-container-lowest p-1 shadow-sm">
+<div class="w-full h-full rounded-lg bg-surface-container-high text-on-surface-variant flex items-center justify-center font-headline-sm text-headline-sm font-semibold">
+                KV
+              </div>
+</div>
+<div class="text-right">
+<span class="text-label-sm font-label-sm text-outline uppercase tracking-wider block">Day Rate</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">₹15,000 <span class="font-label-sm text-label-sm text-outline font-normal">/ day</span></span>
+</div>
+</div>
+<div class="mb-space-md">
+<h2 class="text-headline-sm font-headline-sm text-on-surface font-semibold">Kiran Varma</h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant font-medium mt-0.5">Senior Cinematographer &amp; Gimbal Tech</p>
+<div class="mt-2 text-label-sm font-label-sm text-outline flex items-center gap-1.5 bg-surface-container-low px-2.5 py-1.5 rounded-lg">
+<span class="material-symbols-outlined text-[16px] text-primary">schedule</span>
+<span>Available for call: Free until Nov 18</span>
+</div>
+</div>
+<div class="space-y-1.5 mb-space-md">
+<span class="text-label-sm font-label-sm uppercase tracking-widest text-outline">Primary Kit:</span>
+<div class="flex flex-wrap gap-1">
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant text-label-sm font-label-sm">Sony FX3</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant text-label-sm font-label-sm">Ronin RS3 Pro</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant text-label-sm font-label-sm">24-70mm GM II</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-space-sm pt-space-sm border-t border-surface-container-high text-label-sm font-label-sm mb-space-md">
+<div>
+<span class="text-outline block">Commissions</span>
+<span class="text-on-surface font-medium text-body-sm">64 Shoots Delivered</span>
+</div>
+<div>
+<span class="text-outline block">Review Index</span>
+<span class="text-on-surface font-medium text-body-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span>4.94 (51 reviews)</span>
+</span>
+</div>
+</div>
+<div class="text-body-sm font-body-sm text-outline space-y-1 mb-space-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[15px]">call</span>
+<span class="text-on-surface-variant font-body-sm">+91 97118 90334</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[15px]">mail</span>
+<span class="text-on-surface-variant font-body-sm">kiran.varma@vowsstudio.com</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-xs pt-space-sm border-t border-surface-container-high">
+<button class="flex-1 py-2 px-3 rounded-lg bg-surface-container text-on-surface font-label-md text-label-md hover:bg-surface-container-high transition-colors text-center" type="button">
+            View Profile
+          </button>
+<button class="flex-1 py-2 px-3 rounded-lg bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-container hover:text-on-primary-container transition-colors text-center font-medium" type="button">
+            Assign Booking
+          </button>
+</div>
+</div>
+</article>
+<!-- 4. Milo Thorne (Aerial Drone Specialist) -->
+<article class="bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col justify-between overflow-hidden relative">
+<div class="h-28 relative overflow-hidden bg-surface-container">
+<div class="w-full h-full bg-gradient-to-tr from-surface-container-high to-surface-container-low flex items-center justify-center">
+<span class="material-symbols-outlined text-outline/30 text-[48px]">flight</span>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent"></div>
+<div class="absolute top-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant text-label-sm font-label-sm font-medium shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span>Booked Nov 19–20</span>
+</div>
+</div>
+<div class="p-space-lg pt-0 flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-end justify-between -mt-9 mb-space-sm">
+<div class="w-16 h-16 rounded-xl bg-surface-container-lowest p-1 shadow-sm">
+<div class="w-full h-full rounded-lg bg-tertiary-fixed text-on-tertiary-fixed flex items-center justify-center font-headline-sm text-headline-sm font-semibold">
+                MT
+              </div>
+</div>
+<div class="text-right">
+<span class="text-label-sm font-label-sm text-outline uppercase tracking-wider block">Day Rate</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">₹16,500 <span class="font-label-sm text-label-sm text-outline font-normal">/ day</span></span>
+</div>
+</div>
+<div class="mb-space-md">
+<div class="flex items-center gap-2">
+<h2 class="text-headline-sm font-headline-sm text-on-surface font-semibold">Milo Thorne</h2>
+<span class="text-label-sm font-label-sm px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface font-medium">DGCA Cat 2</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant font-medium mt-0.5">Aerial Drone Specialist &amp; Crane Pilot</p>
+<div class="mt-2 text-label-sm font-label-sm text-outline flex items-center gap-1.5 bg-surface-container-low px-2.5 py-1.5 rounded-lg">
+<span class="material-symbols-outlined text-[16px] text-outline">event_busy</span>
+<span>Engaged: Nov 19–20 (Coastal Venue)</span>
+</div>
+</div>
+<div class="space-y-1.5 mb-space-md">
+<span class="text-label-sm font-label-sm uppercase tracking-widest text-outline">Primary Kit:</span>
+<div class="flex flex-wrap gap-1">
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant text-label-sm font-label-sm">DJI Inspire 3</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant text-label-sm font-label-sm">FPV Cinewhoop</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant text-label-sm font-label-sm">Zenmuse X9-8K Air</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-space-sm pt-space-sm border-t border-surface-container-high text-label-sm font-label-sm mb-space-md">
+<div>
+<span class="text-outline block">Commissions</span>
+<span class="text-on-surface font-medium text-body-sm">52 Productions</span>
+</div>
+<div>
+<span class="text-outline block">Review Index</span>
+<span class="text-on-surface font-medium text-body-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span>4.97 (48 reviews)</span>
+</span>
+</div>
+</div>
+<div class="text-body-sm font-body-sm text-outline space-y-1 mb-space-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[15px]">call</span>
+<span class="text-on-surface-variant font-body-sm">+91 99304 88219</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[15px]">mail</span>
+<span class="text-on-surface-variant font-body-sm">milo.thorne@vowsstudio.com</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-xs pt-space-sm border-t border-surface-container-high">
+<button class="w-full py-2 px-3 rounded-lg bg-surface-container text-on-surface font-label-md text-label-md hover:bg-surface-container-high transition-colors text-center font-medium" type="button">
+            View Flight Logs &amp; Reel
+          </button>
+</div>
+</div>
+</article>
+<!-- 5. Praveen Nair (Audio Recordist) -->
+<article class="bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col justify-between overflow-hidden relative">
+<div class="h-28 relative overflow-hidden bg-surface-container">
+<div class="w-full h-full bg-gradient-to-tr from-surface-container-low to-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-outline/30 text-[48px]">graphic_eq</span>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent"></div>
+<div class="absolute top-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed text-label-sm font-label-sm font-medium shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+<span>Available Now</span>
+</div>
+</div>
+<div class="p-space-lg pt-0 flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-end justify-between -mt-9 mb-space-sm">
+<div class="w-16 h-16 rounded-xl bg-surface-container-lowest p-1 shadow-sm">
+<div class="w-full h-full rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center font-headline-sm text-headline-sm font-semibold">
+                PN
+              </div>
+</div>
+<div class="text-right">
+<span class="text-label-sm font-label-sm text-outline uppercase tracking-wider block">Day Rate</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">₹12,000 <span class="font-label-sm text-label-sm text-outline font-normal">/ day</span></span>
+</div>
+</div>
+<div class="mb-space-md">
+<h2 class="text-headline-sm font-headline-sm text-on-surface font-semibold">Praveen Nair</h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant font-medium mt-0.5">Sound Recordist &amp; 32-bit Float Audio Engineer</p>
+<div class="mt-2 text-label-sm font-label-sm text-outline flex items-center gap-1.5 bg-surface-container-low px-2.5 py-1.5 rounded-lg">
+<span class="material-symbols-outlined text-[16px] text-primary">check_circle</span>
+<span>Available for call: No pending commitments</span>
+</div>
+</div>
+<div class="space-y-1.5 mb-space-md">
+<span class="text-label-sm font-label-sm uppercase tracking-widest text-outline">Primary Kit:</span>
+<div class="flex flex-wrap gap-1">
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant text-label-sm font-label-sm">Sound Devices MixPre-6 II</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant text-label-sm font-label-sm">Sennheiser MKH 416</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant text-label-sm font-label-sm">4x Tentacle Sync E</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-space-sm pt-space-sm border-t border-surface-container-high text-label-sm font-label-sm mb-space-md">
+<div>
+<span class="text-outline block">Commissions</span>
+<span class="text-on-surface font-medium text-body-sm">39 Audio Masters</span>
+</div>
+<div>
+<span class="text-outline block">Review Index</span>
+<span class="text-on-surface font-medium text-body-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span>4.92 (31 reviews)</span>
+</span>
+</div>
+</div>
+<div class="text-body-sm font-body-sm text-outline space-y-1 mb-space-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[15px]">call</span>
+<span class="text-on-surface-variant font-body-sm">+91 94471 20098</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[15px]">mail</span>
+<span class="text-on-surface-variant font-body-sm">praveen.nair@vowsstudio.com</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-xs pt-space-sm border-t border-surface-container-high">
+<button class="flex-1 py-2 px-3 rounded-lg bg-surface-container text-on-surface font-label-md text-label-md hover:bg-surface-container-high transition-colors text-center" type="button">
+            View Profile
+          </button>
+<button class="flex-1 py-2 px-3 rounded-lg bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-container hover:text-on-primary-container transition-colors text-center font-medium" type="button">
+            Assign Booking
+          </button>
+</div>
+</div>
+</article>
+<!-- 6. Ananya Sen (2nd Stills Photographer - On Leave) -->
+<article class="bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col justify-between overflow-hidden relative opacity-95">
+<div class="h-28 relative overflow-hidden bg-surface-container">
+<div class="w-full h-full bg-gradient-to-tr from-surface-container-high to-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-outline/20 text-[48px]">nights_stay</span>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent"></div>
+<div class="absolute top-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-high text-outline text-label-sm font-label-sm font-medium shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+<span>On Leave (Blackout)</span>
+</div>
+</div>
+<div class="p-space-lg pt-0 flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-end justify-between -mt-9 mb-space-sm">
+<div class="w-16 h-16 rounded-xl bg-surface-container-lowest p-1 shadow-sm">
+<div class="w-full h-full rounded-lg bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-headline-sm text-headline-sm font-semibold">
+                AS
+              </div>
+</div>
+<div class="text-right">
+<span class="text-label-sm font-label-sm text-outline uppercase tracking-wider block">Day Rate</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">₹9,500 <span class="font-label-sm text-label-sm text-outline font-normal">/ day</span></span>
+</div>
+</div>
+<div class="mb-space-md">
+<h2 class="text-headline-sm font-headline-sm text-on-surface font-semibold">Ananya Sen</h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant font-medium mt-0.5">2nd Stills Photographer &amp; Lighting Assistant</p>
+<div class="mt-2 text-label-sm font-label-sm text-outline flex items-center gap-1.5 bg-surface-container-low px-2.5 py-1.5 rounded-lg">
+<span class="material-symbols-outlined text-[16px] text-outline">do_not_disturb_on</span>
+<span>Blackout period active until Nov 24</span>
+</div>
+</div>
+<div class="space-y-1.5 mb-space-md">
+<span class="text-label-sm font-label-sm uppercase tracking-widest text-outline">Primary Kit:</span>
+<div class="flex flex-wrap gap-1">
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant text-label-sm font-label-sm">Canon R5</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant text-label-sm font-label-sm">Profoto B10X Plus</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-low text-on-surface-variant text-label-sm font-label-sm">RF 50mm f/1.2L</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-space-sm pt-space-sm border-t border-surface-container-high text-label-sm font-label-sm mb-space-md">
+<div>
+<span class="text-outline block">Commissions</span>
+<span class="text-on-surface font-medium text-body-sm">27 Shoots Assisted</span>
+</div>
+<div>
+<span class="text-outline block">Review Index</span>
+<span class="text-on-surface font-medium text-body-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span>4.88 (22 reviews)</span>
+</span>
+</div>
+</div>
+<div class="text-body-sm font-body-sm text-outline space-y-1 mb-space-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[15px]">call</span>
+<span class="text-on-surface-variant font-body-sm">+91 91670 12894</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[15px]">mail</span>
+<span class="text-on-surface-variant font-body-sm">ananya.sen@vowsstudio.com</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-xs pt-space-sm border-t border-surface-container-high">
+<button class="w-full py-2 px-3 rounded-lg bg-surface-container text-on-surface font-label-md text-label-md hover:bg-surface-container-high transition-colors text-center font-medium" type="button">
+            View Schedule History
+          </button>
+</div>
+</div>
+</article>
+</div>
+<!-- Editorial Schedule Horizon (Inline Visualizer) -->
+<section class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm mb-space-xl">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm mb-space-md">
+<div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface font-semibold">Weekly Production Deployment Horizon</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Visualizing lead assignments across upcoming multi-day weddings.</p>
+</div>
+<div class="flex items-center gap-space-xs text-label-sm font-label-sm text-outline">
+<span class="inline-block w-3 h-3 rounded-sm bg-primary"></span>
+<span class="mr-2">Confirmed On Set</span>
+<span class="inline-block w-3 h-3 rounded-sm bg-surface-container-high"></span>
+<span>Studio Standby</span>
+</div>
+</div>
+<!-- Weekly Timeline Grid -->
+<div class="overflow-x-auto">
+<div class="min-w-[700px] space-y-2">
+<!-- Date Markers -->
+<div class="grid grid-cols-7 text-center font-label-sm text-label-sm text-outline py-2 border-b border-surface-container-high">
+<div>Mon Nov 18</div>
+<div class="text-on-surface font-semibold">Tue Nov 19</div>
+<div class="text-on-surface font-semibold">Wed Nov 20</div>
+<div>Thu Nov 21</div>
+<div>Fri Nov 22</div>
+<div>Sat Nov 23</div>
+<div>Sun Nov 24</div>
+</div>
+<!-- Roster Gantt Row 1 -->
+<div class="grid grid-cols-7 gap-1 items-center py-1">
+<div class="col-span-1 text-label-sm font-label-sm text-on-surface font-medium truncate pr-2">Reuben Serrao</div>
+<div class="col-span-3 bg-secondary-container text-on-secondary-container px-3 py-1.5 rounded-md text-label-sm font-label-sm font-medium truncate flex items-center justify-between">
+<span>Derick &amp; Samantha (Goa Manor)</span>
+<span class="material-symbols-outlined text-[14px]">videocam</span>
+</div>
+<div class="col-span-3 bg-surface-container-low rounded-md h-8 flex items-center justify-center text-label-sm font-label-sm text-outline">
+            Studio Editing
+          </div>
+</div>
+<!-- Roster Gantt Row 2 -->
+<div class="grid grid-cols-7 gap-1 items-center py-1">
+<div class="col-span-1 text-label-sm font-label-sm text-on-surface font-medium truncate pr-2">Tara Rao</div>
+<div class="col-span-1 bg-surface-container-low rounded-md h-8 flex items-center justify-center text-label-sm font-label-sm text-outline">
+            Prep &amp; Film Lab
+          </div>
+<div class="col-span-2 bg-primary-fixed text-on-primary-fixed px-3 py-1.5 rounded-md text-label-sm font-label-sm font-medium truncate flex items-center justify-between">
+<span>35mm Portra Commission</span>
+<span class="material-symbols-outlined text-[14px]">photo_camera</span>
+</div>
+<div class="col-span-4 bg-surface-container-low rounded-md h-8 flex items-center justify-center text-label-sm font-label-sm text-outline">
+            Available for Booking
+          </div>
+</div>
+<!-- Roster Gantt Row 3 -->
+<div class="grid grid-cols-7 gap-1 items-center py-1">
+<div class="col-span-1 text-label-sm font-label-sm text-on-surface font-medium truncate pr-2">Milo Thorne</div>
+<div class="col-span-1 bg-surface-container-low rounded-md h-8 flex items-center justify-center text-label-sm font-label-sm text-outline">
+            Gear Maintenance
+          </div>
+<div class="col-span-2 bg-secondary-fixed text-on-secondary-fixed px-3 py-1.5 rounded-md text-label-sm font-label-sm font-medium truncate flex items-center justify-between">
+<span>Inspire 3 Aerials</span>
+<span class="material-symbols-outlined text-[14px]">flight</span>
+</div>
+<div class="col-span-4 bg-surface-container-low rounded-md h-8 flex items-center justify-center text-label-sm font-label-sm text-outline">
+            DGCA Flight Standby
+          </div>
+</div>
+</div>
+</div>
+</section>
+<!-- Contextual Quick Action Footer -->
+<div class="flex flex-col sm:flex-row items-center justify-between p-space-md rounded-xl bg-surface-container-low text-on-surface-variant gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[20px] text-primary">info</span>
+<span class="font-body-sm text-body-sm">Showing 6 of 14 crew records matching your operational criteria.</span>
+</div>
+<div class="flex items-center gap-space-xs font-label-md text-label-md">
+<button class="px-space-sm py-1.5 rounded text-outline hover:text-on-surface transition-colors" type="button">Previous</button>
+<span class="px-space-sm py-1 rounded bg-surface-container-lowest text-on-surface font-semibold shadow-sm">1</span>
+<button class="px-space-sm py-1.5 rounded text-on-surface-variant hover:text-on-surface transition-colors" type="button">2</button>
+<button class="px-space-sm py-1.5 rounded text-on-surface-variant hover:text-on-surface transition-colors" type="button">3</button>
+<button class="px-space-sm py-1.5 rounded text-outline hover:text-on-surface transition-colors" type="button">Next</button>
+</div>
+</div>
+</div></main></div></div></body></html>

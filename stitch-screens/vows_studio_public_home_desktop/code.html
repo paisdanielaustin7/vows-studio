@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "error-container": "#ffdad6", "surface-bright": "#f5fbf4", "on-primary": "#ffffff", "on-surface-variant": "#424843", "surface-container-high": "#e4eae3", "inverse-primary": "#b3cdb7", "on-background": "#171d19", "surface-container-highest": "#dee4de", "on-primary-fixed": "#092012", "outline": "#737972", "primary-fixed": "#cfe9d3", "primary": "#4c6452", "tertiary": "#5a605b", "on-error-container": "#93000a", "error": "#ba1a1a", "on-tertiary-fixed-variant": "#424843", "secondary-fixed-dim": "#b2cdb6", "on-secondary-container": "#516a57", "on-tertiary": "#ffffff", "inverse-surface": "#2c322e", "secondary": "#4b6451", "surface-container": "#eaefe9", "secondary-container": "#ceead2", "tertiary-container": "#909690", "surface-container-lowest": "#ffffff", "tertiary-fixed": "#dee4dd", "on-secondary-fixed-variant": "#344c3b", "surface-variant": "#dee4de", "inverse-on-surface": "#ecf2ec", "on-secondary": "#ffffff", "surface-container-low": "#eff5ef", "surface-tint": "#4c6452", "on-tertiary-fixed": "#171d19", "primary-container": "#829b87", "background": "#f5fbf4", "surface": "#f5fbf4", "on-secondary-fixed": "#082011", "outline-variant": "#c3c8c1", "on-primary-container": "#1c3223", "primary-fixed-dim": "#b3cdb7", "on-surface": "#171d19", "on-error": "#ffffff", "on-tertiary-container": "#282f2a", "secondary-fixed": "#ceead2", "surface-dim": "#d6dcd5", "tertiary-fixed-dim": "#c2c8c2", "on-primary-fixed-variant": "#354c3b" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-xs": "0.25rem", "space-xl": "2.5rem", "gutter": "1.5rem", "margin": "3rem", "space-md": "1rem", "margin-mobile": "1.25rem", "space-sm": "0.5rem", "gutter-mobile": "1rem", "space-lg": "1.5rem" }, "fontFamily": { "headline-lg-mobile": ["Inter"], "headline-lg": ["Inter"], "headline-md": ["Inter"], "body-sm": ["Inter"], "label-sm": ["Inter"], "label-lg": ["Inter"], "body-lg": ["Inter"], "headline-sm": ["Inter"], "label-md": ["Inter"], "display": ["Inter"], "display-mobile": ["Inter"], "body-md": ["Inter"] }, "fontSize": { "headline-lg-mobile": ["1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.015em", "fontWeight": "600" }], "headline-lg": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600" }], "headline-md": ["1.375rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.015em", "fontWeight": "600" }], "body-sm": ["0.8125rem", { "lineHeight": "1.25rem", "fontWeight": "400" }], "label-sm": ["0.6875rem", { "lineHeight": "0.875rem", "letterSpacing": "0.04em", "fontWeight": "600" }], "label-lg": ["0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "500" }], "body-lg": ["1rem", { "lineHeight": "1.625rem", "fontWeight": "400" }], "headline-sm": ["1.125rem", { "lineHeight": "1.5rem", "letterSpacing": "-0.01em", "fontWeight": "500" }], "label-md": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.02em", "fontWeight": "500" }], "display": ["2.75rem", { "lineHeight": "3.25rem", "letterSpacing": "-0.03em", "fontWeight": "600" }], "display-mobile": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600" }], "body-md": ["0.875rem", { "lineHeight": "1.5rem", "fontWeight": "400" }] } } } };</script></head><body class="bg-surface text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-md border-b border-surface-container-high"><div class="h-20 w-full max-w-[1280px] mx-auto px-margin-mobile lg:px-margin flex items-center justify-between"><a class="flex flex-col group" data-path="portfolio" href="#"><span class="font-headline-sm text-headline-sm uppercase tracking-[0.2em] text-on-surface font-semibold">VOWS STUDIO</span><span class="font-label-sm text-label-sm tracking-[0.18em] text-outline uppercase">WEDDING CINEMATIC & STILLS</span></a><nav class="hidden md:flex items-center gap-space-lg" data-active-classes="text-on-surface border-b-2 border-primary font-medium"><a aria-current="page" class="transition-colors py-1 text-on-surface border-b-2 border-primary font-medium" data-path="portfolio" href="#">Portfolio</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors py-1" data-path="services" href="#">Services</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors py-1" data-path="packages" href="#">Packages</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors py-1" data-path="testimonials" href="#">Testimonials</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors py-1" data-path="about" href="#">About</a></nav><div class="flex items-center gap-space-md"><a class="inline-flex items-center justify-center px-space-lg py-space-sm bg-primary text-on-primary font-label-lg text-label-lg rounded hover:bg-secondary transition-colors" data-path="enquire" href="#">Enquire</a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-surface min-h-[calc(100vh-5rem)]"><div class="flex flex-col w-full">
+<!-- 1. HERO SECTION (Minimal, Plain Solid Background, Architectural Monograph Feel) -->
+<section class="w-full bg-surface px-margin-mobile lg:px-margin pt-12 pb-20">
+<div class="max-w-[1280px] mx-auto flex flex-col">
+<!-- Micro-Tag -->
+<div class="flex items-center gap-space-sm mb-6">
+<span class="inline-block w-2 h-2 rounded-full bg-primary"></span>
+<span class="font-label-sm text-label-sm uppercase tracking-[0.2em] text-on-surface-variant">
+          FINE ART CHRISTIAN WEDDING CINEMATOGRAPHY & ANALOG STILLS • GOA & MANGALORE
+        </span>
+</div>
+<!-- Title / Subtitle -->
+<div class="max-w-4xl">
+<h1 class="font-display text-display text-on-surface tracking-tight leading-none mb-3">
+          VOWS STUDIO
+        </h1>
+<p class="font-headline-md text-headline-md text-primary font-normal tracking-wide uppercase mb-8">
+          Wedding Cinematic & Stills
+        </p>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl leading-relaxed mb-10">
+          Understated cinematic documentation and heirloom analog stills capturing sacred vows across heritage chapels, coastal solemnizations, and intimate family gatherings with reverent stillness.
+        </p>
+<!-- Dual CTA Buttons -->
+<div class="flex flex-wrap items-center gap-space-md mb-12">
+<a class="inline-flex items-center justify-center px-8 py-3.5 bg-primary text-on-primary font-label-lg text-label-lg rounded-lg hover:bg-secondary transition-colors duration-200 shadow-sm" href="#enquire">
+            Enquire for Your Date
+          </a>
+<a class="inline-flex items-center justify-center px-8 py-3.5 bg-surface-container-lowest text-on-surface font-label-lg text-label-lg rounded-lg hover:bg-surface-container-low transition-colors duration-200 shadow-sm" href="#portfolio">
+            View Curated Portfolio
+          </a>
+</div>
+</div>
+<!-- Trust Strip -->
+<div class="w-full bg-surface-container-low rounded-xl px-space-lg py-4 flex flex-wrap items-center justify-between gap-y-3">
+<div class="flex items-center gap-space-sm text-on-surface">
+<span class="material-symbols-outlined text-[20px] text-primary">verified</span>
+<span class="font-label-md text-label-md">Founded by Reuben Serrao</span>
+</div>
+<div class="flex items-center gap-space-sm text-on-surface">
+<span class="material-symbols-outlined text-[20px] text-primary">church</span>
+<span class="font-label-md text-label-md">48+ Verified Solemnizations</span>
+</div>
+<div class="flex items-center gap-space-sm text-on-surface">
+<span class="material-symbols-outlined text-[20px] text-primary">lock_person</span>
+<span class="font-label-md text-label-md">100% Client Consent & Archival Integrity</span>
+</div>
+<div class="flex items-center gap-space-sm text-on-surface">
+<span class="material-symbols-outlined text-[20px] text-primary">history_edu</span>
+<span class="font-label-md text-label-md">SLA 99.98% On-Time Delivery</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 2. FEATURED PORTFOLIO MASONRY GRID -->
+<section class="w-full bg-surface px-margin-mobile lg:px-margin py-16" id="portfolio">
+<div class="max-w-[1280px] mx-auto flex flex-col">
+<!-- Section Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-space-md">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-[0.2em] text-outline block mb-2">SELECTED MONOGRAPHS</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-2">Moments Preserved in Quiet Reverence</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-xl">
+            Unobtrusive documentation capturing authentic emotion and architectural sanctity.
+          </p>
+</div>
+<!-- Filter Pills -->
+<div class="flex items-center flex-wrap gap-2" id="portfolio-filters">
+<button class="filter-btn px-4 py-1.5 rounded-full bg-secondary-container text-on-secondary-container font-label-md text-label-md" data-category="all" type="button">
+            All (38)
+          </button>
+<button class="filter-btn px-4 py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant hover:text-on-surface font-label-md text-label-md shadow-sm" data-category="chapel" type="button">
+            Nuptials & Chapel
+          </button>
+<button class="filter-btn px-4 py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant hover:text-on-surface font-label-md text-label-md shadow-sm" data-category="reception" type="button">
+            Coastal Reception
+          </button>
+<button class="filter-btn px-4 py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant hover:text-on-surface font-label-md text-label-md shadow-sm" data-category="analog" type="button">
+            35mm Analog
+          </button>
+</div>
+</div>
+<!-- Masonry Grid with Images -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-space-lg mb-10">
+<!-- Card 1: 7 cols -->
+<div class="md:col-span-7 bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm flex flex-col group">
+<div class="relative overflow-hidden aspect-[16/10] bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]" data-alt="A candid documentary wedding photo of bride Samantha in ivory lace gown and groom Derick in a charcoal suit walking hand-in-hand through an ancient Goan heritage stone courtyard lined with bougainvillea and ferns during golden sunset light, captured on 35mm film with warm natural tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBVvfOTcVAD8JtlI8NSrJZFILqwRSAcgECetF-DfCoGR_WDTV5pbOIgnL_y0SHwKpqIcf71hrAzd_oJfmjyk52_lh5x_aVeIP6hcc9MLzSoyt79MzUKIN8ThNp-zwtdQKsfeW7Mrvqrege8XhzqQ78Aiid0nXavOsLgnMD413AfW0Rr1R9asg4BTZhRX9b4z2ry02BvxGbknE6oOXePcF-JTuID3T0cAa0Fu7dUFCj"/>
+<span class="absolute top-4 left-4 bg-surface/90 backdrop-blur-md px-3 py-1 rounded text-on-surface font-label-sm text-label-sm uppercase tracking-wider">35mm Film • 4K Cinema</span>
+</div>
+<div class="p-6 flex flex-col">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider mb-1">GOA ARCHIVE • MONOGRAPH NO. 042</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-medium">Derick & Samantha</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Heritage Courtyard & Coastal Solemnization (Goa) • Liturgical Stills & Highlight Reel</p>
+</div>
+</div>
+<!-- Card 2: 5 cols -->
+<div class="md:col-span-5 bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm flex flex-col group">
+<div class="relative overflow-hidden aspect-[4/3] bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]" data-alt="A solemn Catholic cathedral wedding ceremony inside St. Aloysius Chapel Mangalore, showing the bride and groom standing before the historic stone altar and frescoed arches, bathed in soft shafts of cathedral stained-glass morning light with reverent stillness and fine art editorial composition." src="https://lh3.googleusercontent.com/aida-public/AB6AXuALjkTCT2LDz0EB-nTCxZnQar0Z1JPy1QB0o_tQpXFHFk54PFCPOuvGW6MTGBQZrKINA-rzUfOAz7Aped_gDXjZPifgvXgZGNuZsMr3uUJ73ssf5b1atwMl4LMUUhO_URNVDI57-_cwuyv-ylfTjfvDp-xCDEA9MUang6E7dt4lZNDDrduLHO44VCPZt52nDbAlpcmSRuoBojQknoCwWSNDmJgqND_eKsqYh8A1D1Oc"/>
+<span class="absolute top-4 left-4 bg-surface/90 backdrop-blur-md px-3 py-1 rounded text-on-surface font-label-sm text-label-sm uppercase tracking-wider">Heritage Chapel</span>
+</div>
+<div class="p-6 flex flex-col">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider mb-1">MANGALORE NUPTIALS • MONOGRAPH NO. 039</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-medium">St. Aloysius Chapel Solemn Nuptials</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Sacred Vows & Cathedral Light • Ambient Pipe Organ Sound Recording</p>
+</div>
+</div>
+<!-- Card 3: 5 cols -->
+<div class="md:col-span-5 bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm flex flex-col group">
+<div class="relative overflow-hidden aspect-[4/3] bg-surface-container">
+<img class="w-full h-full object-cover grayscale transition-transform duration-500 group-hover:scale-[1.02]" data-alt="Fine art black and white medium format photograph of a bride profile with an intricate heirloom lace veil draped softly over her curls, captured on Kodak Tri-X analog film, quiet emotional mood, natural soft rim lighting, textured grain and vintage luxury aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBWStGel2qzRBWma4-sqTNQavPt1JAT3RjTWTPXxPCYWrchSduK3bejBd-qdzsk92CCHwtJXBsEWoKdjpOuLzrGUfY6ht_D6V4ERmdP77uOVKE-BzaZ_hifcFjU0TxWT3amcZ4_55Q7YBN8DuUwlSMKPgi_mTfJdaSKHC2kHXIvf4Tw7GOQcL-FSDIoHCFI9KuAosYozOaJY36b2zM0ZDZTBdUOjknhuSW5h-RGNnE"/>
+<span class="absolute top-4 left-4 bg-surface/90 backdrop-blur-md px-3 py-1 rounded text-on-surface font-label-sm text-label-sm uppercase tracking-wider">Kodak Tri-X 400</span>
+</div>
+<div class="p-6 flex flex-col">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider mb-1">ANALOG VAULT • MONOGRAPH NO. 036</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-medium">Bridal Veil & Heirloom Lace</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Black & White Fine Art Analog Monograph • Hand Processed Stills</p>
+</div>
+</div>
+<!-- Card 4: 7 cols -->
+<div class="md:col-span-7 bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm flex flex-col group">
+<div class="relative overflow-hidden aspect-[16/10] bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]" data-alt="An evening outdoor wedding dinner under canopy of warm fairy lights and wooden pergolas at Alila Diwa Goa, happy guests laughing around long wooden farm tables decorated with olive branches and candles, warm atmospheric cinematic still with soft shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB686HdfrdQrwEUfdOUrPwODOW5oB_6teUaQ-xNf5BLODaKnt1e2w3ASsEJRTAam9D9ynA7RYrLqMZuRtVIVIcjZGjF2P_KdmIDnrJaTM5FRf20BuBprE0nGwDaWjsjImcwAPQuv_VACpvqywcjGEKvVfavv7uTxzBDapxJST8mqt74uDEkgZzGebMly3FR4r8bpbzuwV9Jf4KftoKWFCx_EJ_BUWENAjBEgdfHKClZ"/>
+<span class="absolute top-4 left-4 bg-surface/90 backdrop-blur-md px-3 py-1 rounded text-on-surface font-label-sm text-label-sm uppercase tracking-wider">Alila Diwa Coastal</span>
+</div>
+<div class="p-6 flex flex-col">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider mb-1">EVENING MONOGRAPH • MONOGRAPH NO. 044</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-medium">Evening Candlelit Reception</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Candids & Long Table Monograph • Uncompressed 32-bit Float Audio Speeches</p>
+</div>
+</div>
+</div>
+<!-- Complete Archive Link -->
+<div class="flex justify-center">
+<a class="inline-flex items-center gap-space-sm font-label-lg text-label-lg text-primary hover:text-on-primary-container transition-colors font-medium group" href="#portfolio-archive">
+<span>Explore Complete Portfolio Archive (38 Works)</span>
+<span class="material-symbols-outlined text-[18px] transition-transform group-hover:translate-x-1">arrow_forward</span>
+</a>
+</div>
+</div>
+</section>
+<!-- 3. THREE SERVICE HIGHLIGHTS (Disciplines) -->
+<section class="w-full bg-surface-container-low px-margin-mobile lg:px-margin py-20" id="services">
+<div class="max-w-[1280px] mx-auto flex flex-col">
+<div class="mb-12">
+<span class="font-label-sm text-label-sm uppercase tracking-[0.2em] text-outline block mb-2">DISCIPLINES</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-2">Cinematic & Fine Art Disciplines</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-xl">
+          Structured with studio discipline, calibrated color grades, and archival storage.
+        </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
+<!-- Service 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-8 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div>
+<div class="flex items-center justify-between mb-6">
+<span class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[24px]">videocam</span>
+</span>
+<span class="font-label-sm text-label-sm text-outline tracking-wider">SRV-CIN-01</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-medium mb-3">Principal 4K Cinematography</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed mb-6">
+              Dual camera multi-cam coverage on Sony FX6/FX3 cine bodies, dedicated directional sound recording for liturgical vows and cathedral sermons, tailored DaVinci Resolve color grading.
+            </p>
+</div>
+<div class="pt-4 flex items-center gap-space-sm text-outline font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px] text-primary">check_circle</span>
+<span>Uncompressed 10-bit 4:2:2 D-Cinelike</span>
+</div>
+</div>
+<!-- Service 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-8 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div>
+<div class="flex items-center justify-between mb-6">
+<span class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[24px]">camera_roll</span>
+</span>
+<span class="font-label-sm text-label-sm text-outline tracking-wider">SRV-ANL-03</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-medium mb-3">35mm & Medium Format Stills</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed mb-6">
+              Authentic hand-wound Kodak Portra 400 and Ilford HP5 analog rolls, master darkroom lab processing, high-resolution Noritsu scans, and lossless archival TIFFs for physical fine art framing.
+            </p>
+</div>
+<div class="pt-4 flex items-center gap-space-sm text-outline font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px] text-primary">check_circle</span>
+<span>Cold-Stored Emulsions • Pure Silver Prints</span>
+</div>
+</div>
+<!-- Service 3 -->
+<div class="bg-surface-container-lowest rounded-xl p-8 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div>
+<div class="flex items-center justify-between mb-6">
+<span class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[24px]">flight</span>
+</span>
+<span class="font-label-sm text-label-sm text-outline tracking-wider">SRV-DRN-02</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-medium mb-3">Licensed Aerial Drone Flyover</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed mb-6">
+              DGCA-compliant certified cinematic aerial perspectives capturing historic chapel architecture, sea clifftops, and estate landscape context with low-noise optical telephoto safety.
+            </p>
+</div>
+<div class="pt-4 flex items-center gap-space-sm text-outline font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px] text-primary">check_circle</span>
+<span>DGCA Category Certified Pilots • 100% Insured</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. SIGNATURE PACKAGES WITH STARTING PRICES -->
+<section class="w-full bg-surface px-margin-mobile lg:px-margin py-20" id="packages">
+<div class="max-w-[1280px] mx-auto flex flex-col">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-space-md">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-[0.2em] text-outline block mb-2">INVESTMENT & TIERS</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-2">Curated Production Packages</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-xl">
+            Transparent bespoke bundles designed for cathedral nuptials and multi-day celebrations.
+          </p>
+</div>
+<div class="text-right hidden md:block">
+<span class="font-label-sm text-label-sm text-outline uppercase">Season 2025–2026 Calibrated</span>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-space-lg items-stretch mb-8">
+<!-- Package 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-8 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Single Day Solemnization</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface font-medium mb-2">Chapel Solemnization & Nuptials</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-6">Designed for sacred morning vows and immediate family lunch banquet.</p>
+<div class="mb-6">
+<span class="font-label-sm text-label-sm text-outline block">STARTING FROM</span>
+<span class="font-headline-lg text-headline-lg text-on-surface font-semibold tracking-tight">₹1,45,000</span>
+<span class="font-body-sm text-body-sm text-outline block">+18% IGST Itemized</span>
+</div>
+<ul class="space-y-3 font-body-sm text-body-sm text-on-surface-variant mb-8">
+<li class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-primary">schedule</span>
+<span>10 hours principal 4K cinematography</span>
+</li>
+<li class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-primary">photo_camera</span>
+<span>6 rolls 35mm analog film scans</span>
+</li>
+<li class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-primary">movie</span>
+<span>3-minute cinematic highlight reel</span>
+</li>
+<li class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-primary">cloud_done</span>
+<span>Lossless web gallery master release</span>
+</li>
+</ul>
+</div>
+<a class="w-full text-center py-3 bg-surface-container text-on-surface hover:bg-surface-container-high font-label-lg text-label-lg rounded-lg transition-colors" href="#enquire">
+            Request Availability
+          </a>
+</div>
+<!-- Package 2: Featured Tier -->
+<div class="bg-surface-container-lowest rounded-xl p-8 shadow-md flex flex-col justify-between relative">
+<!-- Featured Badge -->
+<div class="absolute -top-3.5 right-6 bg-primary text-on-primary px-3 py-1 rounded-full font-label-sm text-label-sm tracking-wider uppercase font-semibold">
+            Most Requested
+          </div>
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider font-semibold">Multi-Day Comprehensive</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface font-medium mb-2">The Heritage Solemnization & Grand Reception</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-6">Complete legacy archive for church benediction, eve roast, and grand seaside banquet.</p>
+<div class="mb-6">
+<span class="font-label-sm text-label-sm text-outline block">STARTING FROM</span>
+<span class="font-headline-lg text-headline-lg text-on-surface font-semibold tracking-tight">₹3,22,000</span>
+<span class="font-body-sm text-body-sm text-outline block">+18% IGST Itemized</span>
+</div>
+<ul class="space-y-3 font-body-sm text-body-sm text-on-surface-variant mb-8">
+<li class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-primary">calendar_month</span>
+<span>2 Full Days 4K multi-cam cine coverage</span>
+</li>
+<li class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-primary">camera_roll</span>
+<span>12 rolls Portra 400 + Ilford HP5 analog</span>
+</li>
+<li class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-primary">flight</span>
+<span>Licensed drone aerial perspectives</span>
+</li>
+<li class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-primary">movie</span>
+<span>24-minute extended narrative feature film</span>
+</li>
+<li class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-primary">auto_stories</span>
+<span>Archival Linen Hardcover Monograph + 2TB NVMe Vault</span>
+</li>
+</ul>
+</div>
+<a class="w-full text-center py-3.5 bg-primary text-on-primary hover:bg-secondary font-label-lg text-label-lg rounded-lg transition-colors shadow-sm" href="#enquire">
+            Book Heritage Monograph
+          </a>
+</div>
+<!-- Package 3 -->
+<div class="bg-surface-container-lowest rounded-xl p-8 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Destination & Extended</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface font-medium mb-2">Atelier Bespoke Commission</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-6">Fully custom production crafted around multi-location ancestral rites and diaspora returns.</p>
+<div class="mb-6">
+<span class="font-label-sm text-label-sm text-outline block">STARTING FROM</span>
+<span class="font-headline-lg text-headline-lg text-on-surface font-semibold tracking-tight">₹4,80,000</span>
+<span class="font-body-sm text-body-sm text-outline block">+18% IGST Itemized</span>
+</div>
+<ul class="space-y-3 font-body-sm text-body-sm text-on-surface-variant mb-8">
+<li class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-primary">explore</span>
+<span>Custom 3-day coverage across Goa & Mangalore</span>
+</li>
+<li class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-primary">person_check</span>
+<span>Director Reuben Serrao on principal camera</span>
+</li>
+<li class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-primary">tune</span>
+<span>Dual dedicated colorists for cinema & stills</span>
+</li>
+<li class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-primary">archive</span>
+<span>LTO-8 magnetic cold vault 20-year preservation</span>
+</li>
+</ul>
+</div>
+<a class="w-full text-center py-3 bg-surface-container text-on-surface hover:bg-surface-container-high font-label-lg text-label-lg rounded-lg transition-colors" href="#enquire">
+            Schedule Atelier Consultation
+          </a>
+</div>
+</div>
+<p class="font-label-sm text-label-sm text-outline text-center">
+        All contracts executed under verified studio SLA with transparent GST billing and itemized service schedules.
+      </p>
+</div>
+</section>
+<!-- 5. TESTIMONIAL CAROUSEL WITH AGGREGATE STAR RATING -->
+<section class="w-full bg-surface-container-low px-margin-mobile lg:px-margin py-20" id="testimonials">
+<div class="max-w-[1280px] mx-auto flex flex-col">
+<!-- Studio Score Banner -->
+<div class="bg-surface-container-lowest rounded-xl p-8 mb-12 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
+<div class="flex items-center gap-space-lg">
+<div class="flex flex-col">
+<span class="font-display text-display text-on-surface font-semibold leading-none">4.96</span>
+<span class="font-label-sm text-label-sm text-outline mt-1 uppercase tracking-wider">Out of 5.0 Rating</span>
+</div>
+<div class="flex flex-col">
+<div class="flex text-primary mb-1">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-medium">Across 48 Verified Commissions • 99.2% Positive • SLA Compliant</span>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-3">
+<span class="px-3 py-1 bg-surface-container rounded-full font-label-md text-label-md text-on-surface">Communication 4.98 ★</span>
+<span class="px-3 py-1 bg-surface-container rounded-full font-label-md text-label-md text-on-surface">Cinematic Quality 4.95 ★</span>
+<span class="px-3 py-1 bg-surface-container rounded-full font-label-md text-label-md text-on-surface">Punctuality 4.96 ★</span>
+</div>
+</div>
+<!-- 3 Client Quote Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
+<div class="bg-surface-container-lowest rounded-xl p-8 shadow-sm flex flex-col justify-between">
+<div class="mb-6">
+<div class="flex text-primary mb-4">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface leading-relaxed italic mb-4">
+              “VOWS Studio felt like quiet, calm witnesses rather than intrusive cameras. From the dawn prayers in Candolim through our dusk seaside vow exchange, their crew preserved moments we were too overwhelmed to even notice.”
+            </p>
+</div>
+<div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-medium block">Samantha & Derick</span>
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider block">Goa Coastal Solemnization</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-8 shadow-sm flex flex-col justify-between">
+<div class="mb-6">
+<div class="flex text-primary mb-4">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface leading-relaxed italic mb-4">
+              “Reuben and his team captured the solemnity and architectural grandeur of St. Aloysius chapel with breathtaking sensitivity. The 35mm analog prints are heirloom treasures.”
+            </p>
+</div>
+<div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-medium block">Michelle & Alister</span>
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider block">Mangalore Cathedral Nuptials</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-8 shadow-sm flex flex-col justify-between">
+<div class="mb-6">
+<div class="flex text-primary mb-4">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface leading-relaxed italic mb-4">
+              “Flawless communication, rigorous punctuality, and a film grade that feels timeless rather than trendy. Worth every rupee.”
+            </p>
+</div>
+<div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-medium block">Priya & Joshua</span>
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider block">Chapel Vows</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. ABOUT TEASER -->
+<section class="w-full bg-surface px-margin-mobile lg:px-margin py-20" id="about">
+<div class="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-space-xl">
+<!-- Left Column: Story -->
+<div class="lg:col-span-7 flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-[0.2em] text-outline block mb-2">THE ATELIER & OUR PHILOSOPHY</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-6">Reverence, Natural Light, and Honest Emotion</h2>
+<div class="space-y-4 font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+<p>
+            Led by founder and cinematographer Reuben Serrao across Mangalore and Goa, VOWS Studio was established to preserve Christian matrimony through the lens of quiet artistic discipline.
+          </p>
+<p>
+            We reject manufactured trends, frenetic cuts, and loud wedding theatrics. Our craft is rooted in reverence, natural light, liturgical stillness, and honest emotion. Every solemnization is approached with the architectural respect due to centuries-old stone chapels and the quiet dignity of sacred covenants.
+          </p>
+<p>
+            With over 8 years of Christian wedding documentation, we safeguard each legacy with strict client privacy protocols and triple-redundant magnetic LTO-8 tape cold storage.
+          </p>
+</div>
+<div class="mt-8 flex items-center gap-space-lg text-on-surface">
+<div>
+<span class="font-headline-md text-headline-md font-semibold text-primary block">8+ Years</span>
+<span class="font-label-sm text-label-sm text-outline uppercase">Christian Nuptials</span>
+</div>
+<div>
+<span class="font-headline-md text-headline-md font-semibold text-primary block">LTO-8 Tape</span>
+<span class="font-label-sm text-label-sm text-outline uppercase">Cold Vault Archiving</span>
+</div>
+<div>
+<span class="font-headline-md text-headline-md font-semibold text-primary block">100% DGCA</span>
+<span class="font-label-sm text-label-sm text-outline uppercase">Aviation Certified</span>
+</div>
+</div>
+</div>
+<!-- Right Column: Studio Fact Card -->
+<div class="lg:col-span-5 bg-surface-container-low rounded-xl p-8 flex flex-col justify-between shadow-sm">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline block mb-4">PRODUCTION HEADQUARTERS</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold mb-6">Studio Coordinates & Operations</h3>
+<div class="space-y-5 font-body-sm text-body-sm text-on-surface-variant">
+<div class="flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-[20px] text-primary shrink-0 mt-0.5">location_on</span>
+<div>
+<strong class="text-on-surface block font-medium">Physical Atelier</strong>
+<span>Atelier 4B, Light House Hill, Mangalore 575001</span>
+</div>
+</div>
+<div class="flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-[20px] text-primary shrink-0 mt-0.5">verified_user</span>
+<div>
+<strong class="text-on-surface block font-medium">Verified LLP Entity</strong>
+<span>Registered Production Studio with Ministry of Corporate Affairs</span>
+</div>
+</div>
+<div class="flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-[20px] text-primary shrink-0 mt-0.5">flight_takeoff</span>
+<div>
+<strong class="text-on-surface block font-medium">DGCA Certified Drone Operations</strong>
+<span>Licensed commercial remote pilot certification for aerial filming</span>
+</div>
+</div>
+<div class="flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-[20px] text-primary shrink-0 mt-0.5">monitor</span>
+<div>
+<strong class="text-on-surface block font-medium">In-House Color Grading Suite</strong>
+<span>Calibrated EIZO ColorEdge monitors with DaVinci Resolve Studio</span>
+</div>
+</div>
+</div>
+</div>
+<div class="pt-6 mt-6 bg-surface-container-lowest/80 rounded-lg p-4">
+<span class="font-label-sm text-label-sm text-outline uppercase block mb-1">DIRECT COMMISSIONS LEAD</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-medium block">Reuben Serrao</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Principal Cinematographer & Founder</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 7. FINAL CALL-TO-ACTION (Plain Solid Background #eff5ef) -->
+<section class="w-full bg-surface-container-low px-margin-mobile lg:px-margin py-20" id="enquire">
+<div class="max-w-[960px] mx-auto bg-surface-container-lowest rounded-xl p-10 lg:p-16 text-center shadow-sm">
+<span class="font-label-sm text-label-sm uppercase tracking-[0.2em] text-outline block mb-3">SEASON 2025–2026 CALENDAR</span>
+<h2 class="font-display text-headline-lg lg:text-display text-on-surface font-semibold tracking-tight mb-4">
+        Reserve Your Wedding Date
+      </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl mx-auto mb-8">
+        Our studio limits commissions to 18 couples per calendar season to ensure meticulous production focus and archival delivery standards.
+      </p>
+<div class="flex justify-center mb-8">
+<a class="inline-flex items-center gap-space-sm px-9 py-4 bg-primary text-on-primary font-label-lg text-label-lg rounded-lg hover:bg-secondary transition-colors shadow-sm font-medium" href="mailto:reuben@vowsstudio.com">
+<span>Begin Availability Enquiry</span>
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</a>
+</div>
+<div class="max-w-md mx-auto bg-surface-container-low rounded-lg p-4 font-body-sm text-body-sm text-on-surface-variant">
+<span class="font-medium text-on-surface block mb-1">Prefer direct dialogue?</span>
+<span>Call Reuben Serrao at <strong>+91 98200 44521</strong> or email <a class="text-primary hover:underline" href="mailto:reuben@vowsstudio.com">reuben@vowsstudio.com</a></span>
+</div>
+</div>
+</section>
+<!-- 8. FOOTER (4 Columns, Plain Solid Minimal Aesthetic) -->
+<footer class="w-full bg-surface-container-lowest px-margin-mobile lg:px-margin pt-16 pb-12">
+<div class="max-w-[1280px] mx-auto flex flex-col">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-xl mb-12">
+<!-- Col 1: Wordmark & Philosophy -->
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm uppercase tracking-[0.2em] text-on-surface font-semibold mb-2">VOWS STUDIO</span>
+<span class="font-label-sm text-label-sm tracking-[0.18em] text-primary uppercase font-semibold mb-4">WEDDING CINEMATIC & STILLS</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+            Understated documentation for Christian nuptials across Mangalore, Goa, and South India. Crafted with quiet reverence and archival discipline.
+          </p>
+</div>
+<!-- Col 2: Navigation -->
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold mb-4">ATELIER DIRECTORY</span>
+<ul class="space-y-2.5 font-label-md text-label-md text-on-surface-variant">
+<li><a class="hover:text-on-surface transition-colors" href="#portfolio">Portfolio Archive</a></li>
+<li><a class="hover:text-on-surface transition-colors" href="#services">Services Ratecard</a></li>
+<li><a class="hover:text-on-surface transition-colors" href="#packages">Production Packages</a></li>
+<li><a class="hover:text-on-surface transition-colors" href="#testimonials">Verified Reviews</a></li>
+<li><a class="hover:text-on-surface transition-colors" href="#about">About Atelier</a></li>
+<li><a class="hover:text-on-surface transition-colors" href="#login">Client Portal Login</a></li>
+</ul>
+</div>
+<!-- Col 3: Coordinates -->
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold mb-4">STUDIO COORDINATES</span>
+<ul class="space-y-2.5 font-body-sm text-body-sm text-on-surface-variant">
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[16px] text-outline mt-0.5">location_on</span>
+<span>Atelier 4B, Light House Hill, Mangalore 575001</span>
+</li>
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-outline">call</span>
+<span>Direct: +91 98200 44521</span>
+</li>
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-outline">mail</span>
+<span>Email: reuben@vowsstudio.com</span>
+</li>
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-outline">photo_camera</span>
+<span>Instagram: @vowsstudio</span>
+</li>
+</ul>
+</div>
+<!-- Col 4: Statutory & Legal -->
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold mb-4">STATUTORY & LEGAL</span>
+<ul class="space-y-2.5 font-label-md text-label-md text-on-surface-variant">
+<li><span>GSTIN: 29AAAAA0000A1Z5</span></li>
+<li><span>SAC 998384 / 998381</span></li>
+<li><a class="hover:text-on-surface transition-colors" href="#privacy">Privacy Policy & Media Release</a></li>
+<li><a class="hover:text-on-surface transition-colors" href="#sla">SLA Terms of Service</a></li>
+<li><a class="hover:text-on-surface transition-colors" href="#vault">LTO Cold Vault Security</a></li>
+</ul>
+</div>
+</div>
+<!-- Bottom Copyright Bar -->
+<div class="pt-8 bg-surface-container-low rounded-lg px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-2">
+<p class="font-label-sm text-label-sm text-outline">
+          © 2025 VOWS Studio LLP. All rights reserved. Plain solid aesthetic, zero ornamental clutter.
+        </p>
+<span class="font-label-sm text-label-sm text-outline">Archival Grade Reproduction • Goa • Mangalore</span>
+</div>
+</div>
+</footer>
+<!-- 9. COOKIE BANNER (Bottom-docked toast) -->
+<aside class="fixed bottom-6 right-6 z-50 max-w-md bg-surface-container-lowest p-5 rounded-xl shadow-lg flex flex-col gap-3" id="archival-cookie-toast">
+<div class="flex items-start justify-between gap-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">verified_user</span>
+<span class="font-label-md text-label-md font-semibold text-on-surface">Archival Data Protocol</span>
+</div>
+<button class="text-outline hover:text-on-surface" id="cookie-close" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-normal">
+      We use strictly necessary cookies to ensure secure client portal streaming and encrypted gallery proofing.
+    </p>
+<div class="flex items-center gap-2 pt-1">
+<button class="px-4 py-2 bg-primary text-on-primary font-label-sm text-label-sm rounded-lg hover:bg-secondary transition-colors" id="accept-cookies" type="button">
+        Accept Archival Cookies
+      </button>
+<button class="px-4 py-2 bg-surface-container text-on-surface font-label-sm text-label-sm rounded-lg hover:bg-surface-container-high transition-colors" id="pref-cookies" type="button">
+        Preferences
+      </button>
+</div>
+</aside>
+<!-- Interactive JavaScript for Filters & Toast Dismissal -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Cookie banner close action
+      const cookieToast = document.getElementById('archival-cookie-toast');
+      const closeBtn = document.getElementById('cookie-close');
+      const acceptBtn = document.getElementById('accept-cookies');
+      const prefBtn = document.getElementById('pref-cookies');
+
+      function dismissToast() {
+        if (cookieToast) {
+          cookieToast.style.opacity = '0';
+          cookieToast.style.transition = 'opacity 0.2s ease-out';
+          setTimeout(() => cookieToast.remove(), 200);
+        }
+      }
+
+      if (closeBtn) closeBtn.addEventListener('click', dismissToast);
+      if (acceptBtn) acceptBtn.addEventListener('click', dismissToast);
+      if (prefBtn) prefBtn.addEventListener('click', dismissToast);
+
+      // Simple active filter pill toggling
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => {
+            b.classList.remove('bg-secondary-container', 'text-on-secondary-container');
+            b.classList.add('bg-surface-container-lowest', 'text-on-surface-variant');
+          });
+          btn.classList.add('bg-secondary-container', 'text-on-secondary-container');
+          btn.classList.remove('bg-surface-container-lowest', 'text-on-surface-variant');
+        });
+      });
+    });
+  </script>
+</div></main><footer class="w-full bg-surface-container-lowest border-t border-surface-container-high py-space-xl"><div class="w-full max-w-[1280px] mx-auto px-margin-mobile lg:px-margin flex flex-col md:flex-row items-center justify-between gap-space-md"><div class="flex flex-col text-center md:text-left"><span class="font-headline-sm text-headline-sm uppercase tracking-[0.15em] text-on-surface">VOWS STUDIO</span><span class="font-label-sm text-label-sm text-outline mt-space-xs">Grace-centered cinematic heirloom films & editorial fine art stills.</span></div><div class="flex items-center gap-space-lg"><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="portfolio" href="#">Portfolio</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="services" href="#">Services</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="packages" href="#">Packages</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="testimonials" href="#">Testimonials</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="about" href="#">About</a></div><p class="font-label-sm text-label-sm text-outline text-center md:text-right">© 2025 VOWS STUDIO. ALL RIGHTS RESERVED.</p></div></footer></body></html>

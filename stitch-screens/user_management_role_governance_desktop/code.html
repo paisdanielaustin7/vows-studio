@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-tertiary": "#ffffff", "surface-dim": "#d6dcd5", "on-tertiary-container": "#282f2a", "tertiary": "#5a605b", "on-tertiary-fixed-variant": "#424843", "inverse-surface": "#2c322e", "surface-container-low": "#eff5ef", "error-container": "#ffdad6", "primary": "#4c6452", "surface": "#f5fbf4", "on-primary": "#ffffff", "tertiary-fixed": "#dee4dd", "on-secondary-container": "#516a57", "on-primary-fixed-variant": "#354c3b", "on-primary-fixed": "#092012", "surface-container": "#eaefe9", "surface-bright": "#f5fbf4", "secondary-fixed": "#ceead2", "inverse-primary": "#b3cdb7", "on-primary-container": "#1c3223", "secondary-container": "#ceead2", "tertiary-container": "#909690", "surface-container-lowest": "#ffffff", "secondary-fixed-dim": "#b2cdb6", "outline-variant": "#c3c8c1", "on-surface-variant": "#424843", "tertiary-fixed-dim": "#c2c8c2", "primary-container": "#829b87", "outline": "#737972", "on-tertiary-fixed": "#171d19", "secondary": "#4b6451", "error": "#ba1a1a", "surface-container-highest": "#dee4de", "inverse-on-surface": "#ecf2ec", "surface-variant": "#dee4de", "on-error": "#ffffff", "on-background": "#171d19", "surface-tint": "#4c6452", "on-error-container": "#93000a", "primary-fixed-dim": "#b3cdb7", "background": "#f5fbf4", "surface-container-high": "#e4eae3", "on-surface": "#171d19", "primary-fixed": "#cfe9d3", "on-secondary-fixed": "#082011", "on-secondary": "#ffffff", "on-secondary-fixed-variant": "#344c3b" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-xl": "2.5rem", "gutter-mobile": "1rem", "gutter": "1.5rem", "margin-mobile": "1.25rem", "margin": "3rem", "space-sm": "0.5rem", "space-lg": "1.5rem", "space-xs": "0.25rem", "space-md": "1rem" }, "fontFamily": { "body-sm": ["Inter"], "label-md": ["Inter"], "display-mobile": ["Inter"], "headline-md": ["Inter"], "headline-lg-mobile": ["Inter"], "label-sm": ["Inter"], "headline-lg": ["Inter"], "display": ["Inter"], "body-md": ["Inter"], "label-lg": ["Inter"], "body-lg": ["Inter"], "headline-sm": ["Inter"] }, "fontSize": { "body-sm": ["0.8125rem", { "lineHeight": "1.25rem", "fontWeight": "400" }], "label-md": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.02em", "fontWeight": "500" }], "display-mobile": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600" }], "headline-md": ["1.375rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.015em", "fontWeight": "600" }], "headline-lg-mobile": ["1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.015em", "fontWeight": "600" }], "label-sm": ["0.6875rem", { "lineHeight": "0.875rem", "letterSpacing": "0.04em", "fontWeight": "600" }], "headline-lg": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600" }], "display": ["2.75rem", { "lineHeight": "3.25rem", "letterSpacing": "-0.03em", "fontWeight": "600" }], "body-md": ["0.875rem", { "lineHeight": "1.5rem", "fontWeight": "400" }], "label-lg": ["0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "500" }], "body-lg": ["1rem", { "lineHeight": "1.625rem", "fontWeight": "400" }], "headline-sm": ["1.125rem", { "lineHeight": "1.5rem", "letterSpacing": "-0.01em", "fontWeight": "500" }] } } } };</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col h-full"><div class="h-16 px-space-lg flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center"><span class="font-label-lg text-label-lg text-on-primary tracking-widest">V</span></div><div class="flex flex-col"><span class="font-label-md text-label-md text-on-surface tracking-wider uppercase">VOWS STUDIO</span><span class="font-label-sm text-label-sm text-outline tracking-wider">CINEMA &amp; STILLS</span></div></div></div><nav class="flex-1 overflow-y-auto px-space-md py-space-sm space-y-space-md" data-active-classes="bg-secondary-container text-on-secondary-container font-label-md rounded-lg"><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Sales</div><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="enquiries" href="#"><span class="material-symbols-outlined text-[18px]">inbox</span><span>Enquiries</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="clients" href="#"><span class="material-symbols-outlined text-[18px]">group</span><span>Clients</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="quotations" href="#"><span class="material-symbols-outlined text-[18px]">request_quote</span><span>Quotations</span></a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Operations</div><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="bookings" href="#"><span class="material-symbols-outlined text-[18px]">event_available</span><span>Bookings</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="schedule" href="#"><span class="material-symbols-outlined text-[18px]">calendar_today</span><span>Schedule</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="crew" href="#"><span class="material-symbols-outlined text-[18px]">badge</span><span>Crew</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="delivery" href="#"><span class="material-symbols-outlined text-[18px]">local_shipping</span><span>Delivery</span></a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Studio Tools</div><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="services" href="#"><span class="material-symbols-outlined text-[18px]">concierge</span><span>Services</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="packages" href="#"><span class="material-symbols-outlined text-[18px]">inventory_2</span><span>Packages</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="portfolio" href="#"><span class="material-symbols-outlined text-[18px]">photo_library</span><span>Portfolio</span></a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Finance</div><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="invoices" href="#"><span class="material-symbols-outlined text-[18px]">receipt_long</span><span>Invoices</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="payments" href="#"><span class="material-symbols-outlined text-[18px]">credit_card</span><span>Payments</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="ledger" href="#"><span class="material-symbols-outlined text-[18px]">menu_book</span><span>Ledger</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="expenses" href="#"><span class="material-symbols-outlined text-[18px]">payments</span><span>Expenses</span></a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">Website</div><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="reviews" href="#"><span class="material-symbols-outlined text-[18px]">rate_review</span><span>Reviews</span></a></div><div class="space-y-space-xs"><div class="px-space-sm py-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline">System</div><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="settings" href="#"><span class="material-symbols-outlined text-[18px]">settings</span><span>Settings</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-space-xs transition-colors bg-secondary-container text-on-secondary-container font-label-md rounded-lg" data-path="users-&amp;-roles" href="#"><span class="material-symbols-outlined text-[18px]">manage_accounts</span><span>Users &amp; Roles</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="audit-log" href="#"><span class="material-symbols-outlined text-[18px]">history</span><span>Audit Log</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="system-health" href="#"><span class="material-symbols-outlined text-[18px]">vital_signs</span><span>System Health</span></a></div></nav><div class="p-space-md"><div class="bg-surface-container px-space-md py-space-sm rounded-lg flex items-center justify-between"><div class="flex items-center gap-space-xs"><div class="w-2 h-2 rounded-full bg-primary"></div><span class="font-label-sm text-label-sm text-on-surface-variant">Cloud Sync Real-time</span></div><span class="font-label-sm text-label-sm text-outline">v2.4.0 Prod</span></div></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl z-40 flex items-center justify-between px-space-lg shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex items-center gap-space-sm font-label-md text-label-md text-outline"><span class="text-on-surface-variant">Studio CRM</span><span class="text-outline-variant">/</span><span class="text-on-surface-variant">System</span><span class="text-outline-variant">/</span><span class="text-on-surface font-label-lg text-label-lg">Administration</span></div><div class="flex items-center gap-space-md"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-space-sm text-outline text-[18px]">search</span><input class="w-64 pl-9 pr-space-md py-1.5 rounded-lg bg-surface-container-lowest text-on-surface font-body-sm text-body-sm placeholder:text-outline focus:outline-none shadow-[0_1px_8px_rgba(0,0,0,0.04)]" placeholder="Search records, clients, invoices..." type="text"/></div><button aria-label="Notifications" class="p-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span></button><button aria-label="Toggle Theme" class="p-space-xs rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">dark_mode</span></button><div class="h-6 w-[1px] bg-surface-container-highest"></div><div class="flex items-center gap-space-sm pl-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="flex flex-col text-left"><span class="font-label-md text-label-md text-on-surface leading-tight">Reuben Serrao</span><span class="font-label-sm text-label-sm text-outline leading-tight">Owner / Super Admin</span></div></div></div></header><main class="w-full pt-16 bg-surface"><div class="flex flex-col w-full pb-space-xl">
+<!-- Top Banner / Editorial Screen Header -->
+<div class="px-margin pt-space-lg pb-space-md flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+<div class="space-y-space-xs">
+<div class="flex items-center gap-space-xs text-outline font-label-sm uppercase tracking-wider">
+<span>Security &amp; Compliance</span>
+<span>•</span>
+<span>Zero Trust Tier 1</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Team &amp; Role Governance</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">
+        Manage user provisioning, studio role credentials, MFA enforcement, and access state overrides.
+      </p>
+</div>
+<!-- Top Action CTA -->
+<div class="flex items-center gap-space-sm self-start md:self-auto">
+<button class="inline-flex items-center gap-space-xs px-space-md py-2.5 rounded-lg bg-primary text-on-primary font-label-lg text-label-lg hover:bg-secondary transition-colors shadow-sm" onclick="document.getElementById('inviteModal').classList.remove('hidden')" type="button">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+<span>Invite Team Member</span>
+</button>
+</div>
+</div>
+<!-- Key Metrics Ribbon -->
+<div class="px-margin pb-space-lg">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Metric 1: Total Team -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden group">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Total Team</span>
+<span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">group</span>
+</span>
+</div>
+<div class="mt-space-md flex items-baseline gap-space-xs">
+<span class="font-display text-headline-lg text-on-surface">12</span>
+<span class="font-label-md text-label-md text-secondary">Active Users</span>
+</div>
+<div class="mt-space-xs flex items-center gap-1.5 font-label-sm text-label-sm text-outline">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>100% capacity assigned</span>
+</div>
+</div>
+<!-- Metric 2: MFA Enforced -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">MFA Enforced</span>
+<span class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+</span>
+</div>
+<div class="mt-space-md flex items-baseline gap-space-xs">
+<span class="font-display text-headline-lg text-on-surface">100%</span>
+<span class="font-label-md text-label-md text-secondary">12/12 Compliant</span>
+</div>
+<div class="mt-space-xs flex items-center gap-1.5 font-label-sm text-label-sm text-secondary">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+<span>TOTP hardware or authenticator app</span>
+</div>
+</div>
+<!-- Metric 3: Pending Invites -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Pending Invites</span>
+<span class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">forward_to_inbox</span>
+</span>
+</div>
+<div class="mt-space-md flex items-baseline gap-space-xs">
+<span class="font-display text-headline-lg text-on-surface">2</span>
+<span class="font-label-md text-label-md text-on-surface-variant">Awaiting Signup</span>
+</div>
+<div class="mt-space-xs flex items-center gap-1.5 font-label-sm text-label-sm text-outline">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span>Expiring within 48h</span>
+</div>
+</div>
+<!-- Metric 4: Locked Accounts -->
+<div class="bg-surface-container-lowest p-space-lg rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-error">Locked Accounts</span>
+<span class="w-8 h-8 rounded-full bg-error-container flex items-center justify-center text-on-error-container">
+<span class="material-symbols-outlined text-[18px]">gpp_bad</span>
+</span>
+</div>
+<div class="mt-space-md flex items-baseline gap-space-xs">
+<span class="font-display text-headline-lg text-error">1</span>
+<span class="font-label-md text-label-md text-error">Brute Force Alert</span>
+</div>
+<div class="mt-space-xs flex items-center gap-1.5 font-label-sm text-label-sm text-error">
+<span class="material-symbols-outlined text-[14px]">report</span>
+<span>Melvin Dias (Action required)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Inline Governance Safety Alert: Role Modification Demo -->
+<div class="px-margin pb-space-md">
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-space-md">
+<div class="flex items-start gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-error flex-shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[22px]">security_update_warning</span>
+</div>
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="font-label-md text-label-md uppercase tracking-wider text-error font-semibold">Governance Safety Protocol</span>
+<span class="text-outline">•</span>
+<span class="font-label-sm text-label-sm text-outline">Audit Event #9281-REV</span>
+</div>
+<p class="font-headline-sm text-headline-sm text-on-surface mt-0.5">
+            Confirm Role Change for <span class="font-semibold text-primary underline underline-offset-4 decoration-primary-container">Melvin Dias</span>
+</p>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1 max-w-3xl">
+            Demoting from <strong class="text-on-surface font-medium">Studio Manager</strong> to <strong class="text-on-surface font-medium">Editor / Colorist</strong> will immediately revoke access to financial ledgers, invoice approvals, client billing records, and executive contracts. Active sessions will be terminated.
+          </p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm flex-shrink-0 self-end md:self-center">
+<button class="px-space-md py-2 rounded-lg bg-surface-container font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors" type="button">
+          Abort Change
+        </button>
+<button class="px-space-md py-2 rounded-lg bg-error text-on-error font-label-md text-label-md hover:opacity-95 transition-opacity shadow-sm" type="button">
+          Acknowledge &amp; Revoke
+        </button>
+</div>
+</div>
+</div>
+<!-- Control & Filter Bar -->
+<div class="px-margin pb-space-sm">
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-space-md">
+<!-- Search -->
+<div class="relative flex-1 min-w-[280px]">
+<span class="material-symbols-outlined absolute left-space-md top-1/2 -translate-y-1/2 text-outline text-[20px]">search</span>
+<input class="w-full pl-10 pr-space-md py-2 rounded-lg bg-surface-container text-on-surface font-body-md text-body-md placeholder:text-outline focus:outline-none focus:bg-surface-container-lowest transition-colors" id="userSearchInput" placeholder="Filter by name, email, credentials, or studio seat..." type="text"/>
+</div>
+<!-- Filters & Sorting Group -->
+<div class="flex flex-wrap items-center gap-space-sm">
+<!-- Role Dropdown -->
+<div class="relative">
+<select class="appearance-none pl-space-md pr-8 py-2 rounded-lg bg-surface-container text-on-surface font-label-md text-label-md focus:outline-none cursor-pointer">
+<option>Role: All Studio Roles</option>
+<option>Business Owner</option>
+<option>Studio Manager</option>
+<option>Production Lead</option>
+<option>Editor / Colorist</option>
+<option>Financial Auditor</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-outline text-[18px]">expand_more</span>
+</div>
+<!-- Status Filter -->
+<div class="relative">
+<select class="appearance-none pl-space-md pr-8 py-2 rounded-lg bg-surface-container text-on-surface font-label-md text-label-md focus:outline-none cursor-pointer">
+<option>Status: All States</option>
+<option>Active</option>
+<option>Invited</option>
+<option>Locked</option>
+<option>Inactive</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-outline text-[18px]">expand_more</span>
+</div>
+<!-- Export Audit Log Quick Button -->
+<button class="p-2 rounded-lg bg-surface-container text-on-surface-variant hover:bg-surface-container-high transition-colors" title="Export Security &amp; Access Log" type="button">
+<span class="material-symbols-outlined text-[20px]">download</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Users Table Container -->
+<div class="px-margin">
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-outline font-label-sm text-label-sm uppercase tracking-wider">
+<th class="py-3.5 px-space-lg font-medium">Team Member</th>
+<th class="py-3.5 px-space-md font-medium">Email</th>
+<th class="py-3.5 px-space-md font-medium">Studio Role</th>
+<th class="py-3.5 px-space-md font-medium">Account Status</th>
+<th class="py-3.5 px-space-md font-medium">Last Sign-in</th>
+<th class="py-3.5 px-space-md font-medium">MFA Security</th>
+<th class="py-3.5 px-space-lg text-right font-medium">Governance</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container font-body-sm text-body-sm text-on-surface">
+<!-- Row 1: Reuben Serrao -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="py-3.5 px-space-lg">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-primary text-on-primary flex items-center justify-center font-label-md text-label-md font-semibold tracking-wider">
+                    RS
+                  </div>
+<div>
+<div class="font-label-lg text-label-lg text-on-surface font-medium flex items-center gap-1.5">
+<span>Reuben Serrao</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider bg-surface-container-high text-on-surface-variant">Owner</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline">Principal Cinematographer</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-space-md font-mono text-body-sm text-on-surface-variant">
+                reuben@vowsstudio.com
+              </td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full font-label-sm text-label-sm bg-primary text-on-primary font-medium">
+                  Business Owner
+                </span>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="inline-flex items-center gap-1.5 font-label-md text-label-md text-secondary">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span>Active</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md text-on-surface-variant">
+                Today, 09:42 AM
+              </td>
+<td class="py-3.5 px-space-md">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-surface-container font-label-md text-label-md text-secondary">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">security</span>
+<span>TOTP Enrolled</span>
+</div>
+</td>
+<td class="py-3.5 px-space-lg text-right">
+<div class="relative inline-block text-left">
+<button class="p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors" title="Manage Permissions" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Savio Noronha -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="py-3.5 px-space-lg">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-label-md text-label-md font-semibold tracking-wider">
+                    SN
+                  </div>
+<div>
+<div class="font-label-lg text-label-lg text-on-surface font-medium">Savio Noronha</div>
+<span class="font-label-sm text-label-sm text-outline">Studio Director</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-space-md font-mono text-body-sm text-on-surface-variant">
+                savio@vowsstudio.com
+              </td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full font-label-sm text-label-sm bg-secondary-container text-on-secondary-container font-medium">
+                  Studio Manager
+                </span>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="inline-flex items-center gap-1.5 font-label-md text-label-md text-secondary">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span>Active</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md text-on-surface-variant">
+                Yesterday, 18:15
+              </td>
+<td class="py-3.5 px-space-md">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-surface-container font-label-md text-label-md text-secondary">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">security</span>
+<span>TOTP Enrolled</span>
+</div>
+</td>
+<td class="py-3.5 px-space-lg text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="px-2 py-1 rounded font-label-sm text-label-sm text-on-surface-variant hover:bg-surface-container-high transition-colors" type="button">
+                    Edit Role
+                  </button>
+<button class="p-1 rounded text-on-surface-variant hover:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: Tara Rao -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="py-3.5 px-space-lg">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-label-md text-label-md font-semibold tracking-wider">
+                    TR
+                  </div>
+<div>
+<div class="font-label-lg text-label-lg text-on-surface font-medium">Tara Rao</div>
+<span class="font-label-sm text-label-sm text-outline">Lead Photographer</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-space-md font-mono text-body-sm text-on-surface-variant">
+                tara@vowsstudio.com
+              </td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full font-label-sm text-label-sm bg-surface-container text-on-surface-variant font-medium">
+                  Principal Stills Master
+                </span>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="inline-flex items-center gap-1.5 font-label-md text-label-md text-secondary">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span>Active</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md text-on-surface-variant">
+                Nov 28, 2025
+              </td>
+<td class="py-3.5 px-space-md">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-surface-container font-label-md text-label-md text-secondary">
+<span class="material-symbols-outlined text-[16px]">sms</span>
+<span>SMS Backup Active</span>
+</div>
+</td>
+<td class="py-3.5 px-space-lg text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="px-2 py-1 rounded font-label-sm text-label-sm text-on-surface-variant hover:bg-surface-container-high transition-colors" type="button">
+                    Edit Role
+                  </button>
+<button class="p-1 rounded text-on-surface-variant hover:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4: Melvin Dias (LOCKED) -->
+<tr class="bg-error-container/20 hover:bg-error-container/30 transition-colors group">
+<td class="py-3.5 px-space-lg">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-error text-on-error flex items-center justify-center font-label-md text-label-md font-semibold tracking-wider">
+                    MD
+                  </div>
+<div>
+<div class="font-label-lg text-label-lg text-on-surface font-medium flex items-center gap-2">
+<span>Melvin Dias</span>
+<span class="material-symbols-outlined text-[16px] text-error">lock</span>
+</div>
+<span class="font-label-sm text-label-sm text-error">Junior Colorist</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-space-md font-mono text-body-sm text-on-surface-variant">
+                melvin@vowsstudio.com
+              </td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full font-label-sm text-label-sm bg-surface-container text-on-surface-variant font-medium">
+                  Editor / Colorist
+                </span>
+</td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-label-sm text-label-sm bg-error-container text-on-error-container font-medium" title="Triggered after repeated invalid password attempts">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span>Locked: 5 Failed Attempts</span>
+</span>
+</td>
+<td class="py-3.5 px-space-md text-on-surface-variant">
+                Yesterday, 23:40
+              </td>
+<td class="py-3.5 px-space-md">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-surface-container font-label-md text-label-md text-outline">
+<span class="material-symbols-outlined text-[16px]">lock_reset</span>
+<span>Suspended</span>
+</div>
+</td>
+<td class="py-3.5 px-space-lg text-right">
+<div class="flex items-center justify-end gap-1.5">
+<button class="px-2.5 py-1 rounded bg-secondary text-on-secondary font-label-sm text-label-sm hover:bg-primary transition-colors shadow-sm" type="button">
+                    Unlock User
+                  </button>
+<button class="px-2 py-1 rounded font-label-sm text-label-sm text-error hover:bg-error-container transition-colors" type="button">
+                    Reset MFA
+                  </button>
+</div>
+</td>
+</tr>
+<!-- Row 5: Rachel D'Souza -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="py-3.5 px-space-lg">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-surface-container-high text-on-surface flex items-center justify-center font-label-md text-label-md font-semibold tracking-wider">
+                    RD
+                  </div>
+<div>
+<div class="font-label-lg text-label-lg text-on-surface font-medium">Rachel D'Souza</div>
+<span class="font-label-sm text-label-sm text-outline">Finance Controller</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-space-md font-mono text-body-sm text-on-surface-variant">
+                rachel@vowsstudio.com
+              </td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full font-label-sm text-label-sm bg-surface-container text-on-surface-variant font-medium">
+                  Finance / Accounting
+                </span>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="inline-flex items-center gap-1.5 font-label-md text-label-md text-secondary">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span>Active</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md text-on-surface-variant">
+                Today, 08:12 AM
+              </td>
+<td class="py-3.5 px-space-md">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-surface-container font-label-md text-label-md text-secondary">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">security</span>
+<span>TOTP Enrolled</span>
+</div>
+</td>
+<td class="py-3.5 px-space-lg text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="px-2 py-1 rounded font-label-sm text-label-sm text-on-surface-variant hover:bg-surface-container-high transition-colors" type="button">
+                    Edit Role
+                  </button>
+<button class="p-1 rounded text-on-surface-variant hover:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 6: Kiran Varma -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="py-3.5 px-space-lg">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center font-label-md text-label-md font-semibold tracking-wider">
+                    KV
+                  </div>
+<div>
+<div class="font-label-lg text-label-lg text-on-surface font-medium">Kiran Varma</div>
+<span class="font-label-sm text-label-sm text-outline">Lead Story Editor</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-space-md font-mono text-body-sm text-on-surface-variant">
+                kiran@vowsstudio.com
+              </td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full font-label-sm text-label-sm bg-surface-container text-on-surface-variant font-medium">
+                  Editor
+                </span>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="inline-flex items-center gap-1.5 font-label-md text-label-md text-secondary">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span>Active</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md text-on-surface-variant">
+                Nov 26, 2025
+              </td>
+<td class="py-3.5 px-space-md">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-surface-container font-label-md text-label-md text-secondary">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">security</span>
+<span>TOTP Enrolled</span>
+</div>
+</td>
+<td class="py-3.5 px-space-lg text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="px-2 py-1 rounded font-label-sm text-label-sm text-on-surface-variant hover:bg-surface-container-high transition-colors" type="button">
+                    Edit Role
+                  </button>
+<button class="p-1 rounded text-on-surface-variant hover:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 7: Arjun Naik (Invited) -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="py-3.5 px-space-lg">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-surface-container-high text-outline flex items-center justify-center font-label-md text-label-md font-semibold tracking-wider">
+                    AN
+                  </div>
+<div>
+<div class="font-label-lg text-label-lg text-on-surface font-medium">Arjun Naik</div>
+<span class="font-label-sm text-label-sm text-outline">Production Lead (Candidate)</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-space-md font-mono text-body-sm text-on-surface-variant">
+                arjun@vowsstudio.com
+              </td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full font-label-sm text-label-sm bg-surface-container text-on-surface-variant font-medium">
+                  Production Lead
+                </span>
+</td>
+<td class="py-3.5 px-space-md">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant font-medium">
+<span class="w-2 h-2 rounded-full bg-tertiary-container"></span>
+<span>Invited (Awaiting)</span>
+</span>
+</td>
+<td class="py-3.5 px-space-md text-outline italic">
+                Never
+              </td>
+<td class="py-3.5 px-space-md">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-surface-container font-label-md text-label-md text-outline">
+<span class="material-symbols-outlined text-[16px]">hourglass_empty</span>
+<span>Pending Setup</span>
+</div>
+</td>
+<td class="py-3.5 px-space-lg text-right">
+<div class="flex items-center justify-end gap-1.5">
+<button class="px-2.5 py-1 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm hover:bg-surface-container-high transition-colors" type="button">
+                    Resend Invite
+                  </button>
+<button class="px-2 py-1 rounded font-label-sm text-label-sm text-error hover:bg-error-container transition-colors" type="button">
+                    Revoke
+                  </button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Pagination Metadata -->
+<div class="px-space-lg py-3.5 bg-surface-container-low flex flex-col sm:flex-row items-center justify-between gap-space-sm font-label-sm text-label-sm text-outline">
+<div class="flex items-center gap-space-xs">
+<span>Showing 7 of 14 Provisioned Identities</span>
+<span>•</span>
+<span class="text-on-surface-variant font-medium">100% MFA Enforcement Policy Active</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="px-space-sm py-1 rounded bg-surface-container text-on-surface-variant hover:bg-surface-container-high transition-colors disabled:opacity-40" disabled="" type="button">Previous</button>
+<span class="px-2 text-on-surface font-semibold">1</span>
+<button class="px-space-sm py-1 rounded bg-surface-container text-on-surface-variant hover:bg-surface-container-high transition-colors" type="button">Next</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Role Hierarchy & Studio Permissions Summary Card -->
+<div class="px-margin pt-space-lg">
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="flex items-center justify-between mb-space-md">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Studio Role Security Schema</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Matrix of functional scopes applied automatically during team credential assignment.</p>
+</div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Policy v3.1</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<!-- Tier 1 -->
+<div class="p-space-md rounded-lg bg-surface-container-low space-y-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">Business Owner</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-primary text-on-primary">Full Root</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Full studio control: ledger books, staff compensation, contract signing, and irreversible deletions.</p>
+<div class="pt-space-xs text-secondary font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span>MFA Bypass Exempt: False</span>
+</div>
+</div>
+<!-- Tier 2 -->
+<div class="p-space-md rounded-lg bg-surface-container-low space-y-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">Studio / Production Lead</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-secondary-container text-on-secondary-container">Operations</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Client communications, booking calendar dispatch, equipment assignments, and shoot itineraries.</p>
+<div class="pt-space-xs text-secondary font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span>Ledger Access: Read Only</span>
+</div>
+</div>
+<!-- Tier 3 -->
+<div class="p-space-md rounded-lg bg-surface-container-low space-y-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">Creative Post-Production</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant">Editorial</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">RAW footage review, cloud delivery vault ingestion, client proofing markups, color pass exports.</p>
+<div class="pt-space-xs text-outline font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">block</span>
+<span>Zero financial record access</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Interactive Invite Team Member Modal Overlay -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-space-md bg-inverse-surface/40 backdrop-blur-sm" id="inviteModal">
+<div class="bg-surface-container-lowest rounded-xl shadow-xl w-full max-w-xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+<!-- Modal Header -->
+<div class="px-space-lg py-space-md bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-lg bg-secondary-container text-on-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Invite New Team Member</h2>
+<span class="font-label-sm text-label-sm text-outline">Assign credentials, role-tier &amp; enforcement policies</span>
+</div>
+</div>
+<button class="p-1.5 rounded-lg text-outline hover:bg-surface-container hover:text-on-surface transition-colors" onclick="document.getElementById('inviteModal').classList.add('hidden')" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Modal Body -->
+<form class="p-space-lg space-y-space-md" id="inviteForm" onsubmit="event.preventDefault(); document.getElementById('inviteModal').classList.add('hidden');">
+<!-- Full Name -->
+<div class="space-y-1.5">
+<label class="block font-label-md text-label-md text-outline">Full Name</label>
+<input class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-lowest text-on-surface font-body-md text-body-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="e.g. Elena Rostova" required="" type="text" value="Arjun Naik"/>
+</div>
+<!-- Studio Email -->
+<div class="space-y-1.5">
+<label class="block font-label-md text-label-md text-outline">Studio Email Address</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">mail</span>
+<input class="w-full pl-10 pr-space-md py-2.5 rounded-lg bg-surface-container-lowest text-on-surface font-body-md text-body-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="name@vowsstudio.com" required="" type="email" value="arjun@vowsstudio.com"/>
+</div>
+</div>
+<!-- Role Selector -->
+<div class="space-y-1.5">
+<label class="block font-label-md text-label-md text-outline">Studio Role Assignment</label>
+<div class="relative">
+<select class="w-full appearance-none px-space-md py-2.5 rounded-lg bg-surface-container-lowest text-on-surface font-body-md text-body-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/20 cursor-pointer">
+<option selected="">Production Lead (Full access to schedule, crew dispatch &amp; client galleries)</option>
+<option>Studio Manager (Full operational &amp; standard financial privileges)</option>
+<option>Lead Stills Master / Cinematographer (Media workflows &amp; shoot packs)</option>
+<option>Editor / Colorist (Editorial &amp; Cloud proofing)</option>
+<option>Financial Auditor (Ledgers, invoices &amp; payout audit)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-outline text-[20px]">arrow_drop_down</span>
+</div>
+</div>
+<!-- Access Scope Permissions Summary Card -->
+<div class="p-space-md rounded-lg bg-surface-container-low space-y-space-xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline block">Precomputed Permissions Scope</span>
+<div class="grid grid-cols-2 gap-2 pt-1 font-body-sm text-body-sm text-on-surface">
+<div class="flex items-center gap-1.5 text-secondary">
+<span class="material-symbols-outlined text-[16px]">check</span>
+<span>Read / Write Quotations</span>
+</div>
+<div class="flex items-center gap-1.5 text-secondary">
+<span class="material-symbols-outlined text-[16px]">check</span>
+<span>Manage Shoot Schedules</span>
+</div>
+<div class="flex items-center gap-1.5 text-secondary">
+<span class="material-symbols-outlined text-[16px]">check</span>
+<span>Dispatch Production Crew</span>
+</div>
+<div class="flex items-center gap-1.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-outline">visibility</span>
+<span>Ledger (Read-only view)</span>
+</div>
+</div>
+</div>
+<!-- Security / Policy Note -->
+<div class="p-space-md rounded-lg bg-surface-container flex items-start gap-space-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-secondary text-[20px] flex-shrink-0 mt-0.5" style="font-variation-settings: 'FILL' 1;">shield_lock</span>
+<p class="font-body-sm text-body-sm">
+<strong class="text-on-surface font-medium">Mandatory MFA:</strong> User will be prompted to configure TOTP Multi-Factor Authentication via an authenticator app upon initial sign-in. Access tokens expire automatically after 24 hours of inactivity.
+          </p>
+</div>
+<!-- Modal Footer Buttons -->
+<div class="pt-space-sm flex items-center justify-end gap-space-sm">
+<button class="px-space-md py-2.5 rounded-lg bg-surface-container font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high transition-colors" onclick="document.getElementById('inviteModal').classList.add('hidden')" type="button">
+            Cancel
+          </button>
+<button class="px-space-lg py-2.5 rounded-lg bg-secondary text-on-secondary font-label-lg text-label-lg hover:bg-primary transition-colors shadow-sm inline-flex items-center gap-2" type="submit">
+<span class="material-symbols-outlined text-[18px]">send</span>
+<span>Send Studio Invitation</span>
+</button>
+</div>
+</form>
+</div>
+</div>
+<!-- Inline Script for Filter & Modal Interactivity -->
+<script>
+    // Live Search Filter Implementation
+    const searchInput = document.getElementById('userSearchInput');
+    if (searchInput) {
+      searchInput.addEventListener('input', function(e) {
+        const query = e.target.value.toLowerCase().trim();
+        const rows = document.querySelectorAll('tbody tr');
+        rows.forEach(row => {
+          const text = row.innerText.toLowerCase();
+          row.style.display = text.includes(query) ? '' : 'none';
+        });
+      });
+    }
+  </script>
+</div></main></div></body></html>

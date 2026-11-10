@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface-bright": "#f5fbf4", "primary-fixed-dim": "#b3cdb7", "on-tertiary": "#ffffff", "inverse-surface": "#2c322e", "on-primary-container": "#1c3223", "on-primary-fixed": "#092012", "surface-variant": "#dee4de", "surface-container-highest": "#dee4de", "on-secondary": "#ffffff", "on-primary-fixed-variant": "#354c3b", "inverse-primary": "#b3cdb7", "surface": "#f5fbf4", "tertiary": "#5a605b", "error-container": "#ffdad6", "on-surface-variant": "#424843", "primary-fixed": "#cfe9d3", "on-error-container": "#93000a", "secondary-fixed-dim": "#b2cdb6", "on-background": "#171d19", "on-tertiary-fixed": "#171d19", "tertiary-container": "#909690", "surface-container": "#eaefe9", "error": "#ba1a1a", "inverse-on-surface": "#ecf2ec", "on-primary": "#ffffff", "secondary-fixed": "#ceead2", "outline": "#737972", "secondary-container": "#ceead2", "on-surface": "#171d19", "surface-container-low": "#eff5ef", "surface-tint": "#4c6452", "on-tertiary-fixed-variant": "#424843", "outline-variant": "#c3c8c1", "secondary": "#4b6451", "on-secondary-container": "#516a57", "tertiary-fixed-dim": "#c2c8c2", "on-tertiary-container": "#282f2a", "on-secondary-fixed": "#082011", "background": "#f5fbf4", "surface-container-high": "#e4eae3", "on-error": "#ffffff", "primary-container": "#829b87", "surface-container-lowest": "#ffffff", "surface-dim": "#d6dcd5", "tertiary-fixed": "#dee4dd", "on-secondary-fixed-variant": "#344c3b", "primary": "#4c6452" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-xs": "0.25rem", "gutter": "1.5rem", "space-xl": "2.5rem", "space-sm": "0.5rem", "space-md": "1rem", "margin": "3rem", "margin-mobile": "1.25rem", "space-lg": "1.5rem", "gutter-mobile": "1rem" }, fontFamily: { "label-sm": ["Inter"], "body-sm": ["Inter"], "headline-sm": ["Inter"], "label-lg": ["Inter"], "body-lg": ["Inter"], "body-md": ["Inter"], "display": ["Inter"], "headline-md": ["Inter"], "headline-lg": ["Inter"], "display-mobile": ["Inter"], "headline-lg-mobile": ["Inter"], "label-md": ["Inter"] }, fontSize: { "label-sm": ["0.6875rem", { "lineHeight": "0.875rem", "letterSpacing": "0.04em", "fontWeight": "600" }], "body-sm": ["0.8125rem", { "lineHeight": "1.25rem", "fontWeight": "400" }], "headline-sm": ["1.125rem", { "lineHeight": "1.5rem", "letterSpacing": "-0.01em", "fontWeight": "500" }], "label-lg": ["0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "500" }], "body-lg": ["1rem", { "lineHeight": "1.625rem", "fontWeight": "400" }], "body-md": ["0.875rem", { "lineHeight": "1.5rem", "fontWeight": "400" }], "display": ["2.75rem", { "lineHeight": "3.25rem", "letterSpacing": "-0.03em", "fontWeight": "600" }], "headline-md": ["1.375rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.015em", "fontWeight": "600" }], "headline-lg": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600" }], "display-mobile": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600" }], "headline-lg-mobile": ["1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.015em", "fontWeight": "600" }], "label-md": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.02em", "fontWeight": "500" }] } } } };</script><style>@layer base{html,body{width:100%;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-safe"><div class="h-16 px-margin-mobile flex items-center justify-between"><div class="flex items-center gap-space-sm"><span class="text-primary font-headline-md tracking-tight">VOWS</span><span class="text-outline-variant font-body-md">/</span><h1 class="font-headline-sm text-headline-sm text-on-surface truncate">Reviews Moderation</h1></div><div class="flex items-center gap-space-xs"><button aria-label="Notifications" class="w-11 h-11 flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[22px]">notifications</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex flex-col relative w-full pt-16 pb-20 bg-surface min-h-screen"><div class="flex flex-col w-full pb-10">
+<!-- Sub-Header & Live Operational Bar -->
+<div class="px-margin-mobile pt-space-md pb-space-sm flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="font-headline-sm text-headline-sm text-on-surface">Client Reviews</span>
+<span class="inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm">
+        4 unreviewed
+      </span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button aria-label="Search reviews" class="w-11 h-11 flex items-center justify-center rounded-lg bg-surface-container-low text-on-surface-variant hover:bg-surface-container active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</button>
+<button aria-label="Filter reviews" class="w-11 h-11 flex items-center justify-center rounded-lg bg-surface-container-low text-on-surface-variant hover:bg-surface-container active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</button>
+</div>
+</div>
+<!-- Editorial Studio Metrics Ribbon -->
+<div class="px-margin-mobile mb-space-md">
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex items-center justify-between">
+<div class="flex flex-col">
+<div class="flex items-center gap-1 text-on-surface">
+<span class="material-symbols-outlined text-[18px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-headline-md text-headline-md">4.96</span>
+</div>
+<span class="font-label-sm text-label-sm text-tertiary">Overall Studio Score</span>
+</div>
+<div class="h-8 w-px bg-surface-variant"></div>
+<div class="flex flex-col text-center">
+<span class="font-headline-md text-headline-md text-primary">38</span>
+<span class="font-label-sm text-label-sm text-tertiary">Published</span>
+</div>
+<div class="h-8 w-px bg-surface-variant"></div>
+<div class="flex flex-col text-right">
+<div class="flex items-center justify-end gap-1">
+<span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+<span class="font-headline-md text-headline-md text-on-surface">4</span>
+</div>
+<span class="font-label-sm text-label-sm text-tertiary">Awaiting Action</span>
+</div>
+</div>
+</div>
+<!-- Horizontal Scrollable Segmented Filter -->
+<div class="px-margin-mobile mb-space-md overflow-x-auto no-scrollbar flex items-center gap-space-xs">
+<button class="flex-shrink-0 h-10 px-4 rounded-full bg-primary text-on-primary font-label-md text-label-md flex items-center gap-1.5 shadow-sm">
+<span>Pending</span>
+<span class="px-1.5 py-0.2 rounded-full bg-white/20 text-[10px]">4</span>
+</button>
+<button class="flex-shrink-0 h-10 px-4 rounded-full bg-surface-container-low text-on-surface-variant font-label-md text-label-md flex items-center gap-1.5 hover:bg-surface-container">
+<span>Approved</span>
+<span class="text-tertiary text-[10px]">38</span>
+</button>
+<button class="flex-shrink-0 h-10 px-4 rounded-full bg-surface-container-low text-on-surface-variant font-label-md text-label-md flex items-center gap-1.5 hover:bg-surface-container">
+<span>Rejected</span>
+<span class="text-tertiary text-[10px]">2</span>
+</button>
+<button class="flex-shrink-0 h-10 px-4 rounded-full bg-surface-container-low text-on-surface-variant font-label-md text-label-md flex items-center gap-1.5 hover:bg-surface-container">
+<span>Hidden</span>
+<span class="text-tertiary text-[10px]">4</span>
+</button>
+</div>
+<!-- Moderation Queue -->
+<div class="px-margin-mobile flex flex-col gap-space-md">
+<!-- Card 1: Active Review (Featured Focus) -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md relative overflow-hidden">
+<!-- Active Inspection Indicator Bar -->
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-primary"></div>
+<!-- Top Row: Identification & Tag -->
+<div class="flex items-start justify-between gap-space-sm pl-1">
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface leading-snug">Derick &amp; Samantha</span>
+<span class="font-label-sm text-label-sm text-tertiary">Nuptials &amp; Reception • BKG-2025-019</span>
+</div>
+<span class="inline-flex items-center px-2.5 py-1 rounded-md bg-amber-50 text-amber-800 text-[11px] font-semibold tracking-wide uppercase shrink-0">
+          Pending Review
+        </span>
+</div>
+<!-- Score Bar Highlights -->
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1 text-on-surface">
+<span class="material-symbols-outlined text-[18px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-headline-sm text-headline-sm">5.0</span>
+<span class="font-label-sm text-label-sm text-tertiary">Perfect Score</span>
+</div>
+<span class="font-label-sm text-label-sm text-tertiary">Dec 02, 2025</span>
+</div>
+<div class="grid grid-cols-3 gap-2 pt-1">
+<div class="flex flex-col">
+<span class="text-[10px] text-tertiary uppercase tracking-wider font-semibold">Comm.</span>
+<div class="flex items-center gap-0.5 text-on-surface font-label-sm text-label-sm">
+<span>5.0</span>
+<span class="material-symbols-outlined text-[12px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] text-tertiary uppercase tracking-wider font-semibold">Quality</span>
+<div class="flex items-center gap-0.5 text-on-surface font-label-sm text-label-sm">
+<span>5.0</span>
+<span class="material-symbols-outlined text-[12px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] text-tertiary uppercase tracking-wider font-semibold">Punctuality</span>
+<div class="flex items-center gap-0.5 text-on-surface font-label-sm text-label-sm">
+<span>5.0</span>
+<span class="material-symbols-outlined text-[12px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Testimonial Extract -->
+<blockquote class="pl-3 border-l-2 border-primary-container text-on-surface font-body-md text-body-md italic leading-relaxed">
+        “VOWS Studio captured the sanctity and timeless beauty of our wedding in Mangalore with such reverence and artistry... Every frame felt naturally honest.”
+      </blockquote>
+<!-- Quick Action Prompt to Inspect -->
+<button class="w-full h-11 rounded-lg bg-surface-container-high hover:bg-surface-variant text-on-surface font-label-lg text-label-lg flex items-center justify-center gap-2 active:scale-98 transition-all" id="openDrawerTrigger">
+<span class="material-symbols-outlined text-[18px]">rule</span>
+<span>Inspect &amp; Moderate</span>
+</button>
+</div>
+<!-- Card 2: Approved Entry -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm opacity-90 hover:opacity-100 transition-opacity">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface">Alister &amp; Michelle</span>
+<span class="font-label-sm text-label-sm text-tertiary">BKG-2025-014 • Nov 18, 2025</span>
+</div>
+<span class="inline-flex items-center px-2 py-0.5 rounded-md bg-secondary-container text-on-secondary-container text-[11px] font-medium shrink-0">
+          Approved
+        </span>
+</div>
+<div class="flex items-center justify-between text-tertiary font-body-sm text-body-sm">
+<div class="flex items-center gap-1 text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-semibold">5.0</span>
+</div>
+<span class="text-outline">Quality 5.0 • Comm 5.0 • Punct 4.9</span>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="text-tertiary text-[11px]">Published to Public Portfolio</span>
+<button class="h-9 px-3 rounded-lg bg-surface-container-low hover:bg-surface-container text-tertiary text-[12px] font-medium flex items-center gap-1 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[16px]">visibility_off</span>
+<span>Re-hide</span>
+</button>
+</div>
+</div>
+<!-- Card 3: Rejected Entry -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm opacity-85">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface">Unverified Guest</span>
+<span class="font-label-sm text-label-sm text-tertiary">Flagged Submission • Nov 04, 2025</span>
+</div>
+<span class="inline-flex items-center px-2 py-0.5 rounded-md bg-error-container text-on-error-container text-[11px] font-medium shrink-0">
+          Rejected
+        </span>
+</div>
+<div class="flex items-center gap-1.5 text-on-surface font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-error">star</span>
+<span class="font-semibold text-error">2.0</span>
+<span class="text-outline">• Reason: Non-contracted attendee</span>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container text-on-surface-variant font-body-sm text-body-sm">
+        Attendee not found in confirmed client registry or billing files. Automated gate flagged duplicate IP origin.
+      </div>
+</div>
+</div>
+<!-- Studio Proofing Photo Teaser (Visual richness) -->
+<div class="px-margin-mobile mt-space-lg flex flex-col gap-2">
+<span class="font-label-sm text-label-sm text-tertiary uppercase tracking-wider">Associated Shoot Media</span>
+<div class="relative w-full h-32 rounded-xl overflow-hidden shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Cinematic frame from a serene coastal wedding in Mangalore, high-end bridal portrait bathed in diffused natural golden-hour sunlight with gentle ocean mist, neutral sage tones and quiet luxury aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEJbpwTJiu-pfax8PZVtOTvUuDFpm3mcRU_NGxKryvQ0heXMQle1yCm8eoYwpcW5hqzLer53euuWFuXSgtNXsf7uQC2o412yCkX11jU2SgV1meyrNAnkGE4_6wp7Q1sskw5oe8o4kVaNTJ4SfLr5dGrbxy0XrtZwfq4-THsqgcYD7Rf7wY3wwiI9ds6kYk81K17Dr2qXdB7yAj4z7_tupXXpRNKiGy0TumLDTRe3Lw"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-space-md">
+<div class="flex items-center gap-2 text-white">
+<span class="material-symbols-outlined text-[18px]">photo_camera</span>
+<span class="font-label-md text-label-md tracking-wide">Derick &amp; Samantha Proof Roll #04</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Detail Inspection Drawer (Active/Open State for Card 1) -->
+<div class="fixed inset-x-0 bottom-16 z-40 bg-surface-container-lowest rounded-t-2xl shadow-xl flex flex-col max-h-[707px] overflow-y-auto transform transition-transform duration-300 ease-out" id="inspectionDrawer">
+<!-- Drag Handle / Dismiss bar -->
+<div class="w-full flex items-center justify-center pt-3 pb-1 cursor-pointer" id="closeDrawerPill">
+<div class="w-12 h-1.5 rounded-full bg-surface-variant"></div>
+</div>
+<!-- Drawer Content -->
+<div class="px-space-lg pt-space-xs pb-space-lg flex flex-col gap-space-md">
+<!-- Drawer Header -->
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider font-semibold">Moderation Dossier</span>
+<h2 class="font-headline-md-mobile text-headline-md-mobile text-on-surface">Derick &amp; Samantha</h2>
+<span class="font-body-sm text-body-sm text-tertiary">Booking Ref: BKG-2025-019 • St. Aloysius Chapel</span>
+</div>
+<button aria-label="Close moderation view" class="w-9 h-9 rounded-full bg-surface-container-low flex items-center justify-center text-on-surface-variant hover:bg-surface-container transition-colors" id="closeDrawerBtn">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Verified Wedding Details Badge -->
+<div class="p-space-sm rounded-lg bg-surface-container flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface">Contract Complete &amp; Fully Settled</span>
+<span class="font-label-sm text-label-sm text-tertiary">Production delivered 14 days ahead of deadline</span>
+</div>
+</div>
+<!-- Metric Score Bars Breakdown -->
+<div class="flex flex-col gap-3 bg-surface-container-low p-space-md rounded-xl">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Score Verification Breakdown</span>
+<!-- Bar 1: Communication -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-label-sm text-label-sm">
+<span class="text-tertiary">Pre-production &amp; Communication</span>
+<span class="font-semibold text-on-surface">5.0 / 5.0</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-variant overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 100%;"></div>
+</div>
+</div>
+<!-- Bar 2: Production Quality -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-label-sm text-label-sm">
+<span class="text-tertiary">Artistry &amp; Cinematic Quality</span>
+<span class="font-semibold text-on-surface">5.0 / 5.0</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-variant overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 100%;"></div>
+</div>
+</div>
+<!-- Bar 3: Punctuality -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-label-sm text-label-sm">
+<span class="text-tertiary">Punctuality &amp; Crew Conduct</span>
+<span class="font-semibold text-on-surface">5.0 / 5.0</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-variant overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 100%;"></div>
+</div>
+</div>
+</div>
+<!-- Full Testimonial Text -->
+<div class="flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-tertiary">Full Client Statement</span>
+<p class="font-body-md text-body-md text-on-surface bg-surface-container-low p-space-md rounded-xl leading-relaxed">
+          “VOWS Studio captured the sanctity and timeless beauty of our wedding in Mangalore with such reverence and artistry. They worked unobtrusively during the cathedral vows, and the sunset portraits by the coastline felt completely natural. Every single frame feels naturally honest and cherished by both our families.”
+        </p>
+</div>
+<!-- Rejection / Internal Audit Note Input -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-tertiary" for="moderationNote">
+          Rejection Note / Internal Notation (Optional)
+        </label>
+<textarea class="w-full p-space-sm rounded-lg bg-surface-container-low text-on-surface placeholder-tertiary font-body-sm text-body-sm outline-none focus:bg-surface-container-lowest transition-colors" id="moderationNote" placeholder="Add reason for rejection or private studio note..." rows="2"></textarea>
+</div>
+<!-- Action Button Architecture -->
+<div class="flex flex-col gap-space-sm pt-1">
+<!-- Primary Action -->
+<button class="w-full h-12 rounded-xl bg-primary hover:bg-secondary text-on-primary font-label-lg text-label-lg flex items-center justify-center gap-2 active:scale-98 transition-all shadow-sm" id="approveBtn">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+<span>Approve &amp; Publish Review</span>
+</button>
+<!-- Secondary Action Row -->
+<div class="grid grid-cols-2 gap-space-sm">
+<button class="h-11 rounded-xl bg-surface-container-low hover:bg-error-container hover:text-on-error-container text-on-surface-variant font-label-md text-label-md flex items-center justify-center gap-1.5 active:scale-95 transition-all" id="rejectBtn">
+<span class="material-symbols-outlined text-[18px]">cancel</span>
+<span>Reject with Note</span>
+</button>
+<button class="h-11 rounded-xl bg-surface-container-low hover:bg-surface-container text-on-surface-variant font-label-md text-label-md flex items-center justify-center gap-1.5 active:scale-95 transition-all" id="hideBtn">
+<span class="material-symbols-outlined text-[18px]">visibility_off</span>
+<span>Re-hide</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Client-side interactions for drawer control and delight feedback
+  (function initModerationDrawer() {
+    const drawer = document.getElementById('inspectionDrawer');
+    const openTrigger = document.getElementById('openDrawerTrigger');
+    const closeBtn = document.getElementById('closeDrawerBtn');
+    const closePill = document.getElementById('closeDrawerPill');
+    const approveBtn = document.getElementById('approveBtn');
+
+    function openDrawer() {
+      if (!drawer) return;
+      drawer.classList.remove('translate-y-full');
+      drawer.classList.add('translate-y-0');
+    }
+
+    function closeDrawer() {
+      if (!drawer) return;
+      drawer.classList.remove('translate-y-0');
+      drawer.classList.add('translate-y-full');
+    }
+
+    if (openTrigger) openTrigger.addEventListener('click', openDrawer);
+    if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+    if (closePill) closePill.addEventListener('click', closeDrawer);
+
+    if (approveBtn) {
+      approveBtn.addEventListener('click', function() {
+        approveBtn.innerHTML = '<span class="material-symbols-outlined text-[20px] animate-spin">sync</span><span>Publishing...</span>';
+        setTimeout(function() {
+          approveBtn.innerHTML = '<span class="material-symbols-outlined text-[20px]">done_all</span><span>Published to Studio!</span>';
+          approveBtn.classList.replace('bg-primary', 'bg-secondary');
+          setTimeout(closeDrawer, 800);
+        }, 600);
+      });
+    }
+  })();
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/85 backdrop-blur-xl shadow-[0_-1px_12px_rgba(0,0,0,0.03)]" data-active-classes="text-primary font-semibold"><div class="flex justify-around items-center h-16 px-space-xs"><a class="flex flex-col items-center justify-center min-w-[54px] min-h-[44px] gap-0.5 text-on-surface-variant hover:text-on-surface transition-colors" data-path="bookings" href="#"><span class="material-symbols-outlined text-[20px]">calendar_month</span><span class="font-label-sm text-label-sm">Bookings</span></a><a class="flex flex-col items-center justify-center min-w-[54px] min-h-[44px] gap-0.5 text-on-surface-variant hover:text-on-surface transition-colors" data-path="enquiries" href="#"><span class="material-symbols-outlined text-[20px]">chat_bubble_outline</span><span class="font-label-sm text-label-sm">Enquiries</span></a><a class="flex flex-col items-center justify-center min-w-[54px] min-h-[44px] gap-0.5 text-on-surface-variant hover:text-on-surface transition-colors" data-path="catalogue" href="#"><span class="material-symbols-outlined text-[20px]">photo_library</span><span class="font-label-sm text-label-sm">Catalogue</span></a><a aria-current="page" class="flex flex-col items-center justify-center min-w-[54px] min-h-[44px] gap-0.5 transition-colors text-primary font-semibold" data-path="reviews-moderation" href="#"><span class="material-symbols-outlined text-[20px]">rate_review</span><span class="font-label-sm text-label-sm">Reviews</span></a><a class="flex flex-col items-center justify-center min-w-[54px] min-h-[44px] gap-0.5 text-on-surface-variant hover:text-on-surface transition-colors" data-path="more" href="#"><span class="material-symbols-outlined text-[20px]">more_horiz</span><span class="font-label-sm text-label-sm">More</span></a></div></nav></body></html>

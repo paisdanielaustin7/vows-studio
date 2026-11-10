@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "on-error": "#ffffff",
+          "surface-tint": "#4c6452",
+          "on-primary": "#ffffff",
+          "secondary-fixed": "#ceead2",
+          "error": "#ba1a1a",
+          "on-tertiary-container": "#282f2a",
+          "surface-dim": "#d6dcd5",
+          "surface-container-low": "#eff5ef",
+          "secondary": "#4b6451",
+          "outline-variant": "#c3c8c1",
+          "on-tertiary-fixed": "#171d19",
+          "on-tertiary": "#ffffff",
+          "surface-container-lowest": "#ffffff",
+          "on-background": "#171d19",
+          "secondary-fixed-dim": "#b2cdb6",
+          "secondary-container": "#ceead2",
+          "surface-container-high": "#e4eae3",
+          "on-surface-variant": "#424843",
+          "on-primary-fixed": "#092012",
+          "tertiary-fixed": "#dee4dd",
+          "surface-bright": "#f5fbf4",
+          "surface-container-highest": "#dee4de",
+          "primary-container": "#829b87",
+          "background": "#f5fbf4",
+          "on-secondary-fixed": "#082011",
+          "tertiary-fixed-dim": "#c2c8c2",
+          "surface": "#f5fbf4",
+          "inverse-surface": "#2c322e",
+          "tertiary": "#5a605b",
+          "tertiary-container": "#909690",
+          "surface-variant": "#dee4de",
+          "outline": "#737972",
+          "on-surface": "#171d19",
+          "on-secondary-fixed-variant": "#344c3b",
+          "inverse-on-surface": "#ecf2ec",
+          "inverse-primary": "#b3cdb7",
+          "on-error-container": "#93000a",
+          "on-secondary-container": "#516a57",
+          "primary-fixed-dim": "#b3cdb7",
+          "surface-container": "#eaefe9",
+          "primary": "#4c6452",
+          "primary-fixed": "#cfe9d3",
+          "error-container": "#ffdad6",
+          "on-secondary": "#ffffff",
+          "on-primary-fixed-variant": "#354c3b",
+          "on-primary-container": "#1c3223",
+          "on-tertiary-fixed-variant": "#424843"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "gutter": "1.5rem",
+          "gutter-mobile": "1rem",
+          "margin-mobile": "1.25rem",
+          "space-xl": "2.5rem",
+          "space-lg": "1.5rem",
+          "space-sm": "0.5rem",
+          "margin": "3rem",
+          "space-md": "1rem",
+          "space-xs": "0.25rem"
+        },
+        "fontFamily": {
+          "headline-lg": [
+            "Inter"
+          ],
+          "body-lg": [
+            "Inter"
+          ],
+          "headline-lg-mobile": [
+            "Inter"
+          ],
+          "label-sm": [
+            "Inter"
+          ],
+          "label-lg": [
+            "Inter"
+          ],
+          "body-md": [
+            "Inter"
+          ],
+          "body-sm": [
+            "Inter"
+          ],
+          "label-md": [
+            "Inter"
+          ],
+          "display": [
+            "Inter"
+          ],
+          "headline-sm": [
+            "Inter"
+          ],
+          "headline-md": [
+            "Inter"
+          ],
+          "display-mobile": [
+            "Inter"
+          ]
+        },
+        "fontSize": {
+          "headline-lg": [
+            "2rem",
+            {
+              "lineHeight": "2.5rem",
+              "letterSpacing": "-0.02em",
+              "fontWeight": "600"
+            }
+          ],
+          "body-lg": [
+            "1rem",
+            {
+              "lineHeight": "1.625rem",
+              "fontWeight": "400"
+            }
+          ],
+          "headline-lg-mobile": [
+            "1.5rem",
+            {
+              "lineHeight": "2rem",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "600"
+            }
+          ],
+          "label-sm": [
+            "0.6875rem",
+            {
+              "lineHeight": "0.875rem",
+              "letterSpacing": "0.04em",
+              "fontWeight": "600"
+            }
+          ],
+          "label-lg": [
+            "0.875rem",
+            {
+              "lineHeight": "1.25rem",
+              "letterSpacing": "0.01em",
+              "fontWeight": "500"
+            }
+          ],
+          "body-md": [
+            "0.875rem",
+            {
+              "lineHeight": "1.5rem",
+              "fontWeight": "400"
+            }
+          ],
+          "body-sm": [
+            "0.8125rem",
+            {
+              "lineHeight": "1.25rem",
+              "fontWeight": "400"
+            }
+          ],
+          "label-md": [
+            "0.75rem",
+            {
+              "lineHeight": "1rem",
+              "letterSpacing": "0.02em",
+              "fontWeight": "500"
+            }
+          ],
+          "display": [
+            "2.75rem",
+            {
+              "lineHeight": "3.25rem",
+              "letterSpacing": "-0.03em",
+              "fontWeight": "600"
+            }
+          ],
+          "headline-sm": [
+            "1.125rem",
+            {
+              "lineHeight": "1.5rem",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "500"
+            }
+          ],
+          "headline-md": [
+            "1.375rem",
+            {
+              "lineHeight": "1.75rem",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "600"
+            }
+          ],
+          "display-mobile": [
+            "2rem",
+            {
+              "lineHeight": "2.5rem",
+              "letterSpacing": "-0.02em",
+              "fontWeight": "600"
+            }
+          ]
+        }
+      },
+    },
+  }</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-50 flex flex-col justify-between overflow-y-auto"><div class="flex flex-col"><div class="h-16 px-space-lg flex items-center justify-between"><div class="flex items-center gap-space-sm"><span class="w-2.5 h-2.5 rounded-full bg-primary"></span><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight uppercase">VOWS STUDIO</span></div><span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container px-space-xs py-0.5 rounded">PROD</span></div><nav class="px-space-md py-space-sm flex flex-col gap-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-medium rounded-lg"><div class="px-space-sm pt-space-xs pb-space-xs font-label-sm text-label-sm uppercase text-outline tracking-wider">Operations</div><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="studio-summary" href="#"><span class="material-symbols-outlined text-[20px]">analytics</span><span class="font-label-lg text-label-lg">Studio Summary</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm transition-colors bg-secondary-container text-on-secondary-container font-medium rounded-lg" data-path="production-schedule" href="#"><span class="material-symbols-outlined text-[20px]">calendar_today</span><span class="font-label-lg text-label-lg">Production Schedule</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="bookings" href="#"><span class="material-symbols-outlined text-[20px]">event_available</span><span class="font-label-lg text-label-lg">Bookings</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="inquiries-and-leads" href="#"><span class="material-symbols-outlined text-[20px]">contact_mail</span><span class="font-label-lg text-label-lg">Inquiries &amp; Leads</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="shoot-logistics" href="#"><span class="material-symbols-outlined text-[20px]">local_shipping</span><span class="font-label-lg text-label-lg">Shoot Logistics</span></a><div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase text-outline tracking-wider">Archive</div><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="master-vaults" href="#"><span class="material-symbols-outlined text-[20px]">lock</span><span class="font-label-lg text-label-lg">Master Vaults</span></a><div class="px-space-sm pt-space-md pb-space-xs font-label-sm text-label-sm uppercase text-outline tracking-wider">Finance &amp; Legal</div><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="contracts-and-billing" href="#"><span class="material-symbols-outlined text-[20px]">history_edu</span><span class="font-label-lg text-label-lg">Contracts &amp; Billing</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="invoices" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span class="font-label-lg text-label-lg">Invoices</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="payments" href="#"><span class="material-symbols-outlined text-[20px]">payments</span><span class="font-label-lg text-label-lg">Payments</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="ledger" href="#"><span class="material-symbols-outlined text-[20px]">menu_book</span><span class="font-label-lg text-label-lg">Ledger</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="expenses" href="#"><span class="material-symbols-outlined text-[20px]">account_balance_wallet</span><span class="font-label-lg text-label-lg">Expenses</span></a></nav></div><div class="p-space-md"><div class="p-space-md rounded-lg bg-surface-container flex items-center justify-between"><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface-variant">Studio Node</span><span class="font-body-sm text-body-sm text-on-surface font-medium">Copenhagen 01</span></div><span class="w-2 h-2 rounded-full bg-primary"></span></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-lg"><div class="flex items-center gap-space-sm font-label-md text-label-md"><span class="text-on-surface-variant">Studio CRM</span><span class="text-outline-variant font-normal">/</span><span class="text-on-surface-variant">Operations</span><span class="text-outline-variant font-normal">/</span><span class="text-on-surface font-medium">Schedule</span></div><div class="flex items-center gap-space-md"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-outline text-[18px]">search</span><input class="w-64 h-9 pl-9 pr-space-md bg-surface-container-low rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:bg-surface-container-lowest transition-colors" placeholder="Search shoots, dates, assets..." type="text"/></div><button aria-label="Theme Toggle" class="w-9 h-9 flex items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">light_mode</span></button><button aria-label="Notifications" class="relative w-9 h-9 flex items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-primary"></span></button><div class="h-5 w-px bg-outline-variant/40 ml-space-xs"></div><div class="flex items-center gap-space-sm pl-space-xs"><div class="flex flex-col text-right hidden sm:flex"><span class="font-label-md text-label-md text-on-surface">Reuben Serrao</span><span class="font-label-sm text-label-sm text-on-surface-variant">Executive Producer</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="relative pt-16 w-full min-h-screen bg-surface px-space-lg py-space-lg"><div class="flex flex-col w-full gap-space-lg">
+<!-- Header Section with Controls -->
+<section class="flex flex-col gap-space-md">
+<!-- Top Action Row -->
+<div class="flex flex-col xl:flex-row xl:items-center justify-between gap-space-md">
+<div>
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm uppercase tracking-wider text-outline mb-1">
+<span>Production Operations</span>
+<span>·</span>
+<span>Week 47 Active Schedule</span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary inline-block"></span>
+</div>
+<div class="flex items-baseline gap-space-sm flex-wrap">
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Nov 17 – Nov 23, 2025</h1>
+<span class="font-label-md text-label-md px-space-sm py-0.5 rounded-full bg-secondary-container text-on-secondary-container">
+            Peak Wedding Season • 14 Confirmed Dispatches
+          </span>
+</div>
+</div>
+<!-- Segmented View Controller & Quick Utility -->
+<div class="flex items-center gap-space-sm flex-wrap">
+<!-- Date Navigator -->
+<div class="flex items-center bg-surface-container rounded-lg p-0.5 shadow-sm">
+<button aria-label="Previous Week" class="w-8 h-8 flex items-center justify-center rounded text-on-surface-variant hover:bg-surface-container-lowest hover:text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="px-space-sm py-1 font-label-md text-label-md text-on-surface font-medium hover:bg-surface-container-lowest rounded transition-colors" type="button">
+            Current Week
+          </button>
+<button aria-label="Next Week" class="w-8 h-8 flex items-center justify-center rounded text-on-surface-variant hover:bg-surface-container-lowest hover:text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+<!-- View Segmented Tabs -->
+<div class="flex items-center bg-surface-container rounded-lg p-0.5 shadow-sm">
+<button class="px-space-md py-1.5 rounded font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" type="button">
+            Month
+          </button>
+<button class="px-space-md py-1.5 rounded bg-surface-container-lowest font-label-md text-label-md text-primary font-semibold shadow-sm" type="button">
+            Week
+          </button>
+<button class="px-space-md py-1.5 rounded font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" type="button">
+            Day
+          </button>
+<button class="px-space-md py-1.5 rounded font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors flex items-center gap-1" type="button">
+<span>List</span>
+<span class="w-1.5 h-1.5 rounded-full bg-surface-tint"></span>
+</button>
+</div>
+<button class="flex items-center gap-space-xs bg-primary hover:bg-surface-tint text-on-primary px-space-md py-2 rounded-lg font-label-lg text-label-lg transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span>Schedule Shoot</span>
+</button>
+</div>
+</div>
+<!-- Sub-Filter Bar (Crew & Event Category Pills) -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+<!-- Active Crew Tag Filter -->
+<div class="flex items-center gap-space-sm">
+<div class="flex items-center gap-2 bg-surface-container-low px-space-md py-1.5 rounded-lg text-on-surface">
+<span class="material-symbols-outlined text-primary text-[18px]">badge</span>
+<span class="font-label-md text-label-md font-medium">Field Crew:</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">All Active (5 Operators)</span>
+<span class="material-symbols-outlined text-[16px] text-outline cursor-pointer hover:text-on-surface">expand_more</span>
+</div>
+<div class="flex -space-x-1.5 overflow-hidden">
+<span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-primary text-on-primary font-label-sm text-label-sm font-semibold ring-2 ring-surface-container-lowest" title="Reuben Serrao (Lead DP)">RS</span>
+<span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-secondary text-on-secondary font-label-sm text-label-sm font-semibold ring-2 ring-surface-container-lowest" title="Tara Rao (Principal Stills)">TR</span>
+<span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-tertiary text-on-tertiary font-label-sm text-label-sm font-semibold ring-2 ring-surface-container-lowest" title="Kiran Varma (Cinema Gimbal)">KV</span>
+<span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-surface-tint text-on-primary font-label-sm text-label-sm font-semibold ring-2 ring-surface-container-lowest" title="Maya Sen (Drone/Colorist)">MS</span>
+<span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-surface-container-highest text-on-surface font-label-sm text-label-sm font-semibold ring-2 ring-surface-container-lowest" title="Leo Costa (Lighting/Audio)">LC</span>
+</div>
+</div>
+<!-- Event Category Color Pills -->
+<div class="flex items-center gap-space-xs flex-wrap overflow-x-auto pb-1 lg:pb-0">
+<span class="font-label-sm text-label-sm uppercase tracking-wide text-outline mr-1">Tiers:</span>
+<button class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-on-surface hover:bg-surface-container-high transition-colors" type="button">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span>Wedding</span>
+</button>
+<button class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-on-surface hover:bg-surface-container-high transition-colors" type="button">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span>Pre-Wedding</span>
+</button>
+<button class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-on-surface hover:bg-surface-container-high transition-colors" type="button">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span>Engagement</span>
+</button>
+<button class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-on-surface hover:bg-surface-container-high transition-colors" type="button">
+<span class="w-2 h-2 rounded-full bg-surface-tint"></span>
+<span>Mehendi</span>
+</button>
+<button class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-on-surface hover:bg-surface-container-high transition-colors" type="button">
+<span class="w-2 h-2 rounded-full bg-secondary-fixed-dim"></span>
+<span>Haldi</span>
+</button>
+<button class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-on-surface hover:bg-surface-container-high transition-colors" type="button">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+<span>Reception</span>
+</button>
+<button class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-on-surface hover:bg-surface-container-high transition-colors" type="button">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+<span>Portrait</span>
+</button>
+<button class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-on-surface hover:bg-surface-container-high transition-colors" type="button">
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></span>
+<span>Corporate</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Main View Grid: Week Timeline + Side Day Inspection Pane -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg items-start">
+<!-- 7-Day Interactive Timeline (Span 8 Cols) -->
+<div class="xl:col-span-8 flex flex-col gap-space-md">
+<!-- Week Header Ribbon -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm">
+<div class="grid grid-cols-7 gap-space-xs text-center">
+<!-- Mon -->
+<div class="p-2 rounded-lg bg-surface-container-low flex flex-col items-center">
+<span class="font-label-sm text-label-sm uppercase text-outline">Mon</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">17</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-1">1 Prep</span>
+</div>
+<!-- Tue -->
+<div class="p-2 rounded-lg bg-secondary-container/40 flex flex-col items-center">
+<span class="font-label-sm text-label-sm uppercase text-on-secondary-container font-medium">Tue</span>
+<span class="font-headline-sm text-headline-sm text-on-secondary-container font-semibold">18</span>
+<span class="font-label-sm text-label-sm text-on-secondary-container font-medium mt-1">2 Shoots</span>
+</div>
+<!-- Wed (Active / Primary) -->
+<div class="p-2 rounded-lg bg-primary text-on-primary flex flex-col items-center shadow-sm">
+<span class="font-label-sm text-label-sm uppercase text-primary-fixed opacity-90">Wed</span>
+<span class="font-headline-sm text-headline-sm font-semibold">19</span>
+<span class="font-label-sm text-label-sm text-primary-fixed mt-1">Ceremony</span>
+</div>
+<!-- Thu -->
+<div class="p-2 rounded-lg bg-surface-container-low flex flex-col items-center">
+<span class="font-label-sm text-label-sm uppercase text-outline">Thu</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">20</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-1">Gala Night</span>
+</div>
+<!-- Fri -->
+<div class="p-2 rounded-lg bg-surface-container-low flex flex-col items-center">
+<span class="font-label-sm text-label-sm uppercase text-outline">Fri</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">21</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-1">Sunset Stills</span>
+</div>
+<!-- Sat -->
+<div class="p-2 rounded-lg bg-surface-container-low flex flex-col items-center">
+<span class="font-label-sm text-label-sm uppercase text-outline">Sat</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">22</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-1">Vivanta</span>
+</div>
+<!-- Sun -->
+<div class="p-2 rounded-lg bg-surface-container-low flex flex-col items-center">
+<span class="font-label-sm text-label-sm uppercase text-outline">Sun</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">23</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-1">Atelier</span>
+</div>
+</div>
+</div>
+<!-- Hourly Timeline Canvas (08:00 - 22:00) -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-lg">
+<div class="flex items-center justify-between pb-2">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">Weekly Chronology</span>
+<span class="font-label-sm text-label-sm text-outline">Grid Resolution: Hourly • Studio Calibrated</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container px-2 py-0.5 rounded">All Times IST (UTC+05:30)</span>
+</div>
+<!-- Schedule Matrix by Days -->
+<div class="flex flex-col gap-space-md">
+<!-- Monday 17 -->
+<div class="flex flex-col md:flex-row md:items-start gap-space-md p-space-md rounded-lg bg-surface-container-low/60 hover:bg-surface-container-low transition-colors">
+<div class="w-32 flex-shrink-0">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Mon, Nov 17</span>
+<p class="font-label-sm text-label-sm text-outline">Tech Maintenance</p>
+</div>
+<div class="flex-1 bg-surface-container-lowest p-space-md rounded-lg shadow-sm flex items-center justify-between flex-wrap gap-2">
+<div class="flex items-center gap-space-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-outline"></span>
+<div>
+<h4 class="font-body-md text-body-md font-semibold text-on-surface">Studio Tech: Gear Check &amp; Drone Firmware Calibration</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">09:00 AM – 01:00 PM • VOWS Atelier Cleanroom • All 4 Red V-Raptors &amp; Inspire 3</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm px-space-sm py-0.5 rounded bg-surface-container text-on-surface-variant">Prep Phase</span>
+</div>
+</div>
+<!-- Tuesday 18 (2 events) -->
+<div class="flex flex-col md:flex-row md:items-start gap-space-md p-space-md rounded-lg bg-surface-container-low/60 hover:bg-surface-container-low transition-colors">
+<div class="w-32 flex-shrink-0">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Tue, Nov 18</span>
+<p class="font-label-sm text-label-sm text-secondary font-medium">Pinto Nuptials Day 1</p>
+</div>
+<div class="flex-1 flex flex-col gap-space-sm">
+<!-- Event 1: Haldi -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex items-start gap-space-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary-fixed-dim mt-1.5"></span>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wide text-secondary-fixed-dim font-bold">Haldi</span>
+<h4 class="font-body-md text-body-md font-semibold text-on-surface">Samantha Pinto Haldi Blessing</h4>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">10:00 AM – 02:00 PM • Ancestral Manor, Mangalore</p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm self-end sm:self-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container px-2 py-0.5 rounded">Crew: Tara R., Kiran V.</span>
+<span class="material-symbols-outlined text-outline text-[18px]">verified</span>
+</div>
+</div>
+<!-- Event 2: Mehendi & Sangeet -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex items-start gap-space-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-surface-tint mt-1.5"></span>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wide text-surface-tint font-bold">Mehendi</span>
+<h4 class="font-body-md text-body-md font-semibold text-on-surface">Pinto Family Sunset Mehendi &amp; Sangeet</h4>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">05:00 PM – 10:30 PM • Clifftop Pavilion, Mangalore</p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm self-end sm:self-center">
+<span class="font-label-sm text-label-sm text-on-secondary-container bg-secondary-container px-2 py-0.5 rounded">Crew: Reuben S., Kiran V., Tara R.</span>
+<span class="material-symbols-outlined text-primary text-[18px]">videocam</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Wednesday 19 (Featured Wedding Day) -->
+<div class="flex flex-col md:flex-row md:items-start gap-space-md p-space-md rounded-lg bg-secondary-container/20">
+<div class="w-32 flex-shrink-0">
+<span class="font-label-md text-label-md font-semibold text-primary">Wed, Nov 19</span>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Solemnization</p>
+<span class="mt-1 inline-block font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-primary text-on-primary">Current Focus</span>
+</div>
+<div class="flex-1 bg-surface-container-lowest p-space-md rounded-lg shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-start justify-between flex-wrap gap-2">
+<div class="flex items-start gap-space-sm">
+<span class="w-3 h-3 rounded-full bg-primary mt-1"></span>
+<div>
+<div class="flex items-center gap-2 flex-wrap">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-primary font-bold">Church Nuptials</span>
+<span class="font-label-sm text-label-sm text-outline">BKG-2025-019</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Nuptial Mass &amp; Sacred Vows</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">09:30 AM – 02:00 PM • St. Aloysius Chapel, Lighthouse Hill</p>
+</div>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm px-space-sm py-1 rounded bg-secondary-container text-on-secondary-container font-medium">4 Crew Allocated</span>
+<span class="material-symbols-outlined text-primary text-[20px]">movie</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-outline font-label-sm text-label-sm pt-2 bg-surface-container-low/40 p-2 rounded">
+<span>Audio Stems: 4 Lavaliers + 32-bit Float Boom</span>
+<span>Cinematic Focal: 50mm T1.3 Master Prime Stills</span>
+</div>
+</div>
+</div>
+<!-- Thursday 20 -->
+<div class="flex flex-col md:flex-row md:items-start gap-space-md p-space-md rounded-lg bg-surface-container-low/60 hover:bg-surface-container-low transition-colors">
+<div class="w-32 flex-shrink-0">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Thu, Nov 20</span>
+<p class="font-label-sm text-label-sm text-outline">Reception Gala</p>
+</div>
+<div class="flex-1 bg-surface-container-lowest p-space-md rounded-lg shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex items-start gap-space-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container mt-1.5"></span>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wide text-primary-container font-bold">Reception</span>
+<h4 class="font-body-md text-body-md font-semibold text-on-surface">Grand Coastal Gala (700 Pax)</h4>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">06:30 PM – 00:30 AM • The Ocean Pearl Grand Ballroom</p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm self-end sm:self-center">
+<span class="inline-flex items-center gap-1 font-label-sm text-label-sm text-on-secondary-container bg-secondary-container px-2 py-0.5 rounded">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> Conflict Resolved
+                </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container px-2 py-0.5 rounded">4 Crew</span>
+</div>
+</div>
+</div>
+<!-- Friday 21 -->
+<div class="flex flex-col md:flex-row md:items-start gap-space-md p-space-md rounded-lg bg-surface-container-low/60 hover:bg-surface-container-low transition-colors">
+<div class="w-32 flex-shrink-0">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Fri, Nov 21</span>
+<p class="font-label-sm text-label-sm text-outline">Goa Transit</p>
+</div>
+<div class="flex-1 bg-surface-container-lowest p-space-md rounded-lg shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex items-start gap-space-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary mt-1.5"></span>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wide text-secondary font-bold">Pre-Wedding</span>
+<h4 class="font-body-md text-body-md font-semibold text-on-surface">Alister &amp; Michelle Beach Golden Hour</h4>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">04:00 PM – 07:30 PM • Cabo de Rama Cliff, South Goa</p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm self-end sm:self-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container px-2 py-0.5 rounded">Crew: Tara R. (Solo Direct)</span>
+<span class="material-symbols-outlined text-outline text-[18px]">wb_twilight</span>
+</div>
+</div>
+</div>
+<!-- Saturday 22 -->
+<div class="flex flex-col md:flex-row md:items-start gap-space-md p-space-md rounded-lg bg-surface-container-low/60 hover:bg-surface-container-low transition-colors">
+<div class="w-32 flex-shrink-0">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Sat, Nov 22</span>
+<p class="font-label-sm text-label-sm text-outline">High Noon Soirée</p>
+</div>
+<div class="flex-1 bg-surface-container-lowest p-space-md rounded-lg shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex items-start gap-space-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary mt-1.5"></span>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wide text-tertiary font-bold">Engagement</span>
+<h4 class="font-body-md text-body-md font-semibold text-on-surface">Fernandes Ring Ceremony &amp; Luncheon</h4>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">11:00 AM – 04:00 PM • Vivanta Goa, Panaji</p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm self-end sm:self-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container px-2 py-0.5 rounded">Crew: Leo C., Maya S.</span>
+<span class="material-symbols-outlined text-outline text-[18px]">photo_camera</span>
+</div>
+</div>
+</div>
+<!-- Sunday 23 -->
+<div class="flex flex-col md:flex-row md:items-start gap-space-md p-space-md rounded-lg bg-surface-container-low/60 hover:bg-surface-container-low transition-colors">
+<div class="w-32 flex-shrink-0">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Sun, Nov 23</span>
+<p class="font-label-sm text-label-sm text-outline">Editorial Studio</p>
+</div>
+<div class="flex-1 bg-surface-container-lowest p-space-md rounded-lg shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex items-start gap-space-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-outline mt-1.5"></span>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wide text-outline font-bold">Portrait</span>
+<h4 class="font-body-md text-body-md font-semibold text-on-surface">Heirloom 35mm Analog Studio Session</h4>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">03:00 PM – 07:00 PM • VOWS Atelier Darkroom Bay</p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm self-end sm:self-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container px-2 py-0.5 rounded">Crew: Reuben S. (Medium Format)</span>
+<span class="material-symbols-outlined text-outline text-[18px]">camera_roll</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Side Inspection Drawer (Span 4 Cols) -->
+<div class="xl:col-span-4 flex flex-col gap-space-md">
+<!-- Selected Day Inspector Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between border-b-0 pb-1">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">calendar_month</span>
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface">Day Inspection</span>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-0.5 bg-secondary-container text-on-secondary-container rounded font-medium">Selected: Nov 19</span>
+</div>
+<!-- Venue & Stills Visual Frame -->
+<div class="relative rounded-lg overflow-hidden h-40 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Intimate sunlit interior of St. Aloysius chapel, warm cinematic rays illuminating historic fresco ceilings and an understated luxury aisle setup with white floral runners and serene warm tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdxgC9qBUA4G6q_8luQwB7lTKilqfcBol3pQVNYhfhOqgw352q0V62Jrio7tCGAhE3Heg62zrJ0V28PcwlJTWnEdQymqKrZiTxmFCoQIC7Gdx4pXQ2VCRvQ8YOkOXj7aaAOK_Dl4mwoB407j9IVnawYYr4sKatqy4lzByENFO0qkCCE06K9gqqwkEbBartKdhQYx81drEbKyO0UQf1nCX78jHX-K0ZXg3IZ-lvid4w"/>
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 via-inverse-surface/20 to-transparent flex items-end p-space-md">
+<div class="text-on-primary">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-primary-fixed">Primary Solemnization</span>
+<p class="font-headline-sm text-headline-sm font-semibold">St. Aloysius Chapel</p>
+<p class="font-label-sm text-label-sm text-inverse-on-surface opacity-90">Mangalore High Ridge • Call Time 08:30 AM</p>
+</div>
+</div>
+</div>
+<!-- Day Run of Show (Detailed Step-by-Step) -->
+<div class="flex flex-col gap-space-sm">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Call Sheet Sequence</span>
+<div class="flex items-start gap-space-sm p-space-sm rounded bg-surface-container-low">
+<span class="font-label-md text-label-md font-semibold text-primary w-14">08:30</span>
+<div class="flex-1">
+<p class="font-body-sm text-body-sm text-on-surface font-medium">Audio Mic Up &amp; Drone Clearance</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Leo C. • St. Aloysius Courtyard</p>
+</div>
+</div>
+<div class="flex items-start gap-space-sm p-space-sm rounded bg-surface-container-low">
+<span class="font-label-md text-label-md font-semibold text-primary w-14">09:30</span>
+<div class="flex-1">
+<p class="font-body-sm text-body-sm text-on-surface font-medium">Processional &amp; Nuptial High Mass</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Reuben S. (A-Cam), Kiran V. (B-Cam Gimbal)</p>
+</div>
+</div>
+<div class="flex items-start gap-space-sm p-space-sm rounded bg-surface-container-low">
+<span class="font-label-md text-label-md font-semibold text-primary w-14">12:15</span>
+<div class="flex-1">
+<p class="font-body-sm text-body-sm text-on-surface font-medium">Altar Heirlooms &amp; Family Formals</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Tara R. • 85mm Prime Glass</p>
+</div>
+</div>
+<div class="flex items-start gap-space-sm p-space-sm rounded bg-surface-container-low">
+<span class="font-label-md text-label-md font-semibold text-primary w-14">13:45</span>
+<div class="flex-1">
+<p class="font-body-sm text-body-sm text-on-surface font-medium">Chapel Exit &amp; Vintage Roadster Drive-off</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Full Team Sync • Drone low flyover</p>
+</div>
+</div>
+</div>
+<!-- Venue Map Preview -->
+<div class="flex flex-col gap-1">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Geo Coordinates &amp; Parking</span>
+<div class="w-full h-24 rounded-lg bg-surface-container overflow-hidden relative shadow-sm" data-location="St. Aloysius Chapel, Mangalore, India" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAY7Mw8y1sJljhELaJnDH5i9Jh-MfUyx5rjib0evtu-a94_fgqUUo02xOmp9BL3Hx10lAZ8CPvthbYH4VSNfv7epS-z_XyDoaE5O4K7z2Y7ry2DCNw7Nh9WrdcySXoC7iHMnkzJkrY94C8rSJ9AzQhujjx7EDUQ5qK-Y-phdhClEKtT_s74Qq91Ar5t6j2FCiUlFu5OixjtvkdUlQ77alE0ONfWPAYBgF9wBJOuR_AI')">
+<div class="absolute bottom-2 left-2 bg-surface-container-lowest/90 px-2 py-0.5 rounded text-[10px] font-label-sm text-on-surface shadow">
+              Pinto Nuptials Dedicated Van Bay #2
+            </div>
+</div>
+</div>
+</div>
+<!-- Crew Availability Meter & Conflict Engine -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[20px]">group</span>
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface">Crew Capacity</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">84% Load</span>
+</div>
+<!-- Metric Bars -->
+<div class="flex flex-col gap-space-sm">
+<div>
+<div class="flex justify-between font-label-sm text-label-sm mb-1">
+<span class="text-on-surface font-medium">Reuben Serrao (Lead DP)</span>
+<span class="text-on-surface-variant">28 / 32 hrs</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 87.5%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-label-sm text-label-sm mb-1">
+<span class="text-on-surface font-medium">Tara Rao (Principal Stills)</span>
+<span class="text-on-surface-variant">26 / 32 hrs</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 81.25%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-label-sm text-label-sm mb-1">
+<span class="text-on-surface font-medium">Kiran Varma (Cinema Gimbal)</span>
+<span class="text-on-surface-variant">22 / 32 hrs</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container overflow-hidden">
+<div class="bg-primary-container h-full rounded-full" style="width: 68.75%"></div>
+</div>
+</div>
+</div>
+<!-- Weekly Conflict Status Pill -->
+<div class="p-space-md rounded-lg bg-secondary-container/30 flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[18px] mt-0.5">check_circle</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-semibold text-on-secondary-container">Zero Critical Clashes</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Thursday overlap at Vivanta resolved via second camera operator swap.</p>
+</div>
+</div>
+</div>
+<!-- Quick Action Utilities -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-2">
+<button class="w-full flex items-center justify-between p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors text-left" type="button">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">calendar_month</span>
+<div>
+<p class="font-label-md text-label-md font-semibold text-on-surface">Export Production Roster</p>
+<p class="font-label-sm text-label-sm text-outline">Apple / Google Cal .ICS &amp; CSV</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline text-[18px]">download</span>
+</button>
+<button class="w-full flex items-center justify-between p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors text-left" type="button">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[20px]">print</span>
+<div>
+<p class="font-label-md text-label-md font-semibold text-on-surface">Print Weekly Call Sheets</p>
+<p class="font-label-sm text-label-sm text-outline">Formatted PDF with kit checklists</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline text-[18px]">open_in_new</span>
+</button>
+</div>
+</div>
+</div>
+</div></main></div></body></html>

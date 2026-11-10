@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100%;margin:0;padding:0;background-color:#f5fbf4;}body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-surface": "#171d19", "tertiary-fixed": "#dee4dd", "on-primary-fixed": "#092012", "tertiary-fixed-dim": "#c2c8c2", "secondary-fixed": "#ceead2", "on-tertiary-fixed-variant": "#424843", "inverse-surface": "#2c322e", "surface-container-lowest": "#ffffff", "secondary-fixed-dim": "#b2cdb6", "inverse-on-surface": "#ecf2ec", "tertiary": "#5a605b", "on-secondary-container": "#516a57", "on-primary-fixed-variant": "#354c3b", "surface-container-high": "#e4eae3", "surface-bright": "#f5fbf4", "on-secondary-fixed-variant": "#344c3b", "secondary": "#4b6451", "outline": "#737972", "surface-container-low": "#eff5ef", "secondary-container": "#ceead2", "primary-fixed": "#cfe9d3", "primary-fixed-dim": "#b3cdb7", "inverse-primary": "#b3cdb7", "on-tertiary-fixed": "#171d19", "surface-variant": "#dee4de", "on-error-container": "#93000a", "on-surface-variant": "#424843", "on-secondary-fixed": "#082011", "on-primary-container": "#1c3223", "error-container": "#ffdad6", "on-secondary": "#ffffff", "on-error": "#ffffff", "error": "#ba1a1a", "on-tertiary": "#ffffff", "surface-container": "#eaefe9", "surface": "#f5fbf4", "primary-container": "#829b87", "on-tertiary-container": "#282f2a", "tertiary-container": "#909690", "surface-container-highest": "#dee4de", "primary": "#4c6452", "on-primary": "#ffffff", "on-background": "#171d19", "background": "#f5fbf4", "outline-variant": "#c3c8c1", "surface-dim": "#d6dcd5", "surface-tint": "#4c6452" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-md": "1rem", "gutter": "1.5rem", "space-xs": "0.25rem", "margin": "3rem", "margin-mobile": "1.25rem", "gutter-mobile": "1rem", "space-lg": "1.5rem", "space-xl": "2.5rem", "space-sm": "0.5rem" }, fontFamily: { "label-sm": ["Inter"], "headline-lg": ["Inter"], "label-lg": ["Inter"], "label-md": ["Inter"], "headline-lg-mobile": ["Inter"], "display-mobile": ["Inter"], "display": ["Inter"], "headline-md": ["Inter"], "headline-sm": ["Inter"], "body-md": ["Inter"], "body-lg": ["Inter"], "body-sm": ["Inter"] }, fontSize: { "label-sm": ["0.6875rem", { "lineHeight": "0.875rem", "letterSpacing": "0.04em", "fontWeight": "600" }], "headline-lg": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600" }], "label-lg": ["0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "500" }], "label-md": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.02em", "fontWeight": "500" }], "headline-lg-mobile": ["1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.015em", "fontWeight": "600" }], "display-mobile": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600" }], "display": ["2.75rem", { "lineHeight": "3.25rem", "letterSpacing": "-0.03em", "fontWeight": "600" }], "headline-md": ["1.375rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.015em", "fontWeight": "600" }], "headline-sm": ["1.125rem", { "lineHeight": "1.5rem", "letterSpacing": "-0.01em", "fontWeight": "500" }], "body-md": ["0.875rem", { "lineHeight": "1.5rem", "fontWeight": "400" }], "body-lg": ["1rem", { "lineHeight": "1.625rem", "fontWeight": "400" }], "body-sm": ["0.8125rem", { "lineHeight": "1.25rem", "fontWeight": "400" }] } } } }</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface font-body-md text-body-md flex flex-col min-h-screen antialiased selection:bg-secondary-container selection:text-on-secondary-container"><header class="fixed top-0 inset-x-0 z-50 bg-surface/85 backdrop-blur-xl pt-safe shadow-[0_1px_8px_rgba(0,0,0,0.03)]"><div class="h-16 px-margin-mobile flex items-center justify-between"><div class="flex items-center gap-space-sm min-w-0 pr-space-sm"><span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary flex-shrink-0">VOWS STUDIO</span><span class="text-outline-variant font-light select-none">/</span><h1 class="font-headline-sm text-headline-sm text-on-surface truncate">Settings</h1></div><div class="flex items-center gap-space-xs flex-shrink-0"><button aria-label="Search" class="w-11 h-11 flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors rounded-full"><span class="material-symbols-outlined text-[22px]">search</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex flex-col relative w-full px-margin-mobile pt-16 pb-24 bg-surface flex-grow"><div class="flex flex-col w-full pb-20">
+<!-- Sub-navigation Category Filter Pills -->
+<div class="sticky top-16 z-30 -mx-margin-mobile px-margin-mobile py-space-sm bg-surface/95 backdrop-blur-md">
+<div class="flex items-center gap-space-xs overflow-x-auto no-scrollbar py-0.5" id="settings-pills">
+<button class="flex-shrink-0 h-8 px-space-md rounded-full bg-secondary-container text-on-secondary-container font-label-md text-label-md flex items-center justify-center transition-colors" type="button">
+        Studio Profile
+      </button>
+<button class="flex-shrink-0 h-8 px-space-md rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface font-label-md text-label-md flex items-center justify-center transition-colors" type="button">
+        Branding
+      </button>
+<button class="flex-shrink-0 h-8 px-space-md rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface font-label-md text-label-md flex items-center justify-center transition-colors" type="button">
+        Billing &amp; GST
+      </button>
+<button class="flex-shrink-0 h-8 px-space-md rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface font-label-md text-label-md flex items-center justify-center transition-colors" type="button">
+        Numbering
+      </button>
+<button class="flex-shrink-0 h-8 px-space-md rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface font-label-md text-label-md flex items-center justify-center transition-colors" type="button">
+        Email Templates
+      </button>
+<button class="flex-shrink-0 h-8 px-space-md rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface font-label-md text-label-md flex items-center justify-center transition-colors" type="button">
+        Gmail Sync
+      </button>
+<button class="flex-shrink-0 h-8 px-space-md rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface font-label-md text-label-md flex items-center justify-center transition-colors" type="button">
+        Expenses
+      </button>
+<button class="flex-shrink-0 h-8 px-space-md rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface font-label-md text-label-md flex items-center justify-center transition-colors" type="button">
+        Website &amp; SEO
+      </button>
+</div>
+</div>
+<div class="flex flex-col gap-space-lg mt-space-md">
+<!-- Section 1: Studio Profile -->
+<section class="flex flex-col bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="flex items-center justify-between mb-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[20px]">storefront</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Studio Profile</h2>
+</div>
+<span class="inline-flex items-center px-space-sm h-6 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm">
+          HQ Live
+        </span>
+</div>
+<div class="space-y-space-md">
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-1.5">Studio Legal Name</label>
+<div class="flex items-center bg-surface-container-low rounded-lg px-space-md py-2.5">
+<input class="w-full bg-transparent font-body-md text-body-md text-on-surface focus:outline-none" type="text" value="VOWS Studio LLP"/>
+<span class="material-symbols-outlined text-outline text-[18px]">verified</span>
+</div>
+</div>
+<div class="grid grid-cols-1 gap-space-md">
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-1.5">Official Dispatch Email</label>
+<div class="flex items-center bg-surface-container-low rounded-lg px-space-md py-2.5">
+<input class="w-full bg-transparent font-body-md text-body-md text-on-surface focus:outline-none" type="email" value="reuben@vowsstudio.com"/>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-1.5">Studio Phone Number</label>
+<div class="flex items-center bg-surface-container-low rounded-lg px-space-md py-2.5">
+<input class="w-full bg-transparent font-body-md text-body-md text-on-surface focus:outline-none" type="tel" value="+91 98200 44521"/>
+</div>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-1.5">Physical Atelier Address</label>
+<div class="bg-surface-container-low rounded-lg px-space-md py-2.5">
+<textarea class="w-full bg-transparent font-body-md text-body-md text-on-surface resize-none focus:outline-none" rows="2">Atelier 4B, Light House Hill, Mangalore 575001</textarea>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: Branding & Live Preview -->
+<section class="flex flex-col bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="flex items-center justify-between mb-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[20px]">palette</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Branding &amp; Palette</h2>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Theme v2.4</span>
+</div>
+<!-- Studio Mark / Logo Upload -->
+<div class="flex items-center gap-space-md bg-surface-container-low p-space-md rounded-lg mb-space-md">
+<div class="w-14 h-14 rounded-lg bg-surface-container-lowest shadow-sm flex items-center justify-center p-2 flex-shrink-0">
+<span class="font-headline-sm text-headline-sm font-semibold tracking-tighter text-secondary">V//S</span>
+</div>
+<div class="flex-grow min-w-0">
+<p class="font-label-lg text-label-lg text-on-surface truncate">Vows_Monogram_Vector.svg</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">SVG, EPS or High-Res PNG</p>
+</div>
+<button class="h-9 px-space-sm bg-surface-container-highest hover:bg-surface-dim text-on-surface rounded font-label-md text-label-md flex-shrink-0 flex items-center justify-center transition-colors" type="button">
+          Replace
+        </button>
+</div>
+<!-- Editorial Color Pickers -->
+<label class="block font-label-md text-label-md text-on-surface-variant mb-1.5">Chromatic Signature</label>
+<div class="grid grid-cols-2 gap-space-sm mb-space-md">
+<div class="flex items-center gap-space-sm p-2 rounded-lg bg-surface-container-low">
+<div class="w-8 h-8 rounded-full bg-secondary flex-shrink-0 shadow-inner"></div>
+<div class="min-w-0">
+<span class="block font-label-sm text-label-sm uppercase text-on-surface-variant">Primary</span>
+<span class="block font-body-sm text-body-sm font-medium text-on-surface">#526B58</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm p-2 rounded-lg bg-surface-container-low">
+<div class="w-8 h-8 rounded-full bg-primary-container flex-shrink-0 shadow-inner"></div>
+<div class="min-w-0">
+<span class="block font-label-sm text-label-sm uppercase text-on-surface-variant">Accent</span>
+<span class="block font-body-sm text-body-sm font-medium text-on-surface">#829B87</span>
+</div>
+</div>
+</div>
+<!-- Live Client Portal Card Preview -->
+<div class="rounded-lg bg-surface-container p-space-md flex flex-col gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Portal Teaser Preview</span>
+<div class="flex items-center justify-between bg-surface-container-lowest p-2.5 rounded shadow-sm">
+<div class="flex items-center gap-2">
+<div class="w-2.5 h-2.5 rounded-full bg-secondary"></div>
+<span class="font-label-md text-label-md text-on-surface">Client Monograph Deck</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">Protected</span>
+</div>
+</div>
+</section>
+<!-- Section 3: Billing & GST -->
+<section class="flex flex-col bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="flex items-center justify-between mb-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[20px]">account_balance</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Billing &amp; GSTIN</h2>
+</div>
+<!-- Active Toggle -->
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface-container-lowest after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"></div>
+</label>
+</div>
+<!-- GSTIN Tag -->
+<div class="bg-surface-container-low rounded-lg p-space-md mb-space-md flex items-center justify-between">
+<div>
+<span class="block font-label-sm text-label-sm text-on-surface-variant">GST Identification</span>
+<span class="font-label-lg text-label-lg font-medium text-on-surface tracking-wider">29AAAAA0000A1Z5</span>
+</div>
+<span class="inline-flex items-center gap-1 text-secondary font-label-md text-label-md">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+          Verified
+        </span>
+</div>
+<!-- Statutory SAC codes -->
+<label class="block font-label-md text-label-md text-on-surface-variant mb-1.5">Statutory SAC Classifications</label>
+<div class="space-y-1.5 mb-space-md">
+<div class="flex items-center justify-between p-2 rounded bg-surface-container-low text-body-sm font-body-sm">
+<span class="text-on-surface">Cinematography (SAC 998384)</span>
+<span class="font-medium text-secondary">18% IGST</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded bg-surface-container-low text-body-sm font-body-sm">
+<span class="text-on-surface">Stills &amp; Fine Art (SAC 998381)</span>
+<span class="font-medium text-secondary">18% IGST</span>
+</div>
+</div>
+<!-- Bank Details -->
+<div class="rounded-lg bg-surface-container p-space-md">
+<div class="flex items-center gap-space-sm mb-1">
+<span class="material-symbols-outlined text-outline text-[18px]">account_balance_wallet</span>
+<span class="font-label-md text-label-md font-semibold text-on-surface">HDFC Bank India</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Current A/c ••••• 9103</p>
+<p class="font-label-sm text-label-sm text-outline">IFSC: HDFC0000082 • Light House Hill Branch</p>
+</div>
+</section>
+<!-- Section 4: Document Numbering Logic -->
+<section class="flex flex-col bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="flex items-center gap-space-sm mb-space-md">
+<span class="material-symbols-outlined text-secondary text-[20px]">pin</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Sequencing &amp; Series</h2>
+</div>
+<div class="space-y-space-md">
+<!-- Quotation Sequence -->
+<div class="bg-surface-container-low rounded-lg p-space-md">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Quotations</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-mono">QT-2026-000001</span>
+</div>
+<div class="grid grid-cols-3 gap-2">
+<div class="bg-surface-container-lowest p-1.5 rounded">
+<span class="block font-label-sm text-[10px] text-outline uppercase">Prefix</span>
+<span class="font-body-sm text-body-sm font-medium text-on-surface">QT-</span>
+</div>
+<div class="bg-surface-container-lowest p-1.5 rounded">
+<span class="block font-label-sm text-[10px] text-outline uppercase">Format</span>
+<span class="font-body-sm text-body-sm font-medium text-on-surface">YYYY</span>
+</div>
+<div class="bg-surface-container-lowest p-1.5 rounded">
+<span class="block font-label-sm text-[10px] text-outline uppercase">Digits</span>
+<span class="font-body-sm text-body-sm font-medium text-on-surface">6 Pad</span>
+</div>
+</div>
+</div>
+<!-- Invoices Sequence -->
+<div class="bg-surface-container-low rounded-lg p-space-md">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Tax Invoices</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-mono">INV-2526-00042</span>
+</div>
+<div class="grid grid-cols-3 gap-2">
+<div class="bg-surface-container-lowest p-1.5 rounded">
+<span class="block font-label-sm text-[10px] text-outline uppercase">Prefix</span>
+<span class="font-body-sm text-body-sm font-medium text-on-surface">INV-</span>
+</div>
+<div class="bg-surface-container-lowest p-1.5 rounded">
+<span class="block font-label-sm text-[10px] text-outline uppercase">Format</span>
+<span class="font-body-sm text-body-sm font-medium text-on-surface">FY</span>
+</div>
+<div class="bg-surface-container-lowest p-1.5 rounded">
+<span class="block font-label-sm text-[10px] text-outline uppercase">Digits</span>
+<span class="font-body-sm text-body-sm font-medium text-on-surface">5 Pad</span>
+</div>
+</div>
+</div>
+<!-- Bookings Sequence -->
+<div class="bg-surface-container-low rounded-lg p-space-md">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Production Orders</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-mono">BKG-2025-019</span>
+</div>
+<div class="grid grid-cols-3 gap-2">
+<div class="bg-surface-container-lowest p-1.5 rounded">
+<span class="block font-label-sm text-[10px] text-outline uppercase">Prefix</span>
+<span class="font-body-sm text-body-sm font-medium text-on-surface">BKG-</span>
+</div>
+<div class="bg-surface-container-lowest p-1.5 rounded">
+<span class="block font-label-sm text-[10px] text-outline uppercase">Format</span>
+<span class="font-body-sm text-body-sm font-medium text-on-surface">YYYY</span>
+</div>
+<div class="bg-surface-container-lowest p-1.5 rounded">
+<span class="block font-label-sm text-[10px] text-outline uppercase">Digits</span>
+<span class="font-body-sm text-body-sm font-medium text-on-surface">3 Pad</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 5: Email Templates & Merge Tags -->
+<section class="flex flex-col bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="flex items-center justify-between mb-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[20px]">drafts</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Email Automations</h2>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-medium">Quotation Dispatch</span>
+</div>
+<div class="space-y-space-md">
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-1">Subject Header</label>
+<div class="bg-surface-container-low rounded-lg px-space-md py-2 text-on-surface font-body-sm text-body-sm">
+            Your Wedding Proposal — <span class="text-secondary font-medium">{{client_names}}</span>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-1.5">Interactive Merge Tags</label>
+<div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
+<button class="flex-shrink-0 px-2.5 py-1 rounded bg-surface-container text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm font-mono transition-colors" type="button">
+              {{client_names}}
+            </button>
+<button class="flex-shrink-0 px-2.5 py-1 rounded bg-surface-container text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm font-mono transition-colors" type="button">
+              {{booking_ref}}
+            </button>
+<button class="flex-shrink-0 px-2.5 py-1 rounded bg-surface-container text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm font-mono transition-colors" type="button">
+              {{quotation_total}}
+            </button>
+<button class="flex-shrink-0 px-2.5 py-1 rounded bg-surface-container text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm font-mono transition-colors" type="button">
+              {{portal_link}}
+            </button>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-1">Narrative Body</label>
+<div class="bg-surface-container-low rounded-lg p-space-md text-body-sm font-body-sm text-on-surface leading-relaxed">
+            Dear {{client_names}},<br/><br/>
+            We have crafted your commemorative bespoke proposal (Ref: {{booking_ref}}). Our atelier has secured your dates tentatively. Access your bespoke dossier below:<br/><br/>
+<span class="text-secondary underline font-medium">{{portal_link}}</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 6: Gmail Integration -->
+<section class="flex flex-col bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="flex items-center gap-space-sm mb-space-md">
+<span class="material-symbols-outlined text-secondary text-[20px]">sync</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Google Workspace</h2>
+</div>
+<div class="bg-surface-container-low rounded-lg p-space-md mb-space-md">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<div class="w-2.5 h-2.5 rounded-full bg-secondary"></div>
+<span class="font-label-md text-label-md font-semibold text-on-surface">Gmail API Connected</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">OAuth 2.0</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">reuben@vowsstudio.com</p>
+<p class="font-label-sm text-label-sm text-outline mt-1">Sender Alias: Reuben Serrao — VOWS Studio</p>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="flex-1 h-11 px-space-md rounded-lg bg-surface-container-high hover:bg-surface-variant text-on-surface font-label-md text-label-md flex items-center justify-center gap-1.5 transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">send</span>
+          Send Test
+        </button>
+<button class="h-11 px-space-md rounded-lg bg-surface-container text-error hover:bg-error-container font-label-md text-label-md flex items-center justify-center transition-colors" type="button">
+          Disconnect
+        </button>
+</div>
+</section>
+<!-- Section 7: Expense Categories & SEO -->
+<section class="flex flex-col bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="flex items-center gap-space-sm mb-space-md">
+<span class="material-symbols-outlined text-secondary text-[20px]">category</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Expense Categories</h2>
+</div>
+<div class="flex flex-wrap gap-2 mb-space-lg">
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-low text-on-surface font-label-md text-label-md">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+          Crew Stipends
+        </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-low text-on-surface font-label-md text-label-md">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+          Film Lab &amp; Scan
+        </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-low text-on-surface font-label-md text-label-md">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+          Gear Rentals
+        </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-low text-on-surface font-label-md text-label-md">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+          Travel &amp; Flights
+        </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-low text-on-surface font-label-md text-label-md">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+          Color Grading Suite
+        </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-low text-on-surface font-label-md text-label-md">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+          Archival Storage
+        </span>
+</div>
+<div class="pt-space-md border-t border-surface-container">
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Meta &amp; Search Engine Indexing</span>
+<span class="font-label-sm text-label-sm text-secondary">Canonical</span>
+</div>
+<div class="bg-surface-container-low p-space-md rounded-lg space-y-1">
+<p class="font-label-sm text-label-sm text-secondary font-medium">vowsstudio.com</p>
+<p class="font-label-md text-label-md text-on-surface font-medium truncate">VOWS Studio — Destination Stills &amp; Modern Monograph Cinematography</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">Understated cinematic wedding documentation and fine art stills capturing candid modern luxury worldwide.</p>
+</div>
+</div>
+</section>
+</div>
+<!-- Sticky Bottom Unsaved Changes Bar -->
+<aside class="fixed bottom-20 inset-x-0 z-40 px-margin-mobile pointer-events-none transition-transform duration-300" id="unsaved-bar">
+<div class="pointer-events-auto mx-auto max-w-md bg-inverse-surface/95 backdrop-blur-md text-inverse-on-surface rounded-xl p-space-md shadow-xl flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse"></span>
+<span class="font-label-md text-label-md text-inverse-on-surface">Unsaved adjustments</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="font-label-md text-label-md text-outline-variant hover:text-inverse-on-surface px-2 py-1 transition-colors" id="discard-btn" type="button">
+          Discard
+        </button>
+<button class="h-9 px-space-md bg-primary-container hover:bg-secondary text-on-primary font-label-md text-label-md rounded-lg shadow-sm flex items-center justify-center transition-colors" id="save-btn" type="button">
+          Save Changes
+        </button>
+</div>
+</div>
+</aside>
+</div>
+<script>
+  (function() {
+    const saveBtn = document.getElementById('save-btn');
+    const discardBtn = document.getElementById('discard-btn');
+    const unsavedBar = document.getElementById('unsaved-bar');
+
+    if (saveBtn && unsavedBar) {
+      saveBtn.addEventListener('click', function() {
+        saveBtn.textContent = 'Saved!';
+        setTimeout(function() {
+          unsavedBar.classList.add('translate-y-28');
+          saveBtn.textContent = 'Save Changes';
+        }, 600);
+      });
+    }
+
+    if (discardBtn && unsavedBar) {
+      discardBtn.addEventListener('click', function() {
+        unsavedBar.classList.add('translate-y-28');
+      });
+    }
+  })();
+</script></main><nav class="fixed bottom-0 inset-x-0 z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-2px_12px_rgba(0,0,0,0.03)]" data-active-classes="text-primary font-semibold"><div class="flex justify-around items-center h-16 px-space-xs"><a class="flex flex-col items-center justify-center min-w-[56px] h-12 text-on-surface-variant hover:text-on-surface transition-colors gap-0.5" data-path="bookings" href="#"><span class="material-symbols-outlined text-[22px]">calendar_today</span><span class="font-label-sm text-[10px] tracking-tight">Bookings</span></a><a class="flex flex-col items-center justify-center min-w-[56px] h-12 text-on-surface-variant hover:text-on-surface transition-colors gap-0.5" data-path="enquiries" href="#"><span class="material-symbols-outlined text-[22px]">mail</span><span class="font-label-sm text-[10px] tracking-tight">Enquiries</span></a><a class="flex flex-col items-center justify-center min-w-[56px] h-12 text-on-surface-variant hover:text-on-surface transition-colors gap-0.5" data-path="catalogue" href="#"><span class="material-symbols-outlined text-[22px]">photo_library</span><span class="font-label-sm text-[10px] tracking-tight">Catalogue</span></a><a class="flex flex-col items-center justify-center min-w-[56px] h-12 text-on-surface-variant hover:text-on-surface transition-colors gap-0.5" data-path="reviews" href="#"><span class="material-symbols-outlined text-[22px]">star_outline</span><span class="font-label-sm text-[10px] tracking-tight">Reviews</span></a><a aria-current="page" class="flex flex-col items-center justify-center min-w-[56px] h-12 transition-colors gap-0.5 text-primary font-semibold" data-path="settings" href="#"><span class="material-symbols-outlined text-[22px]">tune</span><span class="font-label-sm text-[10px] tracking-tight">Settings</span></a></div></nav></body></html>

@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "tertiary": "#5a605b",
+        "on-secondary-fixed": "#082011",
+        "tertiary-fixed-dim": "#c2c8c2",
+        "on-tertiary-fixed": "#171d19",
+        "on-error-container": "#93000a",
+        "error": "#ba1a1a",
+        "on-tertiary-container": "#282f2a",
+        "on-surface": "#171d19",
+        "on-primary-fixed-variant": "#354c3b",
+        "secondary": "#4b6451",
+        "primary-container": "#829b87",
+        "on-surface-variant": "#424843",
+        "surface": "#f5fbf4",
+        "background": "#f5fbf4",
+        "on-tertiary": "#ffffff",
+        "on-primary": "#ffffff",
+        "surface-tint": "#4c6452",
+        "error-container": "#ffdad6",
+        "outline-variant": "#c3c8c1",
+        "secondary-fixed-dim": "#b2cdb6",
+        "surface-container": "#eaefe9",
+        "primary": "#4c6452",
+        "on-tertiary-fixed-variant": "#424843",
+        "surface-container-highest": "#dee4de",
+        "inverse-primary": "#b3cdb7",
+        "on-background": "#171d19",
+        "secondary-fixed": "#ceead2",
+        "surface-container-lowest": "#ffffff",
+        "on-error": "#ffffff",
+        "on-secondary-fixed-variant": "#344c3b",
+        "primary-fixed": "#cfe9d3",
+        "tertiary-container": "#909690",
+        "on-secondary": "#ffffff",
+        "inverse-surface": "#2c322e",
+        "secondary-container": "#ceead2",
+        "surface-variant": "#dee4de",
+        "inverse-on-surface": "#ecf2ec",
+        "primary-fixed-dim": "#b3cdb7",
+        "on-secondary-container": "#516a57",
+        "surface-container-low": "#eff5ef",
+        "surface-bright": "#f5fbf4",
+        "tertiary-fixed": "#dee4dd",
+        "surface-container-high": "#e4eae3",
+        "outline": "#737972",
+        "on-primary-fixed": "#092012",
+        "on-primary-container": "#1c3223",
+        "surface-dim": "#d6dcd5"
+      },
+      "borderRadius": {
+        "DEFAULT": "0.25rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "full": "9999px"
+      },
+      "spacing": {
+        "space-md": "1rem",
+        "gutter": "1.5rem",
+        "space-xs": "0.25rem",
+        "margin": "3rem",
+        "margin-mobile": "1.25rem",
+        "space-xl": "2.5rem",
+        "gutter-mobile": "1rem",
+        "space-sm": "0.5rem",
+        "space-lg": "1.5rem"
+      },
+      "fontFamily": {
+        "label-lg": ["Inter"],
+        "body-lg": ["Inter"],
+        "display-mobile": ["Inter"],
+        "label-md": ["Inter"],
+        "display": ["Inter"],
+        "label-sm": ["Inter"],
+        "body-sm": ["Inter"],
+        "headline-sm": ["Inter"],
+        "headline-md": ["Inter"],
+        "headline-lg-mobile": ["Inter"],
+        "headline-lg": ["Inter"],
+        "body-md": ["Inter"]
+      },
+      "fontSize": {
+        "label-lg": ["0.875rem", {"lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "500"}],
+        "body-lg": ["1rem", {"lineHeight": "1.625rem", "fontWeight": "400"}],
+        "display-mobile": ["2rem", {"lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+        "label-md": ["0.75rem", {"lineHeight": "1rem", "letterSpacing": "0.02em", "fontWeight": "500"}],
+        "display": ["2.75rem", {"lineHeight": "3.25rem", "letterSpacing": "-0.03em", "fontWeight": "600"}],
+        "label-sm": ["0.6875rem", {"lineHeight": "0.875rem", "letterSpacing": "0.04em", "fontWeight": "600"}],
+        "body-sm": ["0.8125rem", {"lineHeight": "1.25rem", "fontWeight": "400"}],
+        "headline-sm": ["1.125rem", {"lineHeight": "1.5rem", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+        "headline-md": ["1.375rem", {"lineHeight": "1.75rem", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+        "headline-lg-mobile": ["1.5rem", {"lineHeight": "2rem", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+        "headline-lg": ["2rem", {"lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+        "body-md": ["0.875rem", {"lineHeight": "1.5rem", "fontWeight": "400"}]
+      }
+    }
+  }
+}</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-50 flex flex-col justify-between"><div class="flex flex-col"><div class="h-16 flex items-center px-space-lg gap-space-sm"><span class="material-symbols-outlined text-primary text-[22px]">diamond</span><div class="flex flex-col"><span class="font-headline-sm text-headline-sm tracking-tight text-on-surface uppercase">Vows</span><span class="font-label-sm text-label-sm tracking-widest uppercase text-tertiary">Studio CRM</span></div></div><div class="px-space-md py-space-sm"><div class="px-space-sm mb-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Overview</span></div><nav class="flex flex-col gap-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-label-lg text-label-lg rounded-lg"><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="overview" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span class="font-label-lg text-label-lg">Studio Summary</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="calendar" href="#"><span class="material-symbols-outlined text-[20px]">calendar_today</span><span class="font-label-lg text-label-lg">Production Schedule</span></a></nav></div><div class="px-space-md py-space-sm"><div class="px-space-sm mb-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Operations</span></div><nav class="flex flex-col gap-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-label-lg text-label-lg rounded-lg"><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="booking-detail" href="#"><span class="material-symbols-outlined text-[20px]">book_online</span><span class="font-label-lg text-label-lg">Bookings</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="client-inquiries" href="#"><span class="material-symbols-outlined text-[20px]">contact_page</span><span class="font-label-lg text-label-lg">Inquiries &amp; Leads</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="cinematography-stills" href="#"><span class="material-symbols-outlined text-[20px]">movie</span><span class="font-label-lg text-label-lg">Shoot Logistics</span></a></nav></div><div class="px-space-md py-space-sm"><div class="px-space-sm mb-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Client Galleries</span></div><nav class="flex flex-col gap-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-label-lg text-label-lg rounded-lg"><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="deliverables" href="#"><span class="material-symbols-outlined text-[20px]">perm_media</span><span class="font-label-lg text-label-lg">Master Vaults</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="invoices-contracts" href="#"><span class="material-symbols-outlined text-[20px]">description</span><span class="font-label-lg text-label-lg">Contracts &amp; Billing</span></a></nav></div></div><div class="p-space-md"><div class="bg-surface-container-high rounded-xl p-space-sm flex items-center justify-between"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-secondary text-[20px]">auto_awesome</span><div class="flex flex-col"><span class="font-label-md text-label-md text-on-surface">Archive Storage</span><span class="font-label-sm text-label-sm text-on-surface-variant">8.4 TB of 12 TB</span></div></div></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-xl"><div class="flex items-center gap-space-xs font-label-md text-label-md text-on-surface-variant"><span class="text-tertiary">Studio CRM</span><span class="material-symbols-outlined text-[16px] text-outline-variant">chevron_right</span><span class="text-tertiary">Operations</span><span class="material-symbols-outlined text-[16px] text-outline-variant">chevron_right</span><span class="text-tertiary">Bookings</span><span class="material-symbols-outlined text-[16px] text-outline-variant">chevron_right</span><span class="text-on-surface font-label-lg text-label-lg">Booking Detail</span></div><div class="flex items-center gap-space-md"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-[18px] text-outline">search</span><input class="w-64 pl-9 pr-3 py-1.5 bg-surface-container-low rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-primary" placeholder="Search projects, couples..." type="text"/></div><button aria-label="Notifications" class="w-9 h-9 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span></button><button aria-label="Toggle theme" class="w-9 h-9 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">light_mode</span></button><div class="flex items-center gap-space-sm pl-space-sm"><div class="flex flex-col text-right"><span class="font-label-md text-label-md text-on-surface">Reuben Serrao</span><span class="font-label-sm text-label-sm text-tertiary">Executive Producer</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="relative pt-16 bg-surface w-full px-space-xl py-space-xl"><div class="flex flex-col w-full relative">
+<!-- Backdrop Workspace Context: Invoice Detail Screen Behind Modal -->
+<div class="relative w-full opacity-35 pointer-events-none select-none filter blur-[1px]">
+<!-- Top Action Bar of Invoice -->
+<div class="flex items-center justify-between pb-space-lg mb-space-lg">
+<div class="flex items-center gap-space-md">
+<span class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">arrow_back</span>
+</span>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-sm">
+<span class="font-headline-md text-headline-md text-on-surface">Invoice #INV-2025-140</span>
+<span class="px-2 py-0.5 rounded-full text-label-sm font-label-sm bg-secondary-container text-on-secondary-container uppercase tracking-wider">Milestone 2</span>
+</div>
+<span class="font-body-sm text-body-sm text-tertiary">Derick D'Souza &amp; Samantha Pinto • 3-Day Destination Wedding, Udaipur</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="px-space-md py-2 rounded-lg bg-surface-container font-label-lg text-label-lg text-on-surface">Download PDF</div>
+<div class="px-space-md py-2 rounded-lg bg-primary text-on-primary font-label-lg text-label-lg">Record Payment</div>
+</div>
+</div>
+<!-- Underlying Invoice Ledger Cards Preview -->
+<div class="grid grid-cols-12 gap-space-lg mb-space-xl">
+<div class="col-span-8 bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="flex justify-between items-center mb-space-md">
+<span class="font-headline-sm text-headline-sm text-on-surface">Line Item Statement</span>
+<span class="font-label-md text-label-md text-tertiary">Dated Oct 18, 2025</span>
+</div>
+<div class="space-y-space-sm">
+<div class="p-space-sm rounded-lg bg-surface-container-low flex justify-between">
+<span class="font-body-md text-body-md text-on-surface">Cinematic Feature Edit (4K HDR) &amp; Color Grading Suite</span>
+<span class="font-body-md text-body-md text-on-surface font-semibold">₹1,50,000.00</span>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-low flex justify-between">
+<span class="font-body-md text-body-md text-on-surface">Dual Arri Alexa Mini LF Multi-cam Coverage (Sangeet &amp; Vows)</span>
+<span class="font-body-md text-body-md text-on-surface font-semibold">₹62,400.00</span>
+</div>
+</div>
+</div>
+<div class="col-span-4 bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<span class="font-label-md text-label-md uppercase text-outline tracking-wider">Financial Snapshot</span>
+<div class="mt-space-md space-y-space-xs">
+<div class="flex justify-between text-body-sm font-body-sm text-on-surface-variant">
+<span>Subtotal</span>
+<span>₹2,12,400.00</span>
+</div>
+<div class="flex justify-between text-body-sm font-body-sm text-on-surface-variant">
+<span>Advance Deposited</span>
+<span>₹1,00,000.00</span>
+</div>
+<div class="flex justify-between text-headline-sm font-headline-sm text-on-surface pt-space-sm font-semibold">
+<span>Remaining Due</span>
+<span class="text-error">₹1,12,400.00</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Modal Backdrop Layer -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-on-surface/40 backdrop-blur-sm overflow-y-auto">
+<!-- Modal Window (Desktop 1024px bounded dialog) -->
+<div class="relative w-full max-w-[840px] my-auto bg-surface-container-lowest rounded-xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200" id="payment-modal">
+<!-- Top Subtle Status Accent Bar -->
+<div class="h-1.5 w-full bg-gradient-to-r from-primary via-primary-container to-secondary-container"></div>
+<!-- Modal Header -->
+<div class="px-space-xl pt-space-lg pb-space-md flex items-start justify-between bg-surface-container-lowest">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[24px] text-primary">account_balance_wallet</span>
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-tight">Record Client Payment</h2>
+<span class="px-2 py-0.5 rounded-full text-label-sm font-label-sm bg-secondary-container text-on-secondary-container">
+              Verified Client
+            </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Allocate inbound client funds against open invoices for <span class="font-medium text-on-surface">Derick D'Souza &amp; Samantha Pinto</span> <span class="text-tertiary">(CLT-2025-019)</span>
+</p>
+</div>
+<button aria-label="Close dialog" class="w-8 h-8 rounded-lg flex items-center justify-center text-outline hover:text-on-surface hover:bg-surface-container transition-colors" id="close-modal-btn">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Scrollable Form Container -->
+<div class="px-space-xl py-space-sm overflow-y-auto max-h-[calc(86vh-140px)] flex flex-col gap-space-lg">
+<!-- Primary Inbound Details (Grid) -->
+<div class="grid grid-cols-12 gap-space-md bg-surface-container-low p-space-md rounded-xl">
+<!-- Field 1: Amount Received -->
+<div class="col-span-4 flex flex-col">
+<label class="font-label-md text-label-md text-outline mb-1.5 flex items-center justify-between" for="amount-received">
+<span>Amount Received (₹)</span>
+<span class="text-label-sm font-label-sm text-primary">Exact Match</span>
+</label>
+<div class="relative flex items-center">
+<span class="absolute left-3 font-label-lg text-label-lg text-on-surface-variant select-none">₹</span>
+<input class="w-full bg-surface-container-lowest text-on-surface pl-8 pr-3 py-2 rounded-lg font-headline-sm text-headline-sm font-semibold focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" id="amount-received" type="text" value="1,12,400.00"/>
+</div>
+<span class="font-label-sm text-label-sm text-tertiary mt-1">Net amount settled via bank gateway</span>
+</div>
+<!-- Field 2: Payment Date -->
+<div class="col-span-3 flex flex-col">
+<label class="font-label-md text-label-md text-outline mb-1.5" for="payment-date">Payment Date</label>
+<div class="relative flex items-center">
+<input class="w-full bg-surface-container-lowest text-on-surface pl-3 pr-9 py-2 rounded-lg font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" id="payment-date" type="text" value="Nov 15, 2025"/>
+<span class="material-symbols-outlined absolute right-2.5 text-[18px] text-tertiary pointer-events-none">calendar_month</span>
+</div>
+<span class="font-label-sm text-label-sm text-tertiary mt-1">Effective transaction date</span>
+</div>
+<!-- Field 4: Reference / UTR -->
+<div class="col-span-5 flex flex-col">
+<label class="font-label-md text-label-md text-outline mb-1.5" for="reference-utr">Payment Reference / UTR</label>
+<div class="relative flex items-center">
+<input class="w-full bg-surface-container-lowest text-on-surface pl-3 pr-8 py-2 rounded-lg font-body-md text-body-md font-mono focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" id="reference-utr" type="text" value="HDFC88392019402"/>
+<span class="material-symbols-outlined absolute right-2.5 text-[18px] text-primary" title="Unique verified transaction identifier">verified</span>
+</div>
+<span class="font-label-sm text-label-sm text-tertiary mt-1">Direct NEFT Clearing confirmation code</span>
+</div>
+<!-- Field 3: Payment Method Pill Segment -->
+<div class="col-span-12 flex flex-col pt-space-xs">
+<label class="font-label-md text-label-md text-outline mb-1.5">Payment Instrument</label>
+<div class="flex items-center gap-space-xs p-1 bg-surface-container rounded-lg">
+<button class="method-pill flex-1 py-1.5 px-3 rounded text-label-md font-label-md text-on-surface-variant hover:text-on-surface transition-all flex items-center justify-center gap-1.5" data-method="Cash" type="button">
+<span class="material-symbols-outlined text-[16px]">payments</span>
+                Cash
+              </button>
+<button class="method-pill flex-1 py-1.5 px-3 rounded text-label-md font-label-md text-on-surface-variant hover:text-on-surface transition-all flex items-center justify-center gap-1.5" data-method="UPI" type="button">
+<span class="material-symbols-outlined text-[16px]">qr_code_scanner</span>
+                UPI
+              </button>
+<button class="method-pill flex-1 py-1.5 px-3 rounded text-label-md font-label-md bg-surface-container-lowest text-primary shadow-sm font-semibold flex items-center justify-center gap-1.5" data-method="Bank Transfer" type="button">
+<span class="material-symbols-outlined text-[16px] text-primary">account_balance</span>
+                Bank Transfer
+              </button>
+<button class="method-pill flex-1 py-1.5 px-3 rounded text-label-md font-label-md text-on-surface-variant hover:text-on-surface transition-all flex items-center justify-center gap-1.5" data-method="Cheque" type="button">
+<span class="material-symbols-outlined text-[16px]">receipt_long</span>
+                Cheque
+              </button>
+<button class="method-pill flex-1 py-1.5 px-3 rounded text-label-md font-label-md text-on-surface-variant hover:text-on-surface transition-all flex items-center justify-center gap-1.5" data-method="Other" type="button">
+<span class="material-symbols-outlined text-[16px]">more_horiz</span>
+                Other
+              </button>
+</div>
+</div>
+</div>
+<!-- Multi-Invoice Allocation Section -->
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface">Allocate across Open Invoices</span>
+<span class="w-5 h-5 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm flex items-center justify-center">2</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-2.5 py-1 rounded-md bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-sm text-label-sm transition-colors flex items-center gap-1" id="quick-auto-fill" type="button">
+<span class="material-symbols-outlined text-[14px]">auto_fix_high</span>
+                Auto-allocate Oldest First
+              </button>
+<button class="px-2 py-1 rounded-md text-outline hover:text-error font-label-sm text-label-sm transition-colors" id="clear-allocation" type="button">
+                Reset
+              </button>
+</div>
+</div>
+<!-- Allocation Table -->
+<div class="overflow-hidden rounded-xl bg-surface-container-lowest shadow-sm">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low font-label-sm text-label-sm uppercase tracking-wider text-outline">
+<th class="py-2.5 px-space-md">Invoice #</th>
+<th class="py-2.5 px-space-md">Due Date</th>
+<th class="py-2.5 px-space-md text-right">Total</th>
+<th class="py-2.5 px-space-md text-right">Outstanding</th>
+<th class="py-2.5 px-space-md text-right w-48">Allocation Amount (₹)</th>
+<th class="py-2.5 px-space-md text-center w-28">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-high font-body-sm text-body-sm">
+<!-- Row 1: Milestone 2 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors bg-secondary-container/15">
+<td class="py-3 px-space-md">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">INV-2025-140</span>
+<span class="text-tertiary text-label-sm font-label-sm">Milestone 2 • Production Advance</span>
+</div>
+</td>
+<td class="py-3 px-space-md text-on-surface-variant">Nov 01, 2025</td>
+<td class="py-3 px-space-md text-right font-medium text-on-surface">₹2,12,400.00</td>
+<td class="py-3 px-space-md text-right font-semibold text-error">₹1,12,400.00</td>
+<td class="py-3 px-space-md text-right">
+<div class="relative flex items-center justify-end">
+<span class="absolute left-3 text-tertiary font-label-md text-label-md">₹</span>
+<input class="w-full text-right bg-surface-container-lowest font-label-lg text-label-lg font-semibold text-primary pl-6 pr-3 py-1.5 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary shadow-xs" id="alloc-row-1" type="text" value="1,12,400.00"/>
+</div>
+</td>
+<td class="py-3 px-space-md text-center">
+<button class="px-2.5 py-1 rounded-md bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-medium hover:bg-primary hover:text-on-primary transition-colors" id="btn-settle-1" type="button">
+                      Full Settle
+                    </button>
+</td>
+</tr>
+<!-- Row 2: Drone Add-on -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3 px-space-md">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">INV-2025-148</span>
+<span class="text-tertiary text-label-sm font-label-sm">Drone Add-on &amp; Extra Raw Drives</span>
+</div>
+</td>
+<td class="py-3 px-space-md text-on-surface-variant">Nov 25, 2025</td>
+<td class="py-3 px-space-md text-right font-medium text-on-surface">₹35,000.00</td>
+<td class="py-3 px-space-md text-right font-semibold text-on-surface">₹35,000.00</td>
+<td class="py-3 px-space-md text-right">
+<div class="relative flex items-center justify-end">
+<span class="absolute left-3 text-tertiary font-label-md text-label-md">₹</span>
+<input class="w-full text-right bg-surface-container-low text-tertiary pl-6 pr-3 py-1.5 rounded-lg font-label-lg text-label-lg focus:bg-surface-container-lowest focus:text-on-surface focus:outline-none focus:ring-1 focus:ring-primary shadow-xs" id="alloc-row-2" type="text" value="0.00"/>
+</div>
+</td>
+<td class="py-3 px-space-md text-center">
+<button class="px-2.5 py-1 rounded-md bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm transition-colors" id="btn-settle-2" type="button">
+                      Allocate
+                    </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Unallocated Funds Meter (Crucial Requirement) -->
+<div class="rounded-xl p-space-md bg-surface-container-low flex items-center justify-between shadow-xs">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center transition-colors" id="meter-icon-container">
+<span class="material-symbols-outlined text-[22px]" id="meter-icon">check_circle</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">Unallocated Funds:</span>
+<span class="font-headline-sm text-headline-sm text-primary font-bold" id="unallocated-display">₹0.00</span>
+<span class="ml-2 px-2 py-0.5 rounded text-label-sm font-label-sm bg-secondary-container text-on-secondary-container font-medium" id="balance-pill">
+                  Balanced • All funds allocated exactly
+                </span>
+</div>
+<span class="font-body-sm text-body-sm text-tertiary">
+                Unallocated funds must reach exactly <strong class="text-on-surface">₹0.00</strong> before saving.
+              </span>
+</div>
+</div>
+<!-- Quick Interactive Simulation Toggle (for demonstration) -->
+<div class="flex items-center gap-space-xs bg-surface-container px-2.5 py-1.5 rounded-lg">
+<span class="font-label-sm text-label-sm text-outline">Simulate:</span>
+<button class="px-2 py-0.5 rounded text-label-sm font-label-sm bg-surface-container-lowest text-primary font-medium shadow-xs" id="sim-balanced" type="button">Exact</button>
+<button class="px-2 py-0.5 rounded text-label-sm font-label-sm text-outline hover:text-error" id="sim-over" type="button">Excess (₹1.5L)</button>
+</div>
+</div>
+<!-- Error State / Over-Payment Validation Callout (Explicit requirement) -->
+<div class="rounded-xl p-space-md bg-error-container/40 text-on-error-container flex items-start gap-space-md shadow-xs" id="overpayment-alert">
+<span class="material-symbols-outlined text-error text-[22px] mt-0.5 shrink-0">warning</span>
+<div class="flex flex-col gap-1 text-body-sm font-body-sm">
+<div class="flex items-center gap-2">
+<span class="font-label-lg text-label-lg font-bold text-error">Over-payment is not permitted</span>
+<span class="px-2 py-0.2 rounded bg-error/10 text-error font-label-sm text-label-sm uppercase tracking-wider">Accounting Policy</span>
+</div>
+<p class="leading-relaxed">
+              If client remits funds exceeding total outstanding balance (e.g. <strong>₹1,50,000</strong> vs <strong>₹1,12,400</strong> due), direct invoice over-allocation is blocked. An Advance / Retainer Invoice must be created for surplus funds (<strong>₹37,600.00</strong>) under Client Ledger.
+            </p>
+<div class="pt-1">
+<a class="inline-flex items-center gap-1 font-label-md text-label-md text-error font-semibold hover:underline" href="#">
+                Create Advance Invoice instead
+                <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Field 5: Notes & Documentation -->
+<div class="flex flex-col">
+<div class="flex items-center justify-between mb-1.5">
+<label class="font-label-md text-label-md text-outline" for="payment-notes">Internal Audit &amp; Settlement Notes</label>
+<span class="font-label-sm text-label-sm text-tertiary">Optional</span>
+</div>
+<textarea class="w-full bg-surface-container-lowest text-on-surface p-space-sm rounded-lg font-body-sm text-body-sm focus:outline-none focus:ring-1 focus:ring-primary shadow-xs" id="payment-notes" placeholder="e.g. Handover reference, banker approval code, or special instructions..." rows="2">Final settlement for Milestone 2 production advance via NEFT</textarea>
+</div>
+<!-- Automated Receipt Dispatch Checkbox -->
+<div class="p-space-sm rounded-lg bg-surface-container-low flex items-start gap-space-sm">
+<input checked="" class="mt-1 w-4 h-4 rounded text-primary accent-primary bg-surface-container-lowest focus:ring-primary cursor-pointer" id="send-receipt" type="checkbox"/>
+<label class="font-body-sm text-body-sm text-on-surface cursor-pointer select-none" for="send-receipt">
+            Generate &amp; email formal stamped receipt to <span class="font-medium text-on-surface">derick.dsouza@gmail.com</span> and <span class="font-medium text-on-surface">samantha.pinto@outlook.com</span>
+<span class="block text-label-sm font-label-sm text-tertiary mt-0.5">Automated SMS dispatch will also trigger to +91 98201 44819</span>
+</label>
+</div>
+</div>
+<!-- Dialog Footer Actions -->
+<div class="px-space-xl py-space-md bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-space-xs text-tertiary">
+<span class="material-symbols-outlined text-[18px]">lock</span>
+<span class="font-label-sm text-label-sm">Double-entry audit log generated automatically</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="px-space-md py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container font-label-lg text-label-lg transition-colors" id="cancel-btn" type="button">
+            Cancel
+          </button>
+<button class="px-space-lg py-2.5 rounded-lg bg-primary hover:bg-on-primary-fixed-variant text-on-primary font-label-lg text-label-lg font-medium shadow-sm flex items-center gap-space-xs transition-colors" id="submit-payment-btn" type="button">
+<span class="material-symbols-outlined text-[18px]">task_alt</span>
+<span>Confirm &amp; Record Payment (₹1,12,400.00)</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  (function initPaymentDialog() {
+    const amountReceivedInput = document.getElementById('amount-received');
+    const allocRow1 = document.getElementById('alloc-row-1');
+    const allocRow2 = document.getElementById('alloc-row-2');
+    const unallocatedDisplay = document.getElementById('unallocated-display');
+    const balancePill = document.getElementById('balance-pill');
+    const meterIconContainer = document.getElementById('meter-icon-container');
+    const meterIcon = document.getElementById('meter-icon');
+    const overpaymentAlert = document.getElementById('overpayment-alert');
+    const submitBtn = document.getElementById('submit-payment-btn');
+    const simBalanced = document.getElementById('sim-balanced');
+    const simOver = document.getElementById('sim-over');
+    const methodPills = document.querySelectorAll('.method-pill');
+    const btnSettle1 = document.getElementById('btn-settle-1');
+    const btnSettle2 = document.getElementById('btn-settle-2');
+    const clearAllocation = document.getElementById('clear-allocation');
+    const quickAutoFill = document.getElementById('quick-auto-fill');
+
+    function parseINR(val) {
+      if (!val) return 0;
+      return parseFloat(val.toString().replace(/,/g, '')) || 0;
+    }
+
+    function formatINR(num) {
+      return num.toLocaleString('en-IN', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+    }
+
+    function recalculate() {
+      const totalRec = parseINR(amountReceivedInput.value);
+      const row1Val = parseINR(allocRow1.value);
+      const row2Val = parseINR(allocRow2.value);
+      const totalAlloc = row1Val + row2Val;
+      const unallocated = totalRec - totalAlloc;
+
+      unallocatedDisplay.textContent = '₹' + formatINR(Math.abs(unallocated));
+
+      if (Math.abs(unallocated) < 0.01) {
+        // Balanced
+        unallocatedDisplay.className = 'font-headline-sm text-headline-sm text-primary font-bold';
+        balancePill.className = 'ml-2 px-2 py-0.5 rounded text-label-sm font-label-sm bg-secondary-container text-on-secondary-container font-medium';
+        balancePill.textContent = 'Balanced • All funds allocated exactly';
+        meterIconContainer.className = 'w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center';
+        meterIcon.textContent = 'check_circle';
+        overpaymentAlert.classList.remove('ring-2', 'ring-error');
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        submitBtn.querySelector('span:last-child').textContent = 'Confirm & Record Payment (₹' + formatINR(totalRec) + ')';
+      } else if (unallocated > 0) {
+        // Under-allocated (Remains to be allocated)
+        unallocatedDisplay.className = 'font-headline-sm text-headline-sm text-tertiary font-bold';
+        balancePill.className = 'ml-2 px-2 py-0.5 rounded text-label-sm font-label-sm bg-surface-container-highest text-on-surface-variant font-medium';
+        balancePill.textContent = 'Remaining to allocate: ₹' + formatINR(unallocated);
+        meterIconContainer.className = 'w-10 h-10 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center';
+        meterIcon.textContent = 'pending';
+        submitBtn.disabled = true;
+        submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+      } else {
+        // Over-allocated or negative remainder
+        unallocatedDisplay.className = 'font-headline-sm text-headline-sm text-error font-bold';
+        balancePill.className = 'ml-2 px-2 py-0.5 rounded text-label-sm font-label-sm bg-error-container text-on-error-container font-medium';
+        balancePill.textContent = 'Over-allocated by ₹' + formatINR(Math.abs(unallocated));
+        meterIconContainer.className = 'w-10 h-10 rounded-full bg-error-container text-on-error-container flex items-center justify-center';
+        meterIcon.textContent = 'error';
+        submitBtn.disabled = true;
+        submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+      }
+    }
+
+    // Method pill interaction
+    methodPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        methodPills.forEach(p => {
+          p.className = 'method-pill flex-1 py-1.5 px-3 rounded text-label-md font-label-md text-on-surface-variant hover:text-on-surface transition-all flex items-center justify-center gap-1.5';
+        });
+        pill.className = 'method-pill flex-1 py-1.5 px-3 rounded text-label-md font-label-md bg-surface-container-lowest text-primary shadow-sm font-semibold flex items-center justify-center gap-1.5';
+      });
+    });
+
+    // Inputs listeners
+    allocRow1.addEventListener('input', recalculate);
+    allocRow2.addEventListener('input', recalculate);
+    amountReceivedInput.addEventListener('input', recalculate);
+
+    // Quick Action buttons
+    btnSettle1.addEventListener('click', () => {
+      allocRow1.value = '1,12,400.00';
+      recalculate();
+    });
+
+    btnSettle2.addEventListener('click', () => {
+      allocRow2.value = '35,000.00';
+      recalculate();
+    });
+
+    clearAllocation.addEventListener('click', () => {
+      allocRow1.value = '0.00';
+      allocRow2.value = '0.00';
+      recalculate();
+    });
+
+    quickAutoFill.addEventListener('click', () => {
+      allocRow1.value = '1,12,400.00';
+      allocRow2.value = '0.00';
+      recalculate();
+    });
+
+    // Simulation toggle buttons
+    simBalanced.addEventListener('click', () => {
+      amountReceivedInput.value = '1,12,400.00';
+      allocRow1.value = '1,12,400.00';
+      allocRow2.value = '0.00';
+      simBalanced.className = 'px-2 py-0.5 rounded text-label-sm font-label-sm bg-surface-container-lowest text-primary font-medium shadow-xs';
+      simOver.className = 'px-2 py-0.5 rounded text-label-sm font-label-sm text-outline hover:text-error';
+      recalculate();
+    });
+
+    simOver.addEventListener('click', () => {
+      amountReceivedInput.value = '1,50,000.00';
+      allocRow1.value = '1,12,400.00';
+      allocRow2.value = '0.00';
+      simOver.className = 'px-2 py-0.5 rounded text-label-sm font-label-sm bg-error-container text-on-error-container font-medium shadow-xs';
+      simBalanced.className = 'px-2 py-0.5 rounded text-label-sm font-label-sm text-outline hover:text-primary';
+      overpaymentAlert.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      recalculate();
+    });
+
+    // Close and Cancel interaction simulation
+    const closeModal = () => {
+      const modal = document.getElementById('payment-modal');
+      modal.classList.add('opacity-0', 'scale-95');
+      setTimeout(() => {
+        alert('Payment dialog closed. Navigating back to Invoice #INV-2025-140 overview.');
+        modal.classList.remove('opacity-0', 'scale-95');
+      }, 180);
+    };
+
+    document.getElementById('close-modal-btn').addEventListener('click', closeModal);
+    document.getElementById('cancel-btn').addEventListener('click', closeModal);
+
+    submitBtn.addEventListener('click', () => {
+      if (submitBtn.disabled) return;
+      const ref = document.getElementById('reference-utr').value;
+      alert('Payment of ₹' + amountReceivedInput.value + ' recorded successfully against INV-2025-140. Ref: ' + ref);
+    });
+
+    recalculate();
+  })();
+</script></main></div></body></html>

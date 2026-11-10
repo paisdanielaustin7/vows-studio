@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "tertiary-container": "#909690", "surface-container": "#eaefe9", "secondary-container": "#ceead2", "on-tertiary-container": "#282f2a", "on-primary-fixed-variant": "#354c3b", "surface-container-lowest": "#ffffff", "tertiary-fixed": "#dee4dd", "secondary-fixed-dim": "#b2cdb6", "on-primary-container": "#1c3223", "on-secondary-fixed-variant": "#344c3b", "outline": "#737972", "secondary-fixed": "#ceead2", "secondary": "#4b6451", "primary-fixed": "#cfe9d3", "on-background": "#171d19", "on-tertiary-fixed": "#171d19", "on-primary-fixed": "#092012", "on-surface": "#171d19", "on-surface-variant": "#424843", "on-secondary-fixed": "#082011", "outline-variant": "#c3c8c1", "on-tertiary-fixed-variant": "#424843", "on-error-container": "#93000a", "on-primary": "#ffffff", "on-secondary": "#ffffff", "error": "#ba1a1a", "on-error": "#ffffff", "surface-dim": "#d6dcd5", "surface-bright": "#f5fbf4", "on-secondary-container": "#516a57", "surface-container-high": "#e4eae3", "error-container": "#ffdad6", "inverse-on-surface": "#ecf2ec", "surface-variant": "#dee4de", "inverse-primary": "#b3cdb7", "surface-tint": "#4c6452", "surface-container-low": "#eff5ef", "tertiary": "#5a605b", "tertiary-fixed-dim": "#c2c8c2", "surface-container-highest": "#dee4de", "on-tertiary": "#ffffff", "background": "#f5fbf4", "inverse-surface": "#2c322e", "primary": "#4c6452", "surface": "#f5fbf4", "primary-container": "#829b87", "primary-fixed-dim": "#b3cdb7" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-md": "1rem", "margin-mobile": "1.25rem", "gutter": "1.5rem", "space-xl": "2.5rem", "gutter-mobile": "1rem", "space-lg": "1.5rem", "space-sm": "0.5rem", "margin": "3rem", "space-xs": "0.25rem" }, "fontFamily": { "body-md": ["Inter"], "headline-lg": ["Inter"], "body-lg": ["Inter"], "headline-lg-mobile": ["Inter"], "headline-sm": ["Inter"], "label-md": ["Inter"], "label-lg": ["Inter"], "label-sm": ["Inter"], "display": ["Inter"], "body-sm": ["Inter"], "display-mobile": ["Inter"], "headline-md": ["Inter"] }, "fontSize": { "body-md": ["0.875rem", { "lineHeight": "1.5rem", "fontWeight": "400" }], "headline-lg": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600" }], "body-lg": ["1rem", { "lineHeight": "1.625rem", "fontWeight": "400" }], "headline-lg-mobile": ["1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.015em", "fontWeight": "600" }], "headline-sm": ["1.125rem", { "lineHeight": "1.5rem", "letterSpacing": "-0.01em", "fontWeight": "500" }], "label-md": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.02em", "fontWeight": "500" }], "label-lg": ["0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "500" }], "label-sm": ["0.6875rem", { "lineHeight": "0.875rem", "letterSpacing": "0.04em", "fontWeight": "600" }], "display": ["2.75rem", { "lineHeight": "3.25rem", "letterSpacing": "-0.03em", "fontWeight": "600" }], "body-sm": ["0.8125rem", { "lineHeight": "1.25rem", "fontWeight": "400" }], "display-mobile": ["2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600" }], "headline-md": ["1.375rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.015em", "fontWeight": "600" }] } } } };</script></head><body class="bg-surface font-body-md text-on-surface antialiased selection:bg-secondary-container selection:text-on-secondary-container"><aside class="fixed left-0 top-0 h-screen w-64 bg-surface-container-low border-r border-outline-variant/50 z-50 flex flex-col justify-between overflow-y-auto"><div class="flex flex-col"><div class="h-16 px-space-lg flex items-center justify-between border-b border-outline-variant/40"><div class="flex items-center gap-space-sm"><div class="w-7 h-7 rounded-lg bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[16px]">movie_filter</span></div><span class="font-headline-sm text-headline-sm tracking-tight text-on-surface font-semibold">VOWS STUDIO</span></div><span class="font-label-sm text-label-sm uppercase px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant font-medium tracking-wider">PRO</span></div><div class="px-space-md py-space-lg space-y-space-lg"><nav class="space-y-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-semibold rounded-lg shadow-none"><div class="px-space-sm pb-space-xs font-label-sm text-label-sm text-outline uppercase tracking-wider">Operations</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="bookings" href="#"><span class="material-symbols-outlined text-[18px]">calendar_today</span>Bookings</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="schedule" href="#"><span class="material-symbols-outlined text-[18px]">event_available</span>Schedule</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="crew-directory" href="#"><span class="material-symbols-outlined text-[18px]">groups</span>Crew Directory</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="crew-profile" href="#"><span class="material-symbols-outlined text-[18px]">badge</span>Crew Profile</a><a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-2 transition-colors bg-secondary-container text-on-secondary-container font-semibold rounded-lg shadow-none" data-path="delivery-pipeline" href="#"><span class="material-symbols-outlined text-[18px]">local_shipping</span>Delivery</a></nav><nav class="space-y-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-semibold rounded-lg shadow-none"><div class="px-space-sm pb-space-xs font-label-sm text-label-sm text-outline uppercase tracking-wider">Finance</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="invoices" href="#"><span class="material-symbols-outlined text-[18px]">receipt_long</span>Invoices</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="payments" href="#"><span class="material-symbols-outlined text-[18px]">payments</span>Payments</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="ledger" href="#"><span class="material-symbols-outlined text-[18px]">menu_book</span>Ledger</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="expenses" href="#"><span class="material-symbols-outlined text-[18px]">account_balance_wallet</span>Expenses</a></nav><nav class="space-y-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-semibold rounded-lg shadow-none"><div class="px-space-sm pb-space-xs font-label-sm text-label-sm text-outline uppercase tracking-wider">Studio Tools</div><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="services" href="#"><span class="material-symbols-outlined text-[18px]">photo_camera</span>Services</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="packages" href="#"><span class="material-symbols-outlined text-[18px]">inventory_2</span>Packages</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="portfolio" href="#"><span class="material-symbols-outlined text-[18px]">collections</span>Portfolio</a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="reviews" href="#"><span class="material-symbols-outlined text-[18px]">star_rate</span>Reviews</a></nav></div></div><div class="p-space-md border-t border-outline-variant/40 bg-surface-container-low"><div class="p-space-sm rounded-lg bg-surface-container flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-primary"></span><span class="font-label-sm text-label-sm text-on-surface font-medium">Cloud Sync</span></div><span class="font-label-sm text-label-sm text-outline">Real-time</span></div></div></aside><div class="pl-64 flex flex-col min-h-screen"><header class="fixed top-0 left-64 right-0 h-16 bg-surface/90 backdrop-blur-xl border-b border-outline-variant/40 z-40 px-space-lg flex items-center justify-between"><div class="flex items-center gap-space-xs font-label-md text-label-md text-outline"><span class="hover:text-on-surface cursor-pointer transition-colors">Studio CRM</span><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="hover:text-on-surface cursor-pointer transition-colors">Operations</span><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="font-semibold text-on-surface">Delivery Pipeline</span></div><div class="flex items-center gap-space-md"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-space-sm text-outline text-[18px]">search</span><input class="w-72 h-9 pl-9 pr-14 rounded-lg bg-surface-container-lowest border border-outline-variant/60 font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:border-primary-container focus:ring-2 focus:ring-surface-container-high transition-all" placeholder="Search projects, couples, crew..." type="text"/><kbd class="absolute right-space-sm font-label-sm text-label-sm text-outline bg-surface-container px-1.5 py-0.5 rounded border border-outline-variant/40">⌘K</kbd></div><div class="h-5 w-px bg-outline-variant/50"></div><div class="flex items-center gap-space-xs"><button class="w-9 h-9 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span></button><button class="w-9 h-9 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[20px]">light_mode</span></button></div><div class="h-5 w-px bg-outline-variant/50"></div><div class="flex items-center gap-space-sm pl-space-xs"><div class="text-right"><div class="font-label-md text-label-md font-semibold text-on-surface leading-tight">Reuben Serrao</div><div class="font-label-sm text-label-sm text-outline leading-tight">Executive Producer / Owner</div></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 pt-16 bg-surface"><div class="flex flex-col w-full">
+<div class="px-space-lg lg:px-space-xl py-space-lg max-w-[1440px] mx-auto w-full space-y-space-lg">
+<!-- Top Project Context Header -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="flex flex-col xl:flex-row xl:items-center justify-between gap-space-lg">
+<div class="space-y-space-xs max-w-3xl">
+<div class="flex flex-wrap items-center gap-space-sm text-label-sm font-label-sm">
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-semibold tracking-wider">BKG-2025-019</span>
+<span class="text-outline">Cinematic Production #44</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="text-outline">Deliverable: Feature Film (4K RAW) + 35mm Analog Monograph + Teaser Reel</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight font-semibold pt-1">
+            Derick D'Souza & Samantha Pinto — Goa Coastal Wedding
+          </h1>
+<div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-body-sm font-body-sm text-on-surface-variant pt-0.5">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-secondary">church</span>
+              St. Cajetan Church, Velha Goa & Private Beach Estate
+            </span>
+<span class="text-outline-variant">•</span>
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-secondary">videocam</span>
+              Shot on ARRI Alexa Mini LF + Leica Summilux-C
+            </span>
+<span class="text-outline-variant">•</span>
+<span class="flex items-center gap-1.5 text-error font-medium">
+<span class="material-symbols-outlined text-[16px]">warning</span>
+              SLA Offset: +3 Days on Audio Revisions
+            </span>
+</div>
+</div>
+<!-- Top Right Actions & Health -->
+<div class="flex flex-col sm:flex-row items-start sm:items-center gap-space-md self-start xl:self-center">
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-error-container/40 text-on-error-container">
+<span class="w-2 h-2 rounded-full bg-error animate-pulse"></span>
+<span class="font-label-md text-label-md font-semibold tracking-wide">At Risk / 1 Stage Blocked</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="px-3.5 py-2 rounded-lg bg-primary text-on-primary hover:bg-secondary font-label-lg text-label-lg transition-colors flex items-center gap-1.5 shadow-sm" onclick="document.getElementById('shareModal').classList.toggle('hidden')">
+<span class="material-symbols-outlined text-[18px]">share</span>
+              Share with Client
+            </button>
+<button class="px-3.5 py-2 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface font-label-lg text-label-lg transition-colors flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">description</span>
+              Export Audit
+            </button>
+<button class="p-2 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface-variant transition-colors" title="Project Settings">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Overall Metric Progress Bar Strip -->
+<div class="mt-space-lg pt-space-md">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-xs mb-2">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">5 of 9 Stages Complete</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-semibold">55% Ingested & Assembled</span>
+</div>
+<div class="flex items-center gap-space-md text-label-sm font-label-sm text-outline">
+<span class="flex items-center gap-1 text-on-surface">
+<span class="material-symbols-outlined text-[15px] text-secondary">calendar_clock</span>
+              Target Delivery: <strong class="text-on-surface font-semibold ml-0.5">Dec 15, 2025</strong>
+</span>
+<span>(18 Days Remaining)</span>
+<span class="text-outline-variant">•</span>
+<span>Asset Footprint: <strong class="text-on-surface font-medium">4.2 TB</strong></span>
+</div>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container overflow-hidden flex gap-0.5 p-0.5">
+<div class="h-full bg-primary rounded-full transition-all duration-500" style="width: 55%"></div>
+<div class="h-full bg-error rounded-full animate-pulse transition-all duration-500" style="width: 11%"></div>
+<div class="h-full bg-surface-container-high rounded-full flex-1"></div>
+</div>
+<div class="flex justify-between items-center text-label-sm font-label-sm text-outline pt-2">
+<span>Shoot Wrap: Nov 19, 2025</span>
+<span class="text-error font-medium">Bottleneck: Stage 5 Revisions (Awaiting WAV file)</span>
+<span>Vault Archive: Dec 15, 2025</span>
+</div>
+</div>
+</div>
+<!-- Main Content Canvas: Timeline & Docked Inspection Panel -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg items-start">
+<!-- Left 8 Columns: Horizontal Pipeline Stages Visualizer & Details -->
+<div class="xl:col-span-8 space-y-space-lg">
+<!-- Timeline Stage Overview (Scrollable Cards) -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="flex items-center justify-between pb-space-md">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Sequential Workflow</span>
+<h2 class="font-headline-sm text-headline-sm font-semibold text-on-surface">Production Pipeline Progress</h2>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm text-outline flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-primary"></span> Complete
+              </span>
+<span class="font-label-sm text-label-sm text-outline flex items-center gap-1 ml-2">
+<span class="w-2 h-2 rounded-full bg-error"></span> Blocked / Attention
+              </span>
+<span class="font-label-sm text-label-sm text-outline flex items-center gap-1 ml-2">
+<span class="w-2 h-2 rounded-full bg-surface-container-high"></span> Pending
+              </span>
+</div>
+</div>
+<!-- Horizontal Stepper Bar -->
+<div class="relative py-2 overflow-x-auto pb-4">
+<div class="min-w-[860px]">
+<div class="grid grid-cols-9 gap-2 relative">
+<!-- Track Line Behind Points -->
+<div class="absolute top-5 left-4 right-4 h-0.5 bg-surface-container -z-0">
+<div class="h-full bg-primary transition-all duration-500" style="width: 48%"></div>
+</div>
+<!-- Stage 1 -->
+<button class="group relative z-10 flex flex-col items-center text-center p-2 rounded-lg hover:bg-surface-container-low transition-all" onclick="selectStage(1)">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-label-sm font-semibold shadow-sm">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<span class="font-label-md text-label-md font-semibold text-on-surface mt-2">1. Raw Import</span>
+<span class="font-label-sm text-label-sm text-outline">Nov 21</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.2 rounded bg-surface-container text-on-surface-variant mt-1">4.2 TB</span>
+</button>
+<!-- Stage 2 -->
+<button class="group relative z-10 flex flex-col items-center text-center p-2 rounded-lg hover:bg-surface-container-low transition-all" onclick="selectStage(2)">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-label-sm font-semibold shadow-sm">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<span class="font-label-md text-label-md font-semibold text-on-surface mt-2">2. Culling</span>
+<span class="font-label-sm text-label-sm text-outline">Nov 23</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.2 rounded bg-surface-container text-on-surface-variant mt-1">3.8k Pics</span>
+</button>
+<!-- Stage 3 -->
+<button class="group relative z-10 flex flex-col items-center text-center p-2 rounded-lg hover:bg-surface-container-low transition-all" onclick="selectStage(3)">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-label-sm font-semibold shadow-sm">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<span class="font-label-md text-label-md font-semibold text-on-surface mt-2">3. Editing</span>
+<span class="font-label-sm text-label-sm text-outline">Nov 28</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.2 rounded bg-surface-container text-on-surface-variant mt-1">v1 Cut</span>
+</button>
+<!-- Stage 4 -->
+<button class="group relative z-10 flex flex-col items-center text-center p-2 rounded-lg hover:bg-surface-container-low transition-all" onclick="selectStage(4)">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-label-sm font-semibold shadow-sm">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<span class="font-label-md text-label-md font-semibold text-on-surface mt-2">4. Client Preview</span>
+<span class="font-label-sm text-label-sm text-outline">Dec 01</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.2 rounded bg-surface-container text-on-surface-variant mt-1">Reviewed</span>
+</button>
+<!-- Stage 5: BLOCKED (Selected / Active) -->
+<button class="group relative z-10 flex flex-col items-center text-center p-2 rounded-lg bg-error-container/30 ring-2 ring-error transition-all" id="stage-btn-5" onclick="selectStage(5)">
+<div class="w-8 h-8 rounded-full bg-error text-on-error flex items-center justify-center font-label-sm font-semibold shadow-sm">
+<span class="material-symbols-outlined text-[16px]">lock</span>
+</div>
+<span class="font-label-md text-label-md font-semibold text-on-error-container mt-2">5. Revisions</span>
+<span class="font-label-sm text-label-sm text-error font-medium">Dec 04</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.2 rounded bg-error/20 text-on-error-container font-semibold mt-1">Blocked</span>
+</button>
+<!-- Stage 6 -->
+<button class="group relative z-10 flex flex-col items-center text-center p-2 rounded-lg hover:bg-surface-container-low transition-all opacity-85" onclick="selectStage(6)">
+<div class="w-8 h-8 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-label-sm font-semibold">
+                    6
+                  </div>
+<span class="font-label-md text-label-md font-medium text-on-surface mt-2">6. Final Export</span>
+<span class="font-label-sm text-label-sm text-outline">Dec 07</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.2 rounded bg-surface-container text-outline mt-1">Pending</span>
+</button>
+<!-- Stage 7 -->
+<button class="group relative z-10 flex flex-col items-center text-center p-2 rounded-lg hover:bg-surface-container-low transition-all opacity-85" onclick="selectStage(7)">
+<div class="w-8 h-8 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-label-sm font-semibold">
+                    7
+                  </div>
+<span class="font-label-md text-label-md font-medium text-on-surface mt-2">7. QC Master</span>
+<span class="font-label-sm text-label-sm text-outline">Dec 09</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.2 rounded bg-surface-container text-outline mt-1">Pending</span>
+</button>
+<!-- Stage 8 -->
+<button class="group relative z-10 flex flex-col items-center text-center p-2 rounded-lg hover:bg-surface-container-low transition-all opacity-85" onclick="selectStage(8)">
+<div class="w-8 h-8 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-label-sm font-semibold">
+                    8
+                  </div>
+<span class="font-label-md text-label-md font-medium text-on-surface mt-2">8. Delivery</span>
+<span class="font-label-sm text-label-sm text-outline">Dec 12</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.2 rounded bg-surface-container text-outline mt-1">Pending</span>
+</button>
+<!-- Stage 9 -->
+<button class="group relative z-10 flex flex-col items-center text-center p-2 rounded-lg hover:bg-surface-container-low transition-all opacity-85" onclick="selectStage(9)">
+<div class="w-8 h-8 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-label-sm font-semibold">
+                    9
+                  </div>
+<span class="font-label-md text-label-md font-medium text-on-surface mt-2">9. Completed</span>
+<span class="font-label-sm text-label-sm text-outline">Dec 15</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.2 rounded bg-surface-container text-outline mt-1">Pending</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Highlight Card: Critical Attention Alert on Stage 5 -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm border-l-4 border-l-error">
+<div class="flex items-start justify-between gap-space-md">
+<div class="space-y-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-error text-[20px]">error</span>
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">Stage 5: Revisions Blocked — Behind Schedule Flag</span>
+<span class="px-2 py-0.5 rounded bg-error-container text-on-error-container font-label-sm text-label-sm font-bold">+3 Days Past SLA</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">
+                Awaiting client audio track approval: Couple requested custom konkani hymn replacement for bridal entry sequence. The production cut is locked pending high-fidelity church audio stems from the couple's organist.
+              </p>
+</div>
+<button class="shrink-0 px-3 py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md font-medium transition-colors" onclick="document.getElementById('blockedReasonModal').classList.toggle('hidden')">
+              Update Resolution Plan
+            </button>
+</div>
+<div class="mt-space-md pt-space-sm grid grid-cols-1 sm:grid-cols-3 gap-space-sm bg-surface-container-low p-space-md rounded-lg">
+<div>
+<span class="font-label-sm text-label-sm text-outline block">Original Target</span>
+<span class="font-label-md text-label-md font-semibold text-on-surface">Dec 04, 2025</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-outline block">Revised ETA</span>
+<span class="font-label-md text-label-md font-semibold text-error">Dec 07, 2025 (Tentative)</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-outline block">Direct Lead</span>
+<span class="font-label-md text-label-md font-semibold text-on-surface">Kiran Varma (Editor)</span>
+</div>
+</div>
+</div>
+<!-- Itemized Detailed Stage Cards Grid -->
+<div class="space-y-space-md">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-sm text-headline-sm font-semibold text-on-surface">Stage Audit Ledger</h3>
+<span class="font-label-sm text-label-sm text-outline">9 Stages Defined</span>
+</div>
+<div class="space-y-space-sm">
+<!-- Stage 1 Row -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-md">
+<div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">done_all</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">1. Raw Import & Ingestion</span>
+<span class="px-2 py-0.2 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm">Completed Nov 21</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline">Ingested 4.2 TB RAID dual-mirrored archive. Checksum verified via Silverstack.</p>
+</div>
+</div>
+<div class="flex items-center gap-space-md pl-11 md:pl-0">
+<div class="text-right">
+<span class="font-label-sm text-label-sm text-outline block">Lead Ingest</span>
+<span class="font-label-md text-label-md font-medium text-on-surface">Reuben Serrao (RS)</span>
+</div>
+<span class="material-symbols-outlined text-outline text-[18px]">verified</span>
+</div>
+</div>
+<!-- Stage 2 Row -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-md">
+<div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">photo_library</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">2. Culling & Editorial Selects</span>
+<span class="px-2 py-0.2 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm">Completed Nov 23</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline">3,840 selects refined out of 12,500 total RAW exposures. Narrative arcs marked.</p>
+</div>
+</div>
+<div class="flex items-center gap-space-md pl-11 md:pl-0">
+<div class="text-right">
+<span class="font-label-sm text-label-sm text-outline block">Lead Culler</span>
+<span class="font-label-md text-label-md font-medium text-on-surface">Tara Rao (TR)</span>
+</div>
+<span class="material-symbols-outlined text-outline text-[18px]">verified</span>
+</div>
+</div>
+<!-- Stage 3 Row -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-md">
+<div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">movie_edit</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">3. Editing & Film Color Grade</span>
+<span class="px-2 py-0.2 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm">Completed Nov 28</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline">First rough cut sequence (18 mins) & 35mm film emulation balance completed in DaVinci Resolve.</p>
+</div>
+</div>
+<div class="flex items-center gap-space-md pl-11 md:pl-0">
+<div class="text-right">
+<span class="font-label-sm text-label-sm text-outline block">Editor</span>
+<span class="font-label-md text-label-md font-medium text-on-surface">Kiran Varma (KV)</span>
+</div>
+<span class="material-symbols-outlined text-outline text-[18px]">verified</span>
+</div>
+</div>
+<!-- Stage 4 Row -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-md">
+<div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">4. Client Private Preview</span>
+<span class="px-2 py-0.2 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm">Completed Dec 01</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline">Encrypted stream delivered to Samantha & Derick. 4 timestamps flagged for audio adjustments.</p>
+</div>
+</div>
+<div class="flex items-center gap-space-md pl-11 md:pl-0">
+<div class="text-right">
+<span class="font-label-sm text-label-sm text-outline block">Client Lead</span>
+<span class="font-label-md text-label-md font-medium text-on-surface">Samantha Pinto</span>
+</div>
+<span class="material-symbols-outlined text-outline text-[18px]">verified</span>
+</div>
+</div>
+<!-- Stage 5 Row (Active Blocked Card) -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm ring-2 ring-error/40 flex flex-col md:flex-row md:items-center justify-between gap-space-sm bg-gradient-to-r from-error-container/10 to-transparent">
+<div class="flex items-center gap-space-md">
+<div class="w-8 h-8 rounded-full bg-error-container text-on-error-container flex items-center justify-center shrink-0 font-semibold">
+<span class="material-symbols-outlined text-[18px] text-error">lock_clock</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">5. Revisions (Round 1)</span>
+<span class="px-2 py-0.2 rounded bg-error-container text-on-error-container font-label-sm text-label-sm font-semibold">Blocked • +3 Days Overdue</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-error-container font-medium">Awaiting client audio track approval: Couple requested custom konkani hymn replacement.</p>
+</div>
+</div>
+<div class="flex items-center gap-space-md pl-11 md:pl-0">
+<div class="text-right">
+<span class="font-label-sm text-label-sm text-outline block">Assignees</span>
+<span class="font-label-md text-label-md font-medium text-on-surface">KV (Lead) & RS</span>
+</div>
+<span class="material-symbols-outlined text-error text-[20px]">warning</span>
+</div>
+</div>
+<!-- Subsequent Pending Stages (6 to 9) -->
+<div class="bg-surface-container-lowest/60 rounded-xl p-space-md shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-space-sm opacity-75">
+<div class="flex items-center gap-space-md">
+<div class="w-8 h-8 rounded-full bg-surface-container text-outline flex items-center justify-center shrink-0 font-label-md">6</div>
+<div>
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">6. Final 4K Master Export</span>
+<p class="font-body-sm text-body-sm text-outline">ProRes 4444 XQ Master + Rec.709 & DCI-P3 theatrical deliverables.</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-outline pl-11 md:pl-0">Target: Dec 07 • Kiran Varma</span>
+</div>
+<div class="bg-surface-container-lowest/60 rounded-xl p-space-md shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-space-sm opacity-75">
+<div class="flex items-center gap-space-md">
+<div class="w-8 h-8 rounded-full bg-surface-container text-outline flex items-center justify-center shrink-0 font-label-md">7</div>
+<div>
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">7. Executive Quality Control</span>
+<p class="font-body-sm text-body-sm text-outline">Color calibration, sync veracity, sound level LUFS (-14 standard).</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-outline pl-11 md:pl-0">Target: Dec 09 • Reuben Serrao</span>
+</div>
+<div class="bg-surface-container-lowest/60 rounded-xl p-space-md shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-space-sm opacity-75">
+<div class="flex items-center gap-space-md">
+<div class="w-8 h-8 rounded-full bg-surface-container text-outline flex items-center justify-center shrink-0 font-label-md">8</div>
+<div>
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">8. Client Gallery & Dispatch</span>
+<p class="font-body-sm text-body-sm text-outline">Passkey release, high-bandwidth download CDN, client monogram package.</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-outline pl-11 md:pl-0">Target: Dec 12 • Dispatch Coordinator</span>
+</div>
+<div class="bg-surface-container-lowest/60 rounded-xl p-space-md shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-space-sm opacity-75">
+<div class="flex items-center gap-space-md">
+<div class="w-8 h-8 rounded-full bg-surface-container text-outline flex items-center justify-center shrink-0 font-label-md">9</div>
+<div>
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">9. Archival Vault & Physical Hard Drive</span>
+<p class="font-body-sm text-body-sm text-outline">Laser engraved walnut wood enclosure, 2TB SSD delivery to Goa residence.</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-outline pl-11 md:pl-0">Target: Dec 15 • Courier Express</span>
+</div>
+</div>
+</div>
+<!-- Visual Media Stills Proofing Preview -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm space-y-space-md">
+<div class="flex items-center justify-between">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Cinematic Grading Preview</span>
+<h3 class="font-headline-sm text-headline-sm font-semibold text-on-surface">Production Stills — Sequence V1.2</h3>
+</div>
+<span class="font-label-sm text-label-sm px-2.5 py-1 rounded bg-secondary-container text-on-secondary-container font-medium">35mm Film Tone Emulation</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-md">
+<div class="group relative rounded-lg overflow-hidden bg-surface-container aspect-[3/2] shadow-sm">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Cinematic still from wedding in Goa during sunset by the Arabian sea, couple walking on golden sand, soft golden hour sunlight, Kodak Portra 400 film grain texture, tranquil organic tones of olive sage and neutral sand, peaceful high end editorial composition." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBuco8A3BYgg_tHlMOpWjFjuVTTrZpoMMooQbuo9lqzOnAuHd_Xq29Lih18CrXI5phRCS-ee2gIqfHj_8qmoOwUs-cne9ENsB-d07MLxWCS35bJT95Mk8u0eu9VJuXpAY3cefxhtmOb0NlR78pjM2Gw5GG8pFSj2kiEVrjvNA3LDaFSR1UZXdBMFdxiTlYgcNfsWwX-Z49qSHV2EGGNrbgIcjRdFKXJdluJnTn_6vje"/>
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 via-transparent to-transparent flex items-end p-space-sm">
+<span class="font-label-sm text-label-sm text-inverse-on-surface">Beach Recessional • 17:42:10</span>
+</div>
+</div>
+<div class="group relative rounded-lg overflow-hidden bg-surface-container aspect-[3/2] shadow-sm">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Editorial wedding interior shot inside historic St. Cajetan church in Goa, high baroque arches, natural light streaming through vintage stained glass, bride Samantha in minimalist silk gown, quiet dramatic shadow, cinematic calm mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAK6jyO87I1iVO7iPiCZU9zwaDCGnOdYKXfgQROMD5Dx73yD2z7T4_P6CXNRYWnhGEyxmSi8Qho0W1R5rJojxRut5dP2CbutwcnkFfOLomutBnbdEkWw91aXDFA1C1xkO2HmmCEVkZbwqzpGKNhV80GMW3KoMRqxh-y4s1fewabMoH3OHeAvQIRycXrTmMkwUsaUdWV_z84kdPiC40OcVxzTzXCh2ctGLVILOJYhWmN"/>
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 via-transparent to-transparent flex items-end p-space-sm">
+<span class="font-label-sm text-label-sm text-inverse-on-surface">Bridal Entry Sequence (Blocked Mark)</span>
+</div>
+</div>
+<div class="group relative rounded-lg overflow-hidden bg-surface-container aspect-[3/2] shadow-sm">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Macro detail of 35mm analog contact sheet and monogrammed physical delivery wood box for high end wedding documentary, warm studio tabletop lighting, botanical olive branch accents, soft tactile paper and bespoke leather typography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxTKYx15oVttg7_kGGpA3DLSmMgumyE8wNz8S4TZStIN54iQhpNG2I-dZZyZlCj58F9Btrqbbjb1HDdh5UFbSsanRI8ljCRJ_lJwTXxqfRmaM7qdAfBk-0-TXJY9VpPSY79Rmnc_VPZSAE-r-sN60olJdxdP5KjgxouuK40E0FmCntnTwugz8KAkDvKq5jD1C03YECMAJRTizw4tTKx2TMV_M8q-k2XP9Z8M-HJ5k-"/>
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 via-transparent to-transparent flex items-end p-space-sm">
+<span class="font-label-sm text-label-sm text-inverse-on-surface">Monograph Packaging Proof</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right 4 Columns: Docked Inspection Panel (Stage 5 Revisions) -->
+<aside class="xl:col-span-4 bg-surface-container-lowest rounded-xl p-space-lg shadow-sm space-y-space-lg sticky top-20">
+<!-- Panel Header -->
+<div class="border-b border-outline-variant/30 pb-space-md">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">Active Stage Inspector</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-surface-container font-mono text-outline">STAGE 05 / 09</span>
+</div>
+<div class="flex items-baseline justify-between mt-1">
+<h2 class="font-headline-md text-headline-md font-semibold text-on-surface">Stage 5: Revisions</h2>
+<span class="font-label-sm text-label-sm text-error font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">timer_off</span> Overdue +3d
+            </span>
+</div>
+<div class="flex flex-wrap items-center gap-1.5 mt-2">
+<span class="px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">lock</span> BLOCKED
+            </span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">Round 1 of 2 Free</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-outline font-label-sm text-label-sm">Frame.io v1.2</span>
+</div>
+</div>
+<!-- Status Controller Segmented Picker -->
+<div class="space-y-space-xs">
+<label class="font-label-md text-label-md text-outline block">Lifecycle Stage Status</label>
+<div class="grid grid-cols-3 gap-1 bg-surface-container-low p-1 rounded-lg text-label-sm font-label-sm">
+<button class="py-1.5 px-2 rounded hover:bg-surface-container text-on-surface-variant text-center transition-colors">Pending</button>
+<button class="py-1.5 px-2 rounded hover:bg-surface-container text-on-surface-variant text-center transition-colors">In Work</button>
+<button class="py-1.5 px-2 rounded bg-error text-on-error font-semibold text-center shadow-sm">Blocked</button>
+<button class="py-1.5 px-2 rounded hover:bg-surface-container text-on-surface-variant text-center transition-colors">In Review</button>
+<button class="py-1.5 px-2 rounded hover:bg-surface-container text-on-surface-variant text-center transition-colors col-span-2">Mark Complete</button>
+</div>
+</div>
+<!-- Blocked Reason Callout Box & Quick Action -->
+<div class="p-space-md rounded-lg bg-error-container/25 space-y-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm font-bold text-on-error-container uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px] text-error">priority_high</span> Blocked Reason
+            </span>
+<span class="font-label-sm text-label-sm text-outline">Logged Dec 02</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-error-container leading-relaxed">
+            "Awaiting client audio track approval: Couple requested custom konkani hymn replacement for bridal entry sequence."
+          </p>
+<div class="flex items-center gap-2 pt-1">
+<button class="px-3 py-1.5 rounded-lg bg-primary text-on-primary font-label-md text-label-md font-medium hover:bg-secondary transition-colors w-full flex items-center justify-center gap-1 shadow-sm" onclick="unblockStage()">
+<span class="material-symbols-outlined text-[16px]">lock_open</span>
+              Resolve & Unblock Stage
+            </button>
+</div>
+</div>
+<!-- Due Dates & Assignees -->
+<div class="space-y-space-md pt-space-xs">
+<div class="grid grid-cols-2 gap-space-sm">
+<div class="p-2.5 rounded-lg bg-surface-container-low">
+<span class="font-label-sm text-label-sm text-outline block">Original Target</span>
+<span class="font-label-md text-label-md font-semibold text-on-surface line-through decoration-error">Dec 04, 2025</span>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container-low">
+<span class="font-label-sm text-label-sm text-outline block">Revised Target</span>
+<span class="font-label-md text-label-md font-semibold text-error">Dec 07, 2025</span>
+</div>
+</div>
+<!-- Multi-Assignees Section -->
+<div class="space-y-space-xs">
+<div class="flex items-center justify-between">
+<label class="font-label-md text-label-md text-outline">Direct Assignees (2)</label>
+<button class="font-label-sm text-label-sm text-primary font-medium hover:underline">+ Add Assignee</button>
+</div>
+<div class="space-y-1.5">
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-label-sm font-semibold">
+                    KV
+                  </div>
+<div>
+<span class="font-label-md text-label-md font-semibold text-on-surface block leading-tight">Kiran Varma</span>
+<span class="font-label-sm text-label-sm text-outline">Lead Colorist & Editor</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-medium px-1.5 py-0.5 rounded bg-surface-container">Primary</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-label-sm font-semibold">
+                    RS
+                  </div>
+<div>
+<span class="font-label-md text-label-md font-semibold text-on-surface block leading-tight">Reuben Serrao</span>
+<span class="font-label-sm text-label-sm text-outline">Executive Producer</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-outline px-1.5 py-0.5">Reviewer</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Itemized Studio Notes Log -->
+<div class="space-y-space-sm pt-space-xs border-t border-outline-variant/30">
+<div class="flex items-center justify-between">
+<h4 class="font-label-lg text-label-lg font-semibold text-on-surface">Studio Thread Notes</h4>
+<span class="font-label-sm text-label-sm text-outline">2 Updates</span>
+</div>
+<div class="space-y-space-sm text-body-sm font-body-sm max-h-56 overflow-y-auto pr-1">
+<div class="p-2.5 rounded-lg bg-surface-container-low space-y-1">
+<div class="flex items-center justify-between text-label-sm font-label-sm">
+<span class="font-semibold text-on-surface">Kiran V.</span>
+<span class="text-outline">Nov 30, 14:20</span>
+</div>
+<p class="text-on-surface-variant">
+                Uploaded revision v1.2 with corrected color temperature during church mass. Reduced blue glare on mahogany altar.
+              </p>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container-low space-y-1">
+<div class="flex items-center justify-between text-label-sm font-label-sm">
+<span class="font-semibold text-primary">Reuben S.</span>
+<span class="text-outline">Dec 02, 18:05</span>
+</div>
+<p class="text-on-surface-variant">
+                Client email received: Samantha loves the color grade, but requested church hymn swap at 04:12 mark. Waiting on high-res WAV from choir leader.
+              </p>
+</div>
+</div>
+<!-- Add Note Input -->
+<div class="pt-1 flex gap-2">
+<input class="flex-1 h-8 px-2.5 rounded-lg bg-surface-container-lowest border border-outline-variant/60 font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:border-primary-container" id="newNoteInput" placeholder="Add note for crew..." type="text"/>
+<button class="px-3 h-8 rounded-lg bg-primary text-on-primary hover:bg-secondary font-label-sm text-label-sm font-medium transition-colors" onclick="addStudioNote()">
+              Post
+            </button>
+</div>
+</div>
+<!-- Linked Attachments & Assets -->
+<div class="space-y-space-sm pt-space-xs border-t border-outline-variant/30">
+<div class="flex items-center justify-between">
+<h4 class="font-label-lg text-label-lg font-semibold text-on-surface">Linked Assets (5)</h4>
+<div class="flex items-center gap-2">
+<button class="font-label-sm text-label-sm text-primary hover:underline">+ Link</button>
+<button class="font-label-sm text-label-sm text-primary hover:underline">+ File</button>
+</div>
+</div>
+<div class="space-y-1.5 font-label-md text-label-md">
+<!-- External Links -->
+<a class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors group" href="#">
+<div class="flex items-center gap-2 min-w-0">
+<span class="material-symbols-outlined text-[16px] text-secondary">open_in_new</span>
+<span class="truncate font-medium text-on-surface">Frame.io Review v1.2 Link</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline group-hover:text-on-surface">chevron_right</span>
+</a>
+<a class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors group" href="#">
+<div class="flex items-center gap-2 min-w-0">
+<span class="material-symbols-outlined text-[16px] text-secondary">audio_file</span>
+<span class="truncate font-medium text-on-surface">Spotify Reference Track (Konkani Hymn)</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline group-hover:text-on-surface">chevron_right</span>
+</a>
+<!-- Files -->
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low">
+<div class="flex items-center gap-2 min-w-0">
+<span class="material-symbols-outlined text-[16px] text-outline">picture_as_pdf</span>
+<span class="truncate text-on-surface-variant">hymn_lyrics_notes.pdf</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline shrink-0">180 KB</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low">
+<div class="flex items-center gap-2 min-w-0">
+<span class="material-symbols-outlined text-[16px] text-outline">mail</span>
+<span class="truncate text-on-surface-variant">client_feedback_email.eml</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline shrink-0">45 KB</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low">
+<div class="flex items-center gap-2 min-w-0">
+<span class="material-symbols-outlined text-[16px] text-outline">table_chart</span>
+<span class="truncate text-on-surface-variant">timings_sheet.xlsx</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline shrink-0">84 KB</span>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</div>
+<!-- Share with Client Modal Dialog (Interactive overlay) -->
+<div class="hidden fixed inset-0 z-50 flex items-center justify-center bg-inverse-surface/40 backdrop-blur-sm p-4" id="shareModal">
+<div class="bg-surface-container-lowest rounded-xl max-w-lg w-full p-space-lg shadow-xl space-y-space-md">
+<div class="flex items-center justify-between pb-2 border-b border-outline-variant/30">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Client Access Portal</span>
+<h3 class="font-headline-sm text-headline-sm font-semibold text-on-surface">Share Pipeline Tracking</h3>
+</div>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-outline hover:text-on-surface" onclick="document.getElementById('shareModal').classList.add('hidden')">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+        Generate a client-safe view for <strong>Samantha Pinto & Derick D'Souza</strong>. Sensitive editorial internal notes and raw file sizes will be omitted.
+      </p>
+<div class="space-y-space-xs">
+<label class="font-label-md text-label-md text-outline">Private Client URL</label>
+<div class="flex gap-2">
+<input class="flex-1 h-9 px-3 rounded-lg bg-surface-container font-mono text-label-sm text-on-surface focus:outline-none" readonly="" type="text" value="https://vows.studio/track/bkg-2025-019?token=dsouza-pinto-4k"/>
+<button class="px-3.5 py-1.5 rounded-lg bg-primary text-on-primary font-label-md text-label-md hover:bg-secondary transition-colors" onclick="alert('Link copied to clipboard')">
+            Copy
+          </button>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2">
+<span class="font-label-sm text-label-sm text-outline">Passkey protection active (AES-256)</span>
+<button class="px-4 py-2 rounded-lg bg-surface-container text-on-surface font-label-md text-label-md hover:bg-surface-container-high transition-colors" onclick="document.getElementById('shareModal').classList.add('hidden')">
+          Done
+        </button>
+</div>
+</div>
+</div>
+<!-- Resolution Plan Modal Dialog -->
+<div class="hidden fixed inset-0 z-50 flex items-center justify-center bg-inverse-surface/40 backdrop-blur-sm p-4" id="blockedReasonModal">
+<div class="bg-surface-container-lowest rounded-xl max-w-lg w-full p-space-lg shadow-xl space-y-space-md">
+<div class="flex items-center justify-between pb-2 border-b border-outline-variant/30">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-error">build</span>
+<h3 class="font-headline-sm text-headline-sm font-semibold text-on-surface">Update Resolution Plan</h3>
+</div>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-outline hover:text-on-surface" onclick="document.getElementById('blockedReasonModal').classList.add('hidden')">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<div class="space-y-space-sm">
+<label class="font-label-md text-label-md text-outline">Obstacle Summary</label>
+<textarea class="w-full p-2.5 rounded-lg bg-surface-container-low border border-outline-variant/60 font-body-sm text-body-sm text-on-surface focus:outline-none" rows="3">Awaiting client audio track approval: Couple requested custom konkani hymn replacement for bridal entry sequence.</textarea>
+</div>
+<div class="space-y-space-sm">
+<label class="font-label-md text-label-md text-outline">Actionable Next Step</label>
+<input class="w-full h-9 px-3 rounded-lg bg-surface-container-low border border-outline-variant/60 font-body-sm text-body-sm text-on-surface focus:outline-none" type="text" value="Call church choir director at 10:00 AM Dec 04 for master stem WAV"/>
+</div>
+<div class="flex items-center justify-end gap-2 pt-2">
+<button class="px-3.5 py-2 rounded-lg bg-surface-container text-on-surface font-label-md text-label-md" onclick="document.getElementById('blockedReasonModal').classList.add('hidden')">
+          Cancel
+        </button>
+<button class="px-4 py-2 rounded-lg bg-primary text-on-primary font-label-md text-label-md hover:bg-secondary" onclick="document.getElementById('blockedReasonModal').classList.add('hidden'); alert('Resolution saved and assigned.')">
+          Save Action Plan
+        </button>
+</div>
+</div>
+</div>
+</div>
+<script>
+  function selectStage(stageNum) {
+    // Micro interaction to highlight the inspected stage
+    const inspectHeader = document.querySelector('aside h2');
+    if (inspectHeader) {
+      const names = [
+        "1. Raw Import", "2. Culling", "3. Editing", "4. Client Preview",
+        "5. Revisions", "6. Final Export", "7. QC Master", "8. Delivery", "9. Completed"
+      ];
+      inspectHeader.textContent = "Stage " + stageNum + ": " + names[stageNum - 1].split('. ')[1];
+    }
+  }
+
+  function unblockStage() {
+    if (confirm("Mark audio hymn track as received and return Stage 5 to 'In Progress'?")) {
+      alert("Stage 5 status shifted to 'In Progress'. SLA timer adjusted.");
+    }
+  }
+
+  function addStudioNote() {
+    const input = document.getElementById('newNoteInput');
+    if (input && input.value.trim() !== '') {
+      alert("Note added to project log: " + input.value);
+      input.value = '';
+    }
+  }
+</script></main></div></body></html>

@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "secondary-container": "#ceead2",
+        "on-surface-variant": "#424843",
+        "on-primary-fixed": "#092012",
+        "on-primary": "#ffffff",
+        "outline": "#737972",
+        "surface": "#f5fbf4",
+        "inverse-primary": "#b3cdb7",
+        "on-secondary-container": "#516a57",
+        "error-container": "#ffdad6",
+        "secondary": "#4b6451",
+        "surface-container-highest": "#dee4de",
+        "surface-container-low": "#eff5ef",
+        "on-primary-container": "#1c3223",
+        "on-error-container": "#93000a",
+        "on-secondary-fixed": "#082011",
+        "tertiary-fixed-dim": "#c2c8c2",
+        "on-secondary": "#ffffff",
+        "on-background": "#171d19",
+        "primary-container": "#829b87",
+        "inverse-surface": "#2c322e",
+        "on-tertiary-fixed": "#171d19",
+        "surface-container": "#eaefe9",
+        "secondary-fixed": "#ceead2",
+        "surface-variant": "#dee4de",
+        "surface-tint": "#4c6452",
+        "on-secondary-fixed-variant": "#344c3b",
+        "error": "#ba1a1a",
+        "on-error": "#ffffff",
+        "primary-fixed": "#cfe9d3",
+        "tertiary": "#5a605b",
+        "primary-fixed-dim": "#b3cdb7",
+        "on-tertiary-container": "#282f2a",
+        "on-tertiary-fixed-variant": "#424843",
+        "secondary-fixed-dim": "#b2cdb6",
+        "surface-bright": "#f5fbf4",
+        "on-surface": "#171d19",
+        "tertiary-fixed": "#dee4dd",
+        "surface-container-lowest": "#ffffff",
+        "surface-container-high": "#e4eae3",
+        "tertiary-container": "#909690",
+        "primary": "#4c6452",
+        "outline-variant": "#c3c8c1",
+        "on-primary-fixed-variant": "#354c3b",
+        "on-tertiary": "#ffffff",
+        "surface-dim": "#d6dcd5",
+        "inverse-on-surface": "#ecf2ec",
+        "background": "#f5fbf4"
+      },
+      "borderRadius": {
+        "DEFAULT": "0.25rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "full": "9999px"
+      },
+      "spacing": {
+        "space-xs": "0.25rem",
+        "space-lg": "1.5rem",
+        "margin-mobile": "1.25rem",
+        "space-sm": "0.5rem",
+        "margin": "3rem",
+        "space-md": "1rem",
+        "space-xl": "2.5rem",
+        "gutter": "1.5rem",
+        "gutter-mobile": "1rem"
+      },
+      "fontFamily": {
+        "headline-md": ["Inter"],
+        "display": ["Inter"],
+        "body-sm": ["Inter"],
+        "display-mobile": ["Inter"],
+        "body-lg": ["Inter"],
+        "label-sm": ["Inter"],
+        "body-md": ["Inter"],
+        "label-md": ["Inter"],
+        "headline-lg": ["Inter"],
+        "headline-lg-mobile": ["Inter"],
+        "label-lg": ["Inter"],
+        "headline-sm": ["Inter"]
+      },
+      "fontSize": {
+        "headline-md": ["1.375rem", {"lineHeight": "1.75rem", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+        "display": ["2.75rem", {"lineHeight": "3.25rem", "letterSpacing": "-0.03em", "fontWeight": "600"}],
+        "body-sm": ["0.8125rem", {"lineHeight": "1.25rem", "fontWeight": "400"}],
+        "display-mobile": ["2rem", {"lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+        "body-lg": ["1rem", {"lineHeight": "1.625rem", "fontWeight": "400"}],
+        "label-sm": ["0.6875rem", {"lineHeight": "0.875rem", "letterSpacing": "0.04em", "fontWeight": "600"}],
+        "body-md": ["0.875rem", {"lineHeight": "1.5rem", "fontWeight": "400"}],
+        "label-md": ["0.75rem", {"lineHeight": "1rem", "letterSpacing": "0.02em", "fontWeight": "500"}],
+        "headline-lg": ["2rem", {"lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+        "headline-lg-mobile": ["1.5rem", {"lineHeight": "2rem", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+        "label-lg": ["0.875rem", {"lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "500"}],
+        "headline-sm": ["1.125rem", {"lineHeight": "1.5rem", "letterSpacing": "-0.01em", "fontWeight": "500"}]
+      }
+    }
+  }
+}</script></head><body class="bg-background font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-screen w-72 bg-surface-container-low flex flex-col z-50 overflow-y-auto"><div class="h-16 px-space-lg flex items-center justify-between"><div class="flex flex-col"><span class="font-headline-sm text-headline-sm uppercase tracking-wider text-on-surface font-semibold">VOWS STUDIO</span><span class="font-label-sm text-label-sm tracking-widest text-outline uppercase">WEDDING CINEMATIC &amp; STILLS</span></div><button aria-label="Collapse sidebar" class="w-8 h-8 flex items-center justify-center rounded text-outline hover:text-on-surface hover:bg-surface-container transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">keyboard_double_arrow_left</span></button></div><div class="flex-1 px-space-md py-space-sm space-y-space-lg"><nav class="space-y-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-medium"><div class="px-space-sm py-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">Sales</span></div><div class="space-y-0.5"><a class="flex items-center justify-between px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="enquiries" href="#"><span class="font-body-sm text-body-sm">Enquiries</span><span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-semibold">4</span></a><a class="flex items-center px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="clients" href="#"><span class="font-body-sm text-body-sm">Clients</span></a><a class="flex items-center px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="quotations" href="#"><span class="font-body-sm text-body-sm">Quotations</span></a></div></nav><nav class="space-y-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-medium"><div class="px-space-sm py-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">Operations</span></div><div class="space-y-0.5"><a class="flex items-center px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="bookings" href="#"><span class="font-body-sm text-body-sm">Bookings</span></a><a class="flex items-center px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="schedule" href="#"><span class="font-body-sm text-body-sm">Schedule</span></a><a class="flex items-center px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="crew" href="#"><span class="font-body-sm text-body-sm">Crew</span></a><a class="flex items-center px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="delivery" href="#"><span class="font-body-sm text-body-sm">Delivery</span></a></div></nav><nav class="space-y-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-medium"><div class="px-space-sm py-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">Studio Tools</span></div><div class="space-y-0.5"><a class="flex items-center px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="services" href="#"><span class="font-body-sm text-body-sm">Services</span></a><a aria-current="page" class="flex items-center px-space-sm py-1.5 rounded transition-colors bg-secondary-container text-on-secondary-container font-medium" data-path="packages" href="#"><span class="font-body-sm text-body-sm">Packages</span></a><a class="flex items-center px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="portfolio" href="#"><span class="font-body-sm text-body-sm">Portfolio</span></a></div></nav><nav class="space-y-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-medium"><div class="px-space-sm py-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">Finance</span></div><div class="space-y-0.5"><a class="flex items-center px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="invoices" href="#"><span class="font-body-sm text-body-sm">Invoices</span></a><a class="flex items-center px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="payments" href="#"><span class="font-body-sm text-body-sm">Payments</span></a><a class="flex items-center px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="ledger" href="#"><span class="font-body-sm text-body-sm">Ledger</span></a><a class="flex items-center px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="expenses" href="#"><span class="font-body-sm text-body-sm">Expenses</span></a></div></nav><nav class="space-y-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-medium"><div class="px-space-sm py-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">Website</span></div><div class="space-y-0.5"><a class="flex items-center px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="reviews" href="#"><span class="font-body-sm text-body-sm">Reviews</span></a></div></nav><nav class="space-y-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-medium"><div class="px-space-sm py-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">System</span></div><div class="space-y-0.5"><a class="flex items-center px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="settings" href="#"><span class="font-body-sm text-body-sm">Settings</span></a><a class="flex items-center px-space-sm py-1.5 rounded text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="audit-log" href="#"><span class="font-body-sm text-body-sm">Audit log</span></a></div></nav></div><div class="p-space-md mt-auto"><div class="bg-surface-container-lowest p-space-sm rounded-lg flex flex-col gap-space-xs shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="min-w-0 flex-1"><div class="flex items-center justify-between gap-1"><span class="font-label-lg text-label-lg text-on-surface truncate font-medium">Reuben Serrao</span><span class="font-label-sm text-label-sm px-1.5 py-0.2 rounded bg-secondary-fixed text-on-secondary-fixed font-medium">Active</span></div><span class="font-label-sm text-label-sm text-outline truncate block">reuben@vowsstudio.com</span></div></div><div class="pt-space-xs flex items-center justify-between font-label-sm text-label-sm text-outline"><button class="hover:text-primary transition-colors" type="button">Switch role</button><button class="hover:text-error transition-colors" type="button">Sign out</button></div></div></div></aside><div class="pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-72 right-0 h-16 z-40 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 w-full px-space-lg flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-xs font-label-md text-label-md text-outline"><span class="text-on-surface-variant">Studio CRM</span><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="text-on-surface-variant">Studio Tools</span><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="text-on-surface font-semibold">Overview</span></div><div class="flex items-center gap-space-md"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-2.5 text-outline text-[18px]">search</span><input class="bg-surface-container-lowest font-body-sm text-body-sm text-on-surface placeholder-outline pl-8 pr-12 py-1.5 rounded-lg w-64 focus:outline-none focus:ring-1 focus:ring-primary shadow-[0_1px_4px_rgba(0,0,0,0.02)]" placeholder="Search studio, clients, events..." type="text"/><span class="absolute right-2 font-label-sm text-label-sm text-outline px-1 rounded bg-surface-container">⌘K</span></div><div class="flex items-center gap-space-xs"><button aria-label="Notifications" class="relative w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error"></span></button><button aria-label="Toggle appearance" class="w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">light_mode</span></button></div><div class="flex items-center pl-space-xs"><button class="flex items-center gap-space-xs hover:opacity-90 transition-opacity" type="button"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><span class="material-symbols-outlined text-outline text-[16px]">arrow_drop_down</span></button></div></div></div></header><div class="pt-16 flex flex-col flex-1"><div class="w-full flex flex-col"><div class="bg-secondary-fixed text-on-secondary-fixed px-space-lg py-2 flex items-center justify-between"><div class="flex items-center gap-space-sm font-label-md text-label-md"><span class="material-symbols-outlined text-[18px]">shield_person</span><span>Demo Mode Active — Currently viewing as Reuben Serrao (Owner). Changes are isolated in sandbox environment.</span></div><button class="font-label-sm text-label-sm font-semibold px- space-sm py-0.5 rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container transition-colors" type="button">Switch Role</button></div><div class="bg-error-container text-on-error-container px-space-lg py-2 flex items-center justify-between"><div class="flex items-center gap-space-sm font-label-md text-label-md"><span class="material-symbols-outlined text-[18px]">warning</span><span>Gmail integration needs reconnecting — Studio booking confirmations and client email synchronisation are currently paused.</span></div><div class="flex items-center gap-space-md"><button class="font-label-sm text-label-sm font-semibold px- space-sm py-0.5 rounded bg-surface-container-lowest text-on-surface hover:bg-surface-container transition-colors" type="button">Reconnect Account</button><button aria-label="Dismiss alert" class="text-on-error-container hover:opacity-80 transition-opacity" type="button"><span class="material-symbols-outlined text-[18px]">close</span></button></div></div></div><main class="relative flex-1 bg-background px-space-lg py-space-xl max-w-[1280px] w-full mx-auto"><div class="flex flex-col w-full gap-y-space-xl">
+<!-- Breadcrumbs & Context Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-outline uppercase tracking-wider">
+<span>Studio CRM</span>
+<span class="material-symbols-outlined text-[12px]">chevron_right</span>
+<span>Catalogue</span>
+<span class="material-symbols-outlined text-[12px]">chevron_right</span>
+<span class="text-on-surface font-semibold">Package Builder</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface font-semibold tracking-tight">Package Builder &amp; Tier Configurator</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">
+        Bundle standalone services into tailored client collections with calibrated package savings, margin checks, and real-time website booking availability.
+      </p>
+</div>
+<!-- Global CTA Group -->
+<div class="flex items-center gap-space-sm shrink-0">
+<button class="px-space-md py-2 rounded-lg bg-surface-container-lowest text-on-surface font-label-lg text-label-lg shadow-sm hover:bg-surface-container transition-colors flex items-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[18px] text-outline">bookmark_border</span>
+<span>Save Draft</span>
+</button>
+<button class="px-space-lg py-2 rounded-lg bg-primary text-on-primary font-label-lg text-label-lg shadow-sm hover:bg-on-secondary-container transition-colors flex items-center gap-2" type="button">
+<span class="material-symbols-outlined text-[18px]">publish</span>
+<span>Publish Package</span>
+</button>
+</div>
+</div>
+<!-- Top Metadata & Publishing Canvas Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-lg">
+<div class="flex flex-wrap items-center justify-between gap-space-md pb-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">Package Descriptor</span>
+<span class="font-label-sm text-label-sm font-semibold tracking-wide px-2 py-0.5 rounded bg-surface-container text-on-surface font-mono">PKG-2025-HERITAGE</span>
+<span class="flex items-center gap-1 font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+          Live on Booking Portal
+        </span>
+</div>
+<!-- Visibility Toggle -->
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md text-on-surface-variant">Show on Public Portfolio &amp; Rate Card</span>
+<button aria-pressed="true" class="w-11 h-6 bg-primary rounded-full relative p-0.5 transition-colors focus:outline-none" id="toggle-website" type="button">
+<span class="block w-5 h-5 bg-surface-container-lowest rounded-full shadow-sm transform translate-x-5 transition-transform" id="toggle-thumb"></span>
+</button>
+</div>
+</div>
+</div>
+<!-- Form Inputs Matrix -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-md">
+<!-- Title input -->
+<div class="lg:col-span-7 flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-outline" for="pkg-title">Internal Commercial Name</label>
+<div class="relative">
+<input class="w-full bg-surface-container-lowest rounded-lg px-space-md py-2 text-on-surface font-headline-sm text-headline-sm focus:outline-none focus:ring-1 focus:ring-primary shadow-sm" id="pkg-title" type="text" value="The Heritage Solemnization &amp; Grand Reception"/>
+<span class="material-symbols-outlined absolute right-3 top-3 text-[18px] text-outline pointer-events-none">edit</span>
+</div>
+</div>
+<!-- Target Event Category -->
+<div class="lg:col-span-5 flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-outline" for="pkg-event-type">Target Solemnization Architecture</label>
+<div class="relative">
+<select class="w-full bg-surface-container-lowest rounded-lg px-space-md py-2.5 text-on-surface font-body-md text-body-md appearance-none focus:outline-none focus:ring-1 focus:ring-primary shadow-sm" id="pkg-event-type">
+<option selected="">Christian Nuptials + Reception (Multi-Day)</option>
+<option>Hindu Vedic Vivaha (3-Day Traditional)</option>
+<option>Destination Cathedral &amp; Villa Soirée</option>
+<option>Intimate Botanical Chapel Nuptials</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-3 text-[18px] text-outline pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Client Sub-Headline -->
+<div class="lg:col-span-8 flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-outline" for="pkg-subtitle">Client Facing Editorial Teaser (Displays on Quotation Header)</label>
+<input class="w-full bg-surface-container-lowest rounded-lg px-space-md py-2 font-body-md text-body-md text-on-surface focus:outline-none focus:ring-1 focus:ring-primary shadow-sm" id="pkg-subtitle" type="text" value="Comprehensive dual-day analog stills and 4K cinema monograph for timeless chapel vows."/>
+</div>
+<!-- Category Filter Pills -->
+<div class="lg:col-span-4 flex flex-col gap-1.5">
+<label class="font-label-md text-label-md text-outline">Catalogue Classification</label>
+<div class="flex items-center gap-1.5 pt-0.5">
+<button class="px-3 py-1.5 rounded-lg bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-semibold shadow-sm" type="button">Bespoke Multi-Day</button>
+<button class="px-3 py-1.5 rounded-lg bg-surface-container text-on-surface-variant font-label-sm text-label-sm hover:text-on-surface transition-colors" type="button">Signature Single-Day</button>
+<button class="px-3 py-1.5 rounded-lg bg-surface-container text-on-surface-variant font-label-sm text-label-sm hover:text-on-surface transition-colors" type="button">Chapel &amp; Elopement</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Primary Two-Column Builder Workspace -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- Left Column: Scope & Bundled Deliverables (7 Cols) -->
+<div class="lg:col-span-7 flex flex-col gap-space-lg">
+<!-- Section Header -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">layers</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Included Deliverables &amp; Scope</h2>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant">4 Active Units</span>
+</div>
+<!-- Add Service Dropdown / Modal Trigger -->
+<button class="px-space-md py-1.5 rounded-lg bg-surface-container text-on-surface font-label-md text-label-md hover:bg-secondary-fixed transition-colors flex items-center gap-1.5 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px]">add</span>
+<span>Add Service to Bundle</span>
+</button>
+</div>
+<!-- Draggable Deliverables List -->
+<div class="flex flex-col gap-space-sm" id="deliverables-stack">
+<!-- Item 1: Cinematography -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex items-center justify-between gap-space-md hover:shadow transition-shadow group">
+<div class="flex items-start gap-space-sm">
+<button class="mt-1 cursor-grab active:cursor-grabbing text-outline hover:text-on-surface" title="Reorder line item" type="button">
+<span class="material-symbols-outlined text-[20px]">drag_indicator</span>
+</button>
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center shrink-0 mt-0.5 text-primary">
+<span class="material-symbols-outlined text-[22px]">videocam</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">Principal 4K Cinematography</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.2 rounded bg-surface-container text-on-surface-variant font-medium">Multi-Camera</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">2 Full Days Coverage (Solemnization Ceremony + Evening Grand Ball)</span>
+<div class="flex items-center gap-space-md mt-1 font-label-sm text-label-sm text-outline">
+<span>Crew: 2 Senior Directors + 1 Gimbal Op</span>
+<span>•</span>
+<span>Grade: Rec.709 &amp; Arri Film Emulation</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-lg shrink-0">
+<div class="text-right flex flex-col">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">₹2,80,000</span>
+<span class="font-label-sm text-label-sm text-outline">₹1,40,000 / day (x2)</span>
+</div>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-outline hover:text-error hover:bg-error-container transition-colors" title="Remove line item" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Item 2: Analog Film Stills -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex items-center justify-between gap-space-md hover:shadow transition-shadow group">
+<div class="flex items-start gap-space-sm">
+<button class="mt-1 cursor-grab active:cursor-grabbing text-outline hover:text-on-surface" title="Reorder line item" type="button">
+<span class="material-symbols-outlined text-[20px]">drag_indicator</span>
+</button>
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center shrink-0 mt-0.5 text-primary">
+<span class="material-symbols-outlined text-[22px]">camera_roll</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">35mm &amp; 120 Medium Format Analog Monograph</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.2 rounded bg-secondary-fixed text-on-secondary-fixed font-medium">Archival</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">12 Rolls Kodak Portra 400 + Ilford HP5, bespoke development &amp; Noritsu hi-res scans</span>
+<div class="flex items-center gap-space-md mt-1 font-label-sm text-label-sm text-outline">
+<span>Medium: Leica M6 &amp; Pentax 67II</span>
+<span>•</span>
+<span>Approx. 360 Curated Frames</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-lg shrink-0">
+<div class="text-right flex flex-col">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">₹45,000</span>
+<span class="font-label-sm text-label-sm text-outline">Flat Stills Package</span>
+</div>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-outline hover:text-error hover:bg-error-container transition-colors" title="Remove line item" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Item 3: Aerial Drone -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex items-center justify-between gap-space-md hover:shadow transition-shadow group">
+<div class="flex items-start gap-space-sm">
+<button class="mt-1 cursor-grab active:cursor-grabbing text-outline hover:text-on-surface" title="Reorder line item" type="button">
+<span class="material-symbols-outlined text-[20px]">drag_indicator</span>
+</button>
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center shrink-0 mt-0.5 text-primary">
+<span class="material-symbols-outlined text-[22px]">flight</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">Licensed Aerial Drone Venue &amp; Ceremony Flyover</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.2 rounded bg-surface-container text-on-surface-variant font-medium">1 Day</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">DJI Inspire 3 ProRes Raw capture of chapel exterior, arrival cortege &amp; estate gardens</span>
+<div class="flex items-center gap-space-md mt-1 font-label-sm text-label-sm text-outline">
+<span>DGCA Compliant Pilot + Spotter</span>
+<span>•</span>
+<span>Weather Permitted</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-lg shrink-0">
+<div class="text-right flex flex-col">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">₹18,000</span>
+<span class="font-label-sm text-label-sm text-outline">Base Scope Rate</span>
+</div>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-outline hover:text-error hover:bg-error-container transition-colors" title="Remove line item" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Item 4: Hardcover Box & Master Drive -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex items-center justify-between gap-space-md hover:shadow transition-shadow group">
+<div class="flex items-start gap-space-sm">
+<button class="mt-1 cursor-grab active:cursor-grabbing text-outline hover:text-on-surface" title="Reorder line item" type="button">
+<span class="material-symbols-outlined text-[20px]">drag_indicator</span>
+</button>
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center shrink-0 mt-0.5 text-primary">
+<span class="material-symbols-outlined text-[22px]">auto_stories</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">Archival Linen Hardcover Monograph + 2TB NVMe Vault</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.2 rounded bg-surface-container text-on-surface-variant font-medium">Physical Delivery</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Custom debossed Japanese buckram cover, 80 heavyweight cotton pages &amp; custom engraved USB-C drive</span>
+<div class="flex items-center gap-space-md mt-1 font-label-sm text-label-sm text-outline">
+<span>12x12 Art Grade Folio</span>
+<span>•</span>
+<span>Uncompressed RAW Cinema Archival</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-lg shrink-0">
+<div class="text-right flex flex-col">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">₹25,000</span>
+<span class="font-label-sm text-label-sm text-outline">Master Tangible Kit</span>
+</div>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-outline hover:text-error hover:bg-error-container transition-colors" title="Remove line item" type="button">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Studio Courtesy / Complimentary Perks Card -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-sm flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 text-secondary font-label-lg text-label-lg font-semibold">
+<span class="material-symbols-outlined text-[18px]">workspace_premium</span>
+<span>Studio Courtesy &amp; Complimentary Perks</span>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-semibold">100% Studio Courtesy</span>
+</div>
+<div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-space-sm pt-2">
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-medium text-on-surface">Complimentary Pre-Wedding Sunset Stills Session</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">3-hour golden hour couple portrait session at heritage estate prior to wedding week.</span>
+</div>
+<div class="text-right shrink-0">
+<span class="font-label-md text-label-md line-through text-outline">₹35,000</span>
+<span class="font-label-lg text-label-lg font-semibold text-secondary ml-1.5">Free Inclusion</span>
+</div>
+</div>
+</div>
+<!-- Visual Mood Preview Strip -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">Client Monograph Presentation Mood</span>
+<span class="font-label-sm text-label-sm text-outline">Assets bound to PKG-2025</span>
+</div>
+<div class="grid grid-cols-3 gap-space-sm">
+<div class="relative rounded-lg overflow-hidden h-28 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Intimate church altar wedding ceremony with soft natural light streaming through stained glass windows, cinematic film grade, muted sage and warm neutral tones, fine art wedding photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6LLxEbeEHHUh9krCmZrOjzGkyoXkmzZU2XiSyFwIBaLH98qDjHze5LpX-3bR2VcBibFcBf3X3rIHSwwjBUJO0zm65cxZlem8Dts5dSjLtVqT3TBQ9cgtiU37PUDrTvYk1tDIleqGYchzOHzfxkt9kZ-IkbQktcltX3O3Ln2vJ_V_1FtrhGW4BIy2wJB7GyBtPLq3XYERSIKVU_hA2lzZYXhOpKtwqs_e3wMRsXU2_"/>
+<div class="absolute bottom-1.5 left-2 px-1.5 py-0.5 rounded bg-surface/80 text-on-surface font-label-sm text-label-sm">Chapel Ceremony</div>
+</div>
+<div class="relative rounded-lg overflow-hidden h-28 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Bride and groom walking through a tranquil Italian-style villa garden terrace during twilight, elegant movement blur, 35mm film grain, editorial luxury wedding journal aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKmf_B6-pbo31kZkvPCf5kZNKNbg4rCRSIOdI48Ey1M8i_jGidpMoGju47oofU6YGAghendt8pKxiIopa8mvsaeGvOdWhkEZ3T2PGrEkCeJaVGt-ITnjVEFF8RK6GqWKGo64Rf4luVzMrIxd27kAqeypBpcXuLG4myfT25KKnsCiK7o9W1zljBep-vpetWF0rJg76_el1lrTd07N2Oc_zMSGo0L4At9CM-bI9SUtzm"/>
+<div class="absolute bottom-1.5 left-2 px-1.5 py-0.5 rounded bg-surface/80 text-on-surface font-label-sm text-label-sm">Garden Monograph</div>
+</div>
+<div class="relative rounded-lg overflow-hidden h-28 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="High quality bespoke sage green linen wedding photo album with debossed gold typography resting on a minimalist concrete table next to botanical olive leaves." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAI30jlrgY6IraO20MIRnQiZRUoPqGReLyIbSxK5YG6e5VT44HJhM1IDYqy2-j-Hc4PIrFLzHyYULWOwHBHilGEVsyQdnGfkre3nmm1NQRvc1H5Nq3dn8VHNhTF2OFWKCBZ8nojkjY499symiBoLK7XEoWWW7uUBzJKASzSvDL1yTANtPHtQNQiY7_KqciS3gkp5THcxfuo1W8OfCOMtRkxdqDj02_w0GD5kLAC12r"/>
+<div class="absolute bottom-1.5 left-2 px-1.5 py-0.5 rounded bg-surface/80 text-on-surface font-label-sm text-label-sm">Artisan Hardcover</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Pricing Structure & Ledger Reconciliation Card (5 Cols Sticky) -->
+<div class="lg:col-span-5 sticky top-20 flex flex-col gap-space-md">
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">account_balance_wallet</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Pricing &amp; Margin Ledger</h3>
+</div>
+<span class="font-label-sm text-label-sm font-semibold px-2 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed">FY 2025-26</span>
+</div>
+<!-- Ledger Line Items -->
+<div class="flex flex-col gap-space-sm pt-2">
+<!-- Sum of Standalone components -->
+<div class="flex items-center justify-between text-on-surface">
+<span class="font-body-md text-body-md text-on-surface-variant">Component Itemized Total</span>
+<span class="font-label-lg text-label-lg font-mono font-medium">₹3,68,000</span>
+</div>
+<!-- Bundle Incentive Adjustment Input -->
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<label class="font-label-sm text-label-sm font-semibold text-on-surface" for="bundle-discount-pct">Bundle Incentive Savings</label>
+<div class="flex items-center gap-1">
+<span class="font-label-sm text-label-sm text-outline">Rate:</span>
+<span class="font-label-sm text-label-sm font-semibold text-secondary">-12.5%</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="relative flex-1">
+<span class="absolute left-2.5 top-2 font-label-md text-label-md text-outline">₹</span>
+<input class="w-full bg-surface-container-lowest rounded px-6 py-1.5 font-label-md text-label-md text-on-surface focus:outline-none focus:ring-1 focus:ring-primary shadow-sm" id="bundle-discount-pct" type="text" value="46,000"/>
+</div>
+<button class="px-2.5 py-1.5 rounded bg-surface-container text-on-surface font-label-sm text-label-sm hover:bg-surface-container-high transition-colors" type="button">
+                Apply %
+              </button>
+</div>
+</div>
+<!-- Net Studio Base Price -->
+<div class="flex items-baseline justify-between pt-2">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">Net Package Base</span>
+<span class="font-label-sm text-label-sm text-outline">Pre-tax commercial invoice value</span>
+</div>
+<span class="font-headline-md text-headline-md font-semibold text-on-surface tracking-tight font-mono">₹3,22,000</span>
+</div>
+<!-- Statutory IGST / GST calculation -->
+<div class="flex items-center justify-between text-on-surface-variant pt-1">
+<div class="flex items-center gap-1.5">
+<span class="font-body-sm text-body-sm">Integrated GST (IGST @ 18%)</span>
+<span class="material-symbols-outlined text-[14px] text-outline" title="Applicable for standard creative cinematographic services in India">info</span>
+</div>
+<span class="font-label-md text-label-md font-mono">+₹57,960</span>
+</div>
+<!-- Grand Client Total Card -->
+<div class="bg-surface-container rounded-lg p-space-md flex items-center justify-between mt-2">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">Total Client Invoiced</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Includes all taxes &amp; deliverables</span>
+</div>
+<div class="text-right">
+<span class="font-headline-lg text-headline-lg font-semibold text-primary tracking-tight font-mono">₹3,79,960</span>
+</div>
+</div>
+</div>
+<!-- Profitability / Margin Health Indicator -->
+<div class="bg-surface-container-low rounded-lg p-space-sm flex items-center justify-between mt-1">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[18px]">verified</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">Estimated Gross Margin</span>
+<span class="font-label-sm text-label-sm text-outline">COGS (Crew + Film Lab + Box): ₹1,21,000</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-semibold">62.4% (Healthy)</span>
+</div>
+<!-- Revisions Link & History -->
+<div class="flex items-center justify-between pt-2">
+<button class="text-left font-label-md text-label-md text-outline hover:text-primary transition-colors flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[16px]">history</span>
+<span>View historical package tiers (3 prior revisions)</span>
+</button>
+<span class="font-label-sm text-label-sm text-outline">Updated 2d ago</span>
+</div>
+<!-- Quick Summary Actions -->
+<div class="flex flex-col gap-space-xs pt-3">
+<button class="w-full py-2.5 rounded-lg bg-primary text-on-primary font-label-lg text-label-lg font-medium hover:bg-on-secondary-container transition-colors shadow-sm flex items-center justify-center gap-2" type="button">
+<span class="material-symbols-outlined text-[18px]">sync_saved_locally</span>
+<span>Commit Changes to Live Portal</span>
+</button>
+<button class="w-full py-2 rounded-lg bg-transparent text-outline hover:text-on-surface font-label-md text-label-md transition-colors flex items-center justify-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[16px]">preview</span>
+<span>Preview Client Quotation PDF</span>
+</button>
+</div>
+</div>
+<!-- Danger Zone / Deprecation Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-semibold text-error">Archive Package Tier</span>
+<span class="font-label-sm text-label-sm text-outline">Retire PKG-2025-HERITAGE from new client proposals.</span>
+</div>
+<button class="px-space-md py-1.5 rounded-lg bg-surface-container text-error hover:bg-error-container font-label-md text-label-md transition-colors font-medium" id="archive-btn" type="button">
+          Archive Package
+        </button>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Simple interaction behavior for toggle
+  const toggleBtn = document.getElementById('toggle-website');
+  const toggleThumb = document.getElementById('toggle-thumb');
+  if (toggleBtn && toggleThumb) {
+    let active = true;
+    toggleBtn.addEventListener('click', () => {
+      active = !active;
+      if (active) {
+        toggleBtn.classList.remove('bg-surface-container-highest');
+        toggleBtn.classList.add('bg-primary');
+        toggleThumb.classList.remove('translate-x-0');
+        toggleThumb.classList.add('translate-x-5');
+      } else {
+        toggleBtn.classList.remove('bg-primary');
+        toggleBtn.classList.add('bg-surface-container-highest');
+        toggleThumb.classList.remove('translate-x-5');
+        toggleThumb.classList.add('translate-x-0');
+      }
+    });
+  }
+
+  // Archive button confirmation feedback
+  const archiveBtn = document.getElementById('archive-btn');
+  if (archiveBtn) {
+    archiveBtn.addEventListener('click', () => {
+      if (archiveBtn.innerText.includes('Confirm')) {
+        archiveBtn.innerText = 'Archived';
+        archiveBtn.disabled = true;
+        archiveBtn.classList.add('opacity-50');
+      } else {
+        archiveBtn.innerText = 'Confirm Archive?';
+        archiveBtn.classList.add('bg-error', 'text-on-error');
+        archiveBtn.classList.remove('bg-surface-container', 'text-error');
+      }
+    });
+  }
+</script></main></div></div></body></html>
