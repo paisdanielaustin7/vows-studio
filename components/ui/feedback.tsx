@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { cn } from '@/lib/utils';
-import { AlertCircle, AlertTriangle, CheckCircle, Info, LucideIcon } from 'lucide-react';
+import { AlertCircle, AlertTriangle, CheckCircle2, Info, LucideIcon } from 'lucide-react';
 import { Button } from './button';
 
 // ---------------- Skeleton ----------------
@@ -18,7 +18,7 @@ export function Skeleton({
 
 // ---------------- Banner ----------------
 export interface BannerProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: 'info' | 'warning' | 'danger' | 'success';
+  variant?: 'info' | 'warning' | 'danger' | 'success' | 'error';
   title?: string;
 }
 
@@ -33,6 +33,7 @@ export function Banner({
     info: 'bg-[#EDF5FA] text-[#2D6A9F] border-[#C6DFEF] dark:bg-[#182C3D] dark:text-[#72B4EB]',
     warning: 'bg-[#FEF5E7] text-[#B7791F] border-[#FADBB0] dark:bg-[#3D2C12] dark:text-[#E8AF59]',
     danger: 'bg-[#FDF2F0] text-[#B3392F] border-[#F8C8C4] dark:bg-[#3D1A18] dark:text-[#E8736B]',
+    error: 'bg-[#FDF2F0] text-[#B3392F] border-[#F8C8C4] dark:bg-[#3D1A18] dark:text-[#E8736B]',
     success: 'bg-[#EBF7EE] text-[#2F7D5B] border-[#C5E8CE] dark:bg-[#1C3627] dark:text-[#67D19B]',
   };
 
@@ -40,7 +41,8 @@ export function Banner({
     info: Info,
     warning: AlertTriangle,
     danger: AlertCircle,
-    success: CheckCircle,
+    error: AlertCircle,
+    success: CheckCircle2,
   };
 
   const Icon = icons[variant];

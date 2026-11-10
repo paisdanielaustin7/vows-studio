@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { cn } from '@/lib/utils';
-import { parseINR, formatINR } from '@/lib/money';
+import { parseINR } from '@/lib/money';
 import { formatPhoneE164 } from '@/lib/utils';
 
 // ---------------- Money Input ----------------

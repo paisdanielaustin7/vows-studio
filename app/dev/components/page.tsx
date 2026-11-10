@@ -22,7 +22,7 @@ import { Banner, EmptyState, Skeleton } from '@/components/ui/feedback';
 import { ConfirmDialog } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { formatINR } from '@/lib/money';
-import { Calendar, UserX } from 'lucide-react';
+import { Calendar } from 'lucide-react';
 
 export default function ComponentGalleryPage() {
   const [money, setMoney] = React.useState<bigint>(15000000n);

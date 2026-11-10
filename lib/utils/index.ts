@@ -119,6 +119,8 @@ export function constantTimeCompare(a: string, b: string): boolean {
   return crypto.timingSafeEqual(bufA, bufB);
 }
 
+export const timingSafeCompare = constantTimeCompare;
+
 /**
  * AES-256-GCM Authenticated Encryption for sensitive credentials.
  * Serialized output format: "v1:<keyId>:<ivHex>:<authTagHex>:<ciphertextHex>"

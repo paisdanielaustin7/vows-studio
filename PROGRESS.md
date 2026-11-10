@@ -12,7 +12,7 @@
 |---|---|---|---|
 | **Task 0** | Reconcile Documents 01–08 | **DONE** | `docs: reconcile documents 01-08` |
 | **Phase 0** | Project Foundation & Tooling | **DONE** | Branch `phase-0-foundation` |
-| **Phase 1** | Identity, Roles, RLS Foundation | **IN PROGRESS** | Branch `phase-1-auth` |
+| **Phase 1** | Identity, Roles, RLS Foundation | **DONE** | Branch `phase-1-auth` |
 | **Phase 2** | Settings, Catalogue, Clients, Enquiries, Quotations | Pending | Branch `phase-2-sales` |
 | **Phase 3** | Bookings, Events, Crew, Schedule | Pending | Branch `phase-3-bookings` |
 | **Phase 4** | Finance (Invoices, Payments, Receipts, Credits, Expenses, Ledger) | Pending | Branch `phase-4-finance` |
@@ -46,3 +46,20 @@
 - [x] Task 8: CI workflows (GitHub Actions, pinned SHAs): lint, typecheck, unit tests, integration job (`supabase start`), npm audit, secret scan.
 - [x] Task 9: Security headers and nonce-based CSP in next.config / proxy per SECURITY_PLAN §7.1.
 - [x] Task 10: README with local setup, env table, scripts, and branching model.
+
+---
+
+## Phase 1 Checklist (Identity, Roles, RLS Foundation)
+- [x] Task 1: Migrations 001 (enums), 002 (helpers, schema `app`), 003 (identity & audit tables).
+- [x] Task 2: Custom Access Token Hook for top-level JWT `user_role` claim.
+- [x] Task 3: Triggers: `touch_updated_at`, `profile_role_guard`, `last_owner_guard`, `audit_trigger` (with secret stripping), `block_mutation` on `audit_log`, `log_auth_event`.
+- [x] Task 4: First `system_admin` bootstrap script (`scripts/create-first-admin.ts`) with refusal guard.
+- [x] Task 5: Auth Server Actions: `loginAction` (with lockout check & generic error), `logoutAction` (POST), `forgotPasswordAction`, `resetPasswordAction`, invitation actions (`inviteUserAction`, `resendInvitationAction`, `revokeInvitationAction`, `acceptInvitationAction`).
+- [x] Task 6: MFA TOTP flows (`/mfa/enroll` with recovery handling, `/mfa` challenge). Enforced for SA & BO.
+- [x] Task 7: `proxy.ts`: Session refresh, role claim verification, mandatory MFA level enforcement, RBAC §6 route matrix, landing pages per role, 403 on denied roles.
+- [x] Task 8: `lib/auth`: `getAuthenticatedUser()`, `requirePermission()`, `lib/constants/permissions.ts` generated from RBAC §3, `ActionResult<T>` type and error codes.
+- [x] Task 9: Immediate session revocation on role change, deactivation, password reset, and MFA reset.
+- [x] Task 10: Rate limiting wrapper (Upstash) with tiers from SECURITY_PLAN §7.2, Turnstile verification helper, dev fallback.
+- [x] Task 11: Admin pages (SA only): `/admin/dashboard`, `/admin/users`, `/admin/audit-log`. Business Owner scoped audit view at `/crm/audit-log`. Self-profile pages.
+- [x] Task 12: RLS policies (migration 014 part 1) and test harness (`tests/integration/rls/rls-matrix.test.ts`).
+- [x] Task 13: Auth screens per UI_DESIGN_SPEC §7.2 and CRM shell (`app/crm/layout.tsx` with sidebar, topbar, mobile nav, notification polling, theme toggle, 403/404/500 pages).

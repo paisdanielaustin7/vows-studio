@@ -217,8 +217,8 @@ export function apportionDiscount(
     };
   });
 
-  let allocated = shares.reduce((acc, s) => acc + s.integerShare, 0n);
-  let discrepancy = Number(effectiveDiscount - allocated);
+  const allocated = shares.reduce((acc, s) => acc + s.integerShare, 0n);
+  const discrepancy = Number(effectiveDiscount - allocated);
 
   // Sort descending by remainder, ties broken by original line amount descending
   const sortedShares = [...shares].sort((a, b) => {
