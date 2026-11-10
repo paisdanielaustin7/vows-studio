@@ -124,6 +124,45 @@ const RLS_POLICY_MATRIX: RlsExpectation[] = [
   { table: 'crew_unavailability', action: 'select', role: 'crew_member', expected: 'allow', scope: 'own_records_only' },
   { table: 'crew_pay_records', action: 'select', role: 'staff', expected: 'deny' },
   { table: 'crew_pay_records', action: 'select', role: 'crew_member', expected: 'allow', scope: 'own_records_only' },
+
+  // --- PHASE 4: BILLING & FINANCE ---
+  { table: 'invoices', action: 'select', role: 'system_admin', expected: 'allow' },
+  { table: 'invoices', action: 'select', role: 'business_owner', expected: 'allow' },
+  { table: 'invoices', action: 'select', role: 'accountant', expected: 'allow' },
+  { table: 'invoices', action: 'select', role: 'manager', expected: 'allow' },
+  { table: 'invoices', action: 'select', role: 'staff', expected: 'allow' },
+  { table: 'invoices', action: 'select', role: 'crew_member', expected: 'deny' },
+
+  // Master Prompt: "Manager must not read payments or ledger_entries_v"
+  { table: 'payments', action: 'select', role: 'system_admin', expected: 'allow' },
+  { table: 'payments', action: 'select', role: 'business_owner', expected: 'allow' },
+  { table: 'payments', action: 'select', role: 'accountant', expected: 'allow' },
+  { table: 'payments', action: 'select', role: 'manager', expected: 'deny' },
+  { table: 'payments', action: 'select', role: 'staff', expected: 'deny' },
+  { table: 'payments', action: 'select', role: 'crew_member', expected: 'deny' },
+
+  { table: 'payment_allocations', action: 'select', role: 'manager', expected: 'deny' },
+  { table: 'payment_allocations', action: 'select', role: 'staff', expected: 'deny' },
+  { table: 'payment_allocations', action: 'select', role: 'crew_member', expected: 'deny' },
+
+  { table: 'receipts', action: 'select', role: 'manager', expected: 'deny' },
+  { table: 'receipts', action: 'select', role: 'staff', expected: 'deny' },
+  { table: 'receipts', action: 'select', role: 'crew_member', expected: 'deny' },
+
+  { table: 'credit_notes', action: 'select', role: 'accountant', expected: 'allow' },
+  { table: 'credit_notes', action: 'select', role: 'manager', expected: 'allow' },
+  { table: 'credit_notes', action: 'select', role: 'staff', expected: 'deny' },
+  { table: 'credit_notes', action: 'select', role: 'crew_member', expected: 'deny' },
+
+  { table: 'expenses', action: 'select', role: 'accountant', expected: 'allow' },
+  { table: 'expenses', action: 'select', role: 'manager', expected: 'allow' },
+  { table: 'expenses', action: 'select', role: 'staff', expected: 'deny' },
+  { table: 'expenses', action: 'select', role: 'crew_member', expected: 'deny' },
+
+  { table: 'manual_income_entries', action: 'select', role: 'accountant', expected: 'allow' },
+  { table: 'manual_income_entries', action: 'select', role: 'manager', expected: 'deny' },
+  { table: 'manual_income_entries', action: 'select', role: 'staff', expected: 'deny' },
+  { table: 'manual_income_entries', action: 'select', role: 'crew_member', expected: 'deny' },
 ];
 
 describe('RLS Policy Matrix Test Harness (Foundation, Sales, Bookings & Operations)', () => {
@@ -249,8 +288,25 @@ describe('RLS Policy Matrix Test Harness (Foundation, Sales, Bookings & Operatio
       'crew_pay_records',
       'delivery_pipelines',
       'delivery_stages',
+      // Phase 4 tables
+      'invoices',
+      'invoice_items',
+      'credit_notes',
+      'credit_note_items',
+      'payments',
+      'payment_allocations',
+      'receipts',
+      'expenses',
+      'manual_income_entries',
     ];
 
-    expect(allTables.length).toBe(40);
+    expect(allTables.length).toBe(49);
+  });
+
+  it('guarantees Manager is strictly DENIED from reading payments (Master Prompt §4.6)', () => {
+    const mgrPayment = RLS_POLICY_MATRIX.find(
+      (m) => m.table === 'payments' && m.role === 'manager' && m.action === 'select'
+    );
+    expect(mgrPayment?.expected).toBe('deny');
   });
 });

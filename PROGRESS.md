@@ -15,7 +15,7 @@
 | **Phase 1** | Identity, Roles, RLS Foundation | **DONE** | Branch `phase-1-auth` |
 | **Phase 2** | Settings, Catalogue, Clients, Enquiries, Quotations | **DONE** | Branch `phase-2-sales` |
 | **Phase 3** | Bookings, Events, Crew, Schedule | **DONE** | Branch `phase-3-bookings` |
-| **Phase 4** | Finance (Invoices, Payments, Receipts, Credits, Expenses, Ledger) | **IN PROGRESS** | Branch `phase-4-finance` |
+| **Phase 4** | Finance (Invoices, Payments, Receipts, Credits, Expenses, Ledger) | **DONE** | Branch `phase-4-finance` |
 | **Phase 5** | PDF Generation & Gmail Integration | Pending | Branch `phase-5-documents` |
 | **Phase 6** | Delivery Pipeline (9 Stages) | Pending | Branch `phase-6-delivery` |
 | **Phase 7** | Public Website | Pending | Branch `phase-7-website` |

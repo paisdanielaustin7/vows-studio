@@ -1583,6 +1583,474 @@ export interface Database {
         };
         Relationships: Relationship[];
       };
+      invoices: {
+        Row: {
+          id: string;
+          invoice_number: string;
+          booking_id: string;
+          client_id: string;
+          status: string;
+          issue_date: string;
+          due_date: string;
+          subtotal_paise: number;
+          discount_type: string | null;
+          discount_value: number | null;
+          discount_paise: number;
+          taxable_amount_paise: number;
+          cgst_rate_bps: number;
+          cgst_paise: number;
+          sgst_rate_bps: number;
+          sgst_paise: number;
+          igst_rate_bps: number;
+          igst_paise: number;
+          total_tax_paise: number;
+          total_paise: number;
+          paid_paise: number;
+          credited_paise: number;
+          notes_to_client: string | null;
+          internal_notes: string | null;
+          terms: string | null;
+          payment_terms: string | null;
+          pdf_path: string | null;
+          pdf_generated_at: string | null;
+          sent_at: string | null;
+          cancelled_at: string | null;
+          cancel_reason: string | null;
+          created_by: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          invoice_number: string;
+          booking_id: string;
+          client_id: string;
+          status?: string;
+          issue_date: string;
+          due_date: string;
+          subtotal_paise?: number;
+          discount_type?: string | null;
+          discount_value?: number | null;
+          discount_paise?: number;
+          taxable_amount_paise?: number;
+          cgst_rate_bps?: number;
+          cgst_paise?: number;
+          sgst_rate_bps?: number;
+          sgst_paise?: number;
+          igst_rate_bps?: number;
+          igst_paise?: number;
+          total_tax_paise?: number;
+          total_paise?: number;
+          paid_paise?: number;
+          credited_paise?: number;
+          notes_to_client?: string | null;
+          internal_notes?: string | null;
+          terms?: string | null;
+          payment_terms?: string | null;
+          pdf_path?: string | null;
+          pdf_generated_at?: string | null;
+          sent_at?: string | null;
+          cancelled_at?: string | null;
+          cancel_reason?: string | null;
+          created_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          invoice_number?: string;
+          booking_id?: string;
+          client_id?: string;
+          status?: string;
+          issue_date?: string;
+          due_date?: string;
+          subtotal_paise?: number;
+          discount_type?: string | null;
+          discount_value?: number | null;
+          discount_paise?: number;
+          taxable_amount_paise?: number;
+          cgst_rate_bps?: number;
+          cgst_paise?: number;
+          sgst_rate_bps?: number;
+          sgst_paise?: number;
+          igst_rate_bps?: number;
+          igst_paise?: number;
+          total_tax_paise?: number;
+          total_paise?: number;
+          paid_paise?: number;
+          credited_paise?: number;
+          notes_to_client?: string | null;
+          internal_notes?: string | null;
+          terms?: string | null;
+          payment_terms?: string | null;
+          pdf_path?: string | null;
+          pdf_generated_at?: string | null;
+          sent_at?: string | null;
+          cancelled_at?: string | null;
+          cancel_reason?: string | null;
+          created_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: Relationship[];
+      };
+      invoice_items: {
+        Row: {
+          id: string;
+          invoice_id: string;
+          service_id: string | null;
+          package_id: string | null;
+          description: string;
+          quantity: number;
+          unit_price_paise: number;
+          line_total_paise: number;
+          sort: number;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          invoice_id: string;
+          service_id?: string | null;
+          package_id?: string | null;
+          description: string;
+          quantity?: number;
+          unit_price_paise: number;
+          line_total_paise: number;
+          sort?: number;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          invoice_id?: string;
+          service_id?: string | null;
+          package_id?: string | null;
+          description?: string;
+          quantity?: number;
+          unit_price_paise?: number;
+          line_total_paise?: number;
+          sort?: number;
+          created_at?: string;
+        };
+        Relationships: Relationship[];
+      };
+      credit_notes: {
+        Row: {
+          id: string;
+          credit_note_number: string;
+          invoice_id: string;
+          client_id: string;
+          status: string;
+          issue_date: string;
+          reason: string;
+          subtotal_paise: number;
+          discount_paise: number;
+          taxable_amount_paise: number;
+          cgst_paise: number;
+          sgst_paise: number;
+          igst_paise: number;
+          total_tax_paise: number;
+          total_paise: number;
+          pdf_path: string | null;
+          pdf_generated_at: string | null;
+          sent_at: string | null;
+          created_by: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          credit_note_number: string;
+          invoice_id: string;
+          client_id: string;
+          status?: string;
+          issue_date: string;
+          reason: string;
+          subtotal_paise?: number;
+          discount_paise?: number;
+          taxable_amount_paise?: number;
+          cgst_paise?: number;
+          sgst_paise?: number;
+          igst_paise?: number;
+          total_tax_paise?: number;
+          total_paise?: number;
+          pdf_path?: string | null;
+          pdf_generated_at?: string | null;
+          sent_at?: string | null;
+          created_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          credit_note_number?: string;
+          invoice_id?: string;
+          client_id?: string;
+          status?: string;
+          issue_date?: string;
+          reason?: string;
+          subtotal_paise?: number;
+          discount_paise?: number;
+          taxable_amount_paise?: number;
+          cgst_paise?: number;
+          sgst_paise?: number;
+          igst_paise?: number;
+          total_tax_paise?: number;
+          total_paise?: number;
+          pdf_path?: string | null;
+          pdf_generated_at?: string | null;
+          sent_at?: string | null;
+          created_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: Relationship[];
+      };
+      credit_note_items: {
+        Row: {
+          id: string;
+          credit_note_id: string;
+          description: string;
+          quantity: number;
+          unit_price_paise: number;
+          line_total_paise: number;
+          sort: number;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          credit_note_id: string;
+          description: string;
+          quantity?: number;
+          unit_price_paise: number;
+          line_total_paise: number;
+          sort?: number;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          credit_note_id?: string;
+          description?: string;
+          quantity?: number;
+          unit_price_paise?: number;
+          line_total_paise?: number;
+          sort?: number;
+          created_at?: string;
+        };
+        Relationships: Relationship[];
+      };
+      payments: {
+        Row: {
+          id: string;
+          client_id: string;
+          payment_date: string;
+          amount_paise: number;
+          method: string;
+          reference_number: string | null;
+          notes: string | null;
+          status: string;
+          voided_at: string | null;
+          voided_by: string | null;
+          void_reason: string | null;
+          recorded_by: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          client_id: string;
+          payment_date: string;
+          amount_paise: number;
+          method: string;
+          reference_number?: string | null;
+          notes?: string | null;
+          status?: string;
+          voided_at?: string | null;
+          voided_by?: string | null;
+          void_reason?: string | null;
+          recorded_by: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          client_id?: string;
+          payment_date?: string;
+          amount_paise?: number;
+          method?: string;
+          reference_number?: string | null;
+          notes?: string | null;
+          status?: string;
+          voided_at?: string | null;
+          voided_by?: string | null;
+          void_reason?: string | null;
+          recorded_by?: string;
+          created_at?: string;
+        };
+        Relationships: Relationship[];
+      };
+      payment_allocations: {
+        Row: {
+          id: string;
+          payment_id: string;
+          invoice_id: string;
+          amount_paise: number;
+          reversed_at: string | null;
+          reversed_by: string | null;
+          reversed_reason: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          payment_id: string;
+          invoice_id: string;
+          amount_paise: number;
+          reversed_at?: string | null;
+          reversed_by?: string | null;
+          reversed_reason?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          payment_id?: string;
+          invoice_id?: string;
+          amount_paise?: number;
+          reversed_at?: string | null;
+          reversed_by?: string | null;
+          reversed_reason?: string | null;
+          created_at?: string;
+        };
+        Relationships: Relationship[];
+      };
+      receipts: {
+        Row: {
+          id: string;
+          receipt_number: string;
+          payment_id: string;
+          pdf_path: string | null;
+          generated_at: string | null;
+          sent_at: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          receipt_number: string;
+          payment_id: string;
+          pdf_path?: string | null;
+          generated_at?: string | null;
+          sent_at?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          receipt_number?: string;
+          payment_id?: string;
+          pdf_path?: string | null;
+          generated_at?: string | null;
+          sent_at?: string | null;
+          created_at?: string;
+        };
+        Relationships: Relationship[];
+      };
+      expenses: {
+        Row: {
+          id: string;
+          expense_date: string;
+          category_id: string;
+          description: string;
+          amount_paise: number;
+          vendor: string | null;
+          payment_method: string | null;
+          reference_number: string | null;
+          receipt_path: string | null;
+          booking_id: string | null;
+          crew_pay_id: string | null;
+          source: string;
+          notes: string | null;
+          created_by: string | null;
+          created_at: string;
+          updated_at: string;
+          deleted_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          expense_date: string;
+          category_id: string;
+          description: string;
+          amount_paise: number;
+          vendor?: string | null;
+          payment_method?: string | null;
+          reference_number?: string | null;
+          receipt_path?: string | null;
+          booking_id?: string | null;
+          crew_pay_id?: string | null;
+          source?: string;
+          notes?: string | null;
+          created_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+          deleted_at?: string | null;
+        };
+        Update: {
+          id?: string;
+          expense_date?: string;
+          category_id?: string;
+          description?: string;
+          amount_paise?: number;
+          vendor?: string | null;
+          payment_method?: string | null;
+          reference_number?: string | null;
+          receipt_path?: string | null;
+          booking_id?: string | null;
+          crew_pay_id?: string | null;
+          source?: string;
+          notes?: string | null;
+          created_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+          deleted_at?: string | null;
+        };
+        Relationships: Relationship[];
+      };
+      manual_income_entries: {
+        Row: {
+          id: string;
+          entry_date: string;
+          description: string;
+          amount_paise: number;
+          payment_method: string | null;
+          reference_number: string | null;
+          notes: string | null;
+          created_by: string | null;
+          created_at: string;
+          updated_at: string;
+          deleted_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          entry_date: string;
+          description: string;
+          amount_paise: number;
+          payment_method?: string | null;
+          reference_number?: string | null;
+          notes?: string | null;
+          created_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+          deleted_at?: string | null;
+        };
+        Update: {
+          id?: string;
+          entry_date?: string;
+          description?: string;
+          amount_paise?: number;
+          payment_method?: string | null;
+          reference_number?: string | null;
+          notes?: string | null;
+          created_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+          deleted_at?: string | null;
+        };
+        Relationships: Relationship[];
+      };
     };
     Views: {
       quotations_v: {
@@ -1704,8 +2172,142 @@ export interface Database {
         };
         Relationships: Relationship[];
       };
+      invoices_v: {
+        Row: {
+          id: string;
+          invoice_number: string;
+          booking_id: string;
+          client_id: string;
+          status: string;
+          display_status: string;
+          issue_date: string;
+          due_date: string;
+          subtotal_paise: number;
+          discount_type: string | null;
+          discount_value: number | null;
+          discount_paise: number;
+          taxable_amount_paise: number;
+          cgst_rate_bps: number;
+          cgst_paise: number;
+          sgst_rate_bps: number;
+          sgst_paise: number;
+          igst_rate_bps: number;
+          igst_paise: number;
+          total_tax_paise: number;
+          total_paise: number;
+          paid_paise: number;
+          credited_paise: number;
+          balance_paise: number;
+          notes_to_client: string | null;
+          internal_notes: string | null;
+          terms: string | null;
+          payment_terms: string | null;
+          pdf_path: string | null;
+          pdf_generated_at: string | null;
+          sent_at: string | null;
+          cancelled_at: string | null;
+          cancel_reason: string | null;
+          created_by: string | null;
+          created_at: string;
+          updated_at: string;
+          client_name: string;
+          booking_number: string;
+        };
+        Relationships: Relationship[];
+      };
+      ledger_entries_v: {
+        Row: {
+          id: string;
+          entry_date: string;
+          type: string;
+          category: string;
+          amount_paise: number;
+          source: string;
+          reference_type: string;
+          reference_id: string;
+          description: string;
+          payment_method: string | null;
+          reference_number: string | null;
+          created_at: string;
+        };
+        Relationships: Relationship[];
+      };
+      client_summary_v: {
+        Row: {
+          client_id: string;
+          full_name: string;
+          booking_count: number;
+          total_billed_paise: number;
+          total_paid_paise: number;
+          total_outstanding_paise: number;
+        };
+        Relationships: Relationship[];
+      };
     };
     Functions: {
+      record_payment: {
+        Args: {
+          p_client_id: string;
+          p_payment_date: string;
+          p_amount_paise: number;
+          p_method: string;
+          p_reference_number?: string | null;
+          p_notes?: string | null;
+          p_allocations: any;
+          p_actor_id: string;
+        };
+        Returns: {
+          payment_id: string;
+          receipt_id: string;
+          receipt_number: string;
+        };
+      };
+      void_payment: {
+        Args: {
+          p_payment_id: string;
+          p_reason: string;
+          p_actor_id: string;
+        };
+        Returns: void;
+      };
+      issue_credit_note: {
+        Args: {
+          p_invoice_id: string;
+          p_issue_date: string;
+          p_reason: string;
+          p_items: any;
+          p_actor_id: string;
+        };
+        Returns: {
+          credit_note_id: string;
+          credit_note_number: string;
+        };
+      };
+      cancel_invoice: {
+        Args: {
+          p_invoice_id: string;
+          p_reason: string;
+          p_actor_id: string;
+        };
+        Returns: void;
+      };
+      record_crew_payment: {
+        Args: {
+          p_crew_pay_record_id: string;
+          p_payment_date: string;
+          p_amount_paise: number;
+          p_method: string;
+          p_reference_number?: string | null;
+          p_notes?: string | null;
+          p_actor_id: string;
+        };
+        Returns: {
+          expense_id: string;
+          crew_pay_record_id: string;
+          paid_paise: number;
+          status: string;
+        };
+      };
       next_document_number: {
         Args: {
           p_doc_type: string;
