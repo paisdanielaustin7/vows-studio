@@ -1,5 +1,10 @@
 # VOWS Studio — API Contracts
 
+> **Note:** Most authenticated mutations are Server Actions (D-06). This document now specifies Route Handler contracts only. Permission names are in RBAC_PERMISSIONS.md.
+
+> **Reconciled 2026-11-10.** Where this document disagrees with DECISION_LOG.md or GLOSSARY_AND_ENUMS.md, those files win.
+
+
 > **Version:** 1.0.0 | **Last Updated:** November 2026 | **Base URL:** `https://vows.studio/api`
 
 ---
@@ -238,6 +243,9 @@ The current API is at **v1** (implicit, no prefix required). When breaking chang
 
 ## 3. Clients
 
+Converted to Server Actions. Client create takes `phones[]` (max 3), `emails[]` (max 2). Duplicate warning returned.
+
+
 **Base path:** `/api/clients`
 
 | Method | Path | Auth | Description |
@@ -339,6 +347,9 @@ The current API is at **v1** (implicit, no prefix required). When breaking chang
 ---
 
 ## 5. Quotations
+
+Server Actions for mutations. Discount is overall `{ type: 'percent' | 'fixed', value }`. Editing sent/accepted creates new version. `GET /api/quotations/[id]/pdf` for PDF download.
+
 
 **Base path:** `/api/quotations`
 
@@ -472,6 +483,9 @@ The current API is at **v1** (implicit, no prefix required). When breaking chang
 
 ## 7. Invoices
 
+Server Actions for mutations. DELETE is replaced by cancel action. Statuses per GLOSSARY. Credit notes (`CN`) added as Server Actions.
+
+
 **Base path:** `/api/invoices`
 
 | Method | Path | Auth | Description |
@@ -527,6 +541,9 @@ The current API is at **v1** (implicit, no prefix required). When breaking chang
 
 ## 8. Payments
 
+Server Actions for mutations. Remove PATCH/DELETE. Replaced by `voidPayment` and `reallocatePayment`. Full allocation required. Receipt download route added.
+
+
 **Base path:** `/api/payments`
 
 | Method | Path | Auth | Description |
@@ -570,7 +587,10 @@ The current API is at **v1** (implicit, no prefix required). When breaking chang
 
 ---
 
-## 9. Ledger / Financial Reports
+## 9. Ledger
+
+Permission `ledger:view` (SA, BO, AC). Manager forbidden.
+ / Financial Reports
 
 **Base path:** `/api/ledger`
 
@@ -713,7 +733,10 @@ type=income|expense|all
 
 ---
 
-## 13. Delivery Pipeline
+## 13. Delivery
+
+One pipeline per booking with 9 stages. Stage update, assignees, attachments (≤50MB), share link `/delivery/[token]`.
+ Pipeline
 
 **Base path:** `/api/delivery`
 
@@ -760,7 +783,10 @@ type=income|expense|all
 
 ---
 
-## 14. Reviews / Feedback
+## 14. Reviews
+
+Body takes overall, communication, quality, punctuality ratings, reviewerName, body. Statuses: pending, approved, rejected. Token page `/review/[token]`.
+ / Feedback
 
 **Base path:** `/api/reviews`
 
@@ -808,6 +834,9 @@ type=income|expense|all
 ---
 
 ## 15. Settings
+
+Public fields to signed-in users; billing/Gmail to SA/BO. Gmail OAuth routes: `GET /auth/gmail/start`, `GET /api/auth/gmail/callback`.
+
 
 **Base path:** `/api/settings`
 
@@ -901,7 +930,10 @@ type=income|expense|all
 
 ---
 
-## 17. Public Website Data
+## 17. Public
+
+Single public enquiry endpoint `POST /api/public/enquiry` (Turnstile, honeypot, consent). Creates enquiry only.
+ Website Data
 
 **Base path:** `/api/public`
 

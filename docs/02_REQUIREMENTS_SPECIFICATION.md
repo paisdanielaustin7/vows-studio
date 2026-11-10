@@ -1,4 +1,6 @@
 # VOWS Studio — Requirements Specification
+> **Reconciled 2026-11-10.** Where this document disagrees with DECISION_LOG.md or GLOSSARY_AND_ENUMS.md, those files win.
+
 
 > **Document Version:** 1.0  
 > **Status:** Draft  
@@ -46,13 +48,13 @@
 
 **AUTH-02.** Authentication is by email address and password only. Passwords must be a minimum of 12 characters and satisfy complexity rules (uppercase, lowercase, digit, special character).
 
-**AUTH-03.** Multi-factor authentication (TOTP via authenticator app) is **mandatory** for the System Administrator role and cannot be disabled or bypassed.
+**AUTH-03.** Multi-factor authentication (TOTP via authenticator app) is **mandatory** for the **System Administrator** and **Business Owner** roles and cannot be disabled or bypassed.
 
 **AUTH-04.** MFA is **optional** for all other roles. The UI must actively encourage non-SysAdmin users to enable MFA at their first login.
 
 **AUTH-05.** There is no public user registration flow. All user accounts are provisioned exclusively by the System Administrator via an invite mechanism.
 
-**AUTH-06.** Invitation tokens must be single-use and expire after 72 hours. Expired invitations must be resendable by SysAdmin.
+**AUTH-06.** Invitation tokens must be single-use and expire after 72 hours. Implemented with an invitations table and hashed single-use tokens (D-10). Expired invitations must be resendable by SysAdmin.
 
 **AUTH-07.** Failed login attempts must be rate-limited: maximum 5 consecutive failures within 15 minutes triggers a 30-minute account lockout. SysAdmin can unlock any account manually.
 
@@ -94,7 +96,7 @@
 | Public Website Content | RWD | RWD | R | — | — | — |
 | Reviews (moderation) | RWD | RWD | R | — | — | — |
 
-**AUTHZ-06.** API routes must validate the caller's role from the authenticated Supabase JWT before performing any operation. Returning a 403 response (not 404) for forbidden resources is required.
+**AUTHZ-06.** API routes must validate the caller's role from the authenticated Supabase JWT before performing any operation. Returning a 403 response (not 404) for forbidden resources is required. Exception: rows hidden by own-record RLS (for example another crew member's booking) return 404 (D-13).
 
 **AUTHZ-07.** RLS policies must be tested with an automated test suite that attempts each operation as each role and asserts the correct allow/deny outcome.
 
@@ -104,7 +106,7 @@
 
 **AUDIT-01.** An `audit_log` table must record every create, update, and delete operation on the following tables: clients, enquiries, quotations, bookings, invoices, payments, expenses, crew_members, service_catalogue, delivery_stages, reviews, settings, users.
 
-**AUDIT-02.** Each audit log entry must capture: `id`, `actor_user_id`, `actor_role`, `action` (CREATE / UPDATE / DELETE), `table_name`, `record_id`, `old_values` (JSONB, nullable), `new_values` (JSONB, nullable), `ip_address`, `user_agent`, `created_at`.
+**AUDIT-02.** Each audit log entry must capture: `id`, `actor_user_id`, `actor_role`, `action` (CREATE / UPDATE / DELETE), `table_name`, `record_id`, `old_values` (JSONB, nullable), `new_values` (JSONB, nullable), `ip_address`, `user_agent` (mandatory for auth events, best effort for data mutations, D-15), `created_at`.
 
 **AUDIT-03.** Audit log entries are immutable. No application code, role, or RLS policy may permit UPDATE or DELETE on `audit_log`. It is append-only.
 
@@ -112,7 +114,7 @@
 
 **AUDIT-05.** Sensitive field values (passwords, tokens) must never appear in audit log `old_values` or `new_values`.
 
-**AUDIT-06.** The platform must comply with India's Information Technology Act, 2000 and IT (Amendment) Act, 2008 with regard to data storage and access control.
+**AUDIT-06.** The platform must comply with India's Information Technology Act, 2000 (as amended) and the Digital Personal Data Protection Act, 2023 with the DPDP Rules, 2025 with regard to data storage and access control.
 
 ---
 
@@ -133,19 +135,19 @@
 ### 1.5 Financial Calculation Rules
 
 > [!CAUTION]
-> All monetary values must be stored and computed as **integer paisa** (smallest INR unit). Never store or compute with floating-point decimals for monetary amounts.
+> All monetary values must be stored and computed as **integer paise** (smallest INR unit). Never store or compute with floating-point decimals for monetary amounts.
 
-**FIN-01.** All monetary amounts in the database are stored as `INTEGER` or `BIGINT` representing paisa (1 INR = 100 paisa). Example: ₹1,500.50 → stored as `150050`.
+**FIN-01.** All monetary amounts in the database are stored as `INTEGER` or `BIGINT` representing paise (1 INR = 100 paise). Example: ₹1,500.50 → stored as `150050`.
 
 **FIN-02.** A shared TypeScript utility module (`lib/money.ts`) must implement all monetary arithmetic (addition, subtraction, multiplication by integer quantity, percentage calculation with rounding rules). No inline arithmetic on monetary values is permitted elsewhere.
 
-**FIN-03.** Percentage discounts are applied using **round-half-up** rounding on the final paisa amount.
+**FIN-03.** Percentage discounts are applied using **round-half-up** rounding on the final paise amount.
 
-**FIN-04.** Tax calculations (GST — when enabled) must compute CGST and SGST individually in paisa with round-half-up rounding each, then sum.
+**FIN-04.** Tax calculations (GST — when enabled) must compute CGST and SGST individually in paise with round-half-up rounding each, then sum.
 
 **FIN-05.** All display of monetary amounts must use the `Intl.NumberFormat` API with locale `en-IN` and currency `INR`. Example output: ₹1,500.50.
 
-**FIN-06.** The sum of all line items in a quotation or invoice must be recomputed server-side on every save. The client-submitted total must be validated against the server-computed total and rejected if they differ by more than 0 paisa.
+**FIN-06.** The sum of all line items in a quotation or invoice must be recomputed server-side on every save. The client-submitted total must be validated against the server-computed total and rejected if they differ by more than 0 paise.
 
 **FIN-07.** Partial payment arithmetic: `amount_due = total_amount - sum(payments.amount_paid)`. This is always computed, never stored directly (or if cached, invalidated on any payment change).
 
@@ -160,13 +162,15 @@
 **DOCNUM-02.** Default formats:
   - Quotation: `QT-{YYYY}-{NNNNNN}` (e.g., `QT-2025-000001`)
   - Invoice: `INV-{YYYY}-{NNNNNN}` (e.g., `INV-2025-000001`)
-  - Receipt: `RCP-{YYYY}-{NNNNNN}` (e.g., `RCP-2025-000001`)
+  - Receipt: `RCP-{YYYY}-{NNNNNN}`
+- Booking: `BK-{YYYY}-{NNNNNN}`
+- Credit note: `CN-{YYYY}-{NNNNNN}` (e.g., `RCP-2025-000001`)
 
 **DOCNUM-03.** `{YYYY}` represents the financial year of the document creation date. For India, the financial year starts on April 1. A document created on 2025-05-15 belongs to FY 2025 (FY 2025–26).
 
 **DOCNUM-04.** The sequence counter resets to `000001` at the start of each financial year. The reset must be atomic to prevent gaps or duplicates.
 
-**DOCNUM-05.** The prefix, year format, and padding width are configurable per document type in Settings. Changes take effect for newly created documents only.
+**DOCNUM-05.** The prefix, year format, and padding width are configurable per document type by System Administrator only. Changes take effect for newly created documents only.
 
 **DOCNUM-06.** Document numbers, once assigned, are immutable. No renumbering or sequence alteration is permitted after a document is created.
 
@@ -227,7 +231,7 @@ The Dashboard provides the Business Owner and Manager with an at-a-glance operat
 **DASH-01.** Display a date range selector (Today, This Week, This Month, This Financial Year, Custom Range) that filters all KPI cards and charts on the page.
 
 **DASH-02.** Display the following KPI cards with current period value and percentage change vs. previous period:
-  - Total Revenue Collected (paisa, displayed as INR)
+  - Total Revenue Collected (paise, displayed as INR)
   - Total Revenue Expected (invoiced but unpaid)
   - Total Bookings (confirmed)
   - Pending Enquiries (not yet quoted or rejected)
@@ -292,13 +296,13 @@ Centralises all prospective and existing client records. Tracks the lifecycle of
 
 ### 3.3 Functional Requirements
 
-**CLI-01.** A client record must capture: full name, phone number(s) (up to 3), email address(es) (up to 2), address (line 1, line 2, city, state, pincode), source (how they found the studio), notes, `created_at`, `updated_at`.
+**CLI-01.** Stored in child tables (client_phones max 3, client_emails max 2). A client record must capture: full name, phone number(s) (up to 3), email address(es) (up to 2), address (line 1, line 2, city, state, pincode), source (how they found the studio), notes, `created_at`, `updated_at`.
 
 **CLI-02.** Phone numbers must be validated against Indian mobile number format (+91 XXXXX XXXXX). International numbers allowed with explicit country code flag.
 
 **CLI-03.** Duplicate client detection: on creating a new client, the system must warn if a client with the same phone number or email already exists. It must not auto-block creation, but surface a "Possible duplicate" banner.
 
-**CLI-04.** A client profile page must display: client details, all linked enquiries, all linked bookings, all linked invoices, payment history, and a chronological activity feed.
+**CLI-04.** A client profile page must display: client details, all linked enquiries, all linked bookings, all allocated to one or more invoices through payment allocations; the payment must be fully allocated (D-21)s, payment history, and a chronological activity feed.
 
 **CLI-05.** An enquiry record must capture: linked client (or guest contact details if client not yet created), event type, event date (approximate), event venue, number of guests (optional), services of interest, source channel (Instagram, referral, website, walk-in, etc.), status, assigned staff, notes.
 
@@ -362,11 +366,11 @@ Enables the studio to generate professional, branded quotations for clients, tra
 
 **QT-01.** A quotation must capture: quotation number (auto-generated per DOCNUM rules), client, linked enquiry (optional), event date, validity date, line items, discount, subtotal, total, status, notes to client, internal notes.
 
-**QT-02.** Line items: service/package name, description, quantity, unit price (paisa), line total (paisa). Line items may be added from the Service Catalogue or entered manually.
+**QT-02.** Line items: service/package name, description, quantity, unit price (paise), line total (paise). Line items may be added from the Service Catalogue or entered manually.
 
 **QT-03.** A discount field supports either a percentage or a fixed amount. Only one type may be active per quotation.
 
-**QT-04.** Quotation statuses: `draft` → `sent` → `viewed` (optional tracking) → `accepted` | `rejected` | `expired`.
+**QT-04.** Quotation statuses: `draft` → `sent` → `accepted` | `rejected` | `superseded`; `expired` is derived; `viewed` is reserved and unused in V1.
 
 **QT-05.** Quotation versioning: editing a `sent` or `accepted` quotation creates a new version (v2, v3, …). All versions are retained and viewable. Only the latest version is considered "active".
 
@@ -388,7 +392,7 @@ Enables the studio to generate professional, branded quotations for clients, tra
 
 ### 4.4 Non-Functional Requirements
 
-**QT-NFR-01.** PDF generation must complete within 10 seconds. If it exceeds this, the user receives a "Generating — we'll notify you" message and the PDF is generated asynchronously.
+**QT-NFR-01.** PDF generation must complete within 10 seconds. If it exceeds this, the user receives a failure message with a retry. Asynchronous generation is deferred (D-28).
 
 **QT-NFR-02.** PDF files are stored in Supabase Storage under a private bucket. Access is via signed URLs with a 1-hour expiry.
 
@@ -428,7 +432,7 @@ Manages confirmed bookings, each of which may consist of multiple events (e.g., 
 
 ### 5.3 Functional Requirements
 
-**BK-01.** A booking is the top-level record. It must capture: booking number (auto-generated), client, source enquiry (optional), source quotation (optional), status, total contracted amount (paisa), notes, `created_at`.
+**BK-01.** A booking is the top-level record. It must capture: booking number (auto-generated), client, source enquiry (optional), source quotation (optional), status, total contracted amount (paise), notes, `created_at`.
 
 **BK-02.** Booking statuses: `confirmed` → `in_progress` → `completed` | `cancelled`.
 
@@ -501,7 +505,7 @@ Manages the full billing lifecycle: generating invoices, recording partial and f
 
 **INV-04.** Line items on an invoice are independent of the quotation's line items (they may differ due to changes in scope). The quotation's line items may be used as a starting point.
 
-**INV-05.** A payment record must capture: linked invoice, payment date, amount (paisa), payment mode (cash, bank transfer, UPI, cheque, other), reference number, notes.
+**INV-05.** A payment record must capture: linked invoice, payment date, amount (paise), payment mode (cash, bank transfer, UPI, cheque, other), reference number, notes.
 
 **INV-06.** Multiple payment records may be linked to one invoice (partial payment support). The outstanding balance is `invoice.total - sum(payments.amount)`.
 
@@ -511,7 +515,7 @@ Manages the full billing lifecycle: generating invoices, recording partial and f
 
 **INV-09.** "Send Invoice via Gmail" and "Send Receipt via Gmail" actions work identically to quotation sending (PDF attachment, configurable template body).
 
-**INV-10.** A paid invoice is locked for editing. Any correction requires creating a credit note (a negative-value invoice) and a new corrected invoice. This workflow must be explicitly guided in the UI.
+**INV-10.** A paid invoice is locked for editing. Any correction requires creating a credit note document (CN series) linked to the invoice (D-22) and a new corrected invoice. This workflow must be explicitly guided in the UI.
 
 **INV-11.** Invoice list view must support: filter by status, filter by client, filter by date range, sort by due date. Overdue invoices must be visually highlighted.
 
@@ -527,7 +531,7 @@ Manages the full billing lifecycle: generating invoices, recording partial and f
 
 ### 6.5 Edge Cases & Business Rules
 
-- A payment that overpays the invoice (amount > outstanding balance) must be warned at the UI level and blocked server-side unless the user explicitly overrides (e.g., intentional overpayment for advance).
+- A payment that overpays the invoice (amount > outstanding balance) is blocked in V1; create an advance invoice first (D-21) (e.g., intentional overpayment for advance).
 - Invoices for cancelled bookings should still be manageable (a cancellation fee may still be invoiced).
 - A `draft` invoice does not appear in financial reports; only `sent` and beyond statuses are counted.
 
@@ -559,9 +563,9 @@ Provides a consolidated view of business income and expenditure, enabling basic 
 
 ### 7.3 Functional Requirements
 
-**LED-01.** An income entry is automatically created for each payment recorded in Module 05. Manual income entries may also be created for non-invoice income (e.g., tips, sundry income).
+**LED-01.** The ledger is a database view over payments, manual income entries and expenses (D-23) recorded in Module 05. Manual income entries may also be created for non-invoice income (e.g., tips, sundry income).
 
-**LED-02.** An expense record must capture: date, category (equipment, travel, crew payment, marketing, software, rent, utilities, miscellaneous), description, amount (paisa), vendor/payee name, payment mode, reference number, receipt attachment (image/PDF stored in Supabase Storage), notes.
+**LED-02.** An expense record must capture: date, category (equipment, travel, crew payment, marketing, software, rent, utilities, miscellaneous), description, amount (paise), vendor/payee name, payment mode, reference number, receipt attachment (image/PDF stored in Supabase Storage), notes.
 
 **LED-03.** Expense categories must be configurable in Settings (add/rename/archive categories; built-in categories cannot be deleted).
 
@@ -575,7 +579,7 @@ Provides a consolidated view of business income and expenditure, enabling basic 
 
 **LED-08.** Crew payments (from Module 07) must automatically create corresponding expense entries in the `crew_payment` category when recorded.
 
-**LED-09.** An income entry linked to an invoice payment must be non-deletable independently; it is deleted only if the payment record is voided.
+**LED-09.** An income entry linked to an invoice payment must be non-deletable independently; it is excluded from the ledger when the payment is voided.
 
 ### 7.4 Edge Cases & Business Rules
 
@@ -611,13 +615,13 @@ Tracks all crew members (employees and freelancers), manages their assignments a
 
 ### 8.3 Functional Requirements
 
-**CREW-01.** A crew member profile must capture: full name, role/designation (photographer, videographer, drone operator, editor, coordinator, etc.), phone, email, type (employee / freelancer), daily rate or per-event rate (paisa), bank account details (encrypted at rest), portfolio link, notes, `active` flag.
+**CREW-01.** A crew member profile must capture: full name, role/designation (photographer, videographer, drone operator, editor, coordinator, etc.), phone, email, type (employee / freelancer), daily rate or per-event rate (paise), bank account details (encrypted at rest), portfolio link, notes, `active` flag.
 
 **CREW-02.** Crew members may be assigned a user account (if they need platform access) or exist as profile-only records (no login access).
 
 **CREW-03.** An availability calendar must display all assigned events for each crew member. The crew list view must support filtering by role and availability on a given date.
 
-**CREW-04.** A pay record must capture: crew member, booking/event reference, work date(s), agreed amount (paisa), amount paid (paisa), payment date, payment mode, status (unpaid / partially_paid / paid), notes.
+**CREW-04.** A pay record must capture: crew member, booking/event reference, work date(s), agreed amount (paise), amount paid (paise), payment date, payment mode, status (unpaid / partially_paid / paid), notes.
 
 **CREW-05.** Recording a crew payment must create a corresponding expense entry in Module 06 under the `crew_payment` category automatically.
 
@@ -648,7 +652,7 @@ Maintains a master list of services and packages offered by the studio, with pri
 
 ### 9.2 Functional Requirements
 
-**SVC-01.** A service entry must capture: name, category (photography, videography, drone, album, editing, travel, miscellaneous), description, unit (per event, per day, per hour, per unit), unit price (paisa), `active` flag, `created_at`, `updated_at`.
+**SVC-01.** A service entry must capture: name, category (photography, videography, drone, album, editing, travel, miscellaneous), description, unit (per event, per day, per hour, per unit), unit price (paise), `active` flag, `created_at`, `updated_at`.
 
 **SVC-02.** A package is a named bundle of service entries with a bundled price (which may differ from the sum of individual prices).
 
@@ -749,6 +753,8 @@ Provides a centralised administration panel for all runtime-configurable aspects
 
 **SET-03.** Email Templates: configurable subject line and body for: quotation email, invoice email, receipt email, payment reminder email. Templates support merge tags (`{{client_name}}`, `{{document_number}}`, `{{amount}}`, etc.).
 
+> Document numbering is System Administrator only. User management lives at /admin/users.
+
 **SET-04.** Document Numbering: prefix, year format (YYYY / YY), sequence padding width, and financial year start month (default: April) configurable per document type (quotation, invoice, receipt).
 
 **SET-05.** User Management: invite new users, assign roles, deactivate/reactivate users, resend invitations, view last login timestamp for each user.
@@ -824,7 +830,7 @@ Provides a professional brand presence for VOWS Studio on the public internet, s
 
 ### 13.2 Functional Requirements
 
-**WEB-01.** The public website consists of the following pages: Home, Portfolio, Services, Pricing, About, Contact/Enquiry, Reviews/Testimonials.
+**WEB-01.** The public website consists of the following pages: Home, Portfolio, Services and Pricing (one page), About, Contact (enquiry form), Reviews, FAQ, Privacy, Terms.
 
 **WEB-02.** All public website content (copy, images, services displayed, pricing) is manageable from the Settings & Configuration module. No code changes are required to update content.
 

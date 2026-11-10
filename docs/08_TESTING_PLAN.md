@@ -1,4 +1,6 @@
 # VOWS Studio — Testing Plan
+> **Reconciled 2026-11-10.** Where this document disagrees with DECISION_LOG.md or GLOSSARY_AND_ENUMS.md, those files win.
+
 
 > **Stack:** Next.js 15 App Router · React 19 · TypeScript · Tailwind CSS v4 · Supabase · Zod · Vercel · GitHub
 > **Team:** One developer
@@ -174,7 +176,7 @@ describe('computeLineTotal', () => {
     expect(computeLineTotal(500_000, 3, 100)).toBe(0)
   })
 
-  it('rounds down (floor) to nearest paise on fractional discount', () => {
+  it('rounds half up to nearest paise on fractional discount', () => {
     // ₹100 × 1 × (1 - 33.333%) = ₹66.667 → floor to 6666 paise
     expect(computeLineTotal(10_000, 1, 33.333)).toBe(6_667) // adjust per chosen rounding
   })
@@ -448,7 +450,7 @@ import { createClient } from '@supabase/supabase-js'
 
 export const supabase = createClient(
   process.env.SUPABASE_URL!,       // http://127.0.0.1:54321
-  process.env.SUPABASE_SERVICE_KEY! // local service role key (never committed)
+  process.env.SUPABASE_SERVICE_ROLE_KEY! // local service role key (never committed)
 )
 
 export async function resetTable(tableName: string) {
@@ -515,14 +517,14 @@ describe('RLS: crew_members table', () => {
 #### Scenario: Staff cannot read admin-only audit log details
 
 ```ts
-describe('RLS: audit_logs table', () => {
-  it('staff user gets empty result when querying audit_logs', async () => {
-    const { data } = await staffClient.from('audit_logs').select('*').limit(10)
+describe('RLS: audit_log table', () => {
+  it('staff user gets empty result when querying audit_log', async () => {
+    const { data } = await staffClient.from('audit_log').select('*').limit(10)
     expect(data).toHaveLength(0)
   })
 
-  it('system_admin can read all audit_logs', async () => {
-    const { data } = await adminClient.from('audit_logs').select('*').limit(10)
+  it('system_admin can read all audit_log', async () => {
+    const { data } = await adminClient.from('audit_log').select('*').limit(10)
     expect(data!.length).toBeGreaterThan(0)
   })
 })
@@ -573,7 +575,7 @@ describe('Concurrent payment allocation', () => {
 describe('Quotation number sequencing', () => {
   it('50 concurrent quotation creations produce 50 unique numbers', async () => {
     const creates = Array.from({ length: 50 }, () =>
-      supabase.rpc('create_quotation_with_number', { client_id: testClientId })
+      supabase.rpc('create_quotation (with numbering tests for QT, INV, RCP, BK, CN)', { client_id: testClientId })
     )
     const results = await Promise.all(creates)
     const numbers = results.map(r => r.data?.quotation_number)
@@ -603,7 +605,7 @@ describe('Audit log triggers', () => {
     expect(after).toBe(before + 1)
 
     const { data: log } = await adminClient
-      .from('audit_logs')
+      .from('audit_log')
       .select('*')
       .order('created_at', { ascending: false })
       .limit(1)
@@ -611,10 +613,10 @@ describe('Audit log triggers', () => {
 
     expect(log.table_name).toBe('business_settings')
     expect(log.action).toBe('UPDATE')
-    expect(log.new_value.business_name).toBe('VOWS Studio Updated')
+    expect(log.new_values.business_name).toBe('VOWS Studio Updated')
   })
 
-  it('deleting a client creates audit log entry with old_value', async () => {
+  it('deleting a client creates audit log entry with old_values', async () => {
     const clientId = await seedClient({ name: 'Test Client' })
     const before = await countAuditLogs()
 
@@ -624,14 +626,14 @@ describe('Audit log triggers', () => {
     expect(after).toBe(before + 1)
 
     const { data: log } = await adminClient
-      .from('audit_logs')
+      .from('audit_log')
       .select('*')
       .order('created_at', { ascending: false })
       .limit(1)
       .single()
 
     expect(log.action).toBe('DELETE')
-    expect(log.old_value.name).toBe('Test Client')
+    expect(log.old_values.name).toBe('Test Client')
   })
 })
 ```
@@ -844,7 +846,7 @@ export default defineConfig({
 2. Enter new user's email, select role "Staff"
 3. Click "Send Invitation"
 4. Assert success message and user appears in list with status "Invited"
-5. Open invitation email → click magic link
+5. Open invitation email → click custom invitation link (72 hours)
 6. Assert redirect to set-password page
 7. Set password → submit
 8. Assert redirect to MFA setup page (mandatory for `staff`)
@@ -889,7 +891,7 @@ Manual security checklist — perform during Phase 10 hardening:
 - [ ] Public enquiry form: submit 10 times in 30 seconds — verify rate limiting kicks in
 
 ### Environment
-- [ ] Run `grep -r "SUPABASE_SERVICE_KEY\|service_role" src/` — zero matches (service key must never be in `src/`)
+- [ ] Run `grep -r "SUPABASE_SERVICE_ROLE_KEY\|service_role" src/` — zero matches (service key must never be in `src/`)
 - [ ] Run `next build && grep -r "supabase_service" .next/` — zero matches in client bundle
 - [ ] Verify all Supabase Storage buckets are "Private" in dashboard (except explicitly public CDN assets)
 
@@ -900,7 +902,7 @@ Manual security checklist — perform during Phase 10 hardening:
 > These tests verify business accuracy. Each can be run as an integration test against local Supabase.
 
 ### Rules
-1. **All amounts in integer paise.** No `parseFloat`, no `toFixed`, no division without `Math.floor`.
+1. **All amounts in integer paise.** No `parseFloat`, no `toFixed`, no division without `round-half-up (paise and bps, ledger_entries_v)`.
 2. All DB columns holding money are `bigint` (not `decimal` or `float`).
 3. Display conversion: `paise / 100` for rendering, never stored.
 
@@ -1129,10 +1131,10 @@ Production verification is limited to:
 |---|---|---|---|---|
 | `NEXT_PUBLIC_SUPABASE_URL` | Local Supabase | — | Dev Supabase | Prod Supabase |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Local anon key | — | Dev anon key | Prod anon key |
-| `SUPABASE_SERVICE_KEY` | Local service key | — | Dev service key | Prod service key |
+| `SUPABASE_SERVICE_ROLE_KEY` | Local service key | — | Dev service key | Prod service key |
 | `GOOGLE_CLIENT_ID` | Dev OAuth client | — | Dev OAuth client | Prod OAuth client |
 | `GOOGLE_CLIENT_SECRET` | Dev secret | — | Dev secret | Prod secret |
 | `GOOGLE_TOKEN_ENCRYPTION_KEY` | Local random key | — | Dev random key | Prod random key (rotate on breach) |
 
 > [!IMPORTANT]
-> `SUPABASE_SERVICE_KEY` and `GOOGLE_TOKEN_ENCRYPTION_KEY` are **server-only**. They must never use the `NEXT_PUBLIC_` prefix and must never appear in any `src/` file or client bundle.
+> `SUPABASE_SERVICE_ROLE_KEY` and `GOOGLE_TOKEN_ENCRYPTION_KEY` are **server-only**. They must never use the `NEXT_PUBLIC_` prefix and must never appear in any `src/` file or client bundle.

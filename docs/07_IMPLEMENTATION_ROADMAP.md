@@ -1,6 +1,8 @@
 # VOWS Studio — Implementation Roadmap
+> **Reconciled 2026-11-10.** Where this document disagrees with DECISION_LOG.md or GLOSSARY_AND_ENUMS.md, those files win.
 
-> **Stack:** Next.js 15 App Router · React 19 · TypeScript · Tailwind CSS v4 · Supabase · Zod · Vercel · GitHub
+
+> **Stack:** Next.js 16 App Router · React 19 · TypeScript · Tailwind CSS v4 · Supabase · Zod · Vercel · GitHub
 > **Team:** One developer (Technical Admin / Developer)
 > **Business Context:** Real photography & videography studio, Karnataka, India — financial accuracy is non-negotiable.
 
@@ -94,8 +96,8 @@ hotfix/*      → critical production fixes, PR'd directly into main then merged
 - Install `@supabase/ssr` and `@supabase/supabase-js`
 - Create `lib/supabase/server.ts` (Server Component / Server Action client)
 - Create `lib/supabase/client.ts` (Client Component client)
-- Create `lib/supabase/middleware.ts` (session refresh)
-- Configure `middleware.ts` at project root for route protection
+- Create `lib/supabase/proxy.ts` (session refresh)
+- Configure `proxy.ts` at project root for route protection
 
 #### Authentication
 - Supabase Auth with email/password
@@ -108,7 +110,7 @@ hotfix/*      → critical production fixes, PR'd directly into main then merged
 #### Database Migrations (Phase 1 tables)
 - `profiles` — extends `auth.users`, holds display name, role, avatar
 - `roles` — enum or lookup table: `system_admin`, `staff`, `crew_member`, `client_viewer`
-- `audit_logs` — `user_id`, `action`, `table_name`, `record_id`, `old_value` (jsonb), `new_value` (jsonb), `ip_address`, `created_at`
+- `audit_log` — `user_id`, `action`, `table_name`, `record_id`, `old_values` (jsonb), `new_values` (jsonb), `ip_address`, `created_at`
 - RLS policies for all Phase 1 tables
 - Audit trigger function (generic, applied to all tables that need it)
 
@@ -208,7 +210,7 @@ hotfix/*      → critical production fixes, PR'd directly into main then merged
 #### Booking Module
 - Booking creation from accepted quotation (confirmation step showing client/amount)
 - Independent booking creation (without quotation)
-- Booking number generation: `BK-YYYY-NNNN`
+- Booking number generation: `BK-{FY}-{NNNNNN}`
 - Booking detail page (events list, crew list, invoice status, payment status)
 - Booking status machine: `confirmed → in_progress → completed → cancelled`
 
@@ -249,7 +251,7 @@ hotfix/*      → critical production fixes, PR'd directly into main then merged
 #### Database Migrations
 - `invoices` — booking_id, client_id, invoice_number, version, status, due_date, subtotal, discount_amount, tax_amount, total_amount (all integer paise), notes, snapshot (jsonb)
 - `invoice_items` — invoice_id, description, unit_price, quantity, discount_pct, line_total
-- `invoice_versions` — full snapshot per version
+- `credit_notes, crew_pay_records, record_payment/void_payment, ledger_entries_v` — full snapshot per version
 - `payments` — client_id, payment_date, amount (integer paise), method, reference_number, notes, recorded_by
 - `payment_allocations` — payment_id, invoice_id, allocated_amount (integer paise)
 - `payment_receipts` — payment_id, receipt_number, pdf_path, generated_at
@@ -321,7 +323,7 @@ hotfix/*      → critical production fixes, PR'd directly into main then merged
 
 ### Deliverable
 
-> Staff can connect their Gmail account, send a quotation PDF to a client's email, and see confirmation of delivery in the send log. Reconnection flow works after token expiry.
+> System Admin or Business Owner connects their Gmail account, send a quotation PDF to a client's email, and see confirmation of delivery in the send log. Reconnection flow works after token expiry.
 
 ---
 
@@ -338,7 +340,7 @@ hotfix/*      → critical production fixes, PR'd directly into main then merged
 
 #### Delivery Pipeline
 - Create delivery record from completed event booking
-- Predefined stages: Import → Cull → Edit → Export → Upload → Delivery
+- Predefined stages: 9 stages in GLOSSARY §5 (Ingest, Culling, Color Grading, Teaser, Highlight Film, Raw Selection, Album Design, Client Review, Final Delivery)
 - Stage progress tracking (not started / in progress / complete)
 - Deadline management per stage
 - Feedback thread per delivery
@@ -367,7 +369,7 @@ hotfix/*      → critical production fixes, PR'd directly into main then merged
 - **Portfolio management (CRM):** Upload images to Supabase Storage `portfolio/` bucket, categorise (weddings, pre-shoots, etc.), set published/unpublished, set cover image
 - **Portfolio public pages (ISR):** Grid of categories → individual gallery (lightbox)
 - **Reviews page:** Approved reviews only (from review moderation module — Phase 8)
-- **Enquiry form:** Public form → `POST /api/enquiries/public` → creates `enquiries` row with `source: 'website'`
+- **Enquiry form:** Public form → `POST /api/public/enquiry` → creates `enquiries` row with `source: 'website'`
 - **Contact page:** Location map embed, phone, email, social links
 - **Supporting pages:** FAQ, Privacy Policy, Terms & Conditions
 - **SEO:** `metadata` export per page, `sitemap.xml` route, `robots.txt`

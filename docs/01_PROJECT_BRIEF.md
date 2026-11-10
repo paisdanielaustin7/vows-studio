@@ -1,4 +1,6 @@
 # VOWS Studio — Project Brief
+> **Reconciled 2026-11-10.** Where this document disagrees with DECISION_LOG.md or GLOSSARY_AND_ENUMS.md, those files win.
+
 
 > **Document Version:** 1.0  
 > **Status:** Draft  
@@ -117,7 +119,7 @@ The System Administrator **is** the developer/builder of this platform. This per
 | S-12 | Public Website (portfolio, services, reviews, SEO, enquiry form) |
 | S-13 | Feedback & Reviews (collection, moderation, testimonials) |
 | S-14 | Role-Based Access Control (RBAC) with Supabase RLS |
-| S-15 | Supabase Auth with MFA (mandatory SysAdmin, optional others) |
+| S-15 | Supabase Auth with MFA (mandatory SysAdmin and Business Owner, optional others) |
 | S-16 | Audit logging (all create/update/delete actions) |
 | S-17 | GST-ready data model and UI scaffolding (not activated by default) |
 | S-18 | Mobile-responsive UI across all modules |
@@ -158,7 +160,7 @@ The System Administrator **is** the developer/builder of this platform. This per
 | **Authentication** | Supabase Auth | Email/password + TOTP MFA; no OAuth for internal users |
 | **Storage** | Supabase Storage | Portfolios, PDF uploads, branding assets |
 | **Email Integration** | Google Gmail API (OAuth 2.0) | Transactional document delivery |
-| **PDF Generation** | React-PDF / Puppeteer (server-side) | Rendered server-side via API route or Edge Function |
+| **PDF Generation** | @react-pdf/renderer (Node runtime, Route Handler) | Rendered server-side via API route or Edge Function |
 | **Deployment** | Vercel | Edge-optimised; preview environments per PR |
 | **Source Control** | GitHub | Branch protection; PR-based workflow |
 | **Linting / Formatting** | ESLint + Prettier | Enforced in CI |
@@ -181,7 +183,7 @@ The System Administrator **is** the developer/builder of this platform. This per
 - **Database-level authorization**: Supabase Row Level Security (RLS) is the authoritative access control layer. API-level checks are a secondary defence, never the primary gate.
 - **No self-elevation**: No user can assign themselves a higher privilege role. Only SysAdmin can modify roles.
 - **Secrets in environment variables**: No credentials in source code or client-side bundles.
-- **MFA mandatory for SysAdmin**: The highest-privilege account requires TOTP multi-factor authentication unconditionally.
+- **MFA mandatory for SysAdmin and Business Owner: both require TOTP at aal2 before any app page loads.
 - **Audit trail**: Every mutation (create, update, delete) is logged with actor identity, timestamp, and before/after snapshots for sensitive financial records.
 
 ### 6.2 Configurable
@@ -207,7 +209,7 @@ The System Administrator **is** the developer/builder of this platform. This per
 
 ### 6.5 Data Integrity
 
-- **Integer arithmetic for all monetary values**: All amounts stored as integer paisa (1 INR = 100 paisa) to eliminate floating-point rounding errors. Display-layer only performs division for rendering.
+- **Integer arithmetic for all monetary values**: All amounts stored as integer paise (1 INR = 100 paise) to eliminate floating-point rounding errors. Display-layer only performs division for rendering.
 - **Immutable financial records**: Paid invoices cannot be edited; a credit note workflow must be followed instead.
 - **Historical pricing preservation**: Service catalogue entries used in past quotations/bookings are never modified in-place; a versioning mechanism preserves historical line-item data.
 
@@ -220,13 +222,13 @@ The System Administrator **is** the developer/builder of this platform. This per
 | SC-01 | All 13 modules are functional and deployable | QA sign-off on acceptance criteria for each module |
 | SC-02 | Zero floating-point errors in financial calculations | Unit test suite with 100% coverage on arithmetic utilities |
 | SC-03 | RLS policies correctly enforce role permissions | Automated Supabase RLS test suite passes |
-| SC-04 | PDF generation produces correctly branded documents | Visual regression tests for quote, invoice, receipt PDFs |
+| SC-04 | PDF generation produces correctly branded documents | PDF smoke tests that extract text and assert key fields |
 | SC-05 | Gmail integration sends documents successfully | Integration test with Gmail sandbox account |
 | SC-06 | Public website achieves Lighthouse SEO score ≥ 90 | Lighthouse CI in deployment pipeline |
 | SC-07 | Mobile responsiveness on 375px viewport | Manual QA on Chrome DevTools mobile presets |
 | SC-08 | SysAdmin MFA cannot be bypassed | Security test: attempt login without TOTP |
 | SC-09 | Audit log captures all mutations | Automated test: perform CRUD actions, verify audit records |
-| SC-10 | Platform performs acceptably on Vercel free/pro tier | Dashboard loads in < 3s on 4G connection |
+| SC-10 | Platform performs acceptably on Vercel Pro | Dashboard loads in < 3s on 4G connection |
 
 ---
 
@@ -241,17 +243,17 @@ The System Administrator **is** the developer/builder of this platform. This per
 | C-03 | No self-service user registration; invite-only |
 | C-04 | Gmail API daily sending quotas apply (standard: 1 billion messages/day for workspace, 100/day for personal — verify at deployment) |
 | C-05 | Supabase free tier has row limits and storage quotas; production should use Pro plan |
-| C-06 | Vercel serverless function execution timeout (default 10s; PDF generation may require increased limits or background jobs) |
-| C-07 | GDPR/IT Act compliance: client personal data must be handled with appropriate retention and deletion policies |
+| C-06 | Vercel Pro is required (Hobby is non-commercial). Set maxDuration on the PDF route. Asynchronous PDF generation is deferred (D-28). |
+| C-07 | DPDP Act 2023 / DPDP Rules 2025 and IT Act 2000 compliance: client personal data must be handled with appropriate retention and deletion policies |
 
 ### 8.2 Risks
 
 | # | Risk | Likelihood | Impact | Mitigation |
 |---|---|---|---|---|
 | R-01 | Gmail OAuth token expiry causing email failures | Medium | High | Implement refresh token rotation; surface clear error states in UI |
-| R-02 | PDF generation timeout on Vercel edge | Medium | Medium | Use background job queue or Supabase Edge Function with longer timeout |
+| R-02 | PDF generation timeout on Vercel edge | Medium | Medium | Use maxDuration on Vercel Pro; async job queue deferred (D-28) |
 | R-03 | RLS policy gaps allowing data leakage | Low | Critical | Dedicated RLS test suite; third-party security review before launch |
-| R-04 | Supabase outage affecting availability | Low | High | Supabase SLA; local fallback read cache for critical data |
+| R-04 | Supabase outage affecting availability | Low | High | Supabase SLA; Daily backups plus nightly export; restore drill quarterly |
 | R-05 | Scope creep delaying delivery | High | Medium | Strict in/out-of-scope document; change request process for new features |
 | R-06 | Financial calculation bugs causing billing errors | Low | Critical | Integer arithmetic library; 100% unit test coverage on all monetary logic |
 
@@ -266,7 +268,7 @@ Architectural decisions must therefore reflect industry best practices visibly:
 - Clean, well-documented code with meaningful commit history on GitHub.
 - Use of modern patterns: Server Components, Server Actions, optimistic UI, Zod schema-first design.
 - Comprehensive README covering setup, architecture decisions, and local development.
-- A publicly viewable **demo mode** or **read-only preview environment** that showcases the UI with anonymised/synthetic data, without exposing real client or financial information.
+- A writable demo environment (separate Supabase and Vercel projects, weekly reset).
 - Deployment URL suitable for sharing in a portfolio (custom domain via Vercel).
 - Lighthouse scores, TypeScript coverage, and test coverage badges in the README.
 
@@ -277,19 +279,4 @@ Architectural decisions must therefore reflect industry best practices visibly:
 
 ## 10. Project Phases Overview
 
-| Phase | Name | Key Deliverables | Notes |
-|---|---|---|---|
-| **Phase 0** | Foundation | Project scaffolding, Supabase schema, Auth, RBAC, CI/CD pipeline | All subsequent phases depend on this |
-| **Phase 1** | Core Business Operations | Clients & Enquiries, Quotations, Bookings & Events, Invoices & Payments | Minimum viable operational system |
-| **Phase 2** | Financial & Crew | Ledger & Expenses, Crew Management, Service Catalogue | Extends Phase 1 with financial depth |
-| **Phase 3** | Delivery & Feedback | Delivery Management, Feedback & Reviews | Completes the client journey |
-| **Phase 4** | Public Presence | Public Website, SEO, Enquiry Form integration | Brand and lead generation |
-| **Phase 5** | Integrations & Polish | Gmail Integration, PDF refinement, Dashboard KPIs, Settings | End-to-end integration and UX polish |
-| **Phase 6** | Hardening | Security audit, RLS test suite, performance optimisation, documentation | Pre-launch production readiness |
-
-> [!NOTE]
-> Phases are sequential in dependency but may overlap in development. Phase 0 must be fully complete before any other phase begins. Gmail Integration (Phase 5) may be developed in parallel with Phase 3–4 once OAuth scaffolding is in place.
-
----
-
-*End of Project Brief — VOWS Studio Platform v1.0*
+See 07_IMPLEMENTATION_ROADMAP.md, Phases 0–10, as amended by DECISION_LOG D-40.

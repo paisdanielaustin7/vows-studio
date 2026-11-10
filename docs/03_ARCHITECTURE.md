@@ -1,4 +1,6 @@
 # VOWS Studio — System Architecture
+> **Reconciled 2026-11-10.** Where this document disagrees with DECISION_LOG.md or GLOSSARY_AND_ENUMS.md, those files win.
+
 
 > **Version:** 1.0.0 | **Last Updated:** November 2026 | **Status:** Draft
 
@@ -37,7 +39,7 @@ flowchart TD
     end
 
     subgraph Vercel["Vercel Edge Network"]
-        MW[middleware.ts\nRoute Guard + Session Check]
+        MW[proxy.ts\nRoute Guard + Session Check]
         subgraph NextApp["Next.js 15 App Router"]
             PUB["/(public) Routes\nMarketing, Portfolio, Enquiry"]
             CRM["/(crm) Routes\nDashboard, Clients, Bookings\nInvoices, Payments, etc."]
@@ -112,7 +114,7 @@ flowchart LR
 ```mermaid
 sequenceDiagram
     participant B as Browser
-    participant MW as middleware.ts
+    participant MW as proxy.ts
     participant SB as Supabase Auth
     participant DB as PostgreSQL
 
@@ -123,7 +125,7 @@ sequenceDiagram
         MW-->>B: 302 → /login?redirect=/crm/dashboard
     else Valid session
         SB-->>MW: JWT (user_id, email, role claim)
-        MW->>DB: SELECT role, permissions FROM user_profiles WHERE id = user_id
+        MW->>DB: SELECT role, permissions FROM profiles WHERE id = user_id
         DB-->>MW: { role: "manager", permissions: [...] }
         MW-->>B: Request passes (role in headers)
         B->>DB: Data request (RLS enforced with JWT)
@@ -317,7 +319,7 @@ sequenceDiagram
 │   │   ├── client.ts                     # Browser client (anon key)
 │   │   ├── server.ts                     # Server-side client (cookies)
 │   │   ├── admin.ts                      # Service-role admin client
-│   │   └── middleware.ts                 # Session refresh helper
+│   │   └── proxy.ts                 # Session refresh helper
 │   ├── validations/                      # Zod schemas per domain
 │   │   ├── client.schema.ts
 │   │   ├── enquiry.schema.ts
@@ -370,7 +372,7 @@ sequenceDiagram
 │       ├── bookings.queries.ts
 │       └── dashboard.queries.ts
 │
-├── middleware.ts                         # Route protection + role enforcement
+├── proxy.ts                         # Route protection + role enforcement
 └── next.config.ts
 ```
 
@@ -387,8 +389,8 @@ sequenceDiagram
     participant U as User
     participant Login as /login page
     participant SB as Supabase Auth
-    participant MW as middleware.ts
-    participant DB as user_profiles table
+    participant MW as proxy.ts
+    participant DB as profiles table
 
     U->>Login: Submit email + password
     Login->>SB: signInWithPassword()
@@ -400,14 +402,14 @@ sequenceDiagram
     U->>MW: Request to protected route
     MW->>SB: getUser() (validates JWT, refreshes if expired)
     SB-->>MW: User object
-    MW->>DB: SELECT role FROM user_profiles WHERE id = user.id
+    MW->>DB: SELECT role FROM profiles WHERE id = user.id
     DB-->>MW: role
     MW-->>U: Continue (role stored in request headers)
 ```
 
 ### 3.2 Middleware-Based Route Protection
 
-[`middleware.ts`](file:///home/rovik/Documents/Projects/VOWS%20Studio/middleware.ts) intercepts every request before it reaches any page or API route:
+[`proxy.ts`](file:///home/rovik/Documents/Projects/VOWS%20Studio/proxy.ts) intercepts every request before it reaches any page or API route:
 
 - **Public routes** (`/`, `/portfolio`, `/services`, `/reviews`, `/enquiry`) — allowed without session.
 - **CRM routes** (`/crm/*`) — require a valid session. Redirect to `/login` if none.
@@ -423,20 +425,23 @@ sequenceDiagram
 
 ### 3.4 MFA Enforcement for System Admin
 
-- System Admin users are enrolled in **TOTP-based MFA** at account creation.
+- System Admin and Business Owner are forced through MFA enrolment at first login (D-02).
 - Middleware checks for `aal2` (Assurance Level 2) claim in the JWT for `/admin/*` routes.
 - If only `aal1`, redirect to `/mfa` challenge page before proceeding.
 - MFA setup is enforced server-side; it cannot be bypassed.
 
 ### 3.5 Role Loading from Database
 
-Roles are **not trusted from the JWT claims** alone. On each protected request, middleware queries `user_profiles.role` from the database using the **service-role Supabase client** (bypasses RLS). This prevents role escalation via tampered tokens.
+Roles are **not trusted from the JWT claims** alone. On each protected request, middleware queries `profiles.role` from the database using the **service-role Supabase client** (bypasses RLS). This prevents role escalation via tampered tokens.
 
 ---
 
 ## 4. Authorization Architecture
 
 ### 4.1 Role Hierarchy
+
+The 6 canonical roles are: `system_admin`, `business_owner`, `manager`, `accountant`, `staff`, `crew_member` (GLOSSARY §2).
+
 
 ```
 system_admin  (full platform access, user management, audit log)
@@ -472,7 +477,7 @@ CREATE POLICY "staff_read_clients" ON clients
   FOR SELECT
   USING (
     auth.uid() IN (
-      SELECT id FROM user_profiles WHERE role IN ('manager', 'editor', 'viewer', 'system_admin')
+      SELECT id FROM profiles WHERE role IN ('manager', 'editor', 'viewer', 'system_admin')
     )
   );
 ```
@@ -539,7 +544,7 @@ PDF generation is triggered via `/api/quotations/[id]/pdf` and `/api/invoices/[i
 
 ### 6.2 Storage and Access
 
-1. PDF is generated server-side and streamed to **Supabase Storage** (`private/pdfs/` bucket).
+1. PDF is generated server-side and streamed to **Supabase Storage** (`documents/` bucket).
 2. A signed URL (1-hour TTL) is returned to the client.
 3. Client uses the signed URL to display in `<PDFViewer>` or trigger a download.
 4. For Gmail sending, the PDF buffer is attached directly without storing (unless a record is needed).
@@ -556,7 +561,7 @@ PDF generation is triggered via `/api/quotations/[id]/pdf` and `/api/invoices/[i
 
 ### 7.2 Email Templates
 
-**React Email** (`@react-email/components`) is used for all transactional email templates (quotations, invoices, booking confirmations). Templates are rendered to HTML strings on the server before sending via Gmail API.
+**React Email (Layout and styling are React Email components; subject and body content are owner-editable database templates with whitelisted merge tags, D-27)** (`@react-email/components`) is used for all transactional email templates (quotations, invoices, booking confirmations). Templates are rendered to HTML strings on the server before sending via Gmail API.
 
 ### 7.3 Fallback Strategy
 
@@ -570,6 +575,9 @@ If Gmail is not connected or token is expired:
 ## 8. File Storage Strategy
 
 ### 8.1 Supabase Storage Buckets
+
+Buckets per GLOSSARY §10: `portfolio` (public, 20MB), `branding` (public, 5MB), `documents` (private, 10MB), `client-uploads` (private, 50MB), `expense-receipts` (private, 10MB), `crew-assets` (private, 10MB).
+
 
 | Bucket | Access | Contents | RLS |
 |--------|--------|----------|-----|
@@ -631,7 +639,7 @@ Light/dark mode is supported via Tailwind's `dark:` variant. The user's OS prefe
 
 ### 11.1 Database-Driven Configuration
 
-All studio settings (name, address, logo URL, GST number, bank details, payment terms, branding colours) are stored in a `settings` table in PostgreSQL. There is a single row per studio (or per tenant in future multi-tenant mode).
+All studio settings (name, address, logo URL, GST number, bank details, payment terms, branding colours) are stored in a `settings` table in PostgreSQL. There is a single row per studio .
 
 ### 11.2 Settings Caching
 
@@ -658,7 +666,10 @@ The following settings are **not user-editable** after initial setup and require
 - **Supabase** hosted on Supabase cloud (managed PostgreSQL, Auth, Storage)
 - Static assets served from Vercel Edge CDN
 
-### 12.2 Environment Variables Strategy
+### 12.2 Environment Variables
+
+Canonical environment variables are defined in GLOSSARY §9.
+ Strategy
 
 | Variable | Environment | Description |
 |----------|-------------|-------------|
@@ -667,7 +678,7 @@ The following settings are **not user-editable** after initial setup and require
 | `SUPABASE_SERVICE_ROLE_KEY` | Server only | Never exposed to client |
 | `GOOGLE_CLIENT_ID` | Server only | Gmail OAuth |
 | `GOOGLE_CLIENT_SECRET` | Server only | Gmail OAuth |
-| `ENCRYPTION_KEY` | Server only | For encrypting stored OAuth tokens |
+| `GOOGLE_TOKEN_ENCRYPTION_KEY` | Server only | For encrypting stored OAuth tokens |
 | `NEXT_PUBLIC_APP_URL` | All | Canonical URL for redirects |
 
 Environment variables are set in Vercel's dashboard; **never committed to Git**.
@@ -682,7 +693,7 @@ Environment variables are set in Vercel's dashboard; **never committed to Git**.
 
 ### 12.4 Demo Deployment
 
-A read-only demo instance can be deployed as a separate Vercel project pointing to a **seeded Supabase project** with synthetic data. Environment variable `NEXT_PUBLIC_DEMO_MODE=true` enables demo banners and disables writes.
+A read-only demo instance can be deployed as a separate Vercel project pointing to a **seeded Supabase project** with synthetic data. Environment variable `NEXT_PUBLIC_APP_MODE=true` enables demo banners and disables writes.
 
 ---
 

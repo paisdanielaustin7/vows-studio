@@ -1,4 +1,6 @@
 # VOWS Studio — Portfolio Clone & Demo Deployment Plan
+> **Reconciled 2026-11-10.** Where this document disagrees with DECISION_LOG.md or GLOSSARY_AND_ENUMS.md, those files win.
+
 
 > [!CAUTION]
 > This document governs the creation and maintenance of the VOWS Studio demo environment. The **absolute rule** is: no real VOWS business data, credentials, or photographs may ever appear in the demo environment. Any violation is a serious privacy and security breach.
@@ -32,7 +34,7 @@ The demo/portfolio environment is **completely independent** from the production
 │  URL: xxxx.supabase.co          │    │  URL: yyyy.supabase.co              │
 │  Vercel Project: vows-studio    │    │  Vercel Project: vows-studio-demo   │
 │  Domain: vows.studio (private)  │    │  Domain: demo.vows.studio (public)  │
-│  GitHub Repo: vows-studio       │    │  GitHub Repo: vows-studio-demo      │
+│  GitHub Repo: vows-studio       │    │  GitHub Repo: same repository (separate project)      │
 └─────────────────────────────────┘    └─────────────────────────────────────┘
               ↑                                           ↑
          No network connection between these two environments
@@ -204,7 +206,7 @@ Minimum of **12 fictional client profiles** covering a range of statuses:
 
 | # | Name | Phone | Email | City | Status |
 |---|---|---|---|---|---|
-| 1 | Arjun Nair | +91 98400 00101 | arjun.nair@demo.email | Bengaluru | Active Booking |
+| 1 | Arjun Nair | +91 00000 00101 | arjun.nair@demo.email | Bengaluru | Active Booking |
 | 2 | Priya Sharma | +91 98400 00102 | priya.sharma@demo.email | Mysuru | Enquiry |
 | 3 | Rohan Verma | +91 98400 00103 | rohan.verma@demo.email | Bengaluru | Completed |
 | 4 | Sneha Pillai | +91 98400 00104 | sneha.pillai@demo.email | Mangaluru | Completed |
@@ -369,7 +371,7 @@ async function runSeed() {
   
   for (const file of sqlFiles) {
     const sql = fs.readFileSync(path.join(__dirname, file), 'utf-8')
-    const { error } = await supabase.rpc('exec_sql', { sql })  // Or use Supabase CLI
+    const { error } = await supabase.rpc('psql / Supabase CLI seed (auth users created first)', { sql })  // Or use Supabase CLI
     if (error) throw new Error(`Seed failed on ${file}: ${error.message}`)
     console.log(`  ✓ ${file}`)
   }
@@ -550,7 +552,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY     = <demo-anon-key>
 SUPABASE_SERVICE_ROLE_KEY         = <demo-service-role-key>
 NEXT_PUBLIC_APP_MODE              = demo
 NEXT_PUBLIC_APP_URL               = https://demo.vows.studio
-PDF_ENCRYPTION_KEY                = <demo-only-random-key>
+GOOGLE_TOKEN_ENCRYPTION_KEY                = <demo-only-random-key>
 
 # Google OAuth: either omit entirely (Gmail connect disabled in demo) or
 # use a separate demo Google Cloud project
@@ -731,7 +733,7 @@ GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
 
 # Encryption key for demo token storage (random, demo-only)
-PDF_ENCRYPTION_KEY=GENERATE_A_RANDOM_32_CHAR_STRING_HERE
+GOOGLE_TOKEN_ENCRYPTION_KEY=GENERATE_A_RANDOM_32_CHAR_STRING_HERE
 
 # Cron secret for demo reset endpoint
 CRON_SECRET=GENERATE_A_RANDOM_SECRET_HERE
