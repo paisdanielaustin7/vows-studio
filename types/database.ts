@@ -1654,6 +1654,9 @@ export interface Database {
           completed_at: string | null;
           blocked_reason: string | null;
           notes: string | null;
+          override_reason: string | null;
+          overridden_by: string | null;
+          overridden_at: string | null;
         };
         Insert: {
           id?: string;
@@ -1665,6 +1668,9 @@ export interface Database {
           completed_at?: string | null;
           blocked_reason?: string | null;
           notes?: string | null;
+          override_reason?: string | null;
+          overridden_by?: string | null;
+          overridden_at?: string | null;
         };
         Update: {
           id?: string;
@@ -1676,6 +1682,69 @@ export interface Database {
           completed_at?: string | null;
           blocked_reason?: string | null;
           notes?: string | null;
+          override_reason?: string | null;
+          overridden_by?: string | null;
+          overridden_at?: string | null;
+        };
+        Relationships: Relationship[];
+      };
+      delivery_stage_assignees: {
+        Row: {
+          stage_id: string;
+          profile_id: string;
+          assigned_at: string;
+          assigned_by: string | null;
+        };
+        Insert: {
+          stage_id: string;
+          profile_id: string;
+          assigned_at?: string;
+          assigned_by?: string | null;
+        };
+        Update: {
+          stage_id?: string;
+          profile_id?: string;
+          assigned_at?: string;
+          assigned_by?: string | null;
+        };
+        Relationships: Relationship[];
+      };
+      delivery_stage_attachments: {
+        Row: {
+          id: string;
+          stage_id: string;
+          kind: 'link' | 'file';
+          label: string;
+          url: string | null;
+          file_id: string | null;
+          file_path: string | null;
+          file_size_bytes: number | null;
+          created_by: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          stage_id: string;
+          kind: 'link' | 'file';
+          label: string;
+          url?: string | null;
+          file_id?: string | null;
+          file_path?: string | null;
+          file_size_bytes?: number | null;
+          created_by?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          stage_id?: string;
+          kind?: 'link' | 'file';
+          label?: string;
+          url?: string | null;
+          file_id?: string | null;
+          file_path?: string | null;
+          file_size_bytes?: number | null;
+          created_by?: string | null;
+          created_at?: string;
         };
         Relationships: Relationship[];
       };
@@ -2336,6 +2405,32 @@ export interface Database {
           total_billed_paise: number;
           total_paid_paise: number;
           total_outstanding_paise: number;
+        };
+        Relationships: Relationship[];
+      };
+      delivery_pipelines_v: {
+        Row: {
+          id: string;
+          booking_id: string;
+          booking_number: string;
+          client_id: string | null;
+          client_name: string | null;
+          booking_status: string;
+          target_date: string | null;
+          completed_at: string | null;
+          notes: string | null;
+          share_token_hash: string | null;
+          share_expires_at: string | null;
+          share_revoked_at: string | null;
+          behind_schedule: boolean;
+          is_share_active: boolean;
+          completed_stages_count: number;
+          total_stages_count: number;
+          progress_percentage: number;
+          has_blocked_stage: boolean;
+          current_stage_code: string | null;
+          created_at: string;
+          updated_at: string;
         };
         Relationships: Relationship[];
       };

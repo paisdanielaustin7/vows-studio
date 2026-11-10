@@ -47,6 +47,8 @@ export default async function BookingDetailPage({ params }: BookingDetailPagePro
         availableCrew={availableCrew}
         canViewMoney={canViewMoney}
         canManage={canManage}
+        userRole={user?.role}
+        userId={user?.id}
       />
     </div>
   );

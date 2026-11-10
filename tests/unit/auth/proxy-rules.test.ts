@@ -18,6 +18,9 @@ function evaluateProxyRules(
 
   // 1. Signed-out
   if (!user) {
+    if (pathname.startsWith('/delivery/')) {
+      return { action: 'next' };
+    }
     if (isCrmRoute || isAdminRoute || isMfaRoute) {
       return { action: 'redirect', targetUrl: `/login?redirectTo=${pathname}` };
     }
@@ -143,5 +146,11 @@ describe('Proxy Route Protection Rules (RBAC §6 & Decision D-02)', () => {
 
     const mg = evaluateProxyRules('/crm/audit-log', { role: 'manager', aal: 'aal1' });
     expect(mg.targetUrl).toBe('/403');
+  });
+
+  it('allows unauthenticated visitors to access public client delivery share pages', () => {
+    const rawToken = '0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef';
+    const res = evaluateProxyRules(`/delivery/${rawToken}`, null);
+    expect(res.action).toBe('next');
   });
 });

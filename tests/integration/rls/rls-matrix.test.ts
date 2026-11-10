@@ -163,6 +163,41 @@ const RLS_POLICY_MATRIX: RlsExpectation[] = [
   { table: 'manual_income_entries', action: 'select', role: 'manager', expected: 'deny' },
   { table: 'manual_income_entries', action: 'select', role: 'staff', expected: 'deny' },
   { table: 'manual_income_entries', action: 'select', role: 'crew_member', expected: 'deny' },
+
+  // --- PHASE 6: DELIVERY PIPELINE & STAGES ---
+  { table: 'delivery_pipelines', action: 'select', role: 'system_admin', expected: 'allow' },
+  { table: 'delivery_pipelines', action: 'select', role: 'business_owner', expected: 'allow' },
+  { table: 'delivery_pipelines', action: 'select', role: 'manager', expected: 'allow' },
+  { table: 'delivery_pipelines', action: 'select', role: 'staff', expected: 'allow' },
+  { table: 'delivery_pipelines', action: 'select', role: 'crew_member', expected: 'allow', scope: 'assigned_booking_only' },
+  { table: 'delivery_pipelines', action: 'update', role: 'system_admin', expected: 'allow' },
+  { table: 'delivery_pipelines', action: 'update', role: 'business_owner', expected: 'allow' },
+  { table: 'delivery_pipelines', action: 'update', role: 'manager', expected: 'allow' },
+  { table: 'delivery_pipelines', action: 'update', role: 'staff', expected: 'deny' },
+  { table: 'delivery_pipelines', action: 'update', role: 'crew_member', expected: 'deny' },
+
+  { table: 'delivery_stages', action: 'select', role: 'system_admin', expected: 'allow' },
+  { table: 'delivery_stages', action: 'select', role: 'business_owner', expected: 'allow' },
+  { table: 'delivery_stages', action: 'select', role: 'manager', expected: 'allow' },
+  { table: 'delivery_stages', action: 'select', role: 'staff', expected: 'allow' },
+  { table: 'delivery_stages', action: 'select', role: 'crew_member', expected: 'allow', scope: 'assigned_booking_only' },
+  { table: 'delivery_stages', action: 'update', role: 'system_admin', expected: 'allow' },
+  { table: 'delivery_stages', action: 'update', role: 'business_owner', expected: 'allow' },
+  { table: 'delivery_stages', action: 'update', role: 'manager', expected: 'allow' },
+  { table: 'delivery_stages', action: 'update', role: 'staff', expected: 'allow', scope: 'assigned_stages_only' },
+  { table: 'delivery_stages', action: 'update', role: 'crew_member', expected: 'deny' },
+
+  { table: 'delivery_stage_assignees', action: 'select', role: 'staff', expected: 'allow' },
+  { table: 'delivery_stage_assignees', action: 'select', role: 'crew_member', expected: 'allow' },
+  { table: 'delivery_stage_assignees', action: 'update', role: 'manager', expected: 'allow' },
+  { table: 'delivery_stage_assignees', action: 'update', role: 'staff', expected: 'deny' },
+  { table: 'delivery_stage_assignees', action: 'update', role: 'crew_member', expected: 'deny' },
+
+  { table: 'delivery_stage_attachments', action: 'select', role: 'staff', expected: 'allow' },
+  { table: 'delivery_stage_attachments', action: 'select', role: 'crew_member', expected: 'allow' },
+  { table: 'delivery_stage_attachments', action: 'insert', role: 'manager', expected: 'allow' },
+  { table: 'delivery_stage_attachments', action: 'insert', role: 'staff', expected: 'allow', scope: 'assigned_stages_only' },
+  { table: 'delivery_stage_attachments', action: 'insert', role: 'crew_member', expected: 'deny' },
 ];
 
 describe('RLS Policy Matrix Test Harness (Foundation, Sales, Bookings & Operations)', () => {
@@ -288,6 +323,8 @@ describe('RLS Policy Matrix Test Harness (Foundation, Sales, Bookings & Operatio
       'crew_pay_records',
       'delivery_pipelines',
       'delivery_stages',
+      'delivery_stage_assignees',
+      'delivery_stage_attachments',
       // Phase 4 tables
       'invoices',
       'invoice_items',
@@ -300,7 +337,24 @@ describe('RLS Policy Matrix Test Harness (Foundation, Sales, Bookings & Operatio
       'manual_income_entries',
     ];
 
-    expect(allTables.length).toBe(49);
+    expect(allTables.length).toBe(51);
+  });
+
+  it('guarantees Staff can update ONLY assigned stages, and Crew is strictly read-only (Phase 6)', () => {
+    const staffStageUpdate = RLS_POLICY_MATRIX.find(
+      (m) => m.table === 'delivery_stages' && m.role === 'staff' && m.action === 'update'
+    );
+    const crewStageUpdate = RLS_POLICY_MATRIX.find(
+      (m) => m.table === 'delivery_stages' && m.role === 'crew_member' && m.action === 'update'
+    );
+    const staffAssigneesUpdate = RLS_POLICY_MATRIX.find(
+      (m) => m.table === 'delivery_stage_assignees' && m.role === 'staff' && m.action === 'update'
+    );
+
+    expect(staffStageUpdate?.expected).toBe('allow');
+    expect(staffStageUpdate?.scope).toBe('assigned_stages_only');
+    expect(crewStageUpdate?.expected).toBe('deny');
+    expect(staffAssigneesUpdate?.expected).toBe('deny');
   });
 
   it('guarantees Manager is strictly DENIED from reading payments (Master Prompt §4.6)', () => {

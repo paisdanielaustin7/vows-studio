@@ -11,6 +11,7 @@ import { Input } from '@/components/ui/input';
 import { cancelBookingAction, updateBookingStatusAction } from '@/server/actions/booking.actions';
 import { createEventAction } from '@/server/actions/event.actions';
 import { assignCrewAction, checkCrewConflictsAction, removeCrewAssignmentAction } from '@/server/actions/crew.actions';
+import { PipelineTracker } from '@/components/delivery/pipeline-tracker';
 
 interface BookingDetailViewProps {
   booking: Booking | BookingOps;
@@ -28,6 +29,8 @@ interface BookingDetailViewProps {
   availableCrew: CrewMember[];
   canViewMoney: boolean;
   canManage: boolean;
+  userRole?: string;
+  userId?: string;
 }
 
 export function BookingDetailView({
@@ -38,6 +41,8 @@ export function BookingDetailView({
   availableCrew,
   canViewMoney,
   canManage,
+  userRole,
+  userId,
 }: BookingDetailViewProps) {
   const router = useRouter();
   const [booking, setBooking] = useState(initialBooking);
@@ -616,48 +621,14 @@ export function BookingDetailView({
 
       {/* TAB 3: MASTER DELIVERY */}
       {activeTab === 'delivery' && (
-        <div className="bg-surface-container-lowest rounded-xl p-6 shadow-sm border border-outline-variant/40 space-y-6">
-          <div>
-            <h3 className="font-semibold text-base text-on-surface">9-Stage Master Delivery Pipeline</h3>
-            <p className="text-xs text-outline">
-              Target Delivery Date: {booking.targetDeliveryDate || 'Not set'}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {deliveryStages.map((stage) => (
-              <div
-                key={stage.id}
-                className="p-4 rounded-xl border border-outline-variant/40 bg-surface-container-low/40 space-y-2"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-outline uppercase">
-                    Stage {stage.sort}
-                  </span>
-                  <Badge
-                    variant={
-                      stage.status === 'completed'
-                        ? 'success'
-                        : stage.status === 'in_progress'
-                        ? 'info'
-                        : stage.status === 'blocked'
-                        ? 'danger'
-                        : 'default'
-                    }
-                  >
-                    {stage.status.replace(/_/g, ' ')}
-                  </Badge>
-                </div>
-                <p className="font-semibold text-sm text-on-surface capitalize">
-                  {stage.stageCode.replace(/_/g, ' ')}
-                </p>
-                {stage.blockedReason && (
-                  <p className="text-xs text-error font-medium">Blocked: {stage.blockedReason}</p>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
+        <PipelineTracker
+          bookingId={booking.id}
+          bookingNumber={booking.bookingNumber}
+          clientName={booking.clientName || undefined}
+          targetDeliveryDate={booking.targetDeliveryDate}
+          userRole={userRole}
+          userId={userId}
+        />
       )}
 
       {/* TAB 4: BILLING & INVOICES */}

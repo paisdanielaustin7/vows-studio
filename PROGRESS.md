@@ -17,7 +17,7 @@
 | **Phase 3** | Bookings, Events, Crew, Schedule | **DONE** | Branch `phase-3-bookings` |
 | **Phase 4** | Finance (Invoices, Payments, Receipts, Credits, Expenses, Ledger) | **DONE** | Branch `phase-4-finance` |
 | **Phase 5** | PDF Generation & Gmail Integration | **DONE** | Branch `phase-5-documents` |
-| **Phase 6** | Delivery Pipeline (9 Stages) | Pending | Branch `phase-6-delivery` |
+| **Phase 6** | Delivery Pipeline (9 Stages) | **DONE** | Branch `phase-6-delivery` |
 | **Phase 7** | Public Website | Pending | Branch `phase-7-website` |
 | **Phase 8** | Reviews & Testimonials | Pending | Branch `phase-8-reviews` |
 | **Phase 9** | Dashboard Completion, Jobs, Data Management (Reset Wizard) | Pending | Branch `phase-9-ops` |
@@ -93,3 +93,50 @@
 - [x] Task 11: Crew Directory (`/crm/crew`) and Profile (`/crm/crew/[id]`) with metrics, discipline filter, blackout date management, and assignment history.
 - [x] Task 12: Production Schedule Calendar (`/crm/schedule`) matching Stitch designs with month/week/list views, ceremony type legend, crew filtering, and anti-poaching client masking.
 - [x] Task 13: Unit and integration tests covering scheduling conflicts, quotation conversion, cancellation invariants, and RLS matrix (168 tests, 100% coverage on validations and money).
+
+---
+
+## Phase 4 Checklist (Finance, Billing & Ledger)
+- [x] Task 1: Migrations 009, 010, 017 for invoices, invoice_items, credit_notes, payments, payment_allocations, receipts, expenses, manual_income_entries, and `ledger_entries_v`.
+- [x] Task 2: Core financial functions: `record_payment()`, `void_payment()`, `issue_credit_note()`, `cancel_invoice()`, and `record_crew_payment()`.
+- [x] Task 3: Zero-drift money model: strictly integer paise (`bigint`), BigInt arithmetic in `lib/money`, D-16/D-17 invariants, immutable payment ledger.
+- [x] Task 4: UI components matching Stitch screens: `InvoicesTable`, `InvoiceBuilder`, `InvoiceDetailView`, `PaymentsTable`, `RecordPaymentDialog`, `CreditNotesTable`, `ExpensesManager`, `ReceiptsTable`, `LedgerView`.
+- [x] Task 5: CRM Finance pages: `/crm/invoices`, `/crm/invoices/new`, `/crm/invoices/[id]`, `/crm/payments`, `/crm/receipts`, `/crm/credit-notes`, `/crm/expenses`, `/crm/ledger`.
+- [x] Task 6: Financial integrity test harness `tests/integration/finance-integrity.test.ts` (F-01 through F-08).
+
+---
+
+## Phase 5 Checklist (PDF Generation & Gmail Integration)
+- [x] Task 1: Embedded Carlito fonts (`Carlito-Regular.ttf`, `Carlito-Bold.ttf`) with official `₹` glyph, registered via `lib/pdf/font-registry.ts`.
+- [x] Task 2: Pure `@react-pdf/renderer` v4 templates: Quotation, Invoice, Receipt (with VOID stamp support), Credit Note, and Booking Confirmation.
+- [x] Task 3: Document stream route handler `/api/pdf/[type]/[id]` delivering binary PDF downloads with permission checks.
+- [x] Task 4: Gmail OAuth: connect route `/api/auth/gmail/connect`, callback route `/api/auth/gmail/callback`, AES-256-GCM token encryption (`GOOGLE_TOKEN_ENCRYPTION_KEY`).
+- [x] Task 5: Gmail transmission service `email.service.ts` with RFC 2822 base64 MIME, PDF attachment stream, idempotency checking, daily budget limit (400), and exponential backoff.
+- [x] Task 6: Branded React Email templates for all document types and notifications (`emails/`).
+- [x] Task 7: Google Cloud runbook `docs/RUNBOOK_GMAIL.md`.
+- [x] Task 8: Unit and integration tests for PDF rendering with text extraction and `₹` verification, OAuth state validation, token encryption, and MIME assembly (220 tests).
+
+---
+
+## Phase 6 Checklist (Delivery Pipeline)
+- [x] Task 1: Database Migrations 011 and 018:
+  - Canonical 9 delivery stages from GLOSSARY §5: `raw_import`, `culling`, `editing`, `client_preview`, `revisions`, `final_export`, `quality_check`, `delivery`, `completed`.
+  - Override auditing: `override_reason`, `overridden_by`, `overridden_at` on `delivery_stages`.
+  - Stage assignees table: `delivery_stage_assignees` with staff assignment policy.
+  - Deliverables & attachments table: `delivery_stage_attachments` (links & files ≤ 50MB to `client-uploads`).
+  - Database trigger `fn_check_delivery_stage_sequential`: enforces strict sequential progression; allows SA/BO override only with non-empty reason; requires blocked reason; sets `pipeline.completed_at` on stage 9 without altering booking status (D-36, DEL-03).
+  - Booking trigger `fn_auto_init_booking_delivery`: automatically seeds 9 stages when booking is created.
+  - View `delivery_pipelines_v`: derived `behind_schedule`, progress %, current stage code.
+  - RLS policies: Staff can update ONLY assigned stages (`app.assigned_to_stage`); Crew is read-only.
+- [x] Task 2: Domain types `types/delivery.ts`, database types `types/database.ts`, and Zod schemas `lib/validations/delivery.schema.ts` (100% test coverage).
+- [x] Task 3: Server Actions (`server/actions/delivery.actions.ts`):
+  - `getDeliveryPipelineAction`, `updateStageStatusAction`, `assignStageStaffAction`, `addStageAttachmentAction`, `deleteStageAttachmentAction`, `generateShareLinkAction`, `revokeShareLinkAction`, `getPublicDeliveryAction`, `listDeliveryPipelinesAction`.
+- [x] Task 4: UI Components matching Stitch screens:
+  - `PipelineTracker` (`components/delivery/pipeline-tracker.tsx`) with 9-stage stepper, progress metrics, behind-schedule alerts, and stage drawer.
+  - `StageDialog` (`components/delivery/stage-dialog.tsx`) with status controls, blocked reason prompt, SA/BO override audit form, staff assignees, and attachment deliverables.
+  - `ShareLinkDialog` (`components/delivery/share-link-dialog.tsx`) with 256-bit secure token generation, expiration windows, copy link toast, and revocation.
+  - `ReviewRequestPromptDialog` (`components/delivery/review-request-prompt-dialog.tsx`) launched upon completing stage 9.
+- [x] Task 5: CRM Operations Delivery Page `/crm/delivery/page.tsx` and integration into Booking Detail View Tab 3 ("Master Delivery").
+- [x] Task 6: Public Client Share Portal `/delivery/[token]/page.tsx` with uniform "Invalid or expired delivery link" error handling, and media deliverables viewer.
+- [x] Task 7: Unit & Integration tests (`tests/unit/delivery/sequential-stage.test.ts`, `tests/unit/delivery/share-token.test.ts`, and extended `tests/integration/rls/rls-matrix.test.ts`):
+  - 258 total tests passing; 100% test coverage on `lib/money/**` and `lib/validations/**`.
