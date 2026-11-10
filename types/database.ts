@@ -1199,6 +1199,390 @@ export interface Database {
         };
         Relationships: Relationship[];
       };
+      bookings: {
+        Row: {
+          id: string;
+          booking_number: string;
+          client_id: string;
+          enquiry_id: string | null;
+          quotation_id: string | null;
+          status: string;
+          contract_total_paise: number;
+          notes: string | null;
+          target_delivery_date: string | null;
+          cancelled_at: string | null;
+          cancellation_reason: string | null;
+          cancellation_fee_paise: number;
+          created_by: string | null;
+          created_at: string;
+          updated_at: string;
+          deleted_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          booking_number: string;
+          client_id: string;
+          enquiry_id?: string | null;
+          quotation_id?: string | null;
+          status?: string;
+          contract_total_paise: number;
+          notes?: string | null;
+          target_delivery_date?: string | null;
+          cancelled_at?: string | null;
+          cancellation_reason?: string | null;
+          cancellation_fee_paise?: number;
+          created_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+          deleted_at?: string | null;
+        };
+        Update: {
+          id?: string;
+          booking_number?: string;
+          client_id?: string;
+          enquiry_id?: string | null;
+          quotation_id?: string | null;
+          status?: string;
+          contract_total_paise?: number;
+          notes?: string | null;
+          target_delivery_date?: string | null;
+          cancelled_at?: string | null;
+          cancellation_reason?: string | null;
+          cancellation_fee_paise?: number;
+          created_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+          deleted_at?: string | null;
+        };
+        Relationships: Relationship[];
+      };
+      booking_line_items: {
+        Row: {
+          id: string;
+          booking_id: string;
+          sort: number;
+          description: string;
+          quantity: number;
+          unit_price_paise: number;
+          line_total_paise: number;
+        };
+        Insert: {
+          id?: string;
+          booking_id: string;
+          sort?: number;
+          description: string;
+          quantity: number;
+          unit_price_paise: number;
+          line_total_paise: number;
+        };
+        Update: {
+          id?: string;
+          booking_id?: string;
+          sort?: number;
+          description?: string;
+          quantity?: number;
+          unit_price_paise?: number;
+          line_total_paise?: number;
+        };
+        Relationships: Relationship[];
+      };
+      events: {
+        Row: {
+          id: string;
+          booking_id: string;
+          event_type: string;
+          name: string;
+          event_date: string;
+          start_time: string | null;
+          end_time: string | null;
+          venue_name: string;
+          venue_address: string | null;
+          requirements: string | null;
+          equipment_notes: string | null;
+          sort: number;
+          created_at: string;
+          updated_at: string;
+          deleted_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          booking_id: string;
+          event_type: string;
+          name: string;
+          event_date: string;
+          start_time?: string | null;
+          end_time?: string | null;
+          venue_name: string;
+          venue_address?: string | null;
+          requirements?: string | null;
+          equipment_notes?: string | null;
+          sort?: number;
+          created_at?: string;
+          updated_at?: string;
+          deleted_at?: string | null;
+        };
+        Update: {
+          id?: string;
+          booking_id?: string;
+          event_type?: string;
+          name?: string;
+          event_date?: string;
+          start_time?: string | null;
+          end_time?: string | null;
+          venue_name?: string;
+          venue_address?: string | null;
+          requirements?: string | null;
+          equipment_notes?: string | null;
+          sort?: number;
+          created_at?: string;
+          updated_at?: string;
+          deleted_at?: string | null;
+        };
+        Relationships: Relationship[];
+      };
+      crew_members: {
+        Row: {
+          id: string;
+          profile_id: string | null;
+          full_name: string;
+          role: string;
+          crew_type: string;
+          phone: string;
+          email: string | null;
+          rate_paise: number | null;
+          rate_unit: string | null;
+          bank_details_enc: string | null;
+          portfolio_url: string | null;
+          notes: string | null;
+          is_active: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          profile_id?: string | null;
+          full_name: string;
+          role: string;
+          crew_type: string;
+          phone: string;
+          email?: string | null;
+          rate_paise?: number | null;
+          rate_unit?: string | null;
+          bank_details_enc?: string | null;
+          portfolio_url?: string | null;
+          notes?: string | null;
+          is_active?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          profile_id?: string | null;
+          full_name?: string;
+          role?: string;
+          crew_type?: string;
+          phone?: string;
+          email?: string | null;
+          rate_paise?: number | null;
+          rate_unit?: string | null;
+          bank_details_enc?: string | null;
+          portfolio_url?: string | null;
+          notes?: string | null;
+          is_active?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: Relationship[];
+      };
+      event_crew_assignments: {
+        Row: {
+          id: string;
+          event_id: string;
+          crew_member_id: string;
+          role: string;
+          rate_override_paise: number | null;
+          confirmed_at: string | null;
+          notes: string | null;
+          override_reason: string | null;
+          override_by: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          event_id: string;
+          crew_member_id: string;
+          role: string;
+          rate_override_paise?: number | null;
+          confirmed_at?: string | null;
+          notes?: string | null;
+          override_reason?: string | null;
+          override_by?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          event_id?: string;
+          crew_member_id?: string;
+          role?: string;
+          rate_override_paise?: number | null;
+          confirmed_at?: string | null;
+          notes?: string | null;
+          override_reason?: string | null;
+          override_by?: string | null;
+          created_at?: string;
+        };
+        Relationships: Relationship[];
+      };
+      crew_unavailability: {
+        Row: {
+          id: string;
+          crew_member_id: string;
+          from_ts: string;
+          to_ts: string;
+          reason: string | null;
+          created_by: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          crew_member_id: string;
+          from_ts: string;
+          to_ts: string;
+          reason?: string | null;
+          created_by?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          crew_member_id?: string;
+          from_ts?: string;
+          to_ts?: string;
+          reason?: string | null;
+          created_by?: string | null;
+          created_at?: string;
+        };
+        Relationships: Relationship[];
+      };
+      crew_pay_records: {
+        Row: {
+          id: string;
+          crew_member_id: string;
+          booking_id: string;
+          event_id: string | null;
+          work_dates: string[] | null;
+          agreed_paise: number;
+          paid_paise: number;
+          status: string;
+          notes: string | null;
+          created_by: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          crew_member_id: string;
+          booking_id: string;
+          event_id?: string | null;
+          work_dates?: string[] | null;
+          agreed_paise: number;
+          paid_paise?: number;
+          status?: string;
+          notes?: string | null;
+          created_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          crew_member_id?: string;
+          booking_id?: string;
+          event_id?: string | null;
+          work_dates?: string[] | null;
+          agreed_paise?: number;
+          paid_paise?: number;
+          status?: string;
+          notes?: string | null;
+          created_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: Relationship[];
+      };
+      delivery_pipelines: {
+        Row: {
+          id: string;
+          booking_id: string;
+          target_date: string | null;
+          completed_at: string | null;
+          notes: string | null;
+          share_token_hash: string | null;
+          share_expires_at: string | null;
+          share_revoked_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          booking_id: string;
+          target_date?: string | null;
+          completed_at?: string | null;
+          notes?: string | null;
+          share_token_hash?: string | null;
+          share_expires_at?: string | null;
+          share_revoked_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          booking_id?: string;
+          target_date?: string | null;
+          completed_at?: string | null;
+          notes?: string | null;
+          share_token_hash?: string | null;
+          share_expires_at?: string | null;
+          share_revoked_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: Relationship[];
+      };
+      delivery_stages: {
+        Row: {
+          id: string;
+          pipeline_id: string;
+          stage_code: string;
+          sort: number;
+          status: string;
+          started_at: string | null;
+          completed_at: string | null;
+          blocked_reason: string | null;
+          notes: string | null;
+        };
+        Insert: {
+          id?: string;
+          pipeline_id: string;
+          stage_code: string;
+          sort: number;
+          status?: string;
+          started_at?: string | null;
+          completed_at?: string | null;
+          blocked_reason?: string | null;
+          notes?: string | null;
+        };
+        Update: {
+          id?: string;
+          pipeline_id?: string;
+          stage_code?: string;
+          sort?: number;
+          status?: string;
+          started_at?: string | null;
+          completed_at?: string | null;
+          blocked_reason?: string | null;
+          notes?: string | null;
+        };
+        Relationships: Relationship[];
+      };
     };
     Views: {
       quotations_v: {
@@ -1275,6 +1659,51 @@ export interface Database {
         };
         Relationships: Relationship[];
       };
+      bookings_ops_v: {
+        Row: {
+          id: string;
+          booking_number: string;
+          client_id: string;
+          client_name: string;
+          enquiry_id: string | null;
+          quotation_id: string | null;
+          status: string;
+          notes: string | null;
+          target_delivery_date: string | null;
+          cancelled_at: string | null;
+          cancellation_reason: string | null;
+          created_by: string | null;
+          created_at: string;
+          updated_at: string;
+          deleted_at: string | null;
+          event_count: number;
+        };
+        Relationships: Relationship[];
+      };
+      crew_event_v: {
+        Row: {
+          assignment_id: string;
+          crew_member_id: string;
+          profile_id: string | null;
+          event_id: string;
+          booking_id: string;
+          booking_number: string;
+          client_name: string;
+          event_name: string;
+          event_type: string;
+          event_date: string;
+          start_time: string | null;
+          end_time: string | null;
+          venue_name: string;
+          venue_address: string | null;
+          requirements: string | null;
+          equipment_notes: string | null;
+          assigned_role: string;
+          confirmed_at: string | null;
+          assignment_notes: string | null;
+        };
+        Relationships: Relationship[];
+      };
     };
     Functions: {
       next_document_number: {
@@ -1283,6 +1712,38 @@ export interface Database {
           p_date?: string;
         };
         Returns: string;
+      };
+      assign_crew: {
+        Args: {
+          p_event_id: string;
+          p_crew_member_id: string;
+          p_role: string;
+          p_rate_override_paise?: number;
+          p_override_reason?: string;
+        };
+        Returns: string;
+      };
+      convert_enquiry_to_booking: {
+        Args: {
+          p_enquiry_id: string;
+          p_target_delivery_date?: string;
+        };
+        Returns: string;
+      };
+      create_booking_from_quotation: {
+        Args: {
+          p_quotation_id: string;
+          p_target_delivery_date?: string;
+        };
+        Returns: string;
+      };
+      cancel_booking: {
+        Args: {
+          p_booking_id: string;
+          p_reason: string;
+          p_fee_paise?: number;
+        };
+        Returns: void;
       };
       create_quotation: {
         Args: {
