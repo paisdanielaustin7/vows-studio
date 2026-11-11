@@ -1,14 +1,13 @@
 'use client';
 
 import * as React from 'react';
-import { useRouter, useParams } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { acceptInvitationAction } from '@/server/actions/auth.actions';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Banner } from '@/components/ui/feedback';
 
 export default function AcceptInvitePage() {
-  const router = useRouter();
   const params = useParams();
   const token = (params.token as string) || '';
 
@@ -44,7 +43,7 @@ export default function AcceptInvitePage() {
       }
 
       if (res.data?.redirectTo) {
-        router.push(res.data.redirectTo);
+        window.location.assign(res.data.redirectTo);
       }
     } catch {
       setErrorMsg('Failed to accept invitation. The invitation link may have expired.');

@@ -721,15 +721,29 @@ export async function verifyMfaChallengeAction(
     };
   }
 
-  if (user) {
+  let verifiedRole: UserRole | null = user?.role ?? null;
+  const verifiedUserId = user?.id || challengeData.user?.id;
+
+  if (!verifiedRole && verifiedUserId) {
+    const { data: profileRow } = await admin
+      .from('profiles')
+      .select('role')
+      .eq('id', verifiedUserId)
+      .maybeSingle();
+    if (profileRow?.role) {
+      verifiedRole = profileRow.role as UserRole;
+    }
+  }
+
+  if (verifiedUserId && verifiedRole) {
     await admin.from('audit_log').insert({
-      actor_user_id: user.id,
-      actor_role: user.role,
+      actor_user_id: verifiedUserId,
+      actor_role: verifiedRole,
       action: 'mfa_success',
       table_name: 'auth',
     });
   }
 
-  const landingPage = user ? getRoleLandingPage(user.role) : '/crm/dashboard';
+  const landingPage = verifiedRole ? getRoleLandingPage(verifiedRole) : '/crm/dashboard';
   return { data: { redirectTo: landingPage } };
 }

@@ -2,6 +2,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getAuthenticatedUser } from '@/lib/auth';
+import { isDemoModeVerified } from '@/lib/env';
 import { ShieldCheck, Users, History, Activity, ArrowLeft, Database } from 'lucide-react';
 
 export default async function AdminLayout({
@@ -11,8 +12,16 @@ export default async function AdminLayout({
 }) {
   const user = await getAuthenticatedUser();
 
-  if (!user || user.role !== 'system_admin' || user.aal !== 'aal2') {
+  if (!user) {
+    redirect('/login?redirectTo=/admin/dashboard');
+  }
+
+  if (user.role !== 'system_admin') {
     redirect('/403');
+  }
+
+  if (user.aal !== 'aal2' && !isDemoModeVerified()) {
+    redirect('/mfa');
   }
 
   return (

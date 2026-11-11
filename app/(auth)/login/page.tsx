@@ -2,14 +2,12 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { loginAction } from '@/server/actions/auth.actions';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Banner } from '@/components/ui/feedback';
 
 export default function LoginPage() {
-  const router = useRouter();
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [errorMsg, setErrorMsg] = React.useState<string | null>(null);
@@ -31,7 +29,7 @@ export default function LoginPage() {
       }
 
       if (res.data?.redirectTo) {
-        router.push(res.data.redirectTo);
+        window.location.assign(res.data.redirectTo);
       }
     } catch {
       setErrorMsg('An unexpected error occurred during login. Please try again.');

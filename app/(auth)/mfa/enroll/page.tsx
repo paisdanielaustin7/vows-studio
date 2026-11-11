@@ -1,14 +1,12 @@
 'use client';
 
 import * as React from 'react';
-import { useRouter } from 'next/navigation';
 import { enrollMfaAction, verifyMfaChallengeAction } from '@/server/actions/auth.actions';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Banner } from '@/components/ui/feedback';
 
 export default function MfaEnrollPage() {
-  const router = useRouter();
   const [factorId, setFactorId] = React.useState<string | null>(null);
   const [qrCode, setQrCode] = React.useState<string | null>(null);
   const [secret, setSecret] = React.useState<string | null>(null);
@@ -61,7 +59,7 @@ export default function MfaEnrollPage() {
       }
 
       if (res.data?.redirectTo) {
-        router.push(res.data.redirectTo);
+        window.location.assign(res.data.redirectTo);
       }
     } catch {
       setErrorMsg('Verification failed. Please check the code from your authenticator app.');

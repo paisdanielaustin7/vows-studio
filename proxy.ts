@@ -3,6 +3,35 @@ import { createServerClient } from '@supabase/ssr';
 import { UserRole } from '@/lib/constants/permissions';
 import { assertRuntimeBootGuard, isDemoModeVerified } from '@/lib/env';
 
+const VALID_USER_ROLES = new Set<UserRole>([
+  'system_admin',
+  'business_owner',
+  'manager',
+  'accountant',
+  'staff',
+  'crew_member',
+]);
+
+function isValidUserRole(value: unknown): value is UserRole {
+  return typeof value === 'string' && VALID_USER_ROLES.has(value as UserRole);
+}
+
+function decodeJwtPayload(token: string): Record<string, unknown> | null {
+  try {
+    const parts = token.split('.');
+    if (parts.length !== 3) return null;
+    const base64 = parts[1].replace(/-/g, '+').replace(/_/g, '/');
+    const padded = base64.padEnd(base64.length + ((4 - (base64.length % 4)) % 4), '=');
+    const json =
+      typeof Buffer !== 'undefined'
+        ? Buffer.from(padded, 'base64').toString('utf8')
+        : atob(padded);
+    return JSON.parse(json) as Record<string, unknown>;
+  } catch {
+    return null;
+  }
+}
+
 function getRoleLandingPage(role: UserRole): string {
   switch (role) {
     case 'system_admin':
@@ -81,6 +110,7 @@ export async function proxy(request: NextRequest) {
   let user = null;
   let userRole: UserRole | null = null;
   let aal: 'aal1' | 'aal2' = 'aal1';
+  let isDeactivated = false;
 
   if (supabaseUrl && supabaseKey) {
     const supabase = createServerClient(supabaseUrl, supabaseKey, {
@@ -105,12 +135,12 @@ export async function proxy(request: NextRequest) {
     user = authData?.user || null;
 
     if (user) {
-      // Read top-level user_role claim injected by app.custom_access_token_hook via getClaims()
-      let claimRole: string | undefined;
+      // 1. Read top-level user_role and aal claims injected by app.custom_access_token_hook via getClaims()
+      let claimRole: UserRole | null = null;
       try {
         const { data: claimsData } = await supabase.auth.getClaims();
         const claims = claimsData?.claims as Record<string, unknown> | undefined;
-        if (typeof claims?.user_role === 'string') {
+        if (isValidUserRole(claims?.user_role)) {
           claimRole = claims.user_role;
         }
         if (claims?.aal === 'aal2') {
@@ -120,11 +150,27 @@ export async function proxy(request: NextRequest) {
         // Fallback handled below
       }
 
-      userRole = (claimRole ||
-        user.app_metadata?.user_role ||
-        user.user_metadata?.role ||
-        'staff') as UserRole;
+      // 2. If getClaims() missed JWKS fetch or claims were unavailable, decode the session access token
+      //    (safe because getUser() above already authenticated the session with Supabase Auth)
+      if (!claimRole || aal !== 'aal2') {
+        try {
+          const { data: sessionData } = await supabase.auth.getSession();
+          const accessToken = sessionData?.session?.access_token;
+          if (accessToken) {
+            const payload = decodeJwtPayload(accessToken);
+            if (!claimRole && isValidUserRole(payload?.user_role)) {
+              claimRole = payload.user_role;
+            }
+            if (payload?.aal === 'aal2') {
+              aal = 'aal2';
+            }
+          }
+        } catch {
+          // Fallback handled below
+        }
+      }
 
+      // 3. Check MFA assurance level via getAuthenticatorAssuranceLevel if still needed
       if (aal !== 'aal2') {
         try {
           const { data: aalData } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
@@ -135,6 +181,36 @@ export async function proxy(request: NextRequest) {
           aal = 'aal1';
         }
       }
+
+      // 4. Authoritative DB fallback via user-scoped RLS (profiles__select__self) if JWT claim absent
+      if (!claimRole) {
+        try {
+          const { data: profileRow } = await supabase
+            .from('profiles')
+            .select('role, is_active')
+            .eq('id', user.id)
+            .maybeSingle();
+
+          if (profileRow) {
+            if (profileRow.is_active === false) {
+              isDeactivated = true;
+            } else if (isValidUserRole(profileRow.role)) {
+              claimRole = profileRow.role;
+            }
+          }
+        } catch {
+          // Fallback handled below
+        }
+      }
+
+      const appMetaRole = isValidUserRole(user.app_metadata?.user_role)
+        ? user.app_metadata.user_role
+        : null;
+      const userMetaRole = isValidUserRole(user.user_metadata?.role)
+        ? user.user_metadata.role
+        : null;
+
+      userRole = claimRole || appMetaRole || userMetaRole;
     }
   }
 
@@ -144,7 +220,7 @@ export async function proxy(request: NextRequest) {
     response.headers.set('Pragma', 'no-cache');
   }
 
-  // 1. Signed-out users accessing protected routes
+  // 1. Signed-out or deactivated users accessing protected routes
   const isCrmRoute = pathname.startsWith('/crm');
   const isAdminRoute = pathname.startsWith('/admin');
   const isMfaRoute = pathname.startsWith('/mfa');
@@ -152,10 +228,14 @@ export async function proxy(request: NextRequest) {
     (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`)
   );
 
-  if (!user) {
+  if (!user || isDeactivated) {
     if (isCrmRoute || isAdminRoute || isMfaRoute) {
       const loginUrl = new URL('/login', request.url);
-      loginUrl.searchParams.set('redirectTo', pathname);
+      if (isDeactivated) {
+        loginUrl.searchParams.set('error', 'account_inactive');
+      } else {
+        loginUrl.searchParams.set('redirectTo', pathname);
+      }
       return NextResponse.redirect(loginUrl);
     }
     // Allow public or auth page
@@ -165,18 +245,32 @@ export async function proxy(request: NextRequest) {
     return response;
   }
 
+  // If authenticated user's role could not be determined from claims or profile, fail closed to /login
+  if (!userRole) {
+    if (isCrmRoute || isAdminRoute) {
+      const loginUrl = new URL('/login', request.url);
+      loginUrl.searchParams.set('redirectTo', pathname);
+      return NextResponse.redirect(loginUrl);
+    }
+    return response;
+  }
+
   // 2. Signed-in users accessing auth pages (/login, /forgot-password, /reset-password)
   const isAuthPage = AUTH_PAGES.some((p) => pathname === p || pathname.startsWith(`${p}/`));
   const isInvitePage = pathname.startsWith('/invite/');
 
+  const isMfaMandatory = userRole === 'system_admin' || userRole === 'business_owner';
+  const mfaSatisfied = aal === 'aal2' || isDemoModeVerified();
+
   if (isAuthPage && !isInvitePage) {
-    const landing = getRoleLandingPage(userRole || 'staff');
+    if (isMfaMandatory && !mfaSatisfied) {
+      return NextResponse.redirect(new URL('/mfa', request.url));
+    }
+    const landing = getRoleLandingPage(userRole);
     return NextResponse.redirect(new URL(landing, request.url));
   }
 
   // 3. MFA enforcement for system_admin and business_owner (Decision D-02 & D-32 demo bypass)
-  const isMfaMandatory = userRole === 'system_admin' || userRole === 'business_owner';
-  const mfaSatisfied = aal === 'aal2' || isDemoModeVerified();
   if (isMfaMandatory && !mfaSatisfied && (isCrmRoute || isAdminRoute)) {
     // If not aal2 (and not verified demo), redirect to MFA challenge or enroll
     return NextResponse.redirect(new URL('/mfa', request.url));

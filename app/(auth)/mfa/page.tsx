@@ -44,7 +44,7 @@ export default function MfaChallengePage() {
       }
 
       if (res.data?.redirectTo) {
-        router.push(res.data.redirectTo);
+        window.location.assign(res.data.redirectTo);
       }
     } catch {
       setErrorMsg('Failed to verify security code. Please try again.');

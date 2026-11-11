@@ -49,6 +49,11 @@ export async function getAuthenticatedUser(): Promise<AuthenticatedUser | null> 
     const { data: aalData } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
     if (aalData?.currentLevel === 'aal2') {
       aal = 'aal2';
+    } else {
+      const { data: claimsData } = await supabase.auth.getClaims();
+      if ((claimsData?.claims as Record<string, unknown> | undefined)?.aal === 'aal2') {
+        aal = 'aal2';
+      }
     }
   } catch {
     aal = 'aal1';

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default async function ReviewsModerationPage() {
   const user = await getAuthenticatedUser();
   if (!user) {
-    redirect('/auth/login');
+    redirect('/login');
   }
 
   try {
