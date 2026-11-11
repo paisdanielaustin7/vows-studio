@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+# VOWS Studio Pre-Commit Quality Gate (Master Prompt Phase 0 Task 8)
+
+STAGED_TS=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '\.(ts|tsx|js|mjs)$' || true)
+
+if [ -n "$STAGED_TS" ]; then
+  echo "Running ESLint on staged files..."
+  npx eslint $STAGED_TS
+fi
+
+echo "Running TypeScript typecheck..."
+npm run typecheck

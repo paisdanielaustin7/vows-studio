@@ -45,8 +45,20 @@ jobs:
           node-version: 22
           cache: 'npm'
 
-      - name: Dependency audit (moderate+ thresholds)
-        run: npm audit --audit-level=high || true
+      - name: Dependency audit (high/critical threshold)
+        run: npm audit --audit-level=high
+
+      - name: Secret & key leak scan
+        run: |
+          if git ls-files | grep -E '^\.env(\..+)?$' | grep -v '^\.env\.example$'; then
+            echo "ERROR: Tracked .env file detected in repository!"
+            exit 1
+          fi
+          if git grep -n -E 'BEGIN (RSA|EC|OPENSSH) PRIVATE KEY|AIza[0-9A-Za-z_-]{35}|GOCSPX-[0-9A-Za-z_-]+' -- ':!docs/' ':!tests/'; then
+            echo "ERROR: Potential credential or private key detected in tracked files!"
+            exit 1
+          fi
+          echo "Secret scan clean."
 
   integration:
     name: Supabase Integration & RLS Tests

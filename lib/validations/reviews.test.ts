@@ -77,17 +77,21 @@ describe('Reviews Validation Schemas (Phase 8)', () => {
       expect(parsed.showcaseConsent).toBe(true);
     });
 
-    it('allows category sub-ratings to be optional', () => {
+    it('allows category sub-ratings, honeypot, and turnstileToken to be optional', () => {
       const parsed = submitReviewSchema.parse({
         token: 'a1b2c3d4e5f60718293a4b5c6d7e8f90',
         overallRating: 4,
         body: 'Magnificent documentary cinematography from the atelier.',
         reviewerName: 'Rohan & Nikita',
+        honeypot: '',
+        turnstileToken: 'test-token-pass',
       });
       expect(parsed.overallRating).toBe(4);
       expect(parsed.communicationRating).toBeUndefined();
       expect(parsed.qualityRating).toBeUndefined();
       expect(parsed.punctualityRating).toBeUndefined();
+      expect(parsed.honeypot).toBe('');
+      expect(parsed.turnstileToken).toBe('test-token-pass');
     });
 
     it('rejects token shorter than 16 characters or longer than 128 characters', () => {

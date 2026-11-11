@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { PublicReviewTokenDetails } from '@/types/reviews';
 import { submitReviewAction } from '@/server/actions/reviews.actions';
+import { TurnstileWidget } from '@/components/ui/turnstile-widget';
 
 interface PublicReviewFormProps {
   token: string;
@@ -64,6 +65,8 @@ export function PublicReviewForm({ token, details }: PublicReviewFormProps) {
   const [reviewerName, setReviewerName] = useState<string>(details.coupleName || '');
   const [body, setBody] = useState<string>('');
   const [showcaseConsent, setShowcaseConsent] = useState<boolean>(true);
+  const [honeypot, setHoneypot] = useState<string>('');
+  const [turnstileToken, setTurnstileToken] = useState<string>('');
 
   // Submission state
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -95,6 +98,8 @@ export function PublicReviewForm({ token, details }: PublicReviewFormProps) {
         body: body.trim(),
         reviewerName: reviewerName.trim(),
         showcaseConsent,
+        honeypot,
+        turnstileToken,
       });
 
       if (res.error) {
@@ -255,6 +260,20 @@ export function PublicReviewForm({ token, details }: PublicReviewFormProps) {
 
       {/* Main Review Form */}
       <form onSubmit={handleSubmit} className="space-y-8">
+        {/* Honeypot anti-spam trap (D-11) */}
+        <div className="hidden" aria-hidden="true">
+          <label htmlFor="review_website_fax">Leave this field blank</label>
+          <input
+            id="review_website_fax"
+            type="text"
+            name="review_website_fax"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+            tabIndex={-1}
+            autoComplete="off"
+          />
+        </div>
+
         {errorMessage && (
           <div className="p-4 rounded-xl bg-error-container text-on-error-container text-sm font-medium border border-error/20">
             {errorMessage}
@@ -502,6 +521,12 @@ export function PublicReviewForm({ token, details }: PublicReviewFormProps) {
             </label>
           </div>
         </div>
+
+        {/* Cloudflare Turnstile Widget (D-11) */}
+        <TurnstileWidget
+          onVerify={(tok) => setTurnstileToken(tok)}
+          onExpire={() => setTurnstileToken('')}
+        />
 
         {/* Action Controls */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">

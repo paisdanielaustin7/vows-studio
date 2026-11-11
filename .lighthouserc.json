@@ -1,0 +1,30 @@
+{
+  "ci": {
+    "collect": {
+      "url": [
+        "http://localhost:3000/",
+        "http://localhost:3000/portfolio",
+        "http://localhost:3000/services",
+        "http://localhost:3000/about",
+        "http://localhost:3000/contact",
+        "http://localhost:3000/reviews"
+      ],
+      "startServerCommand": "npm run start",
+      "numberOfRuns": 1,
+      "settings": {
+        "preset": "perf"
+      }
+    },
+    "assert": {
+      "assertions": {
+        "categories:performance": ["error", { "minScore": 0.85 }],
+        "categories:accessibility": ["error", { "minScore": 0.9 }],
+        "categories:seo": ["error", { "minScore": 0.9 }],
+        "categories:best-practices": ["warn", { "minScore": 0.9 }]
+      }
+    },
+    "upload": {
+      "target": "temporary-public-storage"
+    }
+  }
+}

@@ -12,6 +12,12 @@ export async function GET() {
       return new NextResponse('Forbidden: Only Administrators can connect Gmail', { status: 403 });
     }
 
+    if (process.env.APP_MODE === 'demo') {
+      return NextResponse.redirect(
+        new URL('/crm/settings/gmail?error=gmail_disabled_in_demo', process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000')
+      );
+    }
+
     // Generate cryptographically secure state
     const state = crypto.randomBytes(24).toString('hex');
     const authUrl = buildAuthUrl(state);

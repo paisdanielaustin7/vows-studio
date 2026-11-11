@@ -346,6 +346,15 @@ export async function inviteUserAction(
   const user = await getAuthenticatedUser();
   requirePermission(user, 'users:manage');
 
+  if (process.env.APP_MODE === 'demo') {
+    return {
+      error: {
+        code: 'FORBIDDEN',
+        message: 'Team invitations are disabled in Demo Mode. Use the demo role credentials on the login page.',
+      },
+    };
+  }
+
   const parsed = inviteUserSchema.safeParse(input);
   if (!parsed.success) {
     return {

@@ -2,7 +2,9 @@
 
 import crypto from 'crypto';
 import { revalidatePath } from 'next/cache';
+import { headers } from 'next/headers';
 import { getAuthenticatedUser, requirePermission } from '@/lib/auth';
+import { checkRateLimit } from '@/lib/ratelimit';
 import { createClient } from '@/lib/supabase/server';
 import { getAdminClient } from '@/lib/supabase/admin';
 import {
@@ -658,6 +660,25 @@ export async function getPublicDeliveryAction(
   rawToken: string
 ): Promise<ActionResult<PublicDeliveryClientView>> {
   try {
+    let clientIp = '127.0.0.1';
+    try {
+      const h = await headers();
+      const forwarded = h.get('x-forwarded-for');
+      clientIp = forwarded ? forwarded.split(',')[0].trim() : h.get('x-real-ip') || '127.0.0.1';
+    } catch {
+      clientIp = '127.0.0.1';
+    }
+
+    const rate = await checkRateLimit('token_pages', clientIp);
+    if (!rate.success) {
+      return {
+        error: {
+          code: 'RATE_LIMITED',
+          message: 'Too many requests. Please wait a minute before trying again.',
+        },
+      };
+    }
+
     if (!rawToken || typeof rawToken !== 'string' || rawToken.trim().length < 32) {
       return {
         error: {

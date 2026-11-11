@@ -63,14 +63,56 @@ export function validateEnv(rawEnv: Record<string, string | undefined> = process
 
   // Enforce Decision D-32 Boot Guard:
   // Refuse to start if ALLOWED_SUPABASE_PROJECT_REF is configured and does not match the connected Supabase URL
-  if (env.ALLOWED_SUPABASE_PROJECT_REF) {
-    const connectedRef = extractSupabaseProjectRef(env.NEXT_PUBLIC_SUPABASE_URL);
-    if (connectedRef && connectedRef !== env.ALLOWED_SUPABASE_PROJECT_REF) {
+  assertRuntimeBootGuard(rawEnv);
+
+  return env;
+}
+
+/**
+ * Runtime-safe Decision D-32 Boot Guard.
+ * Can be called inside proxy.ts or server entrypoints without failing static Next.js builds
+ * where non-public env vars are intentionally absent.
+ */
+export function assertRuntimeBootGuard(rawEnv: Record<string, string | undefined> = process.env): void {
+  const allowedRef = rawEnv.ALLOWED_SUPABASE_PROJECT_REF;
+  const supabaseUrl = rawEnv.NEXT_PUBLIC_SUPABASE_URL;
+
+  if (allowedRef && supabaseUrl) {
+    const connectedRef = extractSupabaseProjectRef(supabaseUrl);
+    if (connectedRef && connectedRef !== allowedRef) {
       throw new Error(
-        `[BOOT GUARD FATAL] Supabase project mismatch! Connected ref "${connectedRef}" does not match ALLOWED_SUPABASE_PROJECT_REF "${env.ALLOWED_SUPABASE_PROJECT_REF}". Halting for safety.`
+        `[BOOT GUARD FATAL] Supabase project mismatch! Connected ref "${connectedRef}" does not match ALLOWED_SUPABASE_PROJECT_REF "${allowedRef}". Halting for safety.`
       );
     }
   }
 
-  return env;
+  // Prevent split-brain production/demo configuration
+  const serverMode = rawEnv.APP_MODE;
+  const publicMode = rawEnv.NEXT_PUBLIC_APP_MODE;
+  if (serverMode && publicMode && serverMode !== publicMode) {
+    throw new Error(
+      `[BOOT GUARD FATAL] Mode mismatch! APP_MODE ("${serverMode}") disagrees with NEXT_PUBLIC_APP_MODE ("${publicMode}").`
+    );
+  }
+}
+
+/**
+ * Returns true ONLY when Demo Mode is explicitly verified on both server and client
+ * and matches ALLOWED_SUPABASE_PROJECT_REF if configured (Decision D-32).
+ */
+export function isDemoModeVerified(rawEnv: Record<string, string | undefined> = process.env): boolean {
+  if (rawEnv.APP_MODE !== 'demo' || rawEnv.NEXT_PUBLIC_APP_MODE !== 'demo') {
+    return false;
+  }
+
+  const allowedRef = rawEnv.ALLOWED_SUPABASE_PROJECT_REF;
+  const supabaseUrl = rawEnv.NEXT_PUBLIC_SUPABASE_URL;
+  if (allowedRef && supabaseUrl) {
+    const connectedRef = extractSupabaseProjectRef(supabaseUrl);
+    if (connectedRef && connectedRef !== allowedRef) {
+      return false;
+    }
+  }
+
+  return true;
 }

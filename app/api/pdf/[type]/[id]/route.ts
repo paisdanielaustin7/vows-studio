@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import React from 'react';
 import { getAuthenticatedUser, requirePermission } from '@/lib/auth';
 import { createClient } from '@/lib/supabase/server';
+import { checkRateLimit } from '@/lib/ratelimit';
 import { renderPdfToBuffer } from '@/lib/pdf/generator';
 import { QuotationPdf } from '@/lib/pdf/templates/quotation-pdf';
 import { InvoicePdf } from '@/lib/pdf/templates/invoice-pdf';
@@ -25,6 +26,19 @@ export async function GET(
 ) {
   try {
     const user = await getAuthenticatedUser();
+    if (!user) {
+      return NextResponse.json({ error: 'Authentication required.' }, { status: 401 });
+    }
+
+    const rate = await checkRateLimit('pdf_generation', user.id);
+    if (!rate.success) {
+      const retryAfter = Math.max(1, Math.ceil((rate.reset - Date.now()) / 1000));
+      return NextResponse.json(
+        { error: 'PDF generation rate limit exceeded. Please try again in a minute.' },
+        { status: 429, headers: { 'Retry-After': String(retryAfter) } }
+      );
+    }
+
     const { type, id } = await props.params;
 
     const supabase = await createClient();

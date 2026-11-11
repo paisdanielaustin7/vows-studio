@@ -1,9 +1,21 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
+import { headers } from 'next/headers';
 import { getAuthenticatedUser, requirePermission } from '@/lib/auth';
 import { getAdminClient } from '@/lib/supabase/admin';
 import { generateSecureToken, hashToken } from '@/lib/utils';
+import { checkRateLimit, verifyTurnstileToken } from '@/lib/ratelimit';
+
+async function getRequestClientIp(): Promise<string> {
+  try {
+    const h = await headers();
+    const forwarded = h.get('x-forwarded-for');
+    return forwarded ? forwarded.split(',')[0].trim() : h.get('x-real-ip') || '127.0.0.1';
+  } catch {
+    return '127.0.0.1';
+  }
+}
 import {
   createReviewRequestSchema,
   submitReviewSchema,
@@ -228,6 +240,12 @@ export async function getReviewRequestByTokenAction(
   errorReason?: 'invalid' | 'expired' | 'already_submitted' | 'revoked';
 }> {
   try {
+    const clientIp = await getRequestClientIp();
+    const rate = await checkRateLimit('token_pages', clientIp);
+    if (!rate.success) {
+      return { isValid: false, errorReason: 'invalid' };
+    }
+
     if (!token || token.length < 16) {
       return { isValid: false, errorReason: 'invalid' };
     }
@@ -326,6 +344,34 @@ export async function submitReviewAction(
 ): Promise<ActionResult<{ reviewId: string }>> {
   try {
     const validated = submitReviewSchema.parse(input);
+
+    // Honeypot anti-spam trap (silent accept without DB write)
+    if (validated.honeypot && validated.honeypot.trim().length > 0) {
+      return { data: { reviewId: 'ignored-bot' } };
+    }
+
+    // IP Rate limiting + Cloudflare Turnstile check (SECURITY_PLAN §7.2 & D-11)
+    const clientIp = await getRequestClientIp();
+    const rate = await checkRateLimit('public_form', clientIp);
+    if (!rate.success) {
+      return {
+        error: {
+          code: 'RATE_LIMITED',
+          message: 'Too many submissions. Please try again later.',
+        },
+      };
+    }
+
+    const turnstile = await verifyTurnstileToken(validated.turnstileToken || '', clientIp);
+    if (!turnstile.success) {
+      return {
+        error: {
+          code: 'FORBIDDEN',
+          message: 'Security verification failed. Please refresh and try again.',
+        },
+      };
+    }
+
     const tokenHash = hashToken(validated.token);
     const admin = getAdminClient();
 

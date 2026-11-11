@@ -235,4 +235,28 @@ describe('Gmail Transmission Service & RFC 2822 MIME (Phase 5)', () => {
     expect(logString).not.toContain('valid-test-access-token-123');
     expect(logString).not.toContain('mock_encrypted');
   });
+
+  it('simulates email dispatch in demo mode without hitting Google Gmail API (D-32)', async () => {
+    vi.stubEnv('APP_MODE', 'demo');
+    const fetchSpy = vi.fn();
+    global.fetch = fetchSpy;
+
+    const result = await sendEmailService(
+      {
+        to: 'demo-client@demo.email',
+        subject: 'Demo Quotation QT-2026-0001',
+        htmlBody: '<p>Demo email</p>',
+        idempotencyKey: 'demo-send-key-777',
+      },
+      'demo-actor-1'
+    );
+
+    expect(result.messageId).toMatch(/^demo-/);
+    expect(fetchSpy).not.toHaveBeenCalled();
+
+    const logEntry = mockSendLogs.find((l) => l.idempotency_key === 'demo-send-key-777');
+    expect(logEntry).toBeDefined();
+    expect(logEntry.sender_email).toBe('hello@luminastudio.demo');
+    vi.unstubAllEnvs();
+  });
 });

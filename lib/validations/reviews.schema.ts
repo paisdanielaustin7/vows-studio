@@ -46,6 +46,8 @@ export const submitReviewSchema = z.object({
     .min(2, 'Reviewer name must be at least 2 characters')
     .max(150, 'Reviewer name cannot exceed 150 characters'),
   showcaseConsent: z.boolean().optional().default(true),
+  honeypot: z.string().optional().nullable().or(z.literal('')),
+  turnstileToken: z.string().optional().nullable(),
 });
 
 export const moderateReviewSchema = z.object({

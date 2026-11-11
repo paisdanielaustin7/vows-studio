@@ -2,6 +2,7 @@ import { getAdminClient } from '@/lib/supabase/admin';
 import { getValidAccessToken } from '@/lib/gmail/oauth';
 import { buildMimeMessage, encodeBase64Url } from '@/lib/gmail/mime';
 import { SendEmailParams, EmailSendResult } from '@/lib/gmail/types';
+import { checkRateLimit } from '@/lib/ratelimit';
 
 const DAILY_SOFT_BUDGET = 400;
 
@@ -12,7 +13,40 @@ export async function sendEmailService(
   params: SendEmailParams,
   actorId: string
 ): Promise<EmailSendResult> {
+  const rate = await checkRateLimit('email_send', actorId);
+  if (!rate.success) {
+    throw new Error('Hourly email send limit exceeded (20/hour). Please download and share the PDF manually.');
+  }
+
   const supabase = getAdminClient();
+
+  // Demo Mode safeguard (Decision D-32 & 06_PORTFOLIO_CLONE_PLAN §2.1): simulate without real Gmail API calls
+  if (process.env.APP_MODE === 'demo') {
+    const sentAt = new Date().toISOString();
+    const demoMessageId = `demo-${Date.now()}`;
+    await supabase.from('email_send_log').upsert(
+      {
+        document_type: params.documentType || null,
+        document_id: params.documentId || null,
+        client_id: params.clientId || null,
+        recipient: params.to,
+        subject: params.subject,
+        sender_email: 'hello@luminastudio.demo',
+        gmail_message_id: demoMessageId,
+        status: 'sent',
+        error: null,
+        idempotency_key: params.idempotencyKey,
+        sent_by: actorId,
+        sent_at: sentAt,
+      },
+      { onConflict: 'idempotency_key' }
+    );
+    return {
+      messageId: demoMessageId,
+      idempotencyKey: params.idempotencyKey,
+      sentAt,
+    };
+  }
 
   // 1. Idempotency Check
   const { data: existingLog } = await supabase

@@ -1,5 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { validateEnv, extractSupabaseProjectRef } from './env';
+import {
+  validateEnv,
+  extractSupabaseProjectRef,
+  assertRuntimeBootGuard,
+  isDemoModeVerified,
+} from './env';
 
 describe('lib/env — Environment Validation & Boot Guard (D-32)', () => {
   const validBaseEnv = {
@@ -57,5 +62,37 @@ describe('lib/env — Environment Validation & Boot Guard (D-32)', () => {
       GOOGLE_TOKEN_ENCRYPTION_KEY: validKey,
     });
     expect(env.GOOGLE_TOKEN_ENCRYPTION_KEY).toBe(validKey);
+  });
+
+  it('rejects mode split-brain mismatch between APP_MODE and NEXT_PUBLIC_APP_MODE', () => {
+    expect(() =>
+      assertRuntimeBootGuard({
+        ...validBaseEnv,
+        APP_MODE: 'demo',
+        NEXT_PUBLIC_APP_MODE: 'production',
+      })
+    ).toThrow(/Mode mismatch/);
+  });
+
+  it('verifies demo mode strictly only on exact match with ALLOWED_SUPABASE_PROJECT_REF', () => {
+    expect(isDemoModeVerified(validBaseEnv)).toBe(false);
+
+    expect(
+      isDemoModeVerified({
+        NEXT_PUBLIC_SUPABASE_URL: 'https://vows-demo-ref.supabase.co',
+        APP_MODE: 'demo',
+        NEXT_PUBLIC_APP_MODE: 'demo',
+        ALLOWED_SUPABASE_PROJECT_REF: 'vows-demo-ref',
+      })
+    ).toBe(true);
+
+    expect(
+      isDemoModeVerified({
+        NEXT_PUBLIC_SUPABASE_URL: 'https://vows-prod-ref.supabase.co',
+        APP_MODE: 'demo',
+        NEXT_PUBLIC_APP_MODE: 'demo',
+        ALLOWED_SUPABASE_PROJECT_REF: 'vows-demo-ref',
+      })
+    ).toBe(false);
   });
 });

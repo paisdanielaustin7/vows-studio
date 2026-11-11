@@ -1,5 +1,7 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi, afterEach } from 'vitest';
+import { NextRequest } from 'next/server';
 import { UserRole } from '@/lib/constants/permissions';
+import { proxy } from '@/proxy';
 
 interface ProxyDecision {
   action: 'next' | 'redirect';
@@ -69,8 +71,34 @@ function evaluateProxyRules(
         return { action: 'redirect', targetUrl: '/403', statusCode: 403 };
       }
     }
-    if (pathname.startsWith('/crm/payments') || pathname.startsWith('/crm/ledger')) {
+    if (
+      pathname.startsWith('/crm/payments') ||
+      pathname.startsWith('/crm/receipts') ||
+      pathname.startsWith('/crm/credit-notes') ||
+      pathname.startsWith('/crm/ledger') ||
+      pathname.startsWith('/crm/expenses')
+    ) {
       if (!['system_admin', 'business_owner', 'accountant'].includes(user.role)) {
+        return { action: 'redirect', targetUrl: '/403', statusCode: 403 };
+      }
+    }
+    if (pathname.startsWith('/crm/crew')) {
+      if (!['system_admin', 'business_owner', 'manager', 'accountant', 'crew_member'].includes(user.role)) {
+        return { action: 'redirect', targetUrl: '/403', statusCode: 403 };
+      }
+    }
+    if (pathname.startsWith('/crm/services') || pathname.startsWith('/crm/packages')) {
+      if (!['system_admin', 'business_owner', 'manager', 'accountant', 'staff'].includes(user.role)) {
+        return { action: 'redirect', targetUrl: '/403', statusCode: 403 };
+      }
+    }
+    if (pathname.startsWith('/crm/delivery')) {
+      if (!['system_admin', 'business_owner', 'manager', 'staff', 'crew_member'].includes(user.role)) {
+        return { action: 'redirect', targetUrl: '/403', statusCode: 403 };
+      }
+    }
+    if (pathname.startsWith('/crm/portfolio') || pathname.startsWith('/crm/reviews')) {
+      if (!['system_admin', 'business_owner', 'manager'].includes(user.role)) {
         return { action: 'redirect', targetUrl: '/403', statusCode: 403 };
       }
     }
@@ -152,5 +180,26 @@ describe('Proxy Route Protection Rules (RBAC §6 & Decision D-02)', () => {
     const rawToken = '0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef';
     const res = evaluateProxyRules(`/delivery/${rawToken}`, null);
     expect(res.action).toBe('next');
+  });
+
+  it('enforces extended RBAC §6 routes for crew, delivery, services, portfolio, and receipts', () => {
+    expect(evaluateProxyRules('/crm/crew', { role: 'staff', aal: 'aal1' }).targetUrl).toBe('/403');
+    expect(evaluateProxyRules('/crm/delivery', { role: 'accountant', aal: 'aal1' }).targetUrl).toBe('/403');
+    expect(evaluateProxyRules('/crm/services', { role: 'crew_member', aal: 'aal1' }).targetUrl).toBe('/403');
+    expect(evaluateProxyRules('/crm/portfolio', { role: 'staff', aal: 'aal1' }).targetUrl).toBe('/403');
+    expect(evaluateProxyRules('/crm/reviews', { role: 'accountant', aal: 'aal1' }).targetUrl).toBe('/403');
+    expect(evaluateProxyRules('/crm/receipts', { role: 'manager', aal: 'aal1' }).targetUrl).toBe('/403');
+    expect(evaluateProxyRules('/crm/credit-notes', { role: 'manager', aal: 'aal1' }).targetUrl).toBe('/403');
+  });
+
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
+  it('excludes /dev/components in production inside real proxy()', async () => {
+    vi.stubEnv('NODE_ENV', 'production');
+    const req = new NextRequest('http://localhost:3000/dev/components');
+    const res = await proxy(req);
+    expect(res.status).toBe(404);
   });
 });

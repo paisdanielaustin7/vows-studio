@@ -12,9 +12,11 @@
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "test:integration": "vitest run tests/integration",
+    "test:e2e": "playwright test",
     "db:reset": "supabase db reset",
     "db:test": "supabase test db",
-    "types:generate": "supabase gen types typescript --local > types/database.ts"
+    "types:generate": "supabase gen types typescript --local > types/database.ts",
+    "prepare": "git config core.hooksPath .husky || true"
   },
   "dependencies": {
     "next": "^16.4.6",

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
 import { UserRole } from '@/lib/constants/permissions';
+import { assertRuntimeBootGuard, isDemoModeVerified } from '@/lib/env';
 
 function getRoleLandingPage(role: UserRole): string {
   switch (role) {
@@ -48,6 +49,14 @@ const AUTH_PAGES = [
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  // Enforce Decision D-32 Boot Guard at runtime
+  assertRuntimeBootGuard();
+
+  // Exclude /dev/components in production (Master Prompt Phase 0 Task 3)
+  if (pathname.startsWith('/dev') && process.env.NODE_ENV === 'production') {
+    return NextResponse.rewrite(new URL('/not-found', request.url), { status: 404 });
+  }
 
   // Static assets and internal next.js endpoints bypass proxy
   if (
@@ -148,16 +157,17 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL(landing, request.url));
   }
 
-  // 3. MFA enforcement for system_admin and business_owner (Decision D-02)
+  // 3. MFA enforcement for system_admin and business_owner (Decision D-02 & D-32 demo bypass)
   const isMfaMandatory = userRole === 'system_admin' || userRole === 'business_owner';
-  if (isMfaMandatory && aal !== 'aal2' && (isCrmRoute || isAdminRoute)) {
-    // If not aal2, redirect to MFA challenge or enroll
+  const mfaSatisfied = aal === 'aal2' || isDemoModeVerified();
+  if (isMfaMandatory && !mfaSatisfied && (isCrmRoute || isAdminRoute)) {
+    // If not aal2 (and not verified demo), redirect to MFA challenge or enroll
     return NextResponse.redirect(new URL('/mfa', request.url));
   }
 
   // 4. Role-based route access matrix (RBAC_PERMISSIONS.md §6)
   if (isAdminRoute) {
-    if (userRole !== 'system_admin' || aal !== 'aal2') {
+    if (userRole !== 'system_admin' || !mfaSatisfied) {
       return NextResponse.redirect(new URL('/403', request.url));
     }
   }
@@ -177,9 +187,11 @@ export async function proxy(request: NextRequest) {
       }
     }
 
-    // Finance routes: Invoices, Payments, Ledger, Expenses
+    // Finance routes: Payments, Receipts, Credit Notes, Ledger, Expenses (SA, BO, AC only)
     const isFinanceRoute =
       pathname.startsWith('/crm/payments') ||
+      pathname.startsWith('/crm/receipts') ||
+      pathname.startsWith('/crm/credit-notes') ||
       pathname.startsWith('/crm/ledger') ||
       pathname.startsWith('/crm/expenses');
 
@@ -203,6 +215,34 @@ export async function proxy(request: NextRequest) {
       }
     }
 
+    // Crew Directory & Profiles: SA, BO, MG, AC, CR (own) (not staff)
+    if (pathname.startsWith('/crm/crew')) {
+      if (!['system_admin', 'business_owner', 'manager', 'accountant', 'crew_member'].includes(userRole || '')) {
+        return NextResponse.redirect(new URL('/403', request.url));
+      }
+    }
+
+    // Services & Packages Catalogue: SA, BO, MG, AC, ST (not crew)
+    if (pathname.startsWith('/crm/services') || pathname.startsWith('/crm/packages')) {
+      if (!['system_admin', 'business_owner', 'manager', 'accountant', 'staff'].includes(userRole || '')) {
+        return NextResponse.redirect(new URL('/403', request.url));
+      }
+    }
+
+    // Delivery Pipeline: SA, BO, MG, ST, CR (not accountant)
+    if (pathname.startsWith('/crm/delivery')) {
+      if (!['system_admin', 'business_owner', 'manager', 'staff', 'crew_member'].includes(userRole || '')) {
+        return NextResponse.redirect(new URL('/403', request.url));
+      }
+    }
+
+    // Portfolio & Reviews Moderation: SA, BO, MG (not accountant, staff, crew)
+    if (pathname.startsWith('/crm/portfolio') || pathname.startsWith('/crm/reviews')) {
+      if (!['system_admin', 'business_owner', 'manager'].includes(userRole || '')) {
+        return NextResponse.redirect(new URL('/403', request.url));
+      }
+    }
+
     // Business Owner scoped audit log: BO only
     if (pathname.startsWith('/crm/audit-log')) {
       if (userRole !== 'business_owner') {
@@ -210,7 +250,7 @@ export async function proxy(request: NextRequest) {
       }
     }
 
-    // Settings: SA, BO
+    // Settings: SA, BO (numbering config is SA only)
     if (pathname.startsWith('/crm/settings')) {
       if (!['system_admin', 'business_owner'].includes(userRole || '')) {
         return NextResponse.redirect(new URL('/403', request.url));

@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Send, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { TurnstileWidget } from '@/components/ui/turnstile-widget';
 
 export function PublicEnquiryForm() {
   const router = useRouter();
@@ -22,7 +23,7 @@ export function PublicEnquiryForm() {
     source: 'website',
     consentGiven: false,
     website_fax_code: '', // honeypot
-    turnstileToken: 'bypass-local-dev-token',
+    turnstileToken: '',
   });
 
   const [loading, setLoading] = useState(false);
@@ -53,7 +54,7 @@ export function PublicEnquiryForm() {
         source: formData.source,
         consentGiven: formData.consentGiven,
         website_fax_code: formData.website_fax_code,
-        turnstileToken: formData.turnstileToken || 'dev-token',
+        turnstileToken: formData.turnstileToken,
       };
 
       const res = await fetch('/api/public/enquiry', {
@@ -65,7 +66,11 @@ export function PublicEnquiryForm() {
       const json = await res.json();
 
       if (!res.ok) {
-        throw new Error(json.error?.message || 'Failed to submit enquiry. Please check your information.');
+        const message =
+          typeof json.error === 'string'
+            ? json.error
+            : json.error?.message || 'Failed to submit enquiry. Please check your information.';
+        throw new Error(message);
       }
 
       router.push('/contact/thank-you');
@@ -259,6 +264,12 @@ export function PublicEnquiryForm() {
           </span>
         </label>
       </div>
+
+      {/* Cloudflare Turnstile Widget */}
+      <TurnstileWidget
+        onVerify={(token) => setFormData((prev) => ({ ...prev, turnstileToken: token }))}
+        onExpire={() => setFormData((prev) => ({ ...prev, turnstileToken: '' }))}
+      />
 
       {/* Submit Button */}
       <div className="pt-4 border-t border-[var(--border)] flex flex-col sm:flex-row items-center justify-between gap-4">

@@ -51,21 +51,23 @@ export async function POST(request: NextRequest) {
     // 4. Rate Limiting Check (5 per hour per IP per Master Prompt / SECURITY_PLAN §7.2)
     const rateLimit = await checkRateLimit('public_form', ip);
     if (!rateLimit.success) {
+      const retryAfterSeconds = Math.max(1, Math.ceil((rateLimit.reset - Date.now()) / 1000));
       return NextResponse.json(
         { error: 'Rate limit exceeded. You may submit up to 5 enquiries per hour.' },
-        { status: 429 }
+        {
+          status: 429,
+          headers: { 'Retry-After': String(retryAfterSeconds) },
+        }
       );
     }
 
-    // 5. Cloudflare Turnstile CAPTCHA Verification
-    if (normalizedBody.turnstileToken) {
-      const turnstile = await verifyTurnstileToken(normalizedBody.turnstileToken, ip);
-      if (!turnstile.success) {
-        return NextResponse.json(
-          { error: 'Security verification failed. Please refresh and try again.' },
-          { status: 400 }
-        );
-      }
+    // 5. Cloudflare Turnstile CAPTCHA Verification (D-11)
+    const turnstile = await verifyTurnstileToken(normalizedBody.turnstileToken || '', ip);
+    if (!turnstile.success) {
+      return NextResponse.json(
+        { error: 'Security verification failed. Please refresh and try again.' },
+        { status: 400 }
+      );
     }
 
     // 6. Zod Schema Validation
