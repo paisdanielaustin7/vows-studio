@@ -196,12 +196,11 @@ BEGIN
       DELETE FROM public.credit_notes WHERE is_sample = true;
       DELETE FROM public.invoice_items WHERE invoice_id IN (SELECT id FROM public.invoices WHERE is_sample = true);
       DELETE FROM public.invoices WHERE is_sample = true;
-      DELETE FROM public.crew_pay_payments WHERE crew_pay_id IN (SELECT id FROM public.crew_pay_records WHERE booking_id IN (SELECT id FROM public.bookings WHERE is_sample = true));
+      DELETE FROM public.expenses WHERE is_sample = true OR crew_pay_id IN (SELECT id FROM public.crew_pay_records WHERE booking_id IN (SELECT id FROM public.bookings WHERE is_sample = true)) OR booking_id IN (SELECT id FROM public.bookings WHERE is_sample = true);
       DELETE FROM public.crew_pay_records WHERE booking_id IN (SELECT id FROM public.bookings WHERE is_sample = true);
       DELETE FROM public.events WHERE is_sample = true;
       DELETE FROM public.bookings WHERE is_sample = true;
       DELETE FROM public.quotations WHERE is_sample = true;
-      DELETE FROM public.expenses WHERE is_sample = true;
       DELETE FROM public.manual_income_entries WHERE is_sample = true;
       DELETE FROM public.portfolio_items WHERE is_sample = true;
       DELETE FROM public.crew_members WHERE is_sample = true;
@@ -223,7 +222,7 @@ BEGIN
       DELETE FROM public.credit_notes;
       DELETE FROM public.invoice_items;
       DELETE FROM public.invoices;
-      DELETE FROM public.crew_pay_payments;
+      DELETE FROM public.expenses WHERE crew_pay_id IS NOT NULL OR booking_id IS NOT NULL;
       DELETE FROM public.crew_pay_records;
       DELETE FROM public.event_crew_assignments;
       DELETE FROM public.events;
@@ -249,9 +248,8 @@ BEGIN
       DELETE FROM public.credit_notes;
       DELETE FROM public.invoice_items;
       DELETE FROM public.invoices;
-      DELETE FROM public.crew_pay_payments;
-      DELETE FROM public.crew_pay_records;
       DELETE FROM public.expenses;
+      DELETE FROM public.crew_pay_records;
       DELETE FROM public.manual_income_entries;
       v_counts := v_counts || jsonb_build_object('finance', 'cleared');
 
@@ -452,3 +450,80 @@ BEGIN
   );
 END;
 $$;
+
+-- 8. Public PostgREST RPC wrappers (strictly restricted to service_role only)
+CREATE OR REPLACE FUNCTION public.lock_setup(p_actor_id uuid DEFAULT NULL)
+RETURNS void
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public, app
+AS $$
+BEGIN
+  IF (auth.jwt() ->> 'role') IS DISTINCT FROM 'service_role' THEN
+    RAISE EXCEPTION 'Forbidden: service_role only';
+  END IF;
+  PERFORM app.lock_setup(p_actor_id);
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION public.anonymise_client(
+  p_client_id uuid,
+  p_actor_id uuid DEFAULT NULL
+)
+RETURNS void
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public, app
+AS $$
+BEGIN
+  IF (auth.jwt() ->> 'role') IS DISTINCT FROM 'service_role' THEN
+    RAISE EXCEPTION 'Forbidden: service_role only';
+  END IF;
+  PERFORM app.anonymise_client(p_client_id, p_actor_id);
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION public.reset_business_data(
+  p_scopes text[],
+  p_restart_numbering boolean DEFAULT false,
+  p_clear_audit boolean DEFAULT false,
+  p_actor_id uuid DEFAULT NULL
+)
+RETURNS jsonb
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public, app
+AS $$
+BEGIN
+  IF (auth.jwt() ->> 'role') IS DISTINCT FROM 'service_role' THEN
+    RAISE EXCEPTION 'Forbidden: service_role only';
+  END IF;
+  RETURN app.reset_business_data(p_scopes, p_restart_numbering, p_clear_audit, p_actor_id);
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION public.load_sample_data(p_actor_id uuid DEFAULT NULL)
+RETURNS jsonb
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public, app
+AS $$
+BEGIN
+  IF (auth.jwt() ->> 'role') IS DISTINCT FROM 'service_role' THEN
+    RAISE EXCEPTION 'Forbidden: service_role only';
+  END IF;
+  RETURN app.load_sample_data(p_actor_id);
+END;
+$$;
+
+REVOKE ALL ON FUNCTION public.lock_setup(uuid) FROM PUBLIC, anon, authenticated;
+GRANT EXECUTE ON FUNCTION public.lock_setup(uuid) TO service_role;
+
+REVOKE ALL ON FUNCTION public.anonymise_client(uuid, uuid) FROM PUBLIC, anon, authenticated;
+GRANT EXECUTE ON FUNCTION public.anonymise_client(uuid, uuid) TO service_role;
+
+REVOKE ALL ON FUNCTION public.reset_business_data(text[], boolean, boolean, uuid) FROM PUBLIC, anon, authenticated;
+GRANT EXECUTE ON FUNCTION public.reset_business_data(text[], boolean, boolean, uuid) TO service_role;
+
+REVOKE ALL ON FUNCTION public.load_sample_data(uuid) FROM PUBLIC, anon, authenticated;
+GRANT EXECUTE ON FUNCTION public.load_sample_data(uuid) TO service_role;

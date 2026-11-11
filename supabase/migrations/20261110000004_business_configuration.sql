@@ -60,7 +60,7 @@ CREATE TRIGGER business_settings_audit_trigger
 
 -- 2. Document Numbering Configuration
 CREATE TABLE IF NOT EXISTS public.document_number_config (
-  doc_type document_type PRIMARY KEY,
+  doc_type text PRIMARY KEY CHECK (doc_type IN ('QT', 'INV', 'RCP', 'BK', 'CN')),
   prefix text NOT NULL,
   padding smallint NOT NULL DEFAULT 6,
   year_format text NOT NULL DEFAULT 'YYYY' CHECK (year_format IN ('YYYY', 'YY')),
@@ -81,7 +81,7 @@ ON CONFLICT (doc_type) DO NOTHING;
 
 -- 3. Document Sequences (Schema app, for atomic concurrency safety)
 CREATE TABLE IF NOT EXISTS app.document_sequences (
-  doc_type document_type NOT NULL,
+  doc_type text NOT NULL CHECK (doc_type IN ('QT', 'INV', 'RCP', 'BK', 'CN')),
   fy integer NOT NULL,
   last_value integer NOT NULL DEFAULT 0,
   PRIMARY KEY (doc_type, fy)
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS app.document_sequences (
 
 -- 4. Atomic Document Numbering Function
 CREATE OR REPLACE FUNCTION app.next_document_number(
-  p_doc_type document_type,
+  p_doc_type text,
   p_date date DEFAULT current_date
 )
 RETURNS text
@@ -147,6 +147,22 @@ BEGIN
 END;
 $$;
 
+-- Expose public RPC wrapper for Supabase PostgREST client calls
+CREATE OR REPLACE FUNCTION public.next_document_number(
+  p_doc_type text,
+  p_date date DEFAULT current_date
+)
+RETURNS text
+LANGUAGE sql
+SECURITY DEFINER
+SET search_path = public, app
+AS $$
+  SELECT app.next_document_number(p_doc_type, p_date);
+$$;
+
+REVOKE ALL ON FUNCTION public.next_document_number(text, date) FROM PUBLIC, anon;
+GRANT EXECUTE ON FUNCTION public.next_document_number(text, date) TO authenticated, service_role;
+
 -- 5. Service Category Tax (GST-05)
 CREATE TABLE IF NOT EXISTS public.service_category_tax (
   category service_category PRIMARY KEY,
@@ -161,11 +177,11 @@ INSERT INTO public.service_category_tax (category, hsn_sac_code, cgst_bps, sgst_
 VALUES
   ('photography', '998381', 900, 900, 1800),
   ('videography', '998382', 900, 900, 1800),
-  ('cinematography', '998382', 900, 900, 1800),
   ('drone', '998381', 900, 900, 1800),
   ('album', '998912', 600, 600, 1200),
   ('editing', '998384', 900, 900, 1800),
-  ('other', '998389', 900, 900, 1800)
+  ('travel', '998389', 900, 900, 1800),
+  ('miscellaneous', '998389', 900, 900, 1800)
 ON CONFLICT (category) DO NOTHING;
 
 -- 6. Email Templates
@@ -246,7 +262,7 @@ CREATE TABLE IF NOT EXISTS public.gmail_credentials (
 -- 8. Email Send Log
 CREATE TABLE IF NOT EXISTS public.email_send_log (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  document_type document_type,
+  document_type text,
   document_id uuid,
   client_id uuid,
   recipient text NOT NULL,

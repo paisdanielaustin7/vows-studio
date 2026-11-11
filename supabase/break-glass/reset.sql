@@ -40,7 +40,6 @@ DELETE FROM public.invoices;
 -- Expenses & Income
 DELETE FROM public.expenses;
 DELETE FROM public.manual_income_entries;
-DELETE FROM public.crew_pay_payments;
 DELETE FROM public.crew_pay_records;
 
 -- Bookings, Events & Crew
