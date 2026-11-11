@@ -652,6 +652,21 @@ export async function enrollMfaAction(): Promise<
     };
   }
 
+  // Clean up any abandoned unverified TOTP factors so refreshing /mfa/enroll never collides
+  const admin = getAdminClient();
+  const { data: existingFactors } = await admin.auth.admin.mfa.listFactors({
+    userId: user.id,
+  });
+  const unverifiedFactors = (existingFactors?.factors || []).filter(
+    (f) => f.status === 'unverified' && f.factor_type === 'totp'
+  );
+  for (const staleFactor of unverifiedFactors) {
+    await admin.auth.admin.mfa.deleteFactor({
+      id: staleFactor.id,
+      userId: user.id,
+    });
+  }
+
   const { data: enrollData, error: enrollError } = await supabase.auth.mfa.enroll({
     factorType: 'totp',
     issuer: 'VOWS Studio',
