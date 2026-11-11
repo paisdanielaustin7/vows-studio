@@ -1,8 +1,8 @@
 # VOWS Studio — Implementation Progress
 
-> **Last Updated:** 2026-11-10  
+> **Last Updated:** 2026-11-11  
 > **Target:** Google Antigravity with Gemini 3.8  
-> **Status:** Active Execution  
+> **Status:** 100% Complete — Ready for Production Release  
 
 ---
 
@@ -18,10 +18,10 @@
 | **Phase 4** | Finance (Invoices, Payments, Receipts, Credits, Expenses, Ledger) | **DONE** | Branch `phase-4-finance` |
 | **Phase 5** | PDF Generation & Gmail Integration | **DONE** | Branch `phase-5-documents` |
 | **Phase 6** | Delivery Pipeline (9 Stages) | **DONE** | Branch `phase-6-delivery` |
-| **Phase 7** | Public Website | **DONE** | Branch `phase-7-website` |
+| **Phase 7** | Public Website & Monograph Showcase | **DONE** | Branch `phase-7-website` |
 | **Phase 8** | Reviews & Testimonials | **DONE** | Branch `phase-8-reviews` |
-| **Phase 9** | Dashboard Completion, Jobs, Data Management (Reset Wizard) | Pending | Branch `phase-9-ops` |
-| **Phase 10** | Hardening, Release & Deployment Runbooks | Pending | Branch `phase-10-release` |
+| **Phase 9** | Dashboard Completion, Jobs, Data Management (Reset Wizard) | **DONE** | Branch `phase-9-ops` |
+| **Phase 10** | Hardening, Security Audits, Demo Hardening, Runbooks & Release | **DONE** | Branch `phase-10-release` |
 
 ---
 
@@ -120,128 +120,107 @@
 
 ## Phase 6 Checklist (Delivery Pipeline)
 - [x] Task 1: Database Migrations 011 and 018:
-  - Canonical 9 delivery stages from GLOSSARY §5: `raw_import`, `culling`, `editing`, `client_preview`, `revisions`, `final_export`, `quality_check`, `delivery`, `completed`.
-  - Override auditing: `override_reason`, `overridden_by`, `overridden_at` on `delivery_stages`.
-  - Stage assignees table: `delivery_stage_assignees` with staff assignment policy.
-  - Deliverables & attachments table: `delivery_stage_attachments` (links & files ≤ 50MB to `client-uploads`).
-  - Database trigger `fn_check_delivery_stage_sequential`: enforces strict sequential progression; allows SA/BO override only with non-empty reason; requires blocked reason; sets `pipeline.completed_at` on stage 9 without altering booking status (D-36, DEL-03).
-  - Booking trigger `fn_auto_init_booking_delivery`: automatically seeds 9 stages when booking is created.
-  - View `delivery_pipelines_v`: derived `behind_schedule`, progress %, current stage code.
-  - RLS policies: Staff can update ONLY assigned stages (`app.assigned_to_stage`); Crew is read-only.
-- [x] Task 2: Domain types `types/delivery.ts`, database types `types/database.ts`, and Zod schemas `lib/validations/delivery.schema.ts` (100% test coverage).
-- [x] Task 3: Server Actions (`server/actions/delivery.actions.ts`):
-  - `getDeliveryPipelineAction`, `updateStageStatusAction`, `assignStageStaffAction`, `addStageAttachmentAction`, `deleteStageAttachmentAction`, `generateShareLinkAction`, `revokeShareLinkAction`, `getPublicDeliveryAction`, `listDeliveryPipelinesAction`.
-- [x] Task 4: UI Components matching Stitch screens:
-  - `PipelineTracker` (`components/delivery/pipeline-tracker.tsx`) with 9-stage stepper, progress metrics, behind-schedule alerts, and stage drawer.
-  - `StageDialog` (`components/delivery/stage-dialog.tsx`) with status controls, blocked reason prompt, SA/BO override audit form, staff assignees, and attachment deliverables.
-  - `ShareLinkDialog` (`components/delivery/share-link-dialog.tsx`) with 256-bit secure token generation, expiration windows, copy link toast, and revocation.
-  - `ReviewRequestPromptDialog` (`components/delivery/review-request-prompt-dialog.tsx`) launched upon completing stage 9.
-- [x] Task 5: CRM Operations Delivery Page `/crm/delivery/page.tsx` and integration into Booking Detail View Tab 3 ("Master Delivery").
-- [x] Task 6: Public Client Share Portal `/delivery/[token]/page.tsx` with uniform "Invalid or expired delivery link" error handling, and media deliverables viewer.
-- [x] Task 7: Unit & Integration tests (`tests/unit/delivery/sequential-stage.test.ts`, `tests/unit/delivery/share-token.test.ts`, and extended `tests/integration/rls/rls-matrix.test.ts`):
-  - 258 total tests passing; 100% test coverage on `lib/money/**` and `lib/validations/**`.
+  - Canonical 9 delivery stages from GLOSSARY §5.
+  - Database trigger `fn_check_delivery_stage_sequential`: enforces strict sequential progression.
+  - Database trigger `fn_auto_init_booking_delivery`: automatically seeds 9 stages when booking is created.
+- [x] Task 2: Domain types `types/delivery.ts`, database types `types/database.ts`, and Zod schemas `lib/validations/delivery.schema.ts`.
+- [x] Task 3: Server Actions (`server/actions/delivery.actions.ts`).
+- [x] Task 4: UI Components matching Stitch screens (`PipelineTracker`, `StageDialog`, `ShareLinkDialog`, `ReviewRequestPromptDialog`).
+- [x] Task 5: CRM Operations Delivery Page `/crm/delivery/page.tsx` and Booking Detail View integration.
+- [x] Task 6: Public Client Share Portal `/delivery/[token]/page.tsx`.
+- [x] Task 7: Unit & Integration tests (258 total tests passing; 100% test coverage on `lib/money/**` and `lib/validations/**`).
 
 ---
 
 ## Phase 7 Checklist (Public Website & Monograph Showcase)
-- [x] Task 1: Database Migrations 012 and 019:
-  - `portfolio_items` and `portfolio_images` with DB constraint `check_portfolio_consent_to_publish` (`CHECK (NOT is_published OR client_consent_confirmed_at IS NOT NULL)`), indexes, and `app.touch_updated_at()` trigger.
-  - Public storage buckets `portfolio` and `branding` created per GLOSSARY §10 & D-29.
-  - Seeds for default curated wedding monographs, FAQ items, site content, and page SEO metadata.
-  - Strict RLS policies: anonymous public access can read ONLY published portfolio items and images with confirmed client consent (`is_published = true AND client_consent_confirmed_at IS NOT NULL AND deleted_at IS NULL`). Internal roles (SA, BO, MG) can manage; Staff/Crew can read internal drafts in CRM.
-- [x] Task 2: Types & Validations:
-  - Domain types `types/portfolio.ts` (`PortfolioItem`, `PortfolioImage`, `SitePageSeo`, `FaqItem`).
-  - Database types `types/database.ts` updated with `portfolio_items`, `portfolio_images`, `site_content`, `site_page_seo`, `faq_items`.
-  - Zod validation schemas: `publicEnquirySchema` (phone E.164, mandatory consent, honeypot, Turnstile), `portfolioItemSchema` (enforces client consent timestamp when `isPublished: true`), `portfolioImageSchema` (min 5-character alt text), `updateSiteContentSchema`, `updateSitePageSeoSchema`, `faqItemSchema`.
-  - 100% test coverage verified in `lib/validations/website.test.ts`.
-- [x] Task 3: API Route Handler:
-  - `POST /api/public/enquiry` (`app/api/public/enquiry/route.ts`):
-    - Client IP rate limit (5 per hour per IP) via `checkRateLimit('public_form', ip)`.
-    - Honeypot anti-spam trap returning silent 200 without DB insertion.
-    - Cloudflare Turnstile token validation.
-    - Inserts strictly into `enquiries` table with `consent_given_at` (no client row created per D-11, D-33, CLI-05).
-- [x] Task 4: Server Queries & Actions:
-  - Server Queries (`server/queries/website.queries.ts`): `getPublicPortfolioItems`, `getPublicServicesAndPackages`, `getPublicFaqItems`, `getPublicSiteContent`, `getPublicPageSeo`, `getPublicReviews`.
-  - Server Actions (`server/actions/portfolio.actions.ts`): `listPortfolioItemsAction`, `createPortfolioItemAction`, `updatePortfolioItemAction`, `publishPortfolioItemAction` (enforces consent), `unpublishPortfolioItemAction`, `deletePortfolioItemAction`, `addPortfolioImageAction`, `deletePortfolioImageAction`.
-  - Server Actions (`server/actions/website.actions.ts`): `getSiteContentAction`, `updateSiteContentAction`, `listFaqItemsAction`, `createFaqItemAction`, `updateFaqItemAction`, `deleteFaqItemAction`, `getSitePageSeoAction`, `updateSitePageSeoAction`.
-- [x] Task 5: Public Layout & Shared Components:
-  - `PublicHeader` (`components/public/public-header.tsx`): VOWS Studio monogram logo, nav links, "Studio Portal" sign-in link, "Enquire" CTA, and responsive mobile menu drawer.
-  - `PublicFooter` (`components/public/public-footer.tsx`): Mangalore atelier address, South Goa atelier note, legal compliance links, copyright, DPDP notice.
-  - `CookieBanner` (`components/public/cookie-banner.tsx`): subtle local-storage-persisted consent banner.
-  - `PortfolioLightbox` (`components/public/portfolio-lightbox.tsx`): high-res image frame, caption details, tags, alt text, and keyboard navigation (Left, Right, Escape).
-  - `LocalBusinessJsonLd` (`components/public/json-ld.tsx`): PhotographyBusiness and AggregateRating structured data.
-- [x] Task 6: Public Pages:
-  - Home (`app/(public)/page.tsx`): Hero, Trust Strip, Selected Monographs, Liturgical Nuptials philosophy, Signature Packages from catalogue, Kind Words testimonials, and Inscription CTA banner.
-  - Portfolio (`app/(public)/portfolio/page.tsx` & `app/(public)/portfolio/[category]/page.tsx`): Category filter chips, responsive card grid, and lightbox.
-  - Services & Pricing (`app/(public)/services/page.tsx`): Rate card, signature packages comparison with `formatINR`, modular production commissions, and turnaround SLAs.
-  - About (`app/(public)/about/page.tsx`): Studio heritage narrative, Reuben Serrao's philosophy, natural light & chemical film craft, camera systems, archival vault.
-  - Contact (`app/(public)/contact/page.tsx`): Studio coordinates, consultation protocol, and `PublicEnquiryForm`.
-  - Thank You (`app/(public)/contact/thank-you/page.tsx`): Confirmation and 3-step consultation timeline.
-  - Reviews (`app/(public)/reviews/page.tsx`): 4.9/5.0 aggregate rating card, category breakdowns, and verified couple review cards.
-  - FAQ (`app/(public)/faq/page.tsx`), Privacy Policy (`app/(public)/privacy/page.tsx`), Terms of Service (`app/(public)/terms/page.tsx`).
-  - Next.js SEO metadata routes: `app/sitemap.ts` and `app/robots.ts`.
-- [x] Task 7: CRM Portfolio Manager & Website Settings:
-  - `/crm/portfolio` (`app/crm/portfolio/page.tsx` and `portfolio-client.tsx`):
-    - Manage portfolio monographs with live/draft status chips, consent status, and "+ Add New Project" modal.
-    - `PortfolioConsentDialog` matching `stitch-screens/portfolio_manager_consent_dialog_desktop`: enforces 3-point DPDP publication consent release before setting `is_published = true`.
-  - `/crm/settings/website` (`app/crm/settings/website/page.tsx` and `website-settings-client.tsx`):
-    - Tabbed configuration for Homepage hero, Studio philosophy, FAQ items CRUD, page SEO metadata, and legal policies.
-- [x] Task 8: Quality Gates & Tests:
-  - `tests/integration/public-enquiry-form.test.ts` (7 tests covering honeypot, Turnstile failure, rate limiting, validation, consent confirmation, and portfolio DB constraint).
-  - `tests/integration/rls/rls-matrix.test.ts` extended with Phase 7 portfolio visibility simulation.
-  - 284/284 tests passing; 100% coverage on `lib/money/**` and `lib/validations/**`.
-  - Clean ESLint (0 errors) and TypeScript typecheck (0 errors).
-  - Production build successful across all 55 static and dynamic routes.
+- [x] Task 1: Database Migrations 012 and 019 (`portfolio_items`, `portfolio_images`, `check_portfolio_consent_to_publish`, RLS).
+- [x] Task 2: Types & Validations (`types/portfolio.ts`, `lib/validations/website.schema.ts`).
+- [x] Task 3: API Route Handler `POST /api/public/enquiry` with rate limiting, honeypot, Turnstile validation, and consent logging.
+- [x] Task 4: Server Queries & Actions for portfolio items, site content, FAQs, page SEO.
+- [x] Task 5: Public Layout & Shared Components (`PublicHeader`, `PublicFooter`, `CookieBanner`, `PortfolioLightbox`, `LocalBusinessJsonLd`).
+- [x] Task 6: Public Pages (`/`, `/portfolio`, `/services`, `/about`, `/contact`, `/reviews`, `/faq`, `/privacy`, `/terms`, `sitemap.ts`, `robots.ts`).
+- [x] Task 7: CRM Portfolio Manager (`/crm/portfolio`) and Website Settings (`/crm/settings/website`).
+- [x] Task 8: Quality Gates & Tests (284/284 tests passing, clean build across all 55 routes).
 
 ---
 
 ## Phase 8 Checklist (Reviews & Testimonials)
-- [x] Task 1: Database Migrations & Views:
-  - `supabase/migrations/20261110000013_reviews.sql`:
-    - `review_requests` table with 30-day expiry, token hashing, partial unique index `(booking_id) WHERE submitted_at IS NULL AND revoked_at IS NULL`.
-    - `reviews` table with 1..5 rating checks, body length constraint (`char_length(body) >= 10`), unique booking constraint (`UNIQUE (booking_id)`), and status machine (`pending`, `approved`, `rejected`).
-    - Triggers: `touch_updated_at_reviews` and `reviews_audit_trigger`.
-    - View: `public.review_stats_v` aggregating average overall score and category breakdown for approved reviews.
-    - Helper functions: `generate_review_request` and `submit_review`.
-  - `supabase/migrations/20261110000020_rls_policies_part7_reviews.sql`:
-    - RLS enabled on `review_requests` and `reviews`.
-    - Public read restricted strictly to `status = 'approved'` reviews.
-    - Studio internal read for SA, BO, MG (`reviews:view`).
-    - Moderation update restricted to SA and BO (`reviews:moderate`), strictly excluding Manager per Ruling R6.
-    - TypeScript definitions updated in `types/database.ts`.
-- [x] Task 2: Types & Validation Schemas:
-  - `types/reviews.ts`: `ReviewStatus`, `ReviewRequest`, `Review`, `ReviewStats`, `ReviewListItem`, `PublicReviewTokenDetails`, `CreateReviewRequestInput`, `SubmitReviewInput`, `ModerateReviewInput`.
-  - `lib/validations/reviews.schema.ts`: `createReviewRequestSchema`, `submitReviewSchema` (1-5 star ratings, body min 10 chars max 3000 chars, reviewer name min 2 chars, showcase consent), `moderateReviewSchema`, `listReviewsQuerySchema`.
-  - Unit tests in `lib/validations/reviews.test.ts` (20 tests covering all fields and edge cases; 100% test coverage maintained on `lib/validations/**`).
-- [x] Task 3: Server Actions & Integrations:
-  - `generateReviewRequestAction`: generates 256-bit secure token, hashes with SHA-256, revokes previous active link for the booking, enforces single submission guard, dispatches invitation email via connected Gmail service (`sendEmailService`) with `review_request` template, returns private URL.
-  - `getReviewRequestByTokenAction`: validates token hash against expiry, revocation, and submission status; returns uniform invalid response for guessed tokens preventing enumeration.
-  - `submitReviewAction`: public submission action inserting review as `pending`, marking `review_requests.submitted_at = now()`, blocking duplicate submissions, and notifying leadership (BO and SA).
-  - `moderateReviewAction`: enforces `reviews:moderate` (SA and BO only; Manager returns FORBIDDEN per RBAC R6), updates review status, moderation note, moderator id, and revalidates surfaces.
-  - `listReviewsAction`: internal review listing and stats calculator for CRM moderation.
-  - `server/queries/website.queries.ts`: `getPublicReviews()` updated to query approved reviews and `review_stats_v`.
-- [x] Task 4: Public Submission UI (`/review/[token]`):
-  - Server route `app/review/[token]/page.tsx` resolving token and rendering states from Stitch design:
-    - State 1 (Active Form): `PublicReviewForm` (`components/reviews/public-review-form.tsx`) with Confirmed Commission banner, pre-filled couple details, Master Assessment (1–5 interactive stars with descriptive text), 3 category sub-ratings (Dialogue, Artistry, Protocol), dynamic character-counter textarea (min 10 chars), and showcase consent checkbox.
-    - State 2 (Thank-You Confirmation Card): Gratitude seal, couple acknowledgement, summary metrics card, archived excerpt preview, and gallery/home action links.
-    - State 3 (Security Token Inactive): Uniform invalid/expired link screen.
-- [x] Task 5: CRM Review Moderation Interface (`/crm/reviews`):
-  - Route `app/crm/reviews/page.tsx` and client component `components/reviews/review-moderation-view.tsx` matching `stitch-screens/review_moderation_detail_desktop`:
-    - KPI Summary Banner: Overall Studio Score, Moderation Breakdown, and Category Performance.
-    - Filter toolbar: Status pills with counter badges (All, Pending Moderation, Approved, Rejected), search bar, and CSV export.
-    - Split-screen inspection layout: List of review cards on left, active inspection panel on right with granular ratings, full quote, and internal rejection reason field.
-    - Moderation CTA Bar: "Approve & Publish to Showcase", "Reject Review", "Re-Hide & Retract".
-    - RBAC R6 Governance Banner: Informational banner displayed for Manager; moderation buttons disabled/hidden.
-  - `GenerateReviewLinkModal` (`components/reviews/generate-review-link-modal.tsx`): select booking, generate 30-day token link, copy button, and Gmail dispatch.
-- [x] Task 6: Delivery & Booking Integrations:
-  - Wired `ReviewRequestPromptDialog` in `components/delivery/pipeline-tracker.tsx` to `generateReviewRequestAction` on Stage 9 Completion.
-  - Added "Request Review" button to Booking Detail view (`components/bookings/booking-detail-view.tsx`).
-  - Added Schema.org `AggregateRating` JSON-LD to `app/(public)/reviews/page.tsx`.
-- [x] Task 7: Quality Gates & Verification:
-  - `tests/unit/reviews/review-token-flow.test.ts` (7 tests covering token hashing, 30-day expiry, revocation of old links, single submission enforcement, replay protection, and uniform guessing defense).
-  - `tests/unit/reviews/review-moderation.test.ts` (6 tests covering RBAC R6 ruling, SA/BO moderation permissions, Manager forbidden from moderating, public showcase filtering to approved only, and aggregate calculation).
-  - `tests/integration/rls/rls-matrix.test.ts` extended to 55 public tables and verified R6 ruling.
-  - 318/318 tests passing; 100% coverage maintained on `lib/money/**` and `lib/validations/**`.
-  - Clean ESLint (0 errors) and TypeScript typecheck (0 errors).
-  - Production build successful across all 56 routes.
+- [x] Task 1: Database Migration 013 and 020 (`review_requests`, `reviews`, `review_stats_v`, triggers).
+- [x] Task 2: Types & Validation Schemas (`types/reviews.ts`, `lib/validations/reviews.schema.ts`).
+- [x] Task 3: Server Actions & Integrations (`generateReviewRequestAction`, `submitReviewAction`, `moderateReviewAction` enforcing RBAC R6 ruling).
+- [x] Task 4: Public Submission UI (`/review/[token]`).
+- [x] Task 5: CRM Review Moderation Interface (`/crm/reviews`).
+- [x] Task 6: Delivery & Booking Integrations.
+- [x] Task 7: Quality Gates & Tests (318/318 tests passing, clean build across all 56 routes).
 
+---
+
+## Phase 9 Checklist (Dashboard, Notifications, Jobs, and Data Management)
+- [x] Task 1: Database Migration 021 (`20261110000021_data_management.sql`):
+  - Added `setup_mode` (default `true`) and `setup_locked_at` to `business_settings`.
+  - Added `is_sample` (default `false`) across all tenant entity tables.
+  - Stored procedures: `app.lock_setup()`, `app.anonymise_client(client_id, actor_id)`, `app.reset_business_data(scopes, restart_numbering, clear_audit, actor_id)`, and `app.load_sample_data(actor_id)`.
+  - Immutability trigger bypass guard: `fn_block_mutation` honours `current_setting('app.reset_in_progress', true) = 'on'`.
+  - Break-glass procedure: `supabase/break-glass/reset.sql` with documented dependency-order wipes and sequence reset.
+- [x] Task 2: Data Management Console (`/admin/system/data`):
+  - Client component `components/admin/data-management-view.tsx` matching Stitch screens `data_management_reset_wizard_step_1_desktop` and `reset_wizard_dry_run_safety_verification_desktop`.
+  - Setup Mode status card with Tenancy Schema Guard and Go-Live lock state.
+  - First-Run Setup Checklist (6 items: profile, branding, Gmail, catalogue, crew, client) with live progress bar.
+  - Load Sample Data action (allowed only in Setup Mode or Demo Mode).
+  - Permanent Lock Setup modal requiring confirmation phrase `LOCK SETUP`.
+  - DPDP Client Anonymisation tool (`anonymiseClientAction`) preserving financial invoices.
+  - Full 4-step Reset Wizard Modal:
+    - Step 1: Target partition checkboxes with dependency cascade information.
+    - Step 2: Live dry-run simulation table with record and file counts.
+    - Step 3: Safety verification with pre-reset backup archive download, SuperAdmin password verification, exact confirmation phrase `RESET VOWS DATA`, and safeguard checkboxes.
+    - Step 4: Completion summary with backup reference and execution timestamp.
+- [x] Task 3: Executive Dashboard Completion (`/crm/dashboard`):
+  - Complete role-based filtering:
+    - SA & Business Owner: full financial briefing, revenue velocity, collected vs invoiced charts, overdue invoices widget.
+    - Accountant: financial ledger figures and invoice tracking without operations management.
+    - Manager: Operations metrics ONLY (active enquiries, confirmed bookings, upcoming events, blocked stages, total clients, follow-ups due) with **strictly zero revenue or financial amounts** per RBAC R3 ruling.
+    - Staff / Crew: assigned schedule and delivery milestones.
+  - Indian Financial Year selector dropdown (April 1 to March 31, e.g. FY 2025-26).
+  - 5-minute auto-refresh interval with last-synced timestamp and manual refresh trigger.
+  - Booking composition donut chart and 6-month revenue SVG chart.
+  - Active interactive widgets linking to CRM filtered lists.
+- [x] Task 4: Notifications & Bell Dropdown:
+  - Unread count badge and auto-polling every 60 seconds in CRM topbar.
+  - Dropdown listing recent notifications with relative timestamps.
+  - "Mark All Read" action (`markAllNotificationsReadAction`) and click-to-navigate.
+- [x] Task 5: Scheduled Background Jobs (Vercel Cron & `vercel.json`):
+  - `/api/cron/daily-digest`: `30 3 * * *` (09:00 IST) — scans follow-ups and overdue invoices.
+  - `/api/cron/expiry-sweep`: `30 20 * * *` (02:00 IST) — cleans expired share links and stale invites.
+  - `/api/cron/quotation-expiry`: `30 3 * * *` (09:00 IST) — alerts creators of quotations expiring in 3 days.
+  - `/api/cron/demo-reset`: `0 2 * * 0` (Sunday 02:00 UTC) — refreshes demo instance dataset.
+  - All cron endpoints protected by `CRON_SECRET` bearer check.
+- [x] Task 6: Verification & Quality Gates:
+  - Unit tests: `tests/unit/data-management/reset-wizard.test.ts`, `tests/unit/dashboard/role-filtering.test.ts`, `tests/unit/cron/cron-jobs.test.ts`.
+  - 353 / 353 tests passing; 100% coverage on `lib/money/**` and `lib/validations/**`.
+  - Production build successful across 62 routes.
+
+---
+
+## Phase 10 Checklist (Hardening, Security Audits, Demo Hardening, Runbooks & Release)
+- [x] Task 1: Automated Security & Hardening Suites (`tests/unit/security/`):
+  - `bundle-secrets.test.ts`: Verifies service-role key and secrets are never prefixed with `NEXT_PUBLIC_` or exposed to client bundle.
+  - `headers-csp.test.ts`: Verifies `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, HSTS, Referrer-Policy, Permissions-Policy, and Content Security Policy (`frame-ancestors 'none'`, `object-src 'none'`).
+  - `csv-formula-injection.test.ts`: Verifies `lib/utils/csv.ts` neutralizes formula injection payloads (`=`, `+`, `-`, `@`, `\t`, `\r`) in CSV exports.
+  - `upload-abuse.test.ts`: Verifies file upload validation in `lib/validations/upload.ts` (oversized files, disallowed MIME types, double extensions, SVG script injection).
+  - `xss-sqli-probes.test.ts`: Verifies free-text fields and quotation/review schemas withstand XSS and SQL injection payloads safely.
+- [x] Task 2: Demo Mode Hardening:
+  - `NEXT_PUBLIC_APP_MODE === 'demo'` banner displayed across CRM shell.
+  - Quick-fill demo credentials panel on `/login` for all 4 core roles.
+  - `DEMO PREVIEW` watermark stamped on all quotation and invoice PDFs when generated in demo mode.
+- [x] Task 3: Comprehensive Documentation & Operational Runbooks:
+  - `docs/RUNBOOK_RESTORE.md`: Dual-tier backup schedules, step-by-step scratch restoration drill, sequence counter reset, and financial ledger integrity verification.
+  - `docs/RUNBOOK_DEPLOY.md`: Complete guide for Vercel Pro and Supabase Pro deployment, environment variables reference table, Auth settings, Google Cloud OAuth, Upstash Redis, and Cloudflare Turnstile.
+  - `docs/RUNBOOK_SECURITY.md`: Secret rotation protocols, break-glass SQL usage (`supabase/break-glass/reset.sql`), P0/P1 incident response checklists, and DPDP notification procedures.
+  - `docs/USER_GUIDE.md`: Comprehensive owner manual covering setup mode, catalogue & crew onboarding, sample data, lock setup, sales workflows, delivery pipeline, invoicing, and review moderation.
+  - `docs/RELEASE_CHECKLIST.md`: Formal verification audit against every requirement in `SECURITY_PLAN.md` §16, citing exact test names, files, and human sign-offs.
+- [x] Task 4: Final Quality Gates & Verification:
+  - ESLint: 0 errors
+  - TypeScript: 0 errors (`tsc --noEmit`)
+  - Vitest: 375 / 375 tests passing (37 test suites)
+  - Statement & Line Coverage: 100% on `lib/money/**` and `lib/validations/**`
+  - Next.js Production Build: 62 static and dynamic routes compiled successfully in Turbopack

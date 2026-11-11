@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { getAuthenticatedUser, requirePermission } from '@/lib/auth';
 import { createClient } from '@/lib/supabase/server';
+import { sanitizeCsvCell } from '@/lib/utils/csv';
 import { ActionResult } from '@/types/auth';
 import {
   Invoice,
@@ -1271,16 +1272,6 @@ export async function exportLedgerCsvAction(params: {
     if (error) {
       return { error: { code: 'INTERNAL_ERROR', message: error.message } };
     }
-
-    // Formula injection escape helper
-    const sanitizeCsvCell = (val: string | null | undefined): string => {
-      if (!val) return '';
-      const str = String(val).trim();
-      if (/^[=+\-@\t\r]/.test(str)) {
-        return `"'${str.replace(/"/g, '""')}"`;
-      }
-      return `"${str.replace(/"/g, '""')}"`;
-    };
 
     const header = [
       'Entry Date',

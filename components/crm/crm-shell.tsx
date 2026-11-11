@@ -495,6 +495,19 @@ export function CrmShell({
 
         {/* Content Body */}
         <main className="flex-1 pt-16 pb-20 md:pb-8 px-4 sm:px-6 lg:px-8">
+          {process.env.NEXT_PUBLIC_APP_MODE === 'demo' && (
+            <div className="mb-4 p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-900 dark:text-amber-200 text-xs flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+                <span>
+                  <strong>DEMO MODE:</strong> Synthetic demonstration fixtures active. Live emails and payment gateways disabled.
+                </span>
+              </div>
+              <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-amber-500/20">
+                Demo
+              </span>
+            </div>
+          )}
           {children}
         </main>
 
