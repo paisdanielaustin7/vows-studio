@@ -574,6 +574,7 @@ export interface Database {
           created_at: string;
           updated_at: string;
           deleted_at: string | null;
+          is_sample: boolean;
         };
         Insert: {
           id?: string;
@@ -591,6 +592,7 @@ export interface Database {
           created_at?: string;
           updated_at?: string;
           deleted_at?: string | null;
+          is_sample?: boolean;
         };
         Update: {
           id?: string;
@@ -608,6 +610,7 @@ export interface Database {
           created_at?: string;
           updated_at?: string;
           deleted_at?: string | null;
+          is_sample?: boolean;
         };
         Relationships: Relationship[];
       };
@@ -691,6 +694,7 @@ export interface Database {
           created_at: string;
           updated_at: string;
           deleted_at: string | null;
+          is_sample: boolean;
         };
         Insert: {
           id?: string;
@@ -834,6 +838,7 @@ export interface Database {
           created_at: string;
           updated_at: string;
           deleted_at: string | null;
+          is_sample: boolean;
         };
         Insert: {
           id?: string;
@@ -847,6 +852,7 @@ export interface Database {
           created_at?: string;
           updated_at?: string;
           deleted_at?: string | null;
+          is_sample?: boolean;
         };
         Update: {
           id?: string;
@@ -860,6 +866,7 @@ export interface Database {
           created_at?: string;
           updated_at?: string;
           deleted_at?: string | null;
+          is_sample?: boolean;
         };
         Relationships: Relationship[];
       };
@@ -901,6 +908,7 @@ export interface Database {
           created_at: string;
           updated_at: string;
           deleted_at: string | null;
+          is_sample: boolean;
         };
         Insert: {
           id?: string;
@@ -912,6 +920,7 @@ export interface Database {
           created_at?: string;
           updated_at?: string;
           deleted_at?: string | null;
+          is_sample?: boolean;
         };
         Update: {
           id?: string;
@@ -923,6 +932,7 @@ export interface Database {
           created_at?: string;
           updated_at?: string;
           deleted_at?: string | null;
+          is_sample?: boolean;
         };
         Relationships: Relationship[];
       };
@@ -1011,6 +1021,7 @@ export interface Database {
           created_at: string;
           updated_at: string;
           deleted_at: string | null;
+          is_sample: boolean;
         };
         Insert: {
           id?: string;
@@ -1313,6 +1324,7 @@ export interface Database {
           created_at: string;
           updated_at: string;
           deleted_at: string | null;
+          is_sample: boolean;
         };
         Insert: {
           id?: string;
@@ -1399,6 +1411,7 @@ export interface Database {
           created_at: string;
           updated_at: string;
           deleted_at: string | null;
+          is_sample: boolean;
         };
         Insert: {
           id?: string;
@@ -2133,6 +2146,7 @@ export interface Database {
           created_at: string;
           updated_at: string;
           deleted_at: string | null;
+          is_sample: boolean;
         };
         Insert: {
           id?: string;
@@ -2187,6 +2201,7 @@ export interface Database {
           created_at: string;
           updated_at: string;
           deleted_at: string | null;
+          is_sample: boolean;
         };
         Insert: {
           id?: string;
@@ -2233,6 +2248,7 @@ export interface Database {
           created_at: string;
           updated_at: string;
           deleted_at: string | null;
+          is_sample: boolean;
         };
         Insert: {
           id?: string;

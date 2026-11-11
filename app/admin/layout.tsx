@@ -2,7 +2,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getAuthenticatedUser } from '@/lib/auth';
-import { ShieldCheck, Users, History, Activity, ArrowLeft } from 'lucide-react';
+import { ShieldCheck, Users, History, Activity, ArrowLeft, Database } from 'lucide-react';
 
 export default async function AdminLayout({
   children,
@@ -60,6 +60,18 @@ export default async function AdminLayout({
             >
               <History className="w-4 h-4" />
               <span>System Audit Log</span>
+            </Link>
+            <Link
+              href="/admin/system/data"
+              className="flex items-center justify-between px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"
+            >
+              <div className="flex items-center gap-3">
+                <Database className="w-4 h-4" />
+                <span>Data Management</span>
+              </div>
+              <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-error-container text-on-error-container">
+                SA
+              </span>
             </Link>
           </nav>
         </div>

@@ -5,7 +5,11 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { UserRole } from '@/lib/constants/permissions';
 import { logoutAction } from '@/server/actions/auth.actions';
-import { getNotificationsAction, markNotificationReadAction } from '@/server/actions/notification.actions';
+import {
+  getNotificationsAction,
+  markNotificationReadAction,
+  markAllNotificationsReadAction,
+} from '@/server/actions/notification.actions';
 import { NotificationEntry } from '@/types/auth';
 import {
   Inbox,
@@ -259,6 +263,22 @@ export function CrmShell({
     setUnreadCount((prev) => Math.max(0, prev - 1));
   };
 
+  const markAllRead = async () => {
+    await markAllNotificationsReadAction();
+    setNotifications((prev) => prev.map((n) => ({ ...n, isRead: true })));
+    setUnreadCount(0);
+  };
+
+  const handleNotificationClick = async (n: NotificationEntry) => {
+    if (!n.isRead) {
+      await markRead(n.id);
+    }
+    setIsNotificationsOpen(false);
+    if (n.link) {
+      router.push(n.link);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-surface flex text-on-surface">
       {/* Desktop Sidebar (256px) */}
@@ -380,32 +400,41 @@ export function CrmShell({
                 <div className="absolute right-0 mt-2 w-80 bg-surface-container-lowest border border-outline-variant/40 rounded-xl shadow-lg p-3 z-50 space-y-2">
                   <div className="flex items-center justify-between pb-2 border-b border-outline-variant/30">
                     <span className="text-xs font-semibold text-on-surface">Notifications</span>
-                    <span className="text-[11px] text-outline">{unreadCount} unread</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-[11px] text-outline">{unreadCount} unread</span>
+                      {unreadCount > 0 && (
+                        <button
+                          type="button"
+                          onClick={markAllRead}
+                          className="text-[10px] text-primary hover:underline font-semibold"
+                        >
+                          Mark all read
+                        </button>
+                      )}
+                    </div>
                   </div>
-                  <div className="max-h-64 overflow-y-auto space-y-1.5 divide-y divide-outline-variant/20">
+                  <div className="max-h-64 overflow-y-auto space-y-1 divide-y divide-outline-variant/20">
                     {notifications.length === 0 ? (
                       <p className="text-xs text-outline py-4 text-center">No recent notifications.</p>
                     ) : (
                       notifications.map((n) => (
                         <div
                           key={n.id}
-                          className={`pt-1.5 text-xs space-y-0.5 ${
-                            n.isRead ? 'opacity-60' : 'font-medium'
+                          onClick={() => handleNotificationClick(n)}
+                          className={`pt-2 pb-1 text-xs space-y-0.5 cursor-pointer rounded px-1.5 transition-colors hover:bg-surface-container-low ${
+                            n.isRead ? 'opacity-60' : 'font-medium bg-surface-container-low/40'
                           }`}
                         >
                           <div className="flex items-center justify-between">
-                            <span className="text-on-surface">{n.title}</span>
-                            {!n.isRead && (
-                              <button
-                                type="button"
-                                onClick={() => markRead(n.id)}
-                                className="text-primary hover:underline text-[10px]"
-                              >
-                                Mark read
-                              </button>
-                            )}
+                            <span className="text-on-surface truncate font-semibold">{n.title}</span>
+                            <span className="text-[10px] text-outline shrink-0 ml-1">
+                              {new Date(n.createdAt).toLocaleDateString('en-IN', {
+                                day: 'numeric',
+                                month: 'short',
+                              })}
+                            </span>
                           </div>
-                          {n.body && <p className="text-[11px] text-on-surface-variant">{n.body}</p>}
+                          {n.body && <p className="text-[11px] text-on-surface-variant line-clamp-2">{n.body}</p>}
                         </div>
                       ))
                     )}

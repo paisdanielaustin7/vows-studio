@@ -13,6 +13,7 @@ import {
   Wallet,
   Globe,
   ChevronRight,
+  Database,
 } from 'lucide-react';
 
 interface SettingsNavGroup {
@@ -80,6 +81,17 @@ const SETTINGS_NAV: SettingsNavGroup[] = [
         description: 'Quotation & invoice messages',
         href: '/crm/settings/email-templates',
         icon: MailCheck,
+      },
+    ],
+  },
+  {
+    title: 'System & Governance',
+    items: [
+      {
+        title: 'Data Management',
+        description: 'Setup mode, reset wizard & seed partitions (SA)',
+        href: '/admin/system/data',
+        icon: Database,
       },
     ],
   },

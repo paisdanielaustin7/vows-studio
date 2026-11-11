@@ -1,0 +1,20 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/daily-digest",
+      "schedule": "30 3 * * *"
+    },
+    {
+      "path": "/api/cron/expiry-sweep",
+      "schedule": "30 20 * * *"
+    },
+    {
+      "path": "/api/cron/quotation-expiry",
+      "schedule": "30 3 * * *"
+    },
+    {
+      "path": "/api/cron/demo-reset",
+      "schedule": "0 2 * * 0"
+    }
+  ]
+}

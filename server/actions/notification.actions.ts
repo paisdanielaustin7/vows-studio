@@ -79,3 +79,37 @@ export async function markNotificationReadAction(
 
   return { data: { success: true } };
 }
+
+/**
+ * Mark all unread notifications as read for current user.
+ */
+export async function markAllNotificationsReadAction(): Promise<
+  ActionResult<{ success: boolean }>
+> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return { data: { success: true } };
+  }
+
+  const { error } = await supabase
+    .from('notifications')
+    .update({ is_read: true, read_at: new Date().toISOString() })
+    .eq('user_id', user.id)
+    .eq('is_read', false);
+
+  if (error) {
+    return {
+      error: {
+        code: 'INTERNAL_ERROR',
+        message: error.message,
+      },
+    };
+  }
+
+  return { data: { success: true } };
+}
+
