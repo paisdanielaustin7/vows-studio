@@ -195,6 +195,7 @@ CREATE TYPE delivery_stage_code AS ENUM (
 );
 
 CREATE TYPE tax_type AS ENUM (
+  'none',
   'cgst_sgst',
   'igst'
 );

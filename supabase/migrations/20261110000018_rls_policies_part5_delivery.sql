@@ -13,9 +13,9 @@ DROP POLICY IF EXISTS delivery_stages_update ON public.delivery_stages;
 CREATE POLICY delivery_stages_select ON public.delivery_stages
   FOR SELECT TO authenticated
   USING (
-    app.current_user_role() IN ('system_admin', 'business_owner', 'manager', 'staff')
+    app.has_role('system_admin', 'business_owner', 'manager', 'staff')
     OR (
-      app.current_user_role() = 'crew'
+      app.has_role('crew_member')
       AND EXISTS (
         SELECT 1
         FROM public.delivery_pipelines dp
@@ -31,16 +31,16 @@ CREATE POLICY delivery_stages_select ON public.delivery_stages
 CREATE POLICY delivery_stages_update ON public.delivery_stages
   FOR UPDATE TO authenticated
   USING (
-    app.current_user_role() IN ('system_admin', 'business_owner', 'manager')
+    app.has_role('system_admin', 'business_owner', 'manager')
     OR (
-      app.current_user_role() = 'staff'
+      app.has_role('staff')
       AND app.assigned_to_stage(id)
     )
   )
   WITH CHECK (
-    app.current_user_role() IN ('system_admin', 'business_owner', 'manager')
+    app.has_role('system_admin', 'business_owner', 'manager')
     OR (
-      app.current_user_role() = 'staff'
+      app.has_role('staff')
       AND app.assigned_to_stage(id)
     )
   );
@@ -48,24 +48,24 @@ CREATE POLICY delivery_stages_update ON public.delivery_stages
 -- 3. Delivery Stage Assignees Policies
 CREATE POLICY delivery_stage_assignees_select ON public.delivery_stage_assignees
   FOR SELECT TO authenticated
-  USING (app.current_user_role() IN ('system_admin', 'business_owner', 'manager', 'staff', 'crew'));
+  USING (app.has_role('system_admin', 'business_owner', 'manager', 'staff', 'crew_member'));
 
 CREATE POLICY delivery_stage_assignees_all ON public.delivery_stage_assignees
   FOR ALL TO authenticated
-  USING (app.current_user_role() IN ('system_admin', 'business_owner', 'manager'))
-  WITH CHECK (app.current_user_role() IN ('system_admin', 'business_owner', 'manager'));
+  USING (app.has_role('system_admin', 'business_owner', 'manager'))
+  WITH CHECK (app.has_role('system_admin', 'business_owner', 'manager'));
 
 -- 4. Delivery Stage Attachments Policies
 CREATE POLICY delivery_stage_attachments_select ON public.delivery_stage_attachments
   FOR SELECT TO authenticated
-  USING (app.current_user_role() IN ('system_admin', 'business_owner', 'manager', 'staff', 'crew'));
+  USING (app.has_role('system_admin', 'business_owner', 'manager', 'staff', 'crew_member'));
 
 CREATE POLICY delivery_stage_attachments_insert ON public.delivery_stage_attachments
   FOR INSERT TO authenticated
   WITH CHECK (
-    app.current_user_role() IN ('system_admin', 'business_owner', 'manager')
+    app.has_role('system_admin', 'business_owner', 'manager')
     OR (
-      app.current_user_role() = 'staff'
+      app.has_role('staff')
       AND app.assigned_to_stage(stage_id)
     )
   );
@@ -73,17 +73,17 @@ CREATE POLICY delivery_stage_attachments_insert ON public.delivery_stage_attachm
 CREATE POLICY delivery_stage_attachments_update ON public.delivery_stage_attachments
   FOR UPDATE TO authenticated
   USING (
-    app.current_user_role() IN ('system_admin', 'business_owner', 'manager')
-    OR (created_by = auth.uid())
+    app.has_role('system_admin', 'business_owner', 'manager')
+    OR (app.is_active() AND created_by = auth.uid())
   )
   WITH CHECK (
-    app.current_user_role() IN ('system_admin', 'business_owner', 'manager')
-    OR (created_by = auth.uid())
+    app.has_role('system_admin', 'business_owner', 'manager')
+    OR (app.is_active() AND created_by = auth.uid())
   );
 
 CREATE POLICY delivery_stage_attachments_delete ON public.delivery_stage_attachments
   FOR DELETE TO authenticated
   USING (
-    app.current_user_role() IN ('system_admin', 'business_owner', 'manager')
-    OR (created_by = auth.uid())
+    app.has_role('system_admin', 'business_owner', 'manager')
+    OR (app.is_active() AND created_by = auth.uid())
   );

@@ -6,11 +6,12 @@ ALTER TABLE public.portfolio_items ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.portfolio_images ENABLE ROW LEVEL SECURITY;
 
 -- 2. Portfolio Items Policies
--- Public anonymous read: only published items with confirmed client consent
+-- Authenticated read for published & consented items (public pages render via server-only service role)
 CREATE POLICY portfolio_items__select__public ON public.portfolio_items
-  FOR SELECT
+  FOR SELECT TO authenticated
   USING (
-    is_published = true
+    app.is_active()
+    AND is_published = true
     AND client_consent_confirmed_at IS NOT NULL
     AND deleted_at IS NULL
   );
@@ -19,22 +20,23 @@ CREATE POLICY portfolio_items__select__public ON public.portfolio_items
 CREATE POLICY portfolio_items__select__internal ON public.portfolio_items
   FOR SELECT TO authenticated
   USING (
-    app.current_user_role() IN ('system_admin', 'business_owner', 'manager', 'staff', 'crew')
+    app.has_role('system_admin', 'business_owner', 'manager', 'staff', 'crew_member')
     AND deleted_at IS NULL
   );
 
 -- Studio management: SA, BO, MG can create, update, delete portfolio items
 CREATE POLICY portfolio_items__modify__leadership ON public.portfolio_items
   FOR ALL TO authenticated
-  USING (app.current_user_role() IN ('system_admin', 'business_owner', 'manager'))
-  WITH CHECK (app.current_user_role() IN ('system_admin', 'business_owner', 'manager'));
+  USING (app.has_role('system_admin', 'business_owner', 'manager'))
+  WITH CHECK (app.has_role('system_admin', 'business_owner', 'manager'));
 
 -- 3. Portfolio Images Policies
--- Public anonymous read: only for published, consented portfolio items
+-- Authenticated read for images of published, consented portfolio items
 CREATE POLICY portfolio_images__select__public ON public.portfolio_images
-  FOR SELECT
+  FOR SELECT TO authenticated
   USING (
-    EXISTS (
+    app.is_active()
+    AND EXISTS (
       SELECT 1 FROM public.portfolio_items pi
       WHERE pi.id = portfolio_images.item_id
         AND pi.is_published = true
@@ -45,9 +47,9 @@ CREATE POLICY portfolio_images__select__public ON public.portfolio_images
 
 CREATE POLICY portfolio_images__select__internal ON public.portfolio_images
   FOR SELECT TO authenticated
-  USING (app.current_user_role() IN ('system_admin', 'business_owner', 'manager', 'staff', 'crew'));
+  USING (app.has_role('system_admin', 'business_owner', 'manager', 'staff', 'crew_member'));
 
 CREATE POLICY portfolio_images__modify__leadership ON public.portfolio_images
   FOR ALL TO authenticated
-  USING (app.current_user_role() IN ('system_admin', 'business_owner', 'manager'))
-  WITH CHECK (app.current_user_role() IN ('system_admin', 'business_owner', 'manager'));
+  USING (app.has_role('system_admin', 'business_owner', 'manager'))
+  WITH CHECK (app.has_role('system_admin', 'business_owner', 'manager'));

@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS public.services (
   name text NOT NULL,
   category service_category NOT NULL,
   description text,
-  unit service_unit NOT NULL DEFAULT 'day',
+  unit service_unit NOT NULL DEFAULT 'per_day',
   is_active boolean NOT NULL DEFAULT true,
   show_on_website boolean NOT NULL DEFAULT false,
   sort integer DEFAULT 0,

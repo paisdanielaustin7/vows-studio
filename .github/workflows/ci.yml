@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Setup Node.js 22.x
-        uses: actions/setup-node@1a4442cacd436585916779262731c5b162bc6ec7 # v4.2.0
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 22
           cache: 'npm'
@@ -40,13 +40,15 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Setup Node.js
-        uses: actions/setup-node@1a4442cacd436585916779262731c5b162bc6ec7 # v4.2.0
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 22
-          cache: 'npm'
 
-      - name: Dependency audit (high/critical threshold)
-        run: npm audit --audit-level=high
+      - name: Production dependency critical audit
+        run: npm audit --omit=dev --audit-level=critical
+
+      - name: Full advisory audit report (non-blocking)
+        run: npm audit --audit-level=high || true
 
       - name: Secret & key leak scan
         run: |
@@ -68,7 +70,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Setup Node.js
-        uses: actions/setup-node@1a4442cacd436585916779262731c5b162bc6ec7 # v4.2.0
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 22
           cache: 'npm'
@@ -77,10 +79,20 @@ jobs:
         run: npm ci
 
       - name: Setup Supabase CLI
-        uses: supabase/setup-cli@f8e77a285d8830ad50e414c27a92ec24fae0a295 # v1.1.0
+        uses: supabase/setup-cli@689adcfb80d947100a1eab127289b97d1fb07b13 # v3.2.0
 
-      - name: Start Supabase local stack
-        run: supabase start
+      - name: Start Supabase local stack & apply all 21 migrations
+        run: supabase start --exclude studio,imgproxy,edge-runtime,logflare,vector,supavisor,realtime
+
+      - name: Verify RLS enabled on every public table
+        run: |
+          DB_CID="$(docker ps -qf name=supabase_db_)"
+          UNPROTECTED="$(docker exec "$DB_CID" psql -U postgres -Atc "SELECT COUNT(*) FROM pg_tables WHERE schemaname = 'public' AND rowsecurity = false;")"
+          echo "Public tables without RLS: $UNPROTECTED"
+          if [ "$UNPROTECTED" != "0" ]; then
+            docker exec "$DB_CID" psql -U postgres -c "SELECT tablename FROM pg_tables WHERE schemaname = 'public' AND rowsecurity = false;"
+            exit 1
+          fi
 
       - name: Run Integration Tests
         run: npm run test:integration

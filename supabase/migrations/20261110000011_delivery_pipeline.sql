@@ -117,7 +117,6 @@ SET search_path = public, app
 AS $$
 DECLARE
   v_prior_incomplete boolean;
-  v_user_role text;
   v_booking_id uuid;
 BEGIN
   -- A. Blocked status validation
@@ -163,8 +162,7 @@ BEGIN
       ) INTO v_prior_incomplete;
 
       IF v_prior_incomplete THEN
-        v_user_role := app.current_user_role();
-        IF v_user_role NOT IN ('system_admin', 'business_owner') THEN
+        IF NOT app.has_role('system_admin', 'business_owner') THEN
           RAISE EXCEPTION 'Stage % cannot be completed until prior stages are completed. An override reason and Owner/Admin permissions are required to override sequential completion.', NEW.sort;
         END IF;
 

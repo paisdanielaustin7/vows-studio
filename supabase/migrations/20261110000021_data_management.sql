@@ -116,6 +116,15 @@ BEGIN
       updated_at = now()
   WHERE id = p_client_id;
 
+  -- Scrub personal contact fields on linked enquiries (SECURITY_PLAN §10.5)
+  UPDATE public.enquiries
+  SET guest_name = 'Anonymised (' || v_short_id || ')',
+      guest_phone = NULL,
+      guest_email = NULL,
+      message = NULL,
+      updated_at = now()
+  WHERE client_id = p_client_id;
+
   -- Write audit log entry
   INSERT INTO public.audit_log (
     action,
@@ -176,14 +185,19 @@ BEGIN
   -- 3. Execute deletes in dependency order per requested scopes
   FOREACH v_scope IN ARRAY p_scopes LOOP
     IF v_scope = 'sample_data_only' OR v_scope = 'sample' THEN
-      -- Delete only sample data rows
+      -- Delete only sample data rows in FK dependency order
       DELETE FROM public.reviews WHERE booking_id IN (SELECT id FROM public.bookings WHERE is_sample = true);
+      DELETE FROM public.review_requests WHERE booking_id IN (SELECT id FROM public.bookings WHERE is_sample = true);
       DELETE FROM public.delivery_pipelines WHERE booking_id IN (SELECT id FROM public.bookings WHERE is_sample = true);
       DELETE FROM public.receipts WHERE payment_id IN (SELECT id FROM public.payments WHERE is_sample = true);
       DELETE FROM public.payment_allocations WHERE payment_id IN (SELECT id FROM public.payments WHERE is_sample = true);
       DELETE FROM public.payments WHERE is_sample = true;
+      DELETE FROM public.credit_note_items WHERE credit_note_id IN (SELECT id FROM public.credit_notes WHERE is_sample = true);
       DELETE FROM public.credit_notes WHERE is_sample = true;
+      DELETE FROM public.invoice_items WHERE invoice_id IN (SELECT id FROM public.invoices WHERE is_sample = true);
       DELETE FROM public.invoices WHERE is_sample = true;
+      DELETE FROM public.crew_pay_payments WHERE crew_pay_id IN (SELECT id FROM public.crew_pay_records WHERE booking_id IN (SELECT id FROM public.bookings WHERE is_sample = true));
+      DELETE FROM public.crew_pay_records WHERE booking_id IN (SELECT id FROM public.bookings WHERE is_sample = true);
       DELETE FROM public.events WHERE is_sample = true;
       DELETE FROM public.bookings WHERE is_sample = true;
       DELETE FROM public.quotations WHERE is_sample = true;
@@ -209,6 +223,8 @@ BEGIN
       DELETE FROM public.credit_notes;
       DELETE FROM public.invoice_items;
       DELETE FROM public.invoices;
+      DELETE FROM public.crew_pay_payments;
+      DELETE FROM public.crew_pay_records;
       DELETE FROM public.event_crew_assignments;
       DELETE FROM public.events;
       DELETE FROM public.booking_line_items;
@@ -327,6 +343,10 @@ DECLARE
   v_package_id uuid;
   v_crew_id uuid;
   v_booking_id uuid;
+  v_invoice_id uuid;
+  v_payment_id uuid;
+  v_actor_id uuid;
+  v_suffix text;
 BEGIN
   -- Authorization check: setup mode or demo environment only
   SELECT setup_mode INTO v_setup_mode FROM public.business_settings WHERE id = 1;
@@ -336,11 +356,14 @@ BEGIN
     RAISE EXCEPTION 'Loading sample data is prohibited in locked production mode (D-43).';
   END IF;
 
+  v_actor_id := COALESCE(p_actor_id, (SELECT id FROM public.profiles ORDER BY created_at ASC LIMIT 1));
+  v_suffix := upper(substr(replace(gen_random_uuid()::text, '-', ''), 1, 6));
+
   -- 1. Sample Client
   INSERT INTO public.clients (
-    full_name, client_type, address_line1, city, state, pincode, is_sample
+    full_name, address_line1, city, state, pincode, is_sample
   ) VALUES (
-    'Kenneth & Rochelle Fernandes', 'individual', 'Villa 4, Colva Road', 'Margao', 'Goa', '403601', true
+    'Kenneth & Rochelle Fernandes', 'Villa 4, Colva Road', 'Margao', 'Goa', '403601', true
   ) RETURNING id INTO v_client_id;
 
   INSERT INTO public.client_phones (client_id, phone_e164, is_primary)
@@ -371,16 +394,16 @@ BEGIN
 
   -- 4. Sample Crew Member
   INSERT INTO public.crew_members (
-    full_name, phone, email, roles, crew_type, is_sample
+    full_name, phone, email, role, crew_type, is_sample
   ) VALUES (
-    'Reuben Serrao', '+910000000102', 'reuben.serrao@demo.email', ARRAY['photographer']::public.crew_role[], 'employee', true
+    'Reuben Serrao', '+910000000102', 'reuben.serrao@demo.email', 'photographer', 'employee', true
   ) RETURNING id INTO v_crew_id;
 
-  -- 5. Sample Booking
+  -- 5. Sample Booking (trigger initializes delivery pipeline)
   INSERT INTO public.bookings (
-    client_id, booking_number, status, total_paise, is_sample
+    client_id, booking_number, status, contract_total_paise, is_sample
   ) VALUES (
-    v_client_id, 'BK-2026-000001', 'confirmed', 35000000, true
+    v_client_id, 'BK-DEMO-' || v_suffix, 'confirmed', 35000000, true
   ) RETURNING id INTO v_booking_id;
 
   -- Sample Event
@@ -390,28 +413,37 @@ BEGIN
     v_booking_id, 'Sanctuary Solemnization & Sunset Vows', 'wedding', CURRENT_DATE + interval '14 days', '10:00:00', '22:00:00', 'St. Aloysius Chapel & Heritage Courtyard', 1, true
   );
 
-  -- 6. Sample Delivery Pipeline
+  -- 6. Update Sample Delivery Pipeline target_date created by booking trigger
   INSERT INTO public.delivery_pipelines (
     booking_id, target_date
   ) VALUES (
     v_booking_id, CURRENT_DATE + interval '45 days'
-  );
+  )
+  ON CONFLICT (booking_id) DO UPDATE
+    SET target_date = EXCLUDED.target_date;
 
-  -- 7. Sample Invoice
-  INSERT INTO public.invoices (
-    booking_id, client_id, invoice_number, status, issue_date, due_date,
-    subtotal_paise, discount_paise, taxable_amount_paise, cgst_paise, sgst_paise, igst_paise, total_paise, paid_paise, credited_paise, is_sample
-  ) VALUES (
-    v_booking_id, v_client_id, 'INV-2026-000001', 'paid', CURRENT_DATE - interval '7 days', CURRENT_DATE + interval '7 days',
-    35000000, 0, 35000000, 0, 0, 0, 35000000, 35000000, 0, true
-  );
+  -- 7. Sample Invoice & Payment (with allocation to preserve financial integrity)
+  IF v_actor_id IS NOT NULL THEN
+    INSERT INTO public.invoices (
+      booking_id, client_id, invoice_number, status, issue_date, due_date,
+      subtotal_paise, discount_paise, taxable_amount_paise, cgst_paise, sgst_paise, igst_paise, total_paise, paid_paise, credited_paise, created_by, is_sample
+    ) VALUES (
+      v_booking_id, v_client_id, 'INV-DEMO-' || v_suffix, 'paid', CURRENT_DATE - interval '7 days', CURRENT_DATE + interval '7 days',
+      35000000, 0, 35000000, 0, 0, 0, 35000000, 35000000, 0, v_actor_id, true
+    ) RETURNING id INTO v_invoice_id;
 
-  -- 8. Sample Payment
-  INSERT INTO public.payments (
-    client_id, payment_date, amount_paise, method, status, recorded_by, is_sample
-  ) VALUES (
-    v_client_id, CURRENT_DATE - interval '5 days', 35000000, 'bank_transfer', 'recorded', p_actor_id, true
-  );
+    INSERT INTO public.payments (
+      client_id, payment_date, amount_paise, method, status, recorded_by, is_sample
+    ) VALUES (
+      v_client_id, CURRENT_DATE - interval '5 days', 35000000, 'bank_transfer', 'recorded', v_actor_id, true
+    ) RETURNING id INTO v_payment_id;
+
+    INSERT INTO public.payment_allocations (
+      payment_id, invoice_id, amount_paise
+    ) VALUES (
+      v_payment_id, v_invoice_id, 35000000
+    );
+  END IF;
 
   RETURN jsonb_build_object(
     'sample_loaded', true,
