@@ -133,16 +133,15 @@ export async function checkAccountLockout(email: string): Promise<{
     return { isLocked: true, lockedUntil: profile.locked_until };
   }
 
-  // Query app.auth_attempts
-  const { count } = await admin
-    .schema('app')
-    .from('auth_attempts')
-    .select('*', { count: 'exact', head: true })
-    .ilike('email_ci', email.trim().toLowerCase())
-    .eq('succeeded', false)
-    .gte('attempted_at', fifteenMinutesAgo);
+  // Query app.auth_attempts via service_role-only public RPC
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: countData } = await (admin as any).rpc('get_failed_auth_attempt_count', {
+    p_email: email.trim().toLowerCase(),
+    p_since: fifteenMinutesAgo,
+  });
+  const count = typeof countData === 'number' ? countData : 0;
 
-  if (count && count >= 5) {
+  if (count >= 5) {
     // Lock for 30 minutes
     const lockExpiry = new Date(Date.now() + 30 * 60 * 1000).toISOString();
     await admin
@@ -157,7 +156,7 @@ export async function checkAccountLockout(email: string): Promise<{
 }
 
 /**
- * Records an authentication attempt into app.auth_attempts.
+ * Records an authentication attempt into app.auth_attempts via service_role-only RPC.
  */
 export async function recordAuthAttempt(
   email: string,
@@ -165,10 +164,10 @@ export async function recordAuthAttempt(
   succeeded: boolean
 ): Promise<void> {
   const admin = getAdminClient();
-  await admin.schema('app').from('auth_attempts').insert({
-    email_ci: email.trim().toLowerCase(),
-    ip: ip || null,
-    succeeded,
-    attempted_at: new Date().toISOString(),
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  await (admin as any).rpc('record_auth_attempt', {
+    p_email: email.trim().toLowerCase(),
+    p_ip: ip || null,
+    p_succeeded: succeeded,
   });
 }

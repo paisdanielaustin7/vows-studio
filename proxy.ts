@@ -105,18 +105,35 @@ export async function proxy(request: NextRequest) {
     user = authData?.user || null;
 
     if (user) {
-      // Read top-level user_role claim from access token or app_metadata
-      userRole = (user.app_metadata?.user_role ||
-        user.user_metadata?.role ||
-        'staff') as UserRole;
-
+      // Read top-level user_role claim injected by app.custom_access_token_hook via getClaims()
+      let claimRole: string | undefined;
       try {
-        const { data: aalData } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
-        if (aalData?.currentLevel === 'aal2') {
+        const { data: claimsData } = await supabase.auth.getClaims();
+        const claims = claimsData?.claims as Record<string, unknown> | undefined;
+        if (typeof claims?.user_role === 'string') {
+          claimRole = claims.user_role;
+        }
+        if (claims?.aal === 'aal2') {
           aal = 'aal2';
         }
       } catch {
-        aal = 'aal1';
+        // Fallback handled below
+      }
+
+      userRole = (claimRole ||
+        user.app_metadata?.user_role ||
+        user.user_metadata?.role ||
+        'staff') as UserRole;
+
+      if (aal !== 'aal2') {
+        try {
+          const { data: aalData } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+          if (aalData?.currentLevel === 'aal2') {
+            aal = 'aal2';
+          }
+        } catch {
+          aal = 'aal1';
+        }
       }
     }
   }
