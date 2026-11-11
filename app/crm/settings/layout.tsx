@@ -11,6 +11,7 @@ import {
   Mail,
   MailCheck,
   Wallet,
+  Globe,
   ChevronRight,
 } from 'lucide-react';
 
@@ -33,6 +34,12 @@ const SETTINGS_NAV: SettingsNavGroup[] = [
         description: 'Identity, contacts & branding',
         href: '/crm/settings',
         icon: Building2,
+      },
+      {
+        title: 'Website & SEO',
+        description: 'Hero text, FAQs & meta tags',
+        href: '/crm/settings/website',
+        icon: Globe,
       },
     ],
   },

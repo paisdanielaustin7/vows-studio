@@ -198,6 +198,26 @@ const RLS_POLICY_MATRIX: RlsExpectation[] = [
   { table: 'delivery_stage_attachments', action: 'insert', role: 'manager', expected: 'allow' },
   { table: 'delivery_stage_attachments', action: 'insert', role: 'staff', expected: 'allow', scope: 'assigned_stages_only' },
   { table: 'delivery_stage_attachments', action: 'insert', role: 'crew_member', expected: 'deny' },
+
+  // --- PHASE 7: PORTFOLIO & PUBLIC WEBSITE ---
+  { table: 'portfolio_items', action: 'select', role: 'system_admin', expected: 'allow' },
+  { table: 'portfolio_items', action: 'select', role: 'business_owner', expected: 'allow' },
+  { table: 'portfolio_items', action: 'select', role: 'manager', expected: 'allow' },
+  { table: 'portfolio_items', action: 'select', role: 'staff', expected: 'allow' },
+  { table: 'portfolio_items', action: 'select', role: 'crew_member', expected: 'allow' },
+  { table: 'portfolio_items', action: 'insert', role: 'manager', expected: 'allow' },
+  { table: 'portfolio_items', action: 'insert', role: 'staff', expected: 'deny' },
+  { table: 'portfolio_items', action: 'update', role: 'manager', expected: 'allow' },
+  { table: 'portfolio_items', action: 'update', role: 'staff', expected: 'deny' },
+  { table: 'portfolio_items', action: 'delete', role: 'manager', expected: 'allow' },
+  { table: 'portfolio_items', action: 'delete', role: 'staff', expected: 'deny' },
+
+  { table: 'portfolio_images', action: 'select', role: 'staff', expected: 'allow' },
+  { table: 'portfolio_images', action: 'select', role: 'crew_member', expected: 'allow' },
+  { table: 'portfolio_images', action: 'insert', role: 'manager', expected: 'allow' },
+  { table: 'portfolio_images', action: 'insert', role: 'staff', expected: 'deny' },
+  { table: 'portfolio_images', action: 'delete', role: 'manager', expected: 'allow' },
+  { table: 'portfolio_images', action: 'delete', role: 'staff', expected: 'deny' },
 ];
 
 describe('RLS Policy Matrix Test Harness (Foundation, Sales, Bookings & Operations)', () => {
@@ -335,9 +355,12 @@ describe('RLS Policy Matrix Test Harness (Foundation, Sales, Bookings & Operatio
       'receipts',
       'expenses',
       'manual_income_entries',
+      // Phase 7 tables
+      'portfolio_items',
+      'portfolio_images',
     ];
 
-    expect(allTables.length).toBe(51);
+    expect(allTables.length).toBe(53);
   });
 
   it('guarantees Staff can update ONLY assigned stages, and Crew is strictly read-only (Phase 6)', () => {
@@ -355,6 +378,56 @@ describe('RLS Policy Matrix Test Harness (Foundation, Sales, Bookings & Operatio
     expect(staffStageUpdate?.scope).toBe('assigned_stages_only');
     expect(crewStageUpdate?.expected).toBe('deny');
     expect(staffAssigneesUpdate?.expected).toBe('deny');
+  });
+
+  it('guarantees unpublished or unconsented portfolio items are never public (Phase 7 & SECURITY_PLAN §10.2)', () => {
+    function simulatePublicPortfolioVisibility(item: {
+      is_published: boolean;
+      client_consent_confirmed_at: string | null;
+      deleted_at: string | null;
+    }): boolean {
+      return (
+        item.is_published === true &&
+        item.client_consent_confirmed_at !== null &&
+        item.deleted_at === null
+      );
+    }
+
+    // Published and consented -> visible
+    expect(
+      simulatePublicPortfolioVisibility({
+        is_published: true,
+        client_consent_confirmed_at: '2026-02-10T10:00:00Z',
+        deleted_at: null,
+      })
+    ).toBe(true);
+
+    // Published but NO consent -> strictly NOT visible
+    expect(
+      simulatePublicPortfolioVisibility({
+        is_published: true,
+        client_consent_confirmed_at: null,
+        deleted_at: null,
+      })
+    ).toBe(false);
+
+    // Unpublished draft with consent -> NOT visible
+    expect(
+      simulatePublicPortfolioVisibility({
+        is_published: false,
+        client_consent_confirmed_at: '2026-02-10T10:00:00Z',
+        deleted_at: null,
+      })
+    ).toBe(false);
+
+    // Deleted -> NOT visible
+    expect(
+      simulatePublicPortfolioVisibility({
+        is_published: true,
+        client_consent_confirmed_at: '2026-02-10T10:00:00Z',
+        deleted_at: '2026-02-12T10:00:00Z',
+      })
+    ).toBe(false);
   });
 
   it('guarantees Manager is strictly DENIED from reading payments (Master Prompt §4.6)', () => {

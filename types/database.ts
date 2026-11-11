@@ -2216,6 +2216,93 @@ export interface Database {
         };
         Relationships: Relationship[];
       };
+      portfolio_items: {
+        Row: {
+          id: string;
+          title: string;
+          event_type: string;
+          description: string | null;
+          shoot_date: string | null;
+          cover_image_path: string | null;
+          video_url: string | null;
+          tags: string[] | null;
+          sort: number;
+          is_published: boolean;
+          client_consent_confirmed_at: string | null;
+          created_by: string | null;
+          created_at: string;
+          updated_at: string;
+          deleted_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          title: string;
+          event_type: string;
+          description?: string | null;
+          shoot_date?: string | null;
+          cover_image_path?: string | null;
+          video_url?: string | null;
+          tags?: string[] | null;
+          sort?: number;
+          is_published?: boolean;
+          client_consent_confirmed_at?: string | null;
+          created_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+          deleted_at?: string | null;
+        };
+        Update: {
+          id?: string;
+          title?: string;
+          event_type?: string;
+          description?: string | null;
+          shoot_date?: string | null;
+          cover_image_path?: string | null;
+          video_url?: string | null;
+          tags?: string[] | null;
+          sort?: number;
+          is_published?: boolean;
+          client_consent_confirmed_at?: string | null;
+          created_by?: string | null;
+          created_at?: string;
+          updated_at?: string;
+          deleted_at?: string | null;
+        };
+        Relationships: Relationship[];
+      };
+      portfolio_images: {
+        Row: {
+          id: string;
+          item_id: string;
+          storage_path: string;
+          alt_text: string;
+          width: number | null;
+          height: number | null;
+          sort: number;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          item_id: string;
+          storage_path: string;
+          alt_text: string;
+          width?: number | null;
+          height?: number | null;
+          sort?: number;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          item_id?: string;
+          storage_path?: string;
+          alt_text?: string;
+          width?: number | null;
+          height?: number | null;
+          sort?: number;
+          created_at?: string;
+        };
+        Relationships: Relationship[];
+      };
     };
     Views: {
       quotations_v: {

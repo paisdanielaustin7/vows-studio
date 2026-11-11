@@ -18,7 +18,7 @@
 | **Phase 4** | Finance (Invoices, Payments, Receipts, Credits, Expenses, Ledger) | **DONE** | Branch `phase-4-finance` |
 | **Phase 5** | PDF Generation & Gmail Integration | **DONE** | Branch `phase-5-documents` |
 | **Phase 6** | Delivery Pipeline (9 Stages) | **DONE** | Branch `phase-6-delivery` |
-| **Phase 7** | Public Website | Pending | Branch `phase-7-website` |
+| **Phase 7** | Public Website | **DONE** | Branch `phase-7-website` |
 | **Phase 8** | Reviews & Testimonials | Pending | Branch `phase-8-reviews` |
 | **Phase 9** | Dashboard Completion, Jobs, Data Management (Reset Wizard) | Pending | Branch `phase-9-ops` |
 | **Phase 10** | Hardening, Release & Deployment Runbooks | Pending | Branch `phase-10-release` |
@@ -140,3 +140,55 @@
 - [x] Task 6: Public Client Share Portal `/delivery/[token]/page.tsx` with uniform "Invalid or expired delivery link" error handling, and media deliverables viewer.
 - [x] Task 7: Unit & Integration tests (`tests/unit/delivery/sequential-stage.test.ts`, `tests/unit/delivery/share-token.test.ts`, and extended `tests/integration/rls/rls-matrix.test.ts`):
   - 258 total tests passing; 100% test coverage on `lib/money/**` and `lib/validations/**`.
+
+---
+
+## Phase 7 Checklist (Public Website & Monograph Showcase)
+- [x] Task 1: Database Migrations 012 and 019:
+  - `portfolio_items` and `portfolio_images` with DB constraint `check_portfolio_consent_to_publish` (`CHECK (NOT is_published OR client_consent_confirmed_at IS NOT NULL)`), indexes, and `app.touch_updated_at()` trigger.
+  - Public storage buckets `portfolio` and `branding` created per GLOSSARY §10 & D-29.
+  - Seeds for default curated wedding monographs, FAQ items, site content, and page SEO metadata.
+  - Strict RLS policies: anonymous public access can read ONLY published portfolio items and images with confirmed client consent (`is_published = true AND client_consent_confirmed_at IS NOT NULL AND deleted_at IS NULL`). Internal roles (SA, BO, MG) can manage; Staff/Crew can read internal drafts in CRM.
+- [x] Task 2: Types & Validations:
+  - Domain types `types/portfolio.ts` (`PortfolioItem`, `PortfolioImage`, `SitePageSeo`, `FaqItem`).
+  - Database types `types/database.ts` updated with `portfolio_items`, `portfolio_images`, `site_content`, `site_page_seo`, `faq_items`.
+  - Zod validation schemas: `publicEnquirySchema` (phone E.164, mandatory consent, honeypot, Turnstile), `portfolioItemSchema` (enforces client consent timestamp when `isPublished: true`), `portfolioImageSchema` (min 5-character alt text), `updateSiteContentSchema`, `updateSitePageSeoSchema`, `faqItemSchema`.
+  - 100% test coverage verified in `lib/validations/website.test.ts`.
+- [x] Task 3: API Route Handler:
+  - `POST /api/public/enquiry` (`app/api/public/enquiry/route.ts`):
+    - Client IP rate limit (5 per hour per IP) via `checkRateLimit('public_form', ip)`.
+    - Honeypot anti-spam trap returning silent 200 without DB insertion.
+    - Cloudflare Turnstile token validation.
+    - Inserts strictly into `enquiries` table with `consent_given_at` (no client row created per D-11, D-33, CLI-05).
+- [x] Task 4: Server Queries & Actions:
+  - Server Queries (`server/queries/website.queries.ts`): `getPublicPortfolioItems`, `getPublicServicesAndPackages`, `getPublicFaqItems`, `getPublicSiteContent`, `getPublicPageSeo`, `getPublicReviews`.
+  - Server Actions (`server/actions/portfolio.actions.ts`): `listPortfolioItemsAction`, `createPortfolioItemAction`, `updatePortfolioItemAction`, `publishPortfolioItemAction` (enforces consent), `unpublishPortfolioItemAction`, `deletePortfolioItemAction`, `addPortfolioImageAction`, `deletePortfolioImageAction`.
+  - Server Actions (`server/actions/website.actions.ts`): `getSiteContentAction`, `updateSiteContentAction`, `listFaqItemsAction`, `createFaqItemAction`, `updateFaqItemAction`, `deleteFaqItemAction`, `getSitePageSeoAction`, `updateSitePageSeoAction`.
+- [x] Task 5: Public Layout & Shared Components:
+  - `PublicHeader` (`components/public/public-header.tsx`): VOWS Studio monogram logo, nav links, "Studio Portal" sign-in link, "Enquire" CTA, and responsive mobile menu drawer.
+  - `PublicFooter` (`components/public/public-footer.tsx`): Mangalore atelier address, South Goa atelier note, legal compliance links, copyright, DPDP notice.
+  - `CookieBanner` (`components/public/cookie-banner.tsx`): subtle local-storage-persisted consent banner.
+  - `PortfolioLightbox` (`components/public/portfolio-lightbox.tsx`): high-res image frame, caption details, tags, alt text, and keyboard navigation (Left, Right, Escape).
+  - `LocalBusinessJsonLd` (`components/public/json-ld.tsx`): PhotographyBusiness and AggregateRating structured data.
+- [x] Task 6: Public Pages:
+  - Home (`app/(public)/page.tsx`): Hero, Trust Strip, Selected Monographs, Liturgical Nuptials philosophy, Signature Packages from catalogue, Kind Words testimonials, and Inscription CTA banner.
+  - Portfolio (`app/(public)/portfolio/page.tsx` & `app/(public)/portfolio/[category]/page.tsx`): Category filter chips, responsive card grid, and lightbox.
+  - Services & Pricing (`app/(public)/services/page.tsx`): Rate card, signature packages comparison with `formatINR`, modular production commissions, and turnaround SLAs.
+  - About (`app/(public)/about/page.tsx`): Studio heritage narrative, Reuben Serrao's philosophy, natural light & chemical film craft, camera systems, archival vault.
+  - Contact (`app/(public)/contact/page.tsx`): Studio coordinates, consultation protocol, and `PublicEnquiryForm`.
+  - Thank You (`app/(public)/contact/thank-you/page.tsx`): Confirmation and 3-step consultation timeline.
+  - Reviews (`app/(public)/reviews/page.tsx`): 4.9/5.0 aggregate rating card, category breakdowns, and verified couple review cards.
+  - FAQ (`app/(public)/faq/page.tsx`), Privacy Policy (`app/(public)/privacy/page.tsx`), Terms of Service (`app/(public)/terms/page.tsx`).
+  - Next.js SEO metadata routes: `app/sitemap.ts` and `app/robots.ts`.
+- [x] Task 7: CRM Portfolio Manager & Website Settings:
+  - `/crm/portfolio` (`app/crm/portfolio/page.tsx` and `portfolio-client.tsx`):
+    - Manage portfolio monographs with live/draft status chips, consent status, and "+ Add New Project" modal.
+    - `PortfolioConsentDialog` matching `stitch-screens/portfolio_manager_consent_dialog_desktop`: enforces 3-point DPDP publication consent release before setting `is_published = true`.
+  - `/crm/settings/website` (`app/crm/settings/website/page.tsx` and `website-settings-client.tsx`):
+    - Tabbed configuration for Homepage hero, Studio philosophy, FAQ items CRUD, page SEO metadata, and legal policies.
+- [x] Task 8: Quality Gates & Tests:
+  - `tests/integration/public-enquiry-form.test.ts` (7 tests covering honeypot, Turnstile failure, rate limiting, validation, consent confirmation, and portfolio DB constraint).
+  - `tests/integration/rls/rls-matrix.test.ts` extended with Phase 7 portfolio visibility simulation.
+  - 284/284 tests passing; 100% coverage on `lib/money/**` and `lib/validations/**`.
+  - Clean ESLint (0 errors) and TypeScript typecheck (0 errors).
+  - Production build successful across all 55 static and dynamic routes.

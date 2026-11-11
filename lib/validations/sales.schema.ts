@@ -192,7 +192,9 @@ export const eventTypeEnum = z.enum([
 ]);
 
 export const enquirySourceEnum = z.enum([
+  'website',
   'instagram',
+  'facebook',
   'google',
   'referral',
   'wedding_wire',
