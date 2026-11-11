@@ -218,6 +218,29 @@ const RLS_POLICY_MATRIX: RlsExpectation[] = [
   { table: 'portfolio_images', action: 'insert', role: 'staff', expected: 'deny' },
   { table: 'portfolio_images', action: 'delete', role: 'manager', expected: 'allow' },
   { table: 'portfolio_images', action: 'delete', role: 'staff', expected: 'deny' },
+
+  // --- PHASE 8: REVIEWS & REVIEW REQUESTS (RBAC R6 Ruling) ---
+  { table: 'review_requests', action: 'select', role: 'system_admin', expected: 'allow' },
+  { table: 'review_requests', action: 'select', role: 'business_owner', expected: 'allow' },
+  { table: 'review_requests', action: 'select', role: 'manager', expected: 'allow' },
+  { table: 'review_requests', action: 'select', role: 'accountant', expected: 'deny' },
+  { table: 'review_requests', action: 'select', role: 'staff', expected: 'deny' },
+  { table: 'review_requests', action: 'select', role: 'crew_member', expected: 'deny' },
+  { table: 'review_requests', action: 'insert', role: 'manager', expected: 'allow' }, // R6: reviews:request
+  { table: 'review_requests', action: 'insert', role: 'staff', expected: 'deny' },
+
+  { table: 'reviews', action: 'select', role: 'system_admin', expected: 'allow' },
+  { table: 'reviews', action: 'select', role: 'business_owner', expected: 'allow' },
+  { table: 'reviews', action: 'select', role: 'manager', expected: 'allow' }, // reviews:view
+  { table: 'reviews', action: 'select', role: 'accountant', expected: 'deny' },
+  { table: 'reviews', action: 'select', role: 'staff', expected: 'deny' },
+  { table: 'reviews', action: 'select', role: 'crew_member', expected: 'deny' },
+  { table: 'reviews', action: 'update', role: 'system_admin', expected: 'allow' }, // reviews:moderate
+  { table: 'reviews', action: 'update', role: 'business_owner', expected: 'allow' }, // reviews:moderate
+  { table: 'reviews', action: 'update', role: 'manager', expected: 'deny' }, // R6: Manager CANNOT moderate!
+  { table: 'reviews', action: 'update', role: 'staff', expected: 'deny' },
+  { table: 'reviews', action: 'delete', role: 'manager', expected: 'deny' },
+  { table: 'reviews', action: 'delete', role: 'staff', expected: 'deny' },
 ];
 
 describe('RLS Policy Matrix Test Harness (Foundation, Sales, Bookings & Operations)', () => {
@@ -358,9 +381,32 @@ describe('RLS Policy Matrix Test Harness (Foundation, Sales, Bookings & Operatio
       // Phase 7 tables
       'portfolio_items',
       'portfolio_images',
+      // Phase 8 tables
+      'review_requests',
+      'reviews',
     ];
 
-    expect(allTables.length).toBe(53);
+    expect(allTables.length).toBe(55);
+  });
+
+  it('guarantees RBAC R6 ruling: Manager can create review requests but is strictly DENIED from moderating reviews', () => {
+    const mgrRequestInsert = RLS_POLICY_MATRIX.find(
+      (m) => m.table === 'review_requests' && m.role === 'manager' && m.action === 'insert'
+    );
+    const mgrReviewUpdate = RLS_POLICY_MATRIX.find(
+      (m) => m.table === 'reviews' && m.role === 'manager' && m.action === 'update'
+    );
+    const ownerReviewUpdate = RLS_POLICY_MATRIX.find(
+      (m) => m.table === 'reviews' && m.role === 'business_owner' && m.action === 'update'
+    );
+    const adminReviewUpdate = RLS_POLICY_MATRIX.find(
+      (m) => m.table === 'reviews' && m.role === 'system_admin' && m.action === 'update'
+    );
+
+    expect(mgrRequestInsert?.expected).toBe('allow');
+    expect(mgrReviewUpdate?.expected).toBe('deny');
+    expect(ownerReviewUpdate?.expected).toBe('allow');
+    expect(adminReviewUpdate?.expected).toBe('allow');
   });
 
   it('guarantees Staff can update ONLY assigned stages, and Crew is strictly read-only (Phase 6)', () => {

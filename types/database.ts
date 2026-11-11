@@ -2303,6 +2303,108 @@ export interface Database {
         };
         Relationships: Relationship[];
       };
+      review_requests: {
+        Row: {
+          id: string;
+          booking_id: string;
+          token_hash: string;
+          expires_at: string;
+          sent_at: string | null;
+          submitted_at: string | null;
+          revoked_at: string | null;
+          created_by: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          booking_id: string;
+          token_hash: string;
+          expires_at?: string;
+          sent_at?: string | null;
+          submitted_at?: string | null;
+          revoked_at?: string | null;
+          created_by?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          booking_id?: string;
+          token_hash?: string;
+          expires_at?: string;
+          sent_at?: string | null;
+          submitted_at?: string | null;
+          revoked_at?: string | null;
+          created_by?: string | null;
+          created_at?: string;
+        };
+        Relationships: Relationship[];
+      };
+      reviews: {
+        Row: {
+          id: string;
+          booking_id: string;
+          client_id: string;
+          review_request_id: string | null;
+          overall_rating: number;
+          communication_rating: number | null;
+          quality_rating: number | null;
+          punctuality_rating: number | null;
+          body: string;
+          reviewer_name: string;
+          event_type: string | null;
+          event_date: string | null;
+          status: 'pending' | 'approved' | 'rejected';
+          moderation_note: string | null;
+          moderated_by: string | null;
+          moderated_at: string | null;
+          submitted_at: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          booking_id: string;
+          client_id: string;
+          review_request_id?: string | null;
+          overall_rating: number;
+          communication_rating?: number | null;
+          quality_rating?: number | null;
+          punctuality_rating?: number | null;
+          body: string;
+          reviewer_name: string;
+          event_type?: string | null;
+          event_date?: string | null;
+          status?: 'pending' | 'approved' | 'rejected';
+          moderation_note?: string | null;
+          moderated_by?: string | null;
+          moderated_at?: string | null;
+          submitted_at?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          booking_id?: string;
+          client_id?: string;
+          review_request_id?: string | null;
+          overall_rating?: number;
+          communication_rating?: number | null;
+          quality_rating?: number | null;
+          punctuality_rating?: number | null;
+          body?: string;
+          reviewer_name?: string;
+          event_type?: string | null;
+          event_date?: string | null;
+          status?: 'pending' | 'approved' | 'rejected';
+          moderation_note?: string | null;
+          moderated_by?: string | null;
+          moderated_at?: string | null;
+          submitted_at?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: Relationship[];
+      };
     };
     Views: {
       quotations_v: {
@@ -2518,6 +2620,16 @@ export interface Database {
           current_stage_code: string | null;
           created_at: string;
           updated_at: string;
+        };
+        Relationships: Relationship[];
+      };
+      review_stats_v: {
+        Row: {
+          total_reviews: number;
+          avg_overall_rating: number;
+          avg_communication_rating: number;
+          avg_quality_rating: number;
+          avg_punctuality_rating: number;
         };
         Relationships: Relationship[];
       };

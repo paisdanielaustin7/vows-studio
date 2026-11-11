@@ -308,6 +308,7 @@ export function PipelineTracker({
       <ReviewRequestPromptDialog
         isOpen={isReviewPromptOpen}
         onClose={() => setIsReviewPromptOpen(false)}
+        bookingId={bookingId}
         bookingNumber={bookingNumber}
         clientName={clientName}
         clientEmail={clientEmail}

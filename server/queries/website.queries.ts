@@ -559,6 +559,7 @@ export async function getPublicPageSeo(
 
 /**
  * Fetches approved client reviews for public display.
+ * Strictly queries approved reviews only (REV-07, D-37).
  */
 export async function getPublicReviews(): Promise<{
   reviews: PublicReview[];
@@ -567,29 +568,40 @@ export async function getPublicReviews(): Promise<{
 }> {
   try {
     const admin = getAdminClient();
+
+    // Query approved reviews
     const { data, error } = await (admin as any)
       .from('reviews')
       .select('*')
-      .eq('is_approved', true)
-      .order('created_at', { ascending: false });
+      .eq('status', 'approved')
+      .order('submitted_at', { ascending: false });
+
+    // Query review stats view
+    const { data: statsData } = await (admin as any)
+      .from('review_stats_v')
+      .select('*')
+      .maybeSingle();
 
     if (!error && data && data.length > 0) {
       const reviews: PublicReview[] = (data as Array<Record<string, any>>).map((r) => ({
         id: String(r.id),
-        coupleName: String(r.display_name || 'Verified Couple'),
-        eventDate: String(r.event_date || '2026'),
-        venueName: String(r.venue_name || 'Goa & Mangalore'),
-        ratingOverall: typeof r.rating_overall === 'number' ? r.rating_overall : 5,
-        ratingQuality: typeof r.rating_quality === 'number' ? r.rating_quality : 5,
-        ratingCommunication: typeof r.rating_communication === 'number' ? r.rating_communication : 5,
-        ratingPunctuality: typeof r.rating_punctuality === 'number' ? r.rating_punctuality : 5,
-        testimonial: String(r.testimonial || ''),
-        publishedAt: String(r.created_at || new Date().toISOString()),
+        coupleName: String(r.reviewer_name || 'Verified Couple'),
+        eventDate: r.event_date ? String(r.event_date) : '2026',
+        venueName: String(r.event_type || 'Wedding Nuptials'),
+        ratingOverall: typeof r.overall_rating === 'number' ? r.overall_rating : 5,
+        ratingQuality: typeof r.quality_rating === 'number' ? r.quality_rating : 5,
+        ratingCommunication: typeof r.communication_rating === 'number' ? r.communication_rating : 5,
+        ratingPunctuality: typeof r.punctuality_rating === 'number' ? r.punctuality_rating : 5,
+        testimonial: String(r.body || ''),
+        publishedAt: String(r.submitted_at || r.created_at || new Date().toISOString()),
       }));
 
-      const sum = reviews.reduce((acc, r) => acc + r.ratingOverall, 0);
-      const avg = Number((sum / reviews.length).toFixed(1));
-      return { reviews, aggregateRating: avg, totalReviews: reviews.length };
+      const avg = statsData?.avg_overall_rating
+        ? Number(statsData.avg_overall_rating)
+        : Number((reviews.reduce((acc, r) => acc + r.ratingOverall, 0) / reviews.length).toFixed(1));
+      const total = statsData?.total_reviews || reviews.length;
+
+      return { reviews, aggregateRating: avg, totalReviews: total };
     }
   } catch {
     // fallback below

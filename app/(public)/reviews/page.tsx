@@ -19,8 +19,41 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function ReviewsPage() {
   const { reviews, aggregateRating, totalReviews } = await getPublicReviews();
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    name: 'VOWS Studio',
+    url: 'https://vowsstudio.com',
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: aggregateRating.toFixed(1),
+      reviewCount: totalReviews,
+      bestRating: '5',
+      worstRating: '1',
+    },
+    review: reviews.map((rev) => ({
+      '@type': 'Review',
+      author: {
+        '@type': 'Person',
+        name: rev.coupleName,
+      },
+      datePublished: rev.publishedAt,
+      reviewBody: rev.testimonial,
+      reviewRating: {
+        '@type': 'Rating',
+        ratingValue: rev.ratingOverall,
+        bestRating: '5',
+        worstRating: '1',
+      },
+    })),
+  };
+
   return (
     <div className="w-full bg-[var(--background)] py-16 px-6 sm:px-8 lg:px-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="max-w-7xl mx-auto space-y-16">
         {/* Header and Aggregate Card */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10 pb-12 border-b border-[var(--border)]">

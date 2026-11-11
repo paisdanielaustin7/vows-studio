@@ -19,7 +19,7 @@
 | **Phase 5** | PDF Generation & Gmail Integration | **DONE** | Branch `phase-5-documents` |
 | **Phase 6** | Delivery Pipeline (9 Stages) | **DONE** | Branch `phase-6-delivery` |
 | **Phase 7** | Public Website | **DONE** | Branch `phase-7-website` |
-| **Phase 8** | Reviews & Testimonials | Pending | Branch `phase-8-reviews` |
+| **Phase 8** | Reviews & Testimonials | **DONE** | Branch `phase-8-reviews` |
 | **Phase 9** | Dashboard Completion, Jobs, Data Management (Reset Wizard) | Pending | Branch `phase-9-ops` |
 | **Phase 10** | Hardening, Release & Deployment Runbooks | Pending | Branch `phase-10-release` |
 
@@ -192,3 +192,56 @@
   - 284/284 tests passing; 100% coverage on `lib/money/**` and `lib/validations/**`.
   - Clean ESLint (0 errors) and TypeScript typecheck (0 errors).
   - Production build successful across all 55 static and dynamic routes.
+
+---
+
+## Phase 8 Checklist (Reviews & Testimonials)
+- [x] Task 1: Database Migrations & Views:
+  - `supabase/migrations/20261110000013_reviews.sql`:
+    - `review_requests` table with 30-day expiry, token hashing, partial unique index `(booking_id) WHERE submitted_at IS NULL AND revoked_at IS NULL`.
+    - `reviews` table with 1..5 rating checks, body length constraint (`char_length(body) >= 10`), unique booking constraint (`UNIQUE (booking_id)`), and status machine (`pending`, `approved`, `rejected`).
+    - Triggers: `touch_updated_at_reviews` and `reviews_audit_trigger`.
+    - View: `public.review_stats_v` aggregating average overall score and category breakdown for approved reviews.
+    - Helper functions: `generate_review_request` and `submit_review`.
+  - `supabase/migrations/20261110000020_rls_policies_part7_reviews.sql`:
+    - RLS enabled on `review_requests` and `reviews`.
+    - Public read restricted strictly to `status = 'approved'` reviews.
+    - Studio internal read for SA, BO, MG (`reviews:view`).
+    - Moderation update restricted to SA and BO (`reviews:moderate`), strictly excluding Manager per Ruling R6.
+    - TypeScript definitions updated in `types/database.ts`.
+- [x] Task 2: Types & Validation Schemas:
+  - `types/reviews.ts`: `ReviewStatus`, `ReviewRequest`, `Review`, `ReviewStats`, `ReviewListItem`, `PublicReviewTokenDetails`, `CreateReviewRequestInput`, `SubmitReviewInput`, `ModerateReviewInput`.
+  - `lib/validations/reviews.schema.ts`: `createReviewRequestSchema`, `submitReviewSchema` (1-5 star ratings, body min 10 chars max 3000 chars, reviewer name min 2 chars, showcase consent), `moderateReviewSchema`, `listReviewsQuerySchema`.
+  - Unit tests in `lib/validations/reviews.test.ts` (20 tests covering all fields and edge cases; 100% test coverage maintained on `lib/validations/**`).
+- [x] Task 3: Server Actions & Integrations:
+  - `generateReviewRequestAction`: generates 256-bit secure token, hashes with SHA-256, revokes previous active link for the booking, enforces single submission guard, dispatches invitation email via connected Gmail service (`sendEmailService`) with `review_request` template, returns private URL.
+  - `getReviewRequestByTokenAction`: validates token hash against expiry, revocation, and submission status; returns uniform invalid response for guessed tokens preventing enumeration.
+  - `submitReviewAction`: public submission action inserting review as `pending`, marking `review_requests.submitted_at = now()`, blocking duplicate submissions, and notifying leadership (BO and SA).
+  - `moderateReviewAction`: enforces `reviews:moderate` (SA and BO only; Manager returns FORBIDDEN per RBAC R6), updates review status, moderation note, moderator id, and revalidates surfaces.
+  - `listReviewsAction`: internal review listing and stats calculator for CRM moderation.
+  - `server/queries/website.queries.ts`: `getPublicReviews()` updated to query approved reviews and `review_stats_v`.
+- [x] Task 4: Public Submission UI (`/review/[token]`):
+  - Server route `app/review/[token]/page.tsx` resolving token and rendering states from Stitch design:
+    - State 1 (Active Form): `PublicReviewForm` (`components/reviews/public-review-form.tsx`) with Confirmed Commission banner, pre-filled couple details, Master Assessment (1–5 interactive stars with descriptive text), 3 category sub-ratings (Dialogue, Artistry, Protocol), dynamic character-counter textarea (min 10 chars), and showcase consent checkbox.
+    - State 2 (Thank-You Confirmation Card): Gratitude seal, couple acknowledgement, summary metrics card, archived excerpt preview, and gallery/home action links.
+    - State 3 (Security Token Inactive): Uniform invalid/expired link screen.
+- [x] Task 5: CRM Review Moderation Interface (`/crm/reviews`):
+  - Route `app/crm/reviews/page.tsx` and client component `components/reviews/review-moderation-view.tsx` matching `stitch-screens/review_moderation_detail_desktop`:
+    - KPI Summary Banner: Overall Studio Score, Moderation Breakdown, and Category Performance.
+    - Filter toolbar: Status pills with counter badges (All, Pending Moderation, Approved, Rejected), search bar, and CSV export.
+    - Split-screen inspection layout: List of review cards on left, active inspection panel on right with granular ratings, full quote, and internal rejection reason field.
+    - Moderation CTA Bar: "Approve & Publish to Showcase", "Reject Review", "Re-Hide & Retract".
+    - RBAC R6 Governance Banner: Informational banner displayed for Manager; moderation buttons disabled/hidden.
+  - `GenerateReviewLinkModal` (`components/reviews/generate-review-link-modal.tsx`): select booking, generate 30-day token link, copy button, and Gmail dispatch.
+- [x] Task 6: Delivery & Booking Integrations:
+  - Wired `ReviewRequestPromptDialog` in `components/delivery/pipeline-tracker.tsx` to `generateReviewRequestAction` on Stage 9 Completion.
+  - Added "Request Review" button to Booking Detail view (`components/bookings/booking-detail-view.tsx`).
+  - Added Schema.org `AggregateRating` JSON-LD to `app/(public)/reviews/page.tsx`.
+- [x] Task 7: Quality Gates & Verification:
+  - `tests/unit/reviews/review-token-flow.test.ts` (7 tests covering token hashing, 30-day expiry, revocation of old links, single submission enforcement, replay protection, and uniform guessing defense).
+  - `tests/unit/reviews/review-moderation.test.ts` (6 tests covering RBAC R6 ruling, SA/BO moderation permissions, Manager forbidden from moderating, public showcase filtering to approved only, and aggregate calculation).
+  - `tests/integration/rls/rls-matrix.test.ts` extended to 55 public tables and verified R6 ruling.
+  - 318/318 tests passing; 100% coverage maintained on `lib/money/**` and `lib/validations/**`.
+  - Clean ESLint (0 errors) and TypeScript typecheck (0 errors).
+  - Production build successful across all 56 routes.
+

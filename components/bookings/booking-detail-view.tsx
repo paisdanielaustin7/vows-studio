@@ -12,6 +12,7 @@ import { cancelBookingAction, updateBookingStatusAction } from '@/server/actions
 import { createEventAction } from '@/server/actions/event.actions';
 import { assignCrewAction, checkCrewConflictsAction, removeCrewAssignmentAction } from '@/server/actions/crew.actions';
 import { PipelineTracker } from '@/components/delivery/pipeline-tracker';
+import { GenerateReviewLinkModal } from '@/components/reviews/generate-review-link-modal';
 
 interface BookingDetailViewProps {
   booking: Booking | BookingOps;
@@ -54,6 +55,9 @@ export function BookingDetailView({
   const [cancelReason, setCancelReason] = useState('');
   const [cancelFeeRupees, setCancelFeeRupees] = useState(0);
   const [isCancelling, setIsCancelling] = useState(false);
+
+  // Review Modal State
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
   // Add Event Modal State
   const [isAddEventModalOpen, setIsAddEventModalOpen] = useState(false);
@@ -310,6 +314,15 @@ export function BookingDetailView({
               >
                 <span className="material-symbols-outlined text-[18px] text-primary">calendar_add_on</span>
                 <span>Add Event</span>
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => setIsReviewModalOpen(true)}
+                className="h-9 text-primary border-primary/30 hover:bg-primary/10 flex items-center gap-1.5"
+              >
+                <span className="material-symbols-outlined text-[18px]">star</span>
+                <span>Request Review</span>
               </Button>
               <Button
                 size="sm"
@@ -978,6 +991,13 @@ export function BookingDetailView({
           </div>
         </div>
       )}
+
+      {/* GENERATE REVIEW LINK MODAL */}
+      <GenerateReviewLinkModal
+        isOpen={isReviewModalOpen}
+        onClose={() => setIsReviewModalOpen(false)}
+        preselectedBookingId={booking.id}
+      />
     </div>
   );
 }
