@@ -3,6 +3,9 @@
 
 CREATE SCHEMA IF NOT EXISTS app;
 
+-- Ensure tax_type enum includes 'none' before quotation migrations execute
+ALTER TYPE public.tax_type ADD VALUE IF NOT EXISTS 'none';
+
 -- 1. Read role from verified JWT top-level claim (injected by token hook)
 CREATE OR REPLACE FUNCTION app.role()
 RETURNS user_role
@@ -27,15 +30,17 @@ $$;
 -- 3. Check if user is active (cached per transaction)
 CREATE OR REPLACE FUNCTION app.is_active()
 RETURNS boolean
-LANGUAGE sql
+LANGUAGE plpgsql
 SECURITY DEFINER
 STABLE
 SET search_path = public, app
 AS $$
-  SELECT COALESCE(
+BEGIN
+  RETURN COALESCE(
     (SELECT is_active FROM public.profiles WHERE id = auth.uid()),
     false
   );
+END;
 $$;
 
 -- 4. Check if authenticated user has one of the allowed roles, is active, and satisfies MFA requirement
@@ -83,42 +88,48 @@ $$;
 -- 5. Helper to get crew_id for the current authenticated user
 CREATE OR REPLACE FUNCTION app.crew_id()
 RETURNS uuid
-LANGUAGE sql
+LANGUAGE plpgsql
 SECURITY DEFINER
 STABLE
 SET search_path = public, app
 AS $$
-  SELECT id FROM public.crew_members WHERE profile_id = auth.uid() LIMIT 1;
+BEGIN
+  RETURN (SELECT id FROM public.crew_members WHERE profile_id = auth.uid() LIMIT 1);
+END;
 $$;
 
 -- 6. Helper to check if current user is assigned to an event
 CREATE OR REPLACE FUNCTION app.assigned_to_event(target_event_id uuid)
 RETURNS boolean
-LANGUAGE sql
+LANGUAGE plpgsql
 SECURITY DEFINER
 STABLE
 SET search_path = public, app
 AS $$
-  SELECT EXISTS (
+BEGIN
+  RETURN EXISTS (
     SELECT 1 FROM public.event_crew_assignments
     WHERE event_id = target_event_id
       AND crew_member_id = app.crew_id()
   );
+END;
 $$;
 
 -- 7. Helper to check if current user is assigned to a delivery stage
 CREATE OR REPLACE FUNCTION app.assigned_to_stage(target_stage_id uuid)
 RETURNS boolean
-LANGUAGE sql
+LANGUAGE plpgsql
 SECURITY DEFINER
 STABLE
 SET search_path = public, app
 AS $$
-  SELECT EXISTS (
+BEGIN
+  RETURN EXISTS (
     SELECT 1 FROM public.delivery_stage_assignees
-    WHERE delivery_stage_id = target_stage_id
-      AND user_id = auth.uid()
+    WHERE stage_id = target_stage_id
+      AND profile_id = auth.uid()
   );
+END;
 $$;
 
 -- 8. Custom Access Token Hook for Supabase Auth

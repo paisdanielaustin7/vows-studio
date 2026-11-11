@@ -51,16 +51,18 @@ CREATE INDEX IF NOT EXISTS idx_delivery_stage_attachments_stage
 -- 4. Update app.assigned_to_stage helper function to match schema
 CREATE OR REPLACE FUNCTION app.assigned_to_stage(target_stage_id uuid)
 RETURNS boolean
-LANGUAGE sql
+LANGUAGE plpgsql
 SECURITY DEFINER
 STABLE
 SET search_path = public, app
 AS $$
-  SELECT EXISTS (
+BEGIN
+  RETURN EXISTS (
     SELECT 1 FROM public.delivery_stage_assignees
     WHERE stage_id = target_stage_id
       AND profile_id = auth.uid()
   );
+END;
 $$;
 
 -- 5. Canonical init_booking_delivery_pipeline with the 9 GLOSSARY stages
@@ -131,8 +133,9 @@ BEGIN
       FROM public.delivery_pipelines
       WHERE id = NEW.pipeline_id;
 
-      INSERT INTO public.notifications (user_id, title, message, link, is_read)
+      INSERT INTO public.notifications (user_id, type, title, body, link, is_read)
       SELECT p.id,
+             'delivery_blocked',
              'Delivery Stage Blocked',
              'Stage ' || NEW.stage_code::text || ' has been marked as blocked: ' || NEW.blocked_reason,
              '/crm/bookings/' || COALESCE(v_booking_id::text, '') || '?tab=delivery',
