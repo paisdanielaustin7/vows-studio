@@ -104,15 +104,15 @@ export function BookingBuilder({ clients }: BookingBuilderProps) {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <div className="flex items-center gap-2 text-sm text-stone-500 mb-1">
+          <div className="flex items-center gap-2 text-sm text-outline mb-1">
             <Link href="/crm/bookings" className="hover:underline">
               Bookings
             </Link>
             <span>/</span>
-            <span className="text-stone-900 font-medium">New Booking</span>
+            <span className="text-on-surface font-medium">New Booking</span>
           </div>
-          <h1 className="text-2xl font-serif font-bold text-stone-900">Create New Booking</h1>
-          <p className="text-sm text-stone-500">
+          <h1 className="text-2xl font-bold text-on-surface">Create New Booking</h1>
+          <p className="text-sm text-on-surface-variant">
             Initialise a production booking, line items, and automated 9-stage delivery pipeline.
           </p>
         </div>
@@ -124,7 +124,7 @@ export function BookingBuilder({ clients }: BookingBuilderProps) {
       </div>
 
       {errorMsg && (
-        <div className="p-4 bg-red-50 border border-red-200 text-red-700 rounded-md text-sm">
+        <div className="p-4 bg-error-container border border-error/30 text-on-error-container rounded-lg text-sm">
           {errorMsg}
         </div>
       )}
@@ -132,17 +132,17 @@ export function BookingBuilder({ clients }: BookingBuilderProps) {
       <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left Column: Client & Details & Line items */}
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white p-6 rounded-lg border border-stone-200 shadow-sm space-y-4">
-            <h2 className="text-base font-semibold text-stone-900">Client & Delivery</h2>
+          <div className="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/40 shadow-sm space-y-4">
+            <h2 className="text-base font-semibold text-on-surface">Client &amp; Delivery</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-medium text-stone-700 mb-1">
-                  Client <span className="text-red-500">*</span>
+                <label className="block text-xs font-medium text-on-surface-variant mb-1">
+                  Client <span className="text-error">*</span>
                 </label>
                 <select
                   value={clientId}
                   onChange={(e) => setClientId(e.target.value)}
-                  className="w-full h-9 rounded-md border border-stone-300 bg-white px-3 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-stone-900"
+                  className="w-full h-9 rounded-lg border border-outline-variant bg-surface-container-low text-on-surface px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                   required
                 >
                   <option value="" disabled>
@@ -157,7 +157,7 @@ export function BookingBuilder({ clients }: BookingBuilderProps) {
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-stone-700 mb-1">
+                <label className="block text-xs font-medium text-on-surface-variant mb-1">
                   Target Delivery Date
                 </label>
                 <Input
@@ -169,23 +169,23 @@ export function BookingBuilder({ clients }: BookingBuilderProps) {
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-stone-700 mb-1">Internal Notes</label>
+              <label className="block text-xs font-medium text-on-surface-variant mb-1">Internal Notes</label>
               <textarea
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 placeholder="Special client preferences, high-priority deliverables, coverage requirements..."
-                className="w-full rounded-md border border-stone-300 p-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-stone-900"
+                className="w-full rounded-lg border border-outline-variant bg-surface-container-low text-on-surface p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                 rows={3}
               />
             </div>
           </div>
 
           {/* Line Items */}
-          <div className="bg-white p-6 rounded-lg border border-stone-200 shadow-sm space-y-4">
+          <div className="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/40 shadow-sm space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-base font-semibold text-stone-900">Contract Deliverables</h2>
-                <p className="text-xs text-stone-500">Service line items and deliverables included in this booking contract.</p>
+                <h2 className="text-base font-semibold text-on-surface">Contract Deliverables</h2>
+                <p className="text-xs text-on-surface-variant">Service line items and deliverables included in this booking contract.</p>
               </div>
               <Button type="button" variant="outline" size="sm" onClick={handleAddLine}>
                 + Add Item
@@ -196,14 +196,14 @@ export function BookingBuilder({ clients }: BookingBuilderProps) {
               {lines.map((l, idx) => {
                 const subtotal = (Number(l.quantity) || 1) * (Number(l.unitPriceRupees) || 0);
                 return (
-                  <div key={idx} className="p-4 rounded-md border border-stone-200 bg-stone-50/50 space-y-3">
+                  <div key={idx} className="p-4 rounded-xl border border-outline-variant/40 bg-surface-container-low space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-stone-500 uppercase tracking-wider">Item #{idx + 1}</span>
+                      <span className="text-xs font-bold text-outline uppercase tracking-wider">Item #{idx + 1}</span>
                       {lines.length > 1 && (
                         <button
                           type="button"
                           onClick={() => handleRemoveLine(idx)}
-                          className="text-xs text-red-600 hover:underline"
+                          className="text-xs text-error hover:underline"
                         >
                           Remove
                         </button>
@@ -219,7 +219,7 @@ export function BookingBuilder({ clients }: BookingBuilderProps) {
                     </div>
                     <div className="grid grid-cols-3 gap-3">
                       <div>
-                        <label className="block text-xs text-stone-600 mb-1">Qty</label>
+                        <label className="block text-xs text-on-surface-variant mb-1">Qty</label>
                         <Input
                           type="number"
                           min={1}
@@ -229,7 +229,7 @@ export function BookingBuilder({ clients }: BookingBuilderProps) {
                         />
                       </div>
                       <div>
-                        <label className="block text-xs text-stone-600 mb-1">Unit Rate (₹)</label>
+                        <label className="block text-xs text-on-surface-variant mb-1">Unit Rate (₹)</label>
                         <Input
                           type="number"
                           min={0}
@@ -239,8 +239,8 @@ export function BookingBuilder({ clients }: BookingBuilderProps) {
                         />
                       </div>
                       <div>
-                        <label className="block text-xs text-stone-600 mb-1">Subtotal (₹)</label>
-                        <div className="h-9 flex items-center px-3 text-sm font-semibold text-stone-800 bg-stone-100 rounded-md">
+                        <label className="block text-xs text-on-surface-variant mb-1">Subtotal (₹)</label>
+                        <div className="h-9 flex items-center px-3 text-sm font-semibold text-on-surface bg-surface-container rounded-lg">
                           ₹{subtotal.toLocaleString('en-IN')}
                         </div>
                       </div>
@@ -254,20 +254,20 @@ export function BookingBuilder({ clients }: BookingBuilderProps) {
 
         {/* Right Column: Financial Summary & Submit */}
         <div className="space-y-6">
-          <div className="bg-white p-6 rounded-lg border border-stone-200 shadow-sm space-y-4">
-            <h2 className="text-base font-semibold text-stone-900">Contract Summary</h2>
-            <div className="divide-y divide-stone-100 text-sm">
-              <div className="py-2.5 flex justify-between text-stone-600">
+          <div className="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/40 shadow-sm space-y-4">
+            <h2 className="text-base font-semibold text-on-surface">Contract Summary</h2>
+            <div className="divide-y divide-outline-variant/20 text-sm">
+              <div className="py-2.5 flex justify-between text-on-surface-variant">
                 <span>Deliverables Count</span>
-                <span className="font-medium text-stone-900">{lines.length} items</span>
+                <span className="font-medium text-on-surface">{lines.length} items</span>
               </div>
-              <div className="py-2.5 flex justify-between text-stone-600">
+              <div className="py-2.5 flex justify-between text-on-surface-variant">
                 <span>Delivery Pipeline</span>
-                <span className="font-medium text-stone-900">9 Stages (Auto)</span>
+                <span className="font-medium text-on-surface">9 Stages (Auto)</span>
               </div>
-              <div className="py-3 flex justify-between text-base font-bold text-stone-900 border-t border-stone-200">
+              <div className="py-3 flex justify-between text-base font-bold text-on-surface border-t border-outline-variant/40">
                 <span>Contract Total</span>
-                <span className="text-stone-950 font-serif text-lg">{formatINR(BigInt(contractTotalPaise))}</span>
+                <span className="text-on-surface text-lg">{formatINR(BigInt(contractTotalPaise))}</span>
               </div>
             </div>
 

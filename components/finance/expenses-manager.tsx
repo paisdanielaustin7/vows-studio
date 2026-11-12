@@ -104,10 +104,10 @@ export function ExpensesManager({ initialExpenses, categories, canManage }: Expe
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-serif font-bold text-stone-900 tracking-tight">
-            Production & Operational Expenses
+          <h1 className="text-2xl font-bold text-on-surface tracking-tight">
+            Production &amp; Operational Expenses
           </h1>
-          <p className="text-sm text-stone-500 mt-1">
+          <p className="text-sm text-on-surface-variant mt-1">
             Track gear acquisitions, shoot logistics, travel, and automated crew payouts (D-23).
           </p>
         </div>
@@ -120,7 +120,7 @@ export function ExpensesManager({ initialExpenses, categories, canManage }: Expe
       </div>
 
       {/* Filter Matrix */}
-      <div className="bg-white p-4 rounded-lg border border-stone-200 shadow-sm space-y-3">
+      <div className="bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/40 shadow-sm space-y-3">
         <div className="flex flex-col md:flex-row gap-3 items-center justify-between">
           <div className="w-full md:w-96">
             <Input
@@ -134,10 +134,10 @@ export function ExpensesManager({ initialExpenses, categories, canManage }: Expe
           <div className="flex items-center gap-1 overflow-x-auto w-full md:w-auto pb-1 text-xs">
             <button
               onClick={() => setSelectedCategory('all')}
-              className={`px-3 py-1.5 rounded-md font-medium whitespace-nowrap transition-colors ${
+              className={`px-3 py-1.5 rounded-lg font-medium whitespace-nowrap transition-colors ${
                 selectedCategory === 'all'
-                  ? 'bg-stone-900 text-white'
-                  : 'text-stone-600 hover:bg-stone-100'
+                  ? 'bg-secondary-container text-on-secondary-container'
+                  : 'text-on-surface-variant hover:bg-surface-container-high'
               }`}
             >
               All Categories
@@ -146,10 +146,10 @@ export function ExpensesManager({ initialExpenses, categories, canManage }: Expe
               <button
                 key={c.id}
                 onClick={() => setSelectedCategory(c.id)}
-                className={`px-3 py-1.5 rounded-md font-medium whitespace-nowrap transition-colors ${
+                className={`px-3 py-1.5 rounded-lg font-medium whitespace-nowrap transition-colors ${
                   selectedCategory === c.id
-                    ? 'bg-stone-900 text-white'
-                    : 'text-stone-600 hover:bg-stone-100'
+                    ? 'bg-secondary-container text-on-secondary-container'
+                    : 'text-on-surface-variant hover:bg-surface-container-high'
                 }`}
               >
                 {c.name}
@@ -158,13 +158,13 @@ export function ExpensesManager({ initialExpenses, categories, canManage }: Expe
           </div>
         </div>
 
-        <div className="pt-2 border-t border-stone-100 flex items-center justify-between text-xs text-stone-500">
+        <div className="pt-2 border-t border-outline-variant/20 flex items-center justify-between text-xs text-outline">
           <span>
-            Showing <strong>{filtered.length}</strong> items
+            Showing <strong className="text-on-surface">{filtered.length}</strong> items
           </span>
           <span>
             Total in View:{' '}
-            <strong className="text-stone-900 font-mono text-sm">
+            <strong className="text-on-surface font-mono text-sm">
               {formatINR(BigInt(totalFilteredPaise))}
             </strong>
           </span>
@@ -172,62 +172,62 @@ export function ExpensesManager({ initialExpenses, categories, canManage }: Expe
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-lg border border-stone-200 shadow-sm overflow-hidden">
+      <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/40 shadow-sm overflow-hidden">
         {filtered.length === 0 ? (
-          <div className="py-16 text-center text-sm text-stone-500">
+          <div className="py-16 text-center text-sm text-outline">
             No expenses found matching your criteria.
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse text-xs">
               <thead>
-                <tr className="border-b border-stone-200 bg-stone-50 text-stone-600 font-semibold uppercase tracking-wider text-[11px]">
+                <tr className="border-b border-outline-variant/40 bg-surface-container-low text-on-surface-variant font-semibold uppercase tracking-wider text-[11px]">
                   <th className="py-3 px-4">Date</th>
                   <th className="py-3 px-4">Category</th>
                   <th className="py-3 px-4">Description</th>
                   <th className="py-3 px-4">Vendor</th>
-                  <th className="py-3 px-4">Method & Ref</th>
+                  <th className="py-3 px-4">Method &amp; Ref</th>
                   <th className="py-3 px-4">Linked Booking</th>
                   <th className="py-3 px-4 text-right">Amount</th>
                   <th className="py-3 px-4 text-center">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-stone-100">
+              <tbody className="divide-y divide-outline-variant/20 text-on-surface">
                 {filtered.map((e) => (
-                  <tr key={e.id} className="hover:bg-stone-50/70 transition-colors">
-                    <td className="py-3 px-4 text-stone-600">{e.expenseDate}</td>
+                  <tr key={e.id} className="hover:bg-surface-container-low/60 transition-colors">
+                    <td className="py-3 px-4 text-on-surface-variant">{e.expenseDate}</td>
                     <td className="py-3 px-4">
                       <Badge variant={e.source === 'system' ? 'accent' : 'default'}>
                         {e.categoryName}
                       </Badge>
                     </td>
-                    <td className="py-3 px-4 font-medium text-stone-900 max-w-xs truncate" title={e.description}>
+                    <td className="py-3 px-4 font-medium text-on-surface max-w-xs truncate" title={e.description}>
                       {e.description}
                       {e.source === 'system' && (
-                        <span className="text-[10px] text-stone-400 block font-normal">
+                        <span className="text-[10px] text-outline block font-normal">
                           Auto-generated from Crew Payment (D-23)
                         </span>
                       )}
                     </td>
-                    <td className="py-3 px-4 text-stone-600">{e.vendor || '—'}</td>
-                    <td className="py-3 px-4 text-stone-600">
+                    <td className="py-3 px-4 text-on-surface-variant">{e.vendor || '—'}</td>
+                    <td className="py-3 px-4 text-on-surface-variant">
                       <span className="capitalize">{e.paymentMethod?.replace('_', ' ') || '—'}</span>
                       {e.referenceNumber && (
-                        <span className="text-[11px] text-stone-400 block font-mono">
+                        <span className="text-[11px] text-outline block font-mono">
                           {e.referenceNumber}
                         </span>
                       )}
                     </td>
                     <td className="py-3 px-4 font-mono">
                       {e.bookingId ? (
-                        <Link href={`/crm/bookings/${e.bookingId}`} className="text-stone-700 hover:underline">
+                        <Link href={`/crm/bookings/${e.bookingId}`} className="text-primary hover:underline">
                           {e.bookingNumber || 'BK'} →
                         </Link>
                       ) : (
                         '—'
                       )}
                     </td>
-                    <td className="py-3 px-4 text-right font-mono font-bold text-red-700">
+                    <td className="py-3 px-4 text-right font-mono font-bold text-error">
                       -{formatINR(BigInt(e.amountPaise))}
                     </td>
                     <td className="py-3 px-4 text-center">
@@ -235,7 +235,7 @@ export function ExpensesManager({ initialExpenses, categories, canManage }: Expe
                         <button
                           type="button"
                           onClick={() => handleDelete(e.id)}
-                          className="text-stone-400 hover:text-red-600 transition-colors"
+                          className="text-outline hover:text-error transition-colors"
                           title="Delete"
                         >
                           ✕
@@ -252,17 +252,17 @@ export function ExpensesManager({ initialExpenses, categories, canManage }: Expe
 
       {/* Record Expense Dialog */}
       {isAddOpen && (
-        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg shadow-xl max-w-lg w-full p-6 space-y-4">
-            <div className="flex items-center justify-between border-b pb-2">
-              <h3 className="text-base font-bold text-stone-900">Record Operational Expense</h3>
-              <button onClick={() => setIsAddOpen(false)} className="text-stone-400 hover:text-stone-600">
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-surface-container-lowest border border-outline-variant/60 rounded-xl shadow-2xl max-w-lg w-full p-6 space-y-4">
+            <div className="flex items-center justify-between border-b border-outline-variant/40 pb-2">
+              <h3 className="text-base font-bold text-on-surface">Record Operational Expense</h3>
+              <button onClick={() => setIsAddOpen(false)} className="text-outline hover:text-on-surface">
                 ✕
               </button>
             </div>
 
             {formError && (
-              <div className="p-2.5 bg-red-50 border border-red-200 text-red-700 text-xs rounded">
+              <div className="p-2.5 bg-error-container border border-error/30 text-on-error-container text-xs rounded-lg">
                 {formError}
               </div>
             )}
@@ -270,8 +270,8 @@ export function ExpensesManager({ initialExpenses, categories, canManage }: Expe
             <form onSubmit={handleCreate} className="space-y-3">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-medium text-stone-700 mb-1">
-                    Date <span className="text-red-500">*</span>
+                  <label className="block text-xs font-medium text-on-surface-variant mb-1">
+                    Date <span className="text-error">*</span>
                   </label>
                   <Input
                     type="date"
@@ -281,13 +281,13 @@ export function ExpensesManager({ initialExpenses, categories, canManage }: Expe
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-stone-700 mb-1">
-                    Category <span className="text-red-500">*</span>
+                  <label className="block text-xs font-medium text-on-surface-variant mb-1">
+                    Category <span className="text-error">*</span>
                   </label>
                   <select
                     value={formCategoryId}
                     onChange={(e) => setFormCategoryId(e.target.value)}
-                    className="w-full h-9 rounded-md border border-stone-300 bg-white px-2 py-1 text-xs focus:outline-none focus:ring-1 focus:ring-stone-900"
+                    className="w-full h-9 rounded-lg border border-outline-variant bg-surface-container-low text-on-surface px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-primary"
                     required
                   >
                     {manualCategories.map((c) => (
@@ -300,8 +300,8 @@ export function ExpensesManager({ initialExpenses, categories, canManage }: Expe
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-stone-700 mb-1">
-                  Description <span className="text-red-500">*</span>
+                <label className="block text-xs font-medium text-on-surface-variant mb-1">
+                  Description <span className="text-error">*</span>
                 </label>
                 <Input
                   required
@@ -313,8 +313,8 @@ export function ExpensesManager({ initialExpenses, categories, canManage }: Expe
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-medium text-stone-700 mb-1">
-                    Amount (₹) <span className="text-red-500">*</span>
+                  <label className="block text-xs font-medium text-on-surface-variant mb-1">
+                    Amount (₹) <span className="text-error">*</span>
                   </label>
                   <Input
                     type="number"
@@ -326,7 +326,7 @@ export function ExpensesManager({ initialExpenses, categories, canManage }: Expe
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-stone-700 mb-1">Vendor</label>
+                  <label className="block text-xs font-medium text-on-surface-variant mb-1">Vendor</label>
                   <Input
                     placeholder="e.g. B&H / Amazon / Apple"
                     value={formVendor}
@@ -337,11 +337,11 @@ export function ExpensesManager({ initialExpenses, categories, canManage }: Expe
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-medium text-stone-700 mb-1">Payment Method</label>
+                  <label className="block text-xs font-medium text-on-surface-variant mb-1">Payment Method</label>
                   <select
                     value={formMethod}
                     onChange={(e) => setFormMethod(e.target.value as PaymentMethod)}
-                    className="w-full h-9 rounded-md border border-stone-300 bg-white px-2 py-1 text-xs focus:outline-none focus:ring-1 focus:ring-stone-900"
+                    className="w-full h-9 rounded-lg border border-outline-variant bg-surface-container-low text-on-surface px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-primary"
                   >
                     <option value="card">Company Credit/Debit Card</option>
                     <option value="bank_transfer">Bank Transfer</option>
@@ -351,7 +351,7 @@ export function ExpensesManager({ initialExpenses, categories, canManage }: Expe
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-stone-700 mb-1">Transaction Ref / Bill #</label>
+                  <label className="block text-xs font-medium text-on-surface-variant mb-1">Transaction Ref / Bill #</label>
                   <Input
                     placeholder="Ref / Invoice #"
                     value={formRef}
@@ -361,17 +361,17 @@ export function ExpensesManager({ initialExpenses, categories, canManage }: Expe
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-stone-700 mb-1">Notes</label>
+                <label className="block text-xs font-medium text-on-surface-variant mb-1">Notes</label>
                 <textarea
                   rows={2}
                   placeholder="Tax deduction notes, warranty info..."
-                  className="w-full rounded border border-stone-300 p-2 text-xs focus:outline-none focus:ring-1 focus:ring-stone-900"
+                  className="w-full rounded-lg border border-outline-variant bg-surface-container-low text-on-surface p-2 text-xs focus:outline-none focus:ring-2 focus:ring-primary"
                   value={formNotes}
                   onChange={(e) => setFormNotes(e.target.value)}
                 />
               </div>
 
-              <div className="flex justify-end gap-2 pt-3 border-t">
+              <div className="flex justify-end gap-2 pt-3 border-t border-outline-variant/40">
                 <Button type="button" variant="outline" size="sm" onClick={() => setIsAddOpen(false)}>
                   Cancel
                 </Button>

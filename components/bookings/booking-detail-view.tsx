@@ -13,6 +13,19 @@ import { createEventAction } from '@/server/actions/event.actions';
 import { assignCrewAction, checkCrewConflictsAction, removeCrewAssignmentAction } from '@/server/actions/crew.actions';
 import { PipelineTracker } from '@/components/delivery/pipeline-tracker';
 import { GenerateReviewLinkModal } from '@/components/reviews/generate-review-link-modal';
+import {
+  AlertTriangle,
+  ArrowLeft,
+  Calendar,
+  CalendarPlus,
+  Clock,
+  MapPin,
+  Printer,
+  Star,
+  UserPlus,
+  X,
+  XCircle,
+} from 'lucide-react';
 
 interface BookingDetailViewProps {
   booking: Booking | BookingOps;
@@ -264,7 +277,7 @@ export function BookingDetailView({
             href="/crm/bookings"
             className="p-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface-variant transition-colors"
           >
-            <span className="material-symbols-outlined text-[20px]">arrow_back</span>
+            <ArrowLeft className="w-5 h-5" />
           </Link>
           <h1 className="text-2xl font-bold tracking-tight text-on-surface">{booking.bookingNumber}</h1>
           <Badge
@@ -312,7 +325,7 @@ export function BookingDetailView({
                 onClick={() => setIsAddEventModalOpen(true)}
                 className="h-9 flex items-center gap-1.5"
               >
-                <span className="material-symbols-outlined text-[18px] text-primary">calendar_add_on</span>
+                <CalendarPlus className="w-4 h-4 text-primary" />
                 <span>Add Event</span>
               </Button>
               <Button
@@ -321,7 +334,7 @@ export function BookingDetailView({
                 onClick={() => setIsReviewModalOpen(true)}
                 className="h-9 text-primary border-primary/30 hover:bg-primary/10 flex items-center gap-1.5"
               >
-                <span className="material-symbols-outlined text-[18px]">star</span>
+                <Star className="w-4 h-4" />
                 <span>Request Review</span>
               </Button>
               <Button
@@ -330,7 +343,7 @@ export function BookingDetailView({
                 onClick={() => setIsCancelModalOpen(true)}
                 className="h-9 text-error border-error/30 hover:bg-error/10 flex items-center gap-1.5"
               >
-                <span className="material-symbols-outlined text-[18px]">cancel</span>
+                <XCircle className="w-4 h-4" />
                 <span>Cancel Booking</span>
               </Button>
             </>
@@ -342,7 +355,7 @@ export function BookingDetailView({
             onClick={() => window.print()}
             className="h-9 flex items-center gap-1.5"
           >
-            <span className="material-symbols-outlined text-[18px]">print</span>
+            <Printer className="w-4 h-4" />
             <span>Print Confirmation</span>
           </Button>
         </div>
@@ -352,7 +365,7 @@ export function BookingDetailView({
       {booking.status === 'cancelled' && (
         <div className="p-4 rounded-xl bg-error-container text-on-error-container border border-error/30 space-y-1">
           <div className="flex items-center gap-2 font-semibold text-sm">
-            <span className="material-symbols-outlined text-lg">warning</span>
+            <AlertTriangle className="w-4 h-4 shrink-0" />
             <span>Booking Cancelled</span>
           </div>
           <p className="text-xs">
@@ -476,7 +489,7 @@ export function BookingDetailView({
                       <Badge variant="default">{ev.eventType.replace(/_/g, ' ')}</Badge>
                     </div>
                     <div className="flex items-center gap-2 text-xs text-outline mt-1">
-                      <span className="material-symbols-outlined text-[16px]">event</span>
+                      <Calendar className="w-3.5 h-3.5" />
                       <span>
                         {new Date(ev.eventDate).toLocaleDateString('en-IN', {
                           weekday: 'short',
@@ -488,14 +501,14 @@ export function BookingDetailView({
                       {ev.startTime && (
                         <>
                           <span>•</span>
-                          <span className="material-symbols-outlined text-[16px]">schedule</span>
+                          <Clock className="w-3.5 h-3.5" />
                           <span>
                             {ev.startTime.slice(0, 5)} {ev.endTime ? `– ${ev.endTime.slice(0, 5)}` : ''}
                           </span>
                         </>
                       )}
                       <span>•</span>
-                      <span className="material-symbols-outlined text-[16px]">place</span>
+                      <MapPin className="w-3.5 h-3.5" />
                       <span>{ev.venueName}</span>
                     </div>
                   </div>
@@ -507,7 +520,7 @@ export function BookingDetailView({
                       onClick={() => handleOpenAssignModal(ev.id)}
                       className="h-8 text-xs flex items-center gap-1.5"
                     >
-                      <span className="material-symbols-outlined text-[16px] text-primary">person_add</span>
+                      <UserPlus className="w-3.5 h-3.5 text-primary" />
                       <span>Assign Crew</span>
                     </Button>
                   )}
@@ -538,7 +551,7 @@ export function BookingDetailView({
                   </span>
                   {(!ev.assignments || ev.assignments.length === 0) ? (
                     <div className="p-3 rounded-lg bg-surface-container-low/30 text-xs text-outline flex items-center gap-2">
-                      <span className="material-symbols-outlined text-[16px] text-warning">warning</span>
+                      <AlertTriangle className="w-4 h-4 text-warning shrink-0" />
                       <span>No crew members assigned to this event yet.</span>
                     </div>
                   ) : (
@@ -566,7 +579,7 @@ export function BookingDetailView({
                               className="text-outline hover:text-error transition-colors p-1"
                               title="Remove assignment"
                             >
-                              <span className="material-symbols-outlined text-[16px]">close</span>
+                              <X className="w-4 h-4" />
                             </button>
                           )}
                         </div>
@@ -579,7 +592,7 @@ export function BookingDetailView({
 
             {events.length === 0 && (
               <div className="p-12 text-center bg-surface-container-lowest rounded-xl border border-outline-variant/40 space-y-2 text-outline">
-                <span className="material-symbols-outlined text-4xl text-outline/60">calendar_month</span>
+                <Calendar className="w-9 h-9 text-outline/60 mx-auto" />
                 <p>No events added to this booking yet.</p>
               </div>
             )}
@@ -708,7 +721,7 @@ export function BookingDetailView({
                 onClick={() => setAssigningEventId(null)}
                 className="p-1 rounded-lg text-outline hover:text-on-surface"
               >
-                <span className="material-symbols-outlined text-[20px]">close</span>
+                <X className="w-5 h-5" />
               </button>
             </div>
 
@@ -754,7 +767,7 @@ export function BookingDetailView({
               ) : conflicts.length > 0 ? (
                 <div className="p-3 rounded-xl bg-warning/10 border border-warning/30 space-y-2">
                   <div className="flex items-center gap-1.5 text-warning font-semibold text-xs">
-                    <span className="material-symbols-outlined text-sm">warning</span>
+                    <AlertTriangle className="w-3.5 h-3.5" />
                     <span>Scheduling Conflict Detected (D-34)</span>
                   </div>
                   <ul className="list-disc pl-4 text-xs text-on-surface space-y-1">
@@ -816,7 +829,7 @@ export function BookingDetailView({
                 onClick={() => setIsAddEventModalOpen(false)}
                 className="p-1 rounded-lg text-outline hover:text-on-surface"
               >
-                <span className="material-symbols-outlined text-[20px]">close</span>
+                <X className="w-5 h-5" />
               </button>
             </div>
 
@@ -935,7 +948,7 @@ export function BookingDetailView({
                 onClick={() => setIsCancelModalOpen(false)}
                 className="p-1 rounded-lg text-outline hover:text-on-surface"
               >
-                <span className="material-symbols-outlined text-[20px]">close</span>
+                <X className="w-5 h-5" />
               </button>
             </div>
 

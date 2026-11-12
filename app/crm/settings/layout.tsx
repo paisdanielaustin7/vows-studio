@@ -99,6 +99,11 @@ const SETTINGS_NAV: SettingsNavGroup[] = [
 
 export default function SettingsLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const [pendingHref, setPendingHref] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    setPendingHref(null);
+  }, [pathname]);
 
   return (
     <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -113,7 +118,7 @@ export default function SettingsLayout({ children }: { children: React.ReactNode
         </div>
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
-            <h1 className="font-serif text-3xl font-semibold tracking-tight text-on-surface">
+            <h1 className="text-3xl font-semibold tracking-tight text-on-surface">
               Studio Settings &amp; Configuration
             </h1>
             <p className="text-sm text-on-surface-variant mt-1">
@@ -135,11 +140,17 @@ export default function SettingsLayout({ children }: { children: React.ReactNode
                 </div>
                 {group.items.map((item) => {
                   const Icon = item.icon;
-                  const isActive = pathname === item.href;
+                  const isActive = (pendingHref ?? pathname) === item.href;
                   return (
                     <Link
                       key={item.href}
                       href={item.href}
+                      prefetch={true}
+                      onClick={() => {
+                        if (pathname !== item.href) {
+                          setPendingHref(item.href);
+                        }
+                      }}
                       className={cn(
                         'flex items-start gap-3 px-3 py-2.5 rounded-lg transition-colors',
                         isActive

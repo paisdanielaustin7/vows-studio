@@ -85,11 +85,11 @@ export function GmailSettingsCard({
   };
 
   return (
-    <div className="bg-white rounded-xl border border-stone-200 overflow-hidden shadow-xs space-y-6 p-6">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-stone-100 pb-5">
+    <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/40 overflow-hidden shadow-xs space-y-6 p-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-outline-variant/30 pb-5">
         <div>
           <div className="flex items-center gap-3">
-            <h2 className="text-xl font-serif text-stone-900 tracking-tight">
+            <h2 className="text-xl font-bold text-on-surface tracking-tight">
               Gmail Transmission Integration
             </h2>
             <Badge
@@ -105,7 +105,7 @@ export function GmailSettingsCard({
               {status.status.replace('_', ' ')}
             </Badge>
           </div>
-          <p className="text-xs text-stone-500 mt-1">
+          <p className="text-xs text-outline mt-1">
             Studio sender pipeline for quotations, tax invoices, payment receipts, and password resets
           </p>
         </div>
@@ -117,7 +117,7 @@ export function GmailSettingsCard({
                 onClick={() => {
                   window.location.href = '/api/auth/gmail/connect';
                 }}
-                className="bg-stone-900 hover:bg-stone-800 text-white"
+                className="bg-primary hover:bg-primary-dark text-on-primary"
               >
                 {needsReconnect ? 'Reconnect Gmail' : 'Connect with Google'}
               </Button>
@@ -125,7 +125,7 @@ export function GmailSettingsCard({
               <Button
                 variant="outline"
                 onClick={handleDisconnect}
-                className="text-red-700 border-red-200 hover:bg-red-50 text-xs"
+                className="text-error border-error/30 hover:bg-error/10 text-xs"
               >
                 Disconnect Account
               </Button>
@@ -135,7 +135,7 @@ export function GmailSettingsCard({
       </div>
 
       {needsReconnect && (
-        <div className="p-4 bg-amber-50 border border-amber-200 rounded-lg text-xs text-amber-900 space-y-1">
+        <div className="p-4 bg-amber-500/10 border border-amber-500/30 rounded-xl text-xs text-amber-800 dark:text-amber-300 space-y-1">
           <p className="font-bold">⚠️ Reconnection Required</p>
           <p>
             Google authorization token has expired or was revoked. Please click &ldquo;Reconnect Gmail&rdquo; above to re-authorize.
@@ -145,20 +145,20 @@ export function GmailSettingsCard({
 
       {isConnected && status.googleEmail && (
         <div className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-stone-50 p-4 rounded-lg border border-stone-200">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-surface-container-low p-4 rounded-xl border border-outline-variant/40">
             <div>
-              <span className="text-[11px] font-semibold text-stone-500 uppercase tracking-wider block">
+              <span className="text-[11px] font-semibold text-outline uppercase tracking-wider block">
                 Connected Google Account
               </span>
-              <span className="font-mono text-sm font-medium text-stone-900">
+              <span className="font-mono text-sm font-medium text-on-surface">
                 {status.googleEmail}
               </span>
             </div>
             <div>
-              <span className="text-[11px] font-semibold text-stone-500 uppercase tracking-wider block">
+              <span className="text-[11px] font-semibold text-outline uppercase tracking-wider block">
                 Connected At
               </span>
-              <span className="text-sm text-stone-700">
+              <span className="text-sm text-on-surface-variant">
                 {status.connectedAt ? new Date(status.connectedAt).toLocaleString() : 'Active'}
               </span>
             </div>
@@ -166,7 +166,7 @@ export function GmailSettingsCard({
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
             <div>
-              <label className="text-xs font-semibold text-stone-700 block mb-1">
+              <label className="text-xs font-semibold text-on-surface block mb-1">
                 Sender Display Name
               </label>
               <Input
@@ -177,7 +177,7 @@ export function GmailSettingsCard({
               />
             </div>
             <div>
-              <label className="text-xs font-semibold text-stone-700 block mb-1">
+              <label className="text-xs font-semibold text-on-surface block mb-1">
                 Reply-To Email (Optional)
               </label>
               <Input
@@ -195,12 +195,12 @@ export function GmailSettingsCard({
                 size="sm"
                 onClick={handleSaveSettings}
                 disabled={isSaving}
-                className="bg-stone-900 text-white"
+                className="bg-primary hover:bg-primary-dark text-on-primary"
               >
                 {isSaving ? 'Saving...' : 'Save Sender Profile'}
               </Button>
               {saveSuccess && (
-                <span className="text-xs text-emerald-700 font-medium">
+                <span className="text-xs text-emerald-700 dark:text-emerald-400 font-medium">
                   ✓ Sender settings updated
                 </span>
               )}
@@ -209,9 +209,9 @@ export function GmailSettingsCard({
 
           {/* Test Send Section */}
           {canManage && (
-            <div className="border-t border-stone-100 pt-5 space-y-3">
-              <h3 className="text-sm font-semibold text-stone-900">Send Test Transmission</h3>
-              <p className="text-xs text-stone-500">
+            <div className="border-t border-outline-variant/30 pt-5 space-y-3">
+              <h3 className="text-sm font-semibold text-on-surface">Send Test Transmission</h3>
+              <p className="text-xs text-outline">
                 Send a sample verification message to ensure Google quota and MIME transmission are healthy.
               </p>
               <div className="flex items-center gap-3 max-w-md">
@@ -235,10 +235,10 @@ export function GmailSettingsCard({
 
               {testResult && (
                 <div
-                  className={`p-3 rounded-lg text-xs ${
+                  className={`p-3 rounded-xl text-xs ${
                     testResult.success
-                      ? 'bg-emerald-50 text-emerald-900 border border-emerald-200'
-                      : 'bg-red-50 text-red-900 border border-red-200'
+                      ? 'bg-secondary-container text-on-secondary-container border border-secondary-container'
+                      : 'bg-error-container text-on-error-container border border-error/30'
                   }`}
                 >
                   {testResult.message}
@@ -250,11 +250,11 @@ export function GmailSettingsCard({
       )}
 
       {!isConnected && (
-        <div className="p-4 bg-stone-50 rounded-lg text-xs text-stone-600 space-y-2 border border-dashed border-stone-200">
+        <div className="p-4 bg-surface-container-low rounded-xl text-xs text-on-surface-variant space-y-2 border border-dashed border-outline-variant/60">
           <p>
             No active Gmail connection found. Outgoing documents (quotations, invoices, receipts) will require manual PDF download until a Google account is authorized.
           </p>
-          <p className="text-[11px] text-stone-400">
+          <p className="text-[11px] text-outline">
             Authorization requires the <code>gmail.send</code> and <code>openid</code> scopes. No email reading or inbox access is ever requested or permitted.
           </p>
         </div>

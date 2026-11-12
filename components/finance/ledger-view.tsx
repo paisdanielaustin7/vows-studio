@@ -111,10 +111,10 @@ export function LedgerView({
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-serif font-bold text-stone-900 tracking-tight">
-            General Ledger & P&L Statement
+          <h1 className="text-2xl font-bold text-on-surface tracking-tight">
+            General Ledger &amp; P&amp;L Statement
           </h1>
-          <p className="text-sm text-stone-500 mt-1">
+          <p className="text-sm text-on-surface-variant mt-1">
             Real-time unified ledger view dynamically synthesized from payments, manual receipts, and expenses (D-23).
           </p>
         </div>
@@ -136,9 +136,9 @@ export function LedgerView({
       </div>
 
       {/* Date Filter & Preset Bar */}
-      <div className="bg-white p-4 rounded-lg border border-stone-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/40 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-xs font-semibold text-stone-500 uppercase tracking-wider">
+          <span className="text-xs font-semibold text-outline uppercase tracking-wider">
             Period:
           </span>
           <div className="flex items-center gap-2">
@@ -148,7 +148,7 @@ export function LedgerView({
               onChange={(e) => setStartDate(e.target.value)}
               className="h-8 text-xs w-36"
             />
-            <span className="text-stone-400 text-xs">to</span>
+            <span className="text-outline text-xs">to</span>
             <Input
               type="date"
               value={endDate}
@@ -174,7 +174,7 @@ export function LedgerView({
               setStartDate(firstDay);
               setEndDate(lastDay);
             }}
-            className="px-2.5 py-1 rounded hover:bg-stone-100 text-stone-600"
+            className="px-2.5 py-1 rounded-lg hover:bg-surface-container-high text-on-surface-variant"
           >
             This Month
           </button>
@@ -185,7 +185,7 @@ export function LedgerView({
               setStartDate(`${year}-04-01`);
               setEndDate(`${year + 1}-03-31`);
             }}
-            className="px-2.5 py-1 rounded hover:bg-stone-100 text-stone-600"
+            className="px-2.5 py-1 rounded-lg hover:bg-surface-container-high text-on-surface-variant"
           >
             This FY
           </button>
@@ -194,40 +194,40 @@ export function LedgerView({
 
       {/* Operational P&L Performance Dossier Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-        <div className="bg-white p-5 rounded-lg border border-stone-200 shadow-sm">
-          <p className="text-xs uppercase font-medium text-stone-500 tracking-wider">Total Income</p>
-          <p className="text-2xl font-serif font-bold text-emerald-700 mt-1">
+        <div className="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/40 shadow-sm">
+          <p className="text-xs uppercase font-medium text-outline tracking-wider">Total Income</p>
+          <p className="text-2xl font-bold text-emerald-700 dark:text-emerald-400 mt-1">
             {formatINR(BigInt(report.totalIncomePaise))}
           </p>
-          <span className="text-xs text-stone-400">
+          <span className="text-xs text-outline">
             {report.incomeByCategory.length} income revenue streams
           </span>
         </div>
 
-        <div className="bg-white p-5 rounded-lg border border-stone-200 shadow-sm">
-          <p className="text-xs uppercase font-medium text-stone-500 tracking-wider">
+        <div className="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/40 shadow-sm">
+          <p className="text-xs uppercase font-medium text-outline tracking-wider">
             Total Operational Expenses
           </p>
-          <p className="text-2xl font-serif font-bold text-red-700 mt-1">
+          <p className="text-2xl font-bold text-error mt-1">
             -{formatINR(BigInt(report.totalExpensesPaise))}
           </p>
-          <span className="text-xs text-stone-400">
+          <span className="text-xs text-outline">
             Production, crew, and atelier overhead
           </span>
         </div>
 
-        <div className="bg-white p-5 rounded-lg border border-stone-200 shadow-sm">
-          <p className="text-xs uppercase font-medium text-stone-500 tracking-wider">
-            Net Production Margin (P&L)
+        <div className="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/40 shadow-sm">
+          <p className="text-xs uppercase font-medium text-outline tracking-wider">
+            Net Production Margin (P&amp;L)
           </p>
           <p
-            className={`text-2xl font-serif font-bold mt-1 ${
-              report.netProfitPaise >= 0 ? 'text-stone-900' : 'text-red-700'
+            className={`text-2xl font-bold mt-1 ${
+              report.netProfitPaise >= 0 ? 'text-on-surface' : 'text-error'
             }`}
           >
             {formatINR(BigInt(report.netProfitPaise))}
           </p>
-          <span className="text-xs text-stone-400">
+          <span className="text-xs text-outline">
             Net Atelier Operating Margin:{' '}
             {report.totalIncomePaise > 0
               ? `${Math.round((report.netProfitPaise / report.totalIncomePaise) * 100)}%`
@@ -237,7 +237,7 @@ export function LedgerView({
       </div>
 
       {/* Ledger Filter & Search Bar */}
-      <div className="bg-white p-4 rounded-lg border border-stone-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/40 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="w-full md:w-96">
           <Input
             type="text"
@@ -252,8 +252,8 @@ export function LedgerView({
             <button
               key={t}
               onClick={() => setTypeFilter(t)}
-              className={`px-3 py-1.5 rounded-md font-medium capitalize transition-colors ${
-                typeFilter === t ? 'bg-stone-900 text-white' : 'text-stone-600 hover:bg-stone-100'
+              className={`px-3 py-1.5 rounded-lg font-medium capitalize transition-colors ${
+                typeFilter === t ? 'bg-secondary-container text-on-secondary-container' : 'text-on-surface-variant hover:bg-surface-container-high'
               }`}
             >
               {t === 'all' ? 'All Entries' : t}
@@ -263,56 +263,56 @@ export function LedgerView({
       </div>
 
       {/* Unified General Ledger Table */}
-      <div className="bg-white rounded-lg border border-stone-200 shadow-sm overflow-hidden">
+      <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/40 shadow-sm overflow-hidden">
         {filteredEntries.length === 0 ? (
-          <div className="py-16 text-center text-sm text-stone-500">
+          <div className="py-16 text-center text-sm text-outline">
             No ledger transactions found for the selected period.
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse text-xs">
               <thead>
-                <tr className="border-b border-stone-200 bg-stone-50 text-stone-600 font-semibold uppercase tracking-wider text-[11px]">
+                <tr className="border-b border-outline-variant/40 bg-surface-container-low text-on-surface-variant font-semibold uppercase tracking-wider text-[11px]">
                   <th className="py-3 px-4">Date</th>
                   <th className="py-3 px-4">Type</th>
                   <th className="py-3 px-4">Category</th>
                   <th className="py-3 px-4">Description</th>
-                  <th className="py-3 px-4">Method & Ref</th>
+                  <th className="py-3 px-4">Method &amp; Ref</th>
                   <th className="py-3 px-4">Source</th>
                   <th className="py-3 px-4 text-right">Amount</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-stone-100">
+              <tbody className="divide-y divide-outline-variant/20 text-on-surface">
                 {filteredEntries.map((e) => {
                   const isIncome = e.type === 'income';
                   return (
-                    <tr key={e.id} className="hover:bg-stone-50/70 transition-colors">
-                      <td className="py-3 px-4 text-stone-600 font-mono">{e.entryDate}</td>
+                    <tr key={e.id} className="hover:bg-surface-container-low/60 transition-colors">
+                      <td className="py-3 px-4 text-on-surface-variant font-mono">{e.entryDate}</td>
                       <td className="py-3 px-4">
                         <Badge variant={isIncome ? 'success' : 'danger'}>
                           {isIncome ? 'Income' : 'Expense'}
                         </Badge>
                       </td>
-                      <td className="py-3 px-4 font-medium text-stone-700 capitalize">
+                      <td className="py-3 px-4 font-medium text-on-surface capitalize">
                         {e.category.replace('_', ' ')}
                       </td>
-                      <td className="py-3 px-4 font-medium text-stone-900 max-w-sm truncate" title={e.description}>
+                      <td className="py-3 px-4 font-medium text-on-surface max-w-sm truncate" title={e.description}>
                         {e.description}
                       </td>
-                      <td className="py-3 px-4 text-stone-500">
+                      <td className="py-3 px-4 text-on-surface-variant">
                         <span className="capitalize">{e.paymentMethod?.replace('_', ' ') || '—'}</span>
                         {e.referenceNumber && (
-                          <span className="text-[10px] text-stone-400 block font-mono">
+                          <span className="text-[10px] text-outline block font-mono">
                             {e.referenceNumber}
                           </span>
                         )}
                       </td>
-                      <td className="py-3 px-4 text-stone-500 font-mono text-[11px]">
+                      <td className="py-3 px-4 text-outline font-mono text-[11px]">
                         {e.source}
                       </td>
                       <td
                         className={`py-3 px-4 text-right font-mono font-bold ${
-                          isIncome ? 'text-emerald-700' : 'text-red-700'
+                          isIncome ? 'text-emerald-700 dark:text-emerald-400' : 'text-error'
                         }`}
                       >
                         {isIncome ? '+' : '-'}
@@ -329,28 +329,28 @@ export function LedgerView({
 
       {/* Record Manual Income Dialog */}
       {isManualIncomeOpen && (
-        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 space-y-4">
-            <div className="flex items-center justify-between border-b pb-2">
-              <h3 className="text-base font-bold text-stone-900">Record Non-Invoice Income</h3>
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-surface-container-lowest border border-outline-variant/60 rounded-xl shadow-2xl max-w-md w-full p-6 space-y-4">
+            <div className="flex items-center justify-between border-b border-outline-variant/40 pb-2">
+              <h3 className="text-base font-bold text-on-surface">Record Non-Invoice Income</h3>
               <button
                 onClick={() => setIsManualIncomeOpen(false)}
-                className="text-stone-400 hover:text-stone-600"
+                className="text-outline hover:text-on-surface"
               >
                 ✕
               </button>
             </div>
 
             {incomeError && (
-              <div className="p-2.5 bg-red-50 border border-red-200 text-red-700 text-xs rounded">
+              <div className="p-2.5 bg-error-container border border-error/30 text-on-error-container text-xs rounded-lg">
                 {incomeError}
               </div>
             )}
 
             <form onSubmit={handleCreateManualIncome} className="space-y-3">
               <div>
-                <label className="block text-xs font-medium text-stone-700 mb-1">
-                  Date <span className="text-red-500">*</span>
+                <label className="block text-xs font-medium text-on-surface-variant mb-1">
+                  Date <span className="text-error">*</span>
                 </label>
                 <Input
                   type="date"
@@ -361,8 +361,8 @@ export function LedgerView({
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-stone-700 mb-1">
-                  Description <span className="text-red-500">*</span>
+                <label className="block text-xs font-medium text-on-surface-variant mb-1">
+                  Description <span className="text-error">*</span>
                 </label>
                 <Input
                   required
@@ -374,8 +374,8 @@ export function LedgerView({
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-medium text-stone-700 mb-1">
-                    Amount (₹) <span className="text-red-500">*</span>
+                  <label className="block text-xs font-medium text-on-surface-variant mb-1">
+                    Amount (₹) <span className="text-error">*</span>
                   </label>
                   <Input
                     type="number"
@@ -387,11 +387,11 @@ export function LedgerView({
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-stone-700 mb-1">Method</label>
+                  <label className="block text-xs font-medium text-on-surface-variant mb-1">Method</label>
                   <select
                     value={incomeMethod}
                     onChange={(e) => setIncomeMethod(e.target.value as PaymentMethod)}
-                    className="w-full h-9 rounded-md border border-stone-300 bg-white px-2 py-1 text-xs focus:outline-none focus:ring-1 focus:ring-stone-900"
+                    className="w-full h-9 rounded-lg border border-outline-variant bg-surface-container-low text-on-surface px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-primary"
                   >
                     <option value="bank_transfer">Bank Transfer</option>
                     <option value="upi">UPI</option>
@@ -402,7 +402,7 @@ export function LedgerView({
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-stone-700 mb-1">
+                <label className="block text-xs font-medium text-on-surface-variant mb-1">
                   Transaction Reference
                 </label>
                 <Input
@@ -412,7 +412,7 @@ export function LedgerView({
                 />
               </div>
 
-              <div className="flex justify-end gap-2 pt-3 border-t">
+              <div className="flex justify-end gap-2 pt-3 border-t border-outline-variant/40">
                 <Button
                   type="button"
                   variant="outline"

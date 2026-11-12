@@ -7,6 +7,7 @@ import { formatINR, applyDiscount, apportionDiscount, computeGst, fromRupees } f
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { createQuotationAction, updateQuotationStatusAction } from '@/server/actions/quotation.actions';
+import { AlertCircle, ArrowRight, Calculator, Save, Trash2 } from 'lucide-react';
 
 interface QuotationBuilderProps {
   clients: Client[];
@@ -333,7 +334,7 @@ export function QuotationBuilder({
             onClick={() => handleSave(false)}
             className="flex items-center gap-1.5"
           >
-            <span className="material-symbols-outlined text-[18px]">save</span>
+            <Save className="w-4 h-4" />
             Save Draft
           </Button>
           <Button
@@ -343,14 +344,14 @@ export function QuotationBuilder({
             className="bg-[#4c6452] hover:bg-[#3d5242] text-white flex items-center gap-2"
           >
             <span>Send to Client</span>
-            <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+            <ArrowRight className="w-4 h-4" />
           </Button>
         </div>
       </div>
 
       {errorMsg && (
         <div className="p-4 rounded-xl bg-error-container text-on-error-container text-sm flex items-center gap-2">
-          <span className="material-symbols-outlined text-lg">error</span>
+          <AlertCircle className="w-4 h-4 shrink-0" />
           <span>{errorMsg}</span>
         </div>
       )}
@@ -518,7 +519,7 @@ export function QuotationBuilder({
                         onClick={() => handleRemoveItem(item.id)}
                         className="text-error hover:bg-error/10 h-8 w-8 p-0 mt-3"
                       >
-                        <span className="material-symbols-outlined text-[18px]">delete</span>
+                        <Trash2 className="w-4 h-4" />
                       </Button>
                     </div>
                   </div>
@@ -568,7 +569,7 @@ export function QuotationBuilder({
           <section className="bg-surface-container-lowest rounded-xl p-6 shadow-sm border border-outline-variant/40 space-y-5">
             <h2 className="text-base font-semibold text-on-surface flex items-center justify-between">
               <span>Financial Summary</span>
-              <span className="material-symbols-outlined text-outline text-lg">calculate</span>
+              <Calculator className="w-4 h-4 text-outline" />
             </h2>
 
             {/* Subtotal */}

@@ -29,17 +29,17 @@ export function CreditNotesTable({ initialCreditNotes }: CreditNotesTableProps) 
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-serif font-bold text-stone-900 tracking-tight">
+          <h1 className="text-2xl font-bold text-on-surface tracking-tight">
             Credit Notes Ledger
           </h1>
-          <p className="text-sm text-stone-500 mt-1">
+          <p className="text-sm text-on-surface-variant mt-1">
             Issued credit adjustments linked directly to invoices (D-22).
           </p>
         </div>
       </div>
 
       {/* Filter Matrix */}
-      <div className="bg-white p-4 rounded-lg border border-stone-200 shadow-sm flex items-center justify-between gap-4">
+      <div className="bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/40 shadow-sm flex items-center justify-between gap-4">
         <div className="w-full md:w-96">
           <Input
             type="text"
@@ -48,22 +48,22 @@ export function CreditNotesTable({ initialCreditNotes }: CreditNotesTableProps) 
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
-        <div className="text-xs text-stone-500">
-          Showing <strong>{filtered.length}</strong> credit notes
+        <div className="text-xs text-outline">
+          Showing <strong className="text-on-surface">{filtered.length}</strong> credit notes
         </div>
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-lg border border-stone-200 shadow-sm overflow-hidden">
+      <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/40 shadow-sm overflow-hidden">
         {filtered.length === 0 ? (
-          <div className="py-16 text-center text-sm text-stone-500">
+          <div className="py-16 text-center text-sm text-outline">
             No credit notes recorded. Credit notes are issued from invoice detail pages.
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse text-xs">
               <thead>
-                <tr className="border-b border-stone-200 bg-stone-50 text-stone-600 font-semibold uppercase tracking-wider text-[11px]">
+                <tr className="border-b border-outline-variant/40 bg-surface-container-low text-on-surface-variant font-semibold uppercase tracking-wider text-[11px]">
                   <th className="py-3 px-4">CN #</th>
                   <th className="py-3 px-4">Date</th>
                   <th className="py-3 px-4">Client</th>
@@ -73,28 +73,28 @@ export function CreditNotesTable({ initialCreditNotes }: CreditNotesTableProps) 
                   <th className="py-3 px-4 text-center">Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-stone-100">
+              <tbody className="divide-y divide-outline-variant/20 text-on-surface">
                 {filtered.map((cn) => (
-                  <tr key={cn.id} className="hover:bg-stone-50/70 transition-colors">
-                    <td className="py-3 px-4 font-mono font-medium text-stone-900">
+                  <tr key={cn.id} className="hover:bg-surface-container-low/60 transition-colors">
+                    <td className="py-3 px-4 font-mono font-medium text-on-surface">
                       {cn.creditNoteNumber}
                     </td>
-                    <td className="py-3 px-4 text-stone-600">{cn.issueDate}</td>
-                    <td className="py-3 px-4 font-medium text-stone-900">
+                    <td className="py-3 px-4 text-on-surface-variant">{cn.issueDate}</td>
+                    <td className="py-3 px-4 font-medium text-on-surface">
                       {cn.clientName || 'Client'}
                     </td>
                     <td className="py-3 px-4 font-mono">
                       <Link
                         href={`/crm/invoices/${cn.invoiceId}`}
-                        className="text-stone-700 hover:underline"
+                        className="text-primary hover:underline"
                       >
                         {cn.invoiceNumber || 'INV'} →
                       </Link>
                     </td>
-                    <td className="py-3 px-4 text-stone-600 max-w-xs truncate" title={cn.reason}>
+                    <td className="py-3 px-4 text-on-surface-variant max-w-xs truncate" title={cn.reason}>
                       {cn.reason}
                     </td>
-                    <td className="py-3 px-4 text-right font-mono font-bold text-amber-700">
+                    <td className="py-3 px-4 text-right font-mono font-bold text-amber-700 dark:text-amber-400">
                       -{formatINR(BigInt(cn.totalPaise))}
                     </td>
                     <td className="py-3 px-4 text-center">

@@ -151,22 +151,22 @@ export function RecordPaymentDialog({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
-      <div className="bg-white rounded-xl shadow-xl max-w-2xl w-full p-6 space-y-5 max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between border-b pb-3">
+    <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
+      <div className="bg-surface-container-lowest border border-outline-variant/60 rounded-xl shadow-2xl max-w-2xl w-full p-6 space-y-5 max-h-[90vh] overflow-y-auto">
+        <div className="flex items-center justify-between border-b border-outline-variant/40 pb-3">
           <div>
-            <h3 className="text-lg font-serif font-bold text-stone-900">Record Client Payment</h3>
-            <p className="text-xs text-stone-500">
+            <h3 className="text-lg font-bold text-on-surface">Record Client Payment</h3>
+            <p className="text-xs text-on-surface-variant">
               Collect funds, allocate across open invoices, and generate atomic receipt (RCP).
             </p>
           </div>
-          <button onClick={onClose} className="text-stone-400 hover:text-stone-600 text-lg">
+          <button onClick={onClose} className="text-outline hover:text-on-surface text-lg">
             ✕
           </button>
         </div>
 
         {errorMsg && (
-          <div className="p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-md">
+          <div className="p-3 bg-error-container border border-error/30 text-on-error-container text-xs rounded-lg">
             {errorMsg}
           </div>
         )}
@@ -174,8 +174,8 @@ export function RecordPaymentDialog({
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-stone-700 mb-1">
-                Client <span className="text-red-500">*</span>
+              <label className="block text-xs font-medium text-on-surface-variant mb-1">
+                Client <span className="text-error">*</span>
               </label>
               <select
                 value={clientId}
@@ -183,7 +183,7 @@ export function RecordPaymentDialog({
                   setClientId(e.target.value);
                   setAllocations({});
                 }}
-                className="w-full h-9 rounded-md border border-stone-300 bg-white px-3 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-stone-900"
+                className="w-full h-9 rounded-lg border border-outline-variant bg-surface-container-low text-on-surface px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                 required
               >
                 <option value="" disabled>
@@ -198,8 +198,8 @@ export function RecordPaymentDialog({
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-stone-700 mb-1">
-                Payment Date <span className="text-red-500">*</span>
+              <label className="block text-xs font-medium text-on-surface-variant mb-1">
+                Payment Date <span className="text-error">*</span>
               </label>
               <Input
                 type="date"
@@ -212,8 +212,8 @@ export function RecordPaymentDialog({
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-stone-700 mb-1">
-                Payment Amount (₹) <span className="text-red-500">*</span>
+              <label className="block text-xs font-medium text-on-surface-variant mb-1">
+                Payment Amount (₹) <span className="text-error">*</span>
               </label>
               <Input
                 type="number"
@@ -226,13 +226,13 @@ export function RecordPaymentDialog({
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-stone-700 mb-1">
-                Payment Method <span className="text-red-500">*</span>
+              <label className="block text-xs font-medium text-on-surface-variant mb-1">
+                Payment Method <span className="text-error">*</span>
               </label>
               <select
                 value={method}
                 onChange={(e) => setMethod(e.target.value as PaymentMethod)}
-                className="w-full h-9 rounded-md border border-stone-300 bg-white px-3 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-stone-900"
+                className="w-full h-9 rounded-lg border border-outline-variant bg-surface-container-low text-on-surface px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
               >
                 <option value="bank_transfer">Bank Transfer (NEFT/RTGS/IMPS)</option>
                 <option value="upi">UPI (GPay / PhonePe / QR)</option>
@@ -246,7 +246,7 @@ export function RecordPaymentDialog({
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-stone-700 mb-1">
+              <label className="block text-xs font-medium text-on-surface-variant mb-1">
                 Reference / Transaction UTR #
               </label>
               <Input
@@ -256,7 +256,7 @@ export function RecordPaymentDialog({
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-stone-700 mb-1">Notes</label>
+              <label className="block text-xs font-medium text-on-surface-variant mb-1">Notes</label>
               <Input
                 placeholder="e.g. Advance shoot retainer milestone"
                 value={notes}
@@ -266,29 +266,29 @@ export function RecordPaymentDialog({
           </div>
 
           {/* Allocation Section with Unallocated Meter (D-21) */}
-          <div className="p-4 bg-stone-50 rounded-lg border border-stone-200 space-y-3">
+          <div className="p-4 bg-surface-container-low rounded-xl border border-outline-variant/40 space-y-3">
             <div className="flex items-center justify-between">
               <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-stone-700">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-on-surface">
                   Invoice Allocations
                 </h4>
-                <p className="text-[11px] text-stone-500">
+                <p className="text-[11px] text-on-surface-variant">
                   Select and allocate received amount across open invoices.
                 </p>
               </div>
 
               {/* Real-time Unallocated Meter */}
               <div className="text-right">
-                <span className="text-[10px] uppercase font-semibold text-stone-400 block">
+                <span className="text-[10px] uppercase font-semibold text-outline block">
                   Unallocated Funds
                 </span>
                 <span
                   className={`text-xs font-mono font-bold ${
                     unallocatedPaise === 0
-                      ? 'text-emerald-700'
+                      ? 'text-emerald-700 dark:text-emerald-400'
                       : unallocatedPaise > 0
-                      ? 'text-amber-700'
-                      : 'text-red-700'
+                      ? 'text-amber-700 dark:text-amber-400'
+                      : 'text-error'
                   }`}
                 >
                   {formatINR(BigInt(unallocatedPaise))}
@@ -297,21 +297,21 @@ export function RecordPaymentDialog({
             </div>
 
             {clientInvoices.length === 0 ? (
-              <p className="text-xs text-stone-500 py-3 text-center">
+              <p className="text-xs text-outline py-3 text-center">
                 No unpaid invoices found for this client. Issue an advance invoice first (D-21).
               </p>
             ) : (
-              <div className="divide-y divide-stone-200 border rounded-md bg-white">
+              <div className="divide-y divide-outline-variant/30 border border-outline-variant/40 rounded-lg bg-surface-container-lowest">
                 {clientInvoices.map((inv) => {
                   const balRupees = Math.round(inv.balancePaise / 100);
                   const currentAllocRupees = allocations[inv.id] || 0;
                   return (
                     <div key={inv.id} className="p-3 flex items-center justify-between gap-4 text-xs">
                       <div>
-                        <span className="font-semibold text-stone-900 block font-mono">
+                        <span className="font-semibold text-on-surface block font-mono">
                           {inv.invoiceNumber}
                         </span>
-                        <span className="text-stone-500">
+                        <span className="text-on-surface-variant">
                           Balance: {formatINR(BigInt(inv.balancePaise))}
                         </span>
                       </div>
@@ -320,7 +320,7 @@ export function RecordPaymentDialog({
                         <button
                           type="button"
                           onClick={() => handleAllocationChange(inv.id, balRupees)}
-                          className="text-[10px] text-stone-600 hover:text-stone-900 underline"
+                          className="text-[10px] text-primary hover:underline font-medium"
                         >
                           Max
                         </button>
@@ -344,7 +344,7 @@ export function RecordPaymentDialog({
             )}
           </div>
 
-          <div className="flex justify-end gap-3 pt-3 border-t">
+          <div className="flex justify-end gap-3 pt-3 border-t border-outline-variant/40">
             <Button type="button" variant="outline" onClick={onClose}>
               Cancel
             </Button>

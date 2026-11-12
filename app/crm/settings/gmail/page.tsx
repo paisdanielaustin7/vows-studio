@@ -8,10 +8,8 @@ export const metadata = {
 };
 
 export default async function SettingsGmailPage() {
-  const user = await getAuthenticatedUser();
+  const [user, res] = await Promise.all([getAuthenticatedUser(), getGmailStatusAction()]);
   const canManage = user?.role === 'system_admin' || user?.role === 'business_owner';
-
-  const res = await getGmailStatusAction();
   const status = res.data || {
     status: 'disconnected',
     googleEmail: null,

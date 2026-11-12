@@ -129,12 +129,12 @@ export function InvoiceDetailView({
     <div className="space-y-6">
       {/* Top Breadcrumb & Quick Actions Bar */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div className="flex items-center gap-2 text-sm text-stone-500">
+        <div className="flex items-center gap-2 text-sm text-outline">
           <Link href="/crm/invoices" className="hover:underline">
             Invoices
           </Link>
           <span>/</span>
-          <span className="text-stone-900 font-medium font-mono">{invoice.invoiceNumber}</span>
+          <span className="text-on-surface font-medium font-mono">{invoice.invoiceNumber}</span>
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
@@ -149,7 +149,7 @@ export function InvoiceDetailView({
               variant="outline"
               size="sm"
               onClick={() => setIsCancelModalOpen(true)}
-              className="text-red-700 hover:text-red-800 border-red-200"
+              className="text-error border-error/30 hover:bg-error/10"
             >
               Cancel Invoice
             </Button>
@@ -170,7 +170,7 @@ export function InvoiceDetailView({
               variant="outline"
               size="sm"
               onClick={() => setIsSendEmailOpen(true)}
-              className="bg-stone-900 text-white hover:bg-stone-800"
+              className="bg-inverse-surface text-surface hover:opacity-90 border-transparent"
             >
               Send via Email
             </Button>
@@ -192,14 +192,14 @@ export function InvoiceDetailView({
         </div>
       </div>
 
-      {/* Overdue Warning Alert Banner (INV-03 / Stitch editorial variant) */}
+      {/* Overdue Warning Alert Banner */}
       {isOverdue && (
-        <div className="p-4 bg-amber-50 border border-amber-300 rounded-lg flex items-center justify-between text-amber-900">
+        <div className="p-4 bg-amber-500/10 border border-amber-500/30 rounded-xl flex items-center justify-between text-amber-800 dark:text-amber-300">
           <div className="flex items-center gap-3">
             <span className="text-lg">⚠️</span>
             <div>
               <p className="font-semibold text-sm">Invoice is Overdue</p>
-              <p className="text-xs text-amber-800">
+              <p className="text-xs opacity-90">
                 Payment was due on {invoice.dueDate}. Outstanding balance of{' '}
                 <strong>{formatINR(BigInt(invoice.balancePaise))}</strong> remains unpaid.
               </p>
@@ -215,8 +215,8 @@ export function InvoiceDetailView({
 
       {/* Cancellation Notice Banner */}
       {invoice.status === 'cancelled' && (
-        <div className="p-4 bg-stone-100 border border-stone-300 rounded-lg text-stone-700 space-y-1">
-          <p className="font-semibold text-sm">Invoice Cancelled</p>
+        <div className="p-4 bg-surface-container border border-outline-variant rounded-xl text-on-surface-variant space-y-1">
+          <p className="font-semibold text-sm text-on-surface">Invoice Cancelled</p>
           <p className="text-xs">
             <strong>Reason:</strong> {invoice.cancelReason || 'No reason specified'}
           </p>
@@ -226,30 +226,30 @@ export function InvoiceDetailView({
       {/* Main Two-Column Editorial Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Column: Tax Invoice Document (8 cols) */}
-        <div className="lg:col-span-8 bg-white rounded-lg border border-stone-200 shadow-sm p-8 space-y-8">
+        <div className="lg:col-span-8 bg-surface-container-lowest rounded-xl border border-outline-variant/40 shadow-sm p-8 space-y-8">
           {/* Header Monogram & Atelier Info */}
-          <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 pb-6 border-b border-stone-200">
+          <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 pb-6 border-b border-outline-variant/40">
             <div>
-              <h2 className="text-2xl font-serif font-bold text-stone-900 tracking-tight">
+              <h2 className="text-2xl font-bold text-on-surface tracking-tight">
                 VOWS STUDIO
               </h2>
-              <p className="text-xs uppercase tracking-widest text-stone-500 mt-0.5">
-                Cinematic & Stills Atelier
+              <p className="text-xs uppercase tracking-widest text-outline mt-0.5">
+                Cinematic &amp; Stills Atelier
               </p>
-              <div className="text-xs text-stone-600 mt-2 space-y-0.5">
+              <div className="text-xs text-on-surface-variant mt-2 space-y-0.5">
                 <p>Mangalore Studio, Karnataka</p>
                 <p>
                   GSTIN:{' '}
-                  <span className="font-mono font-semibold text-stone-900">29AAACV1234F1Z8</span>
+                  <span className="font-mono font-semibold text-on-surface">29AAACV1234F1Z8</span>
                 </p>
               </div>
             </div>
 
             <div className="text-left md:text-right space-y-1">
-              <span className="text-xs uppercase tracking-wider text-stone-400 block font-medium">
+              <span className="text-xs uppercase tracking-wider text-outline block font-medium">
                 Tax Invoice
               </span>
-              <span className="font-mono text-xl font-bold text-stone-900 block">
+              <span className="font-mono text-xl font-bold text-on-surface block">
                 {invoice.invoiceNumber}
               </span>
               <div className="flex items-center gap-1.5 justify-start md:justify-end pt-1">
@@ -273,18 +273,18 @@ export function InvoiceDetailView({
           </div>
 
           {/* Client & Date Metadata Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 rounded-lg bg-stone-50 border border-stone-200 text-xs">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 rounded-xl bg-surface-container-low border border-outline-variant/40 text-xs">
             <div className="space-y-1">
-              <span className="uppercase tracking-wider font-semibold text-stone-400 block">
+              <span className="uppercase tracking-wider font-semibold text-outline block">
                 Billed To
               </span>
-              <p className="font-semibold text-stone-900 text-sm">{invoice.clientName}</p>
+              <p className="font-semibold text-on-surface text-sm">{invoice.clientName}</p>
               {invoice.bookingNumber && (
-                <p className="text-stone-600">
+                <p className="text-on-surface-variant">
                   Production Booking:{' '}
                   <Link
                     href={`/crm/bookings/${invoice.bookingId}`}
-                    className="font-mono font-medium text-stone-900 hover:underline"
+                    className="font-mono font-medium text-primary hover:underline"
                   >
                     {invoice.bookingNumber}
                   </Link>
@@ -294,12 +294,12 @@ export function InvoiceDetailView({
 
             <div className="space-y-1 md:text-right">
               <div>
-                <span className="text-stone-400">Issue Date: </span>
-                <span className="font-medium text-stone-900">{invoice.issueDate}</span>
+                <span className="text-outline">Issue Date: </span>
+                <span className="font-medium text-on-surface">{invoice.issueDate}</span>
               </div>
               <div>
-                <span className="text-stone-400">Payment Due: </span>
-                <span className={`font-medium ${isOverdue ? 'text-red-700 font-bold' : 'text-stone-900'}`}>
+                <span className="text-outline">Payment Due: </span>
+                <span className={`font-medium ${isOverdue ? 'text-error font-bold' : 'text-on-surface'}`}>
                   {invoice.dueDate}
                 </span>
               </div>
@@ -310,24 +310,24 @@ export function InvoiceDetailView({
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs border-collapse">
               <thead>
-                <tr className="border-b border-stone-200 text-stone-500 uppercase tracking-wider font-semibold text-[11px]">
+                <tr className="border-b border-outline-variant/40 text-on-surface-variant uppercase tracking-wider font-semibold text-[11px]">
                   <th className="py-2.5 px-3">#</th>
-                  <th className="py-2.5 px-3">Service & Deliverable</th>
+                  <th className="py-2.5 px-3">Service &amp; Deliverable</th>
                   <th className="py-2.5 px-3 text-center">Qty</th>
                   <th className="py-2.5 px-3 text-right">Unit Rate</th>
                   <th className="py-2.5 px-3 text-right">Amount</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-stone-100">
+              <tbody className="divide-y divide-outline-variant/20 text-on-surface">
                 {items.map((it, idx) => (
                   <tr key={it.id || idx}>
-                    <td className="py-3 px-3 text-stone-400 font-mono">{idx + 1}</td>
-                    <td className="py-3 px-3 font-medium text-stone-900">{it.description}</td>
-                    <td className="py-3 px-3 text-center text-stone-700">{it.quantity}</td>
-                    <td className="py-3 px-3 text-right text-stone-700">
+                    <td className="py-3 px-3 text-outline font-mono">{idx + 1}</td>
+                    <td className="py-3 px-3 font-medium text-on-surface">{it.description}</td>
+                    <td className="py-3 px-3 text-center text-on-surface-variant">{it.quantity}</td>
+                    <td className="py-3 px-3 text-right text-on-surface-variant">
                       {formatINR(BigInt(it.unitPricePaise))}
                     </td>
-                    <td className="py-3 px-3 text-right font-semibold text-stone-900">
+                    <td className="py-3 px-3 text-right font-semibold text-on-surface">
                       {formatINR(BigInt(it.lineTotalPaise))}
                     </td>
                   </tr>
@@ -337,65 +337,65 @@ export function InvoiceDetailView({
           </div>
 
           {/* Calculations Breakdown */}
-          <div className="border-t border-stone-200 pt-4 flex justify-end">
+          <div className="border-t border-outline-variant/40 pt-4 flex justify-end">
             <div className="w-72 space-y-2 text-xs">
-              <div className="flex justify-between text-stone-600">
+              <div className="flex justify-between text-on-surface-variant">
                 <span>Subtotal</span>
-                <span className="font-medium text-stone-900">
+                <span className="font-medium text-on-surface">
                   {formatINR(BigInt(invoice.subtotalPaise))}
                 </span>
               </div>
               {invoice.discountPaise > 0 && (
-                <div className="flex justify-between text-stone-600">
+                <div className="flex justify-between text-on-surface-variant">
                   <span>Discount</span>
-                  <span className="font-medium text-red-600">
+                  <span className="font-medium text-error">
                     -{formatINR(BigInt(invoice.discountPaise))}
                   </span>
                 </div>
               )}
-              <div className="flex justify-between text-stone-600">
+              <div className="flex justify-between text-on-surface-variant">
                 <span>Taxable Amount</span>
-                <span className="font-medium text-stone-900">
+                <span className="font-medium text-on-surface">
                   {formatINR(BigInt(invoice.taxableAmountPaise))}
                 </span>
               </div>
               {invoice.cgstPaise > 0 && (
-                <div className="flex justify-between text-stone-500">
+                <div className="flex justify-between text-outline">
                   <span>CGST (9%)</span>
                   <span>{formatINR(BigInt(invoice.cgstPaise))}</span>
                 </div>
               )}
               {invoice.sgstPaise > 0 && (
-                <div className="flex justify-between text-stone-500">
+                <div className="flex justify-between text-outline">
                   <span>SGST (9%)</span>
                   <span>{formatINR(BigInt(invoice.sgstPaise))}</span>
                 </div>
               )}
               {invoice.igstPaise > 0 && (
-                <div className="flex justify-between text-stone-500">
+                <div className="flex justify-between text-outline">
                   <span>IGST (18%)</span>
                   <span>{formatINR(BigInt(invoice.igstPaise))}</span>
                 </div>
               )}
-              <div className="flex justify-between text-sm font-bold text-stone-900 pt-2 border-t border-stone-200">
+              <div className="flex justify-between text-sm font-bold text-on-surface pt-2 border-t border-outline-variant/40">
                 <span>Invoice Total</span>
-                <span className="font-serif">{formatINR(BigInt(invoice.totalPaise))}</span>
+                <span>{formatINR(BigInt(invoice.totalPaise))}</span>
               </div>
             </div>
           </div>
 
           {/* Notes & Terms */}
           {(invoice.notesToClient || invoice.paymentTerms) && (
-            <div className="border-t border-stone-200 pt-4 text-xs space-y-2 text-stone-600">
+            <div className="border-t border-outline-variant/40 pt-4 text-xs space-y-2 text-on-surface-variant">
               {invoice.notesToClient && (
                 <div>
-                  <span className="font-semibold text-stone-800">Notes: </span>
+                  <span className="font-semibold text-on-surface">Notes: </span>
                   <span>{invoice.notesToClient}</span>
                 </div>
               )}
               {invoice.paymentTerms && (
                 <div>
-                  <span className="font-semibold text-stone-800">Payment Terms: </span>
+                  <span className="font-semibold text-on-surface">Payment Terms: </span>
                   <span>{invoice.paymentTerms}</span>
                 </div>
               )}
@@ -406,38 +406,38 @@ export function InvoiceDetailView({
         {/* Right Column: Financial Balances & Transactions (4 cols) */}
         <div className="lg:col-span-4 space-y-6">
           {/* Balance Card */}
-          <div className="bg-white p-6 rounded-lg border border-stone-200 shadow-sm space-y-4">
-            <h3 className="text-base font-semibold text-stone-900">Payment Snapshot</h3>
-            <div className="divide-y divide-stone-100 text-xs">
-              <div className="py-2.5 flex justify-between text-stone-600">
+          <div className="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/40 shadow-sm space-y-4">
+            <h3 className="text-base font-semibold text-on-surface">Payment Snapshot</h3>
+            <div className="divide-y divide-outline-variant/20 text-xs">
+              <div className="py-2.5 flex justify-between text-on-surface-variant">
                 <span>Total Invoiced</span>
-                <span className="font-semibold text-stone-900">
+                <span className="font-semibold text-on-surface">
                   {formatINR(BigInt(invoice.totalPaise))}
                 </span>
               </div>
-              <div className="py-2.5 flex justify-between text-stone-600">
+              <div className="py-2.5 flex justify-between text-on-surface-variant">
                 <span>Total Received</span>
-                <span className="font-semibold text-emerald-700">
+                <span className="font-semibold text-emerald-700 dark:text-emerald-400">
                   {formatINR(BigInt(invoice.paidPaise))}
                 </span>
               </div>
               {invoice.creditedPaise > 0 && (
-                <div className="py-2.5 flex justify-between text-stone-600">
+                <div className="py-2.5 flex justify-between text-on-surface-variant">
                   <span>Credit Notes Applied</span>
-                  <span className="font-semibold text-amber-700">
+                  <span className="font-semibold text-amber-700 dark:text-amber-400">
                     -{formatINR(BigInt(invoice.creditedPaise))}
                   </span>
                 </div>
               )}
-              <div className="py-3 flex justify-between text-sm font-bold text-stone-900 border-t border-stone-200">
+              <div className="py-3 flex justify-between text-sm font-bold text-on-surface border-t border-outline-variant/40">
                 <span>Balance Outstanding</span>
                 <span
                   className={`font-mono text-base ${
                     invoice.balancePaise === 0
-                      ? 'text-emerald-700'
+                      ? 'text-emerald-700 dark:text-emerald-400'
                       : isOverdue
-                      ? 'text-red-700'
-                      : 'text-stone-900'
+                      ? 'text-error'
+                      : 'text-on-surface'
                   }`}
                 >
                   {formatINR(BigInt(invoice.balancePaise))}
@@ -456,27 +456,27 @@ export function InvoiceDetailView({
           </div>
 
           {/* Linked Payments & Receipts */}
-          <div className="bg-white p-5 rounded-lg border border-stone-200 shadow-sm space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-stone-700">
-              Payments & Receipts ({payments.length})
+          <div className="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/40 shadow-sm space-y-3">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-on-surface-variant">
+              Payments &amp; Receipts ({payments.length})
             </h4>
             {payments.length === 0 ? (
-              <p className="text-xs text-stone-500 py-3 text-center">
+              <p className="text-xs text-outline py-3 text-center">
                 No payments recorded for this invoice yet.
               </p>
             ) : (
-              <div className="divide-y divide-stone-100">
+              <div className="divide-y divide-outline-variant/20">
                 {payments.map((p, idx) => (
                   <div key={idx} className="py-2.5 flex items-center justify-between text-xs">
                     <div>
-                      <span className="font-semibold text-stone-900 block font-mono">
+                      <span className="font-semibold text-on-surface block font-mono">
                         {p.receiptNumber || 'Receipt'}
                       </span>
-                      <span className="text-stone-500 text-[11px]">
+                      <span className="text-outline text-[11px]">
                         {p.paymentDate} • {p.method}
                       </span>
                     </div>
-                    <span className="font-semibold text-emerald-700">
+                    <span className="font-semibold text-emerald-700 dark:text-emerald-400">
                       {formatINR(BigInt(p.amountPaise))}
                     </span>
                   </div>
@@ -487,20 +487,20 @@ export function InvoiceDetailView({
 
           {/* Linked Credit Notes */}
           {creditNotes.length > 0 && (
-            <div className="bg-white p-5 rounded-lg border border-stone-200 shadow-sm space-y-3">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-stone-700">
+            <div className="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/40 shadow-sm space-y-3">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-on-surface-variant">
                 Credit Notes ({creditNotes.length})
               </h4>
-              <div className="divide-y divide-stone-100">
+              <div className="divide-y divide-outline-variant/20">
                 {creditNotes.map((cn) => (
                   <div key={cn.id} className="py-2.5 flex items-center justify-between text-xs">
                     <div>
-                      <span className="font-semibold text-stone-900 block font-mono">
+                      <span className="font-semibold text-on-surface block font-mono">
                         {cn.creditNoteNumber}
                       </span>
-                      <span className="text-stone-500 text-[11px]">{cn.reason}</span>
+                      <span className="text-outline text-[11px]">{cn.reason}</span>
                     </div>
-                    <span className="font-semibold text-amber-700">
+                    <span className="font-semibold text-amber-700 dark:text-amber-400">
                       -{formatINR(BigInt(cn.totalPaise))}
                     </span>
                   </div>
@@ -543,23 +543,23 @@ export function InvoiceDetailView({
 
       {/* Cancel Invoice Modal */}
       {isCancelModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 space-y-4">
-            <h3 className="text-base font-bold text-stone-900">Cancel Invoice</h3>
-            <p className="text-xs text-stone-500">
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-surface-container-lowest border border-outline-variant/60 rounded-xl shadow-2xl max-w-md w-full p-6 space-y-4">
+            <h3 className="text-base font-bold text-on-surface">Cancel Invoice</h3>
+            <p className="text-xs text-on-surface-variant">
               Cancelling is allowed only when zero payments exist (paid = ₹0). All linked bookings and delivery stages remain intact (D-22 / D-35).
             </p>
 
             {cancelError && (
-              <div className="p-2.5 bg-red-50 border border-red-200 text-red-700 text-xs rounded">
+              <div className="p-2.5 bg-error-container border border-error/30 text-on-error-container text-xs rounded-lg">
                 {cancelError}
               </div>
             )}
 
             <form onSubmit={handleCancelInvoice} className="space-y-3">
               <div>
-                <label className="block text-xs font-medium text-stone-700 mb-1">
-                  Cancellation Reason <span className="text-red-500">*</span>
+                <label className="block text-xs font-medium text-on-surface-variant mb-1">
+                  Cancellation Reason <span className="text-error">*</span>
                 </label>
                 <textarea
                   required
@@ -567,11 +567,11 @@ export function InvoiceDetailView({
                   value={cancelReason}
                   onChange={(e) => setCancelReason(e.target.value)}
                   placeholder="e.g. Scope change requested prior to payment..."
-                  className="w-full rounded border border-stone-300 p-2 text-xs focus:outline-none focus:ring-1 focus:ring-stone-900"
+                  className="w-full rounded-lg border border-outline-variant bg-surface-container-low text-on-surface p-2 text-xs focus:outline-none focus:ring-2 focus:ring-primary"
                 />
               </div>
 
-              <div className="flex justify-end gap-2 pt-2 border-t">
+              <div className="flex justify-end gap-2 pt-2 border-t border-outline-variant/40">
                 <Button
                   type="button"
                   variant="outline"
@@ -591,24 +591,24 @@ export function InvoiceDetailView({
 
       {/* Issue Credit Note Modal */}
       {isCreditNoteModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 space-y-4">
-            <h3 className="text-base font-bold text-stone-900">Issue Credit Note</h3>
-            <p className="text-xs text-stone-500">
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-surface-container-lowest border border-outline-variant/60 rounded-xl shadow-2xl max-w-md w-full p-6 space-y-4">
+            <h3 className="text-base font-bold text-on-surface">Issue Credit Note</h3>
+            <p className="text-xs text-on-surface-variant">
               Reduces outstanding balance. Capped at unpaid balance of{' '}
-              <strong>{formatINR(BigInt(invoice.balancePaise))}</strong> (D-22).
+              <strong className="text-on-surface">{formatINR(BigInt(invoice.balancePaise))}</strong> (D-22).
             </p>
 
             {creditError && (
-              <div className="p-2.5 bg-red-50 border border-red-200 text-red-700 text-xs rounded">
+              <div className="p-2.5 bg-error-container border border-error/30 text-on-error-container text-xs rounded-lg">
                 {creditError}
               </div>
             )}
 
             <form onSubmit={handleIssueCreditNote} className="space-y-3">
               <div>
-                <label className="block text-xs font-medium text-stone-700 mb-1">
-                  Credit Amount (₹) <span className="text-red-500">*</span>
+                <label className="block text-xs font-medium text-on-surface-variant mb-1">
+                  Credit Amount (₹) <span className="text-error">*</span>
                 </label>
                 <Input
                   type="number"
@@ -621,8 +621,8 @@ export function InvoiceDetailView({
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-stone-700 mb-1">
-                  Reason <span className="text-red-500">*</span>
+                <label className="block text-xs font-medium text-on-surface-variant mb-1">
+                  Reason <span className="text-error">*</span>
                 </label>
                 <textarea
                   required
@@ -630,11 +630,11 @@ export function InvoiceDetailView({
                   value={creditReason}
                   onChange={(e) => setCreditReason(e.target.value)}
                   placeholder="e.g. Complimentary discount or scope waiver"
-                  className="w-full rounded border border-stone-300 p-2 text-xs focus:outline-none focus:ring-1 focus:ring-stone-900"
+                  className="w-full rounded-lg border border-outline-variant bg-surface-container-low text-on-surface p-2 text-xs focus:outline-none focus:ring-2 focus:ring-primary"
                 />
               </div>
 
-              <div className="flex justify-end gap-2 pt-2 border-t">
+              <div className="flex justify-end gap-2 pt-2 border-t border-outline-variant/40">
                 <Button
                   type="button"
                   variant="outline"

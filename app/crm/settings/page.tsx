@@ -4,8 +4,7 @@ import { getAuthenticatedUser } from '@/lib/auth';
 import { StudioProfileForm } from '@/components/settings/studio-profile-form';
 
 export default async function SettingsStudioPage() {
-  const user = await getAuthenticatedUser();
-  const res = await getBusinessSettingsAction();
+  const [user, res] = await Promise.all([getAuthenticatedUser(), getBusinessSettingsAction()]);
 
   if (res.error || !res.data) {
     return (

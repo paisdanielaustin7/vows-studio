@@ -13,16 +13,16 @@ interface ScheduleCalendarProps {
 }
 
 const EVENT_TYPE_COLORS: Record<string, { bg: string; text: string; border: string }> = {
-  wedding: { bg: 'bg-emerald-50', text: 'text-emerald-800', border: 'border-emerald-300' },
-  reception: { bg: 'bg-purple-50', text: 'text-purple-800', border: 'border-purple-300' },
-  engagement: { bg: 'bg-rose-50', text: 'text-rose-800', border: 'border-rose-300' },
-  pre_wedding: { bg: 'bg-amber-50', text: 'text-amber-800', border: 'border-amber-300' },
-  sangeet: { bg: 'bg-yellow-50', text: 'text-yellow-800', border: 'border-yellow-300' },
-  haldi: { bg: 'bg-orange-50', text: 'text-orange-800', border: 'border-orange-300' },
-  mehendi: { bg: 'bg-teal-50', text: 'text-teal-800', border: 'border-teal-300' },
-  birthday: { bg: 'bg-blue-50', text: 'text-blue-800', border: 'border-blue-300' },
-  corporate: { bg: 'bg-slate-50', text: 'text-slate-800', border: 'border-slate-300' },
-  other: { bg: 'bg-stone-50', text: 'text-stone-800', border: 'border-stone-300' },
+  wedding: { bg: 'bg-emerald-500/15', text: 'text-emerald-800 dark:text-emerald-300', border: 'border-emerald-500/30' },
+  reception: { bg: 'bg-purple-500/15', text: 'text-purple-800 dark:text-purple-300', border: 'border-purple-500/30' },
+  engagement: { bg: 'bg-rose-500/15', text: 'text-rose-800 dark:text-rose-300', border: 'border-rose-500/30' },
+  pre_wedding: { bg: 'bg-amber-500/15', text: 'text-amber-800 dark:text-amber-300', border: 'border-amber-500/30' },
+  sangeet: { bg: 'bg-yellow-500/15', text: 'text-yellow-800 dark:text-yellow-300', border: 'border-yellow-500/30' },
+  haldi: { bg: 'bg-orange-500/15', text: 'text-orange-800 dark:text-orange-300', border: 'border-orange-500/30' },
+  mehendi: { bg: 'bg-teal-500/15', text: 'text-teal-800 dark:text-teal-300', border: 'border-teal-500/30' },
+  birthday: { bg: 'bg-blue-500/15', text: 'text-blue-800 dark:text-blue-300', border: 'border-blue-500/30' },
+  corporate: { bg: 'bg-slate-500/15', text: 'text-slate-800 dark:text-slate-300', border: 'border-slate-500/30' },
+  other: { bg: 'bg-surface-container', text: 'text-on-surface-variant', border: 'border-outline-variant/60' },
 };
 
 export function ScheduleCalendar({ initialEvents, crewMembers, userRole: _userRole }: ScheduleCalendarProps) {
@@ -119,50 +119,50 @@ export function ScheduleCalendar({ initialEvents, crewMembers, userRole: _userRo
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
-            <span className="text-xs uppercase font-medium text-stone-500 tracking-wider">
+            <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span className="text-xs uppercase font-medium text-outline tracking-wider">
               Studio Operations • Production Schedule
             </span>
           </div>
-          <h1 className="text-2xl font-serif font-bold text-stone-900 tracking-tight">
-            Production Schedule & Calendar
+          <h1 className="text-2xl font-bold text-on-surface tracking-tight">
+            Production Schedule &amp; Calendar
           </h1>
-          <p className="text-sm text-stone-500 mt-0.5">
+          <p className="text-sm text-on-surface-variant mt-0.5">
             Master shoot availability, multi-ceremony logistics, and crew rosters.
           </p>
         </div>
 
         {/* Date Navigator & View Switcher */}
         <div className="flex flex-wrap items-center gap-3">
-          <div className="flex items-center bg-stone-100 rounded-lg p-1 shadow-sm">
+          <div className="flex items-center bg-surface-container rounded-lg p-1 shadow-sm border border-outline-variant/40">
             <button
               onClick={handlePrev}
-              className="w-8 h-8 flex items-center justify-center rounded text-stone-600 hover:text-stone-900 hover:bg-stone-200 transition-colors"
+              className="w-8 h-8 flex items-center justify-center rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"
             >
               ‹
             </button>
-            <span className="text-sm font-semibold text-stone-900 px-3 min-w-[130px] text-center">
+            <span className="text-sm font-semibold text-on-surface px-3 min-w-[130px] text-center">
               {monthLabel}
             </span>
             <button
               onClick={handleNext}
-              className="w-8 h-8 flex items-center justify-center rounded text-stone-600 hover:text-stone-900 hover:bg-stone-200 transition-colors"
+              className="w-8 h-8 flex items-center justify-center rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"
             >
               ›
             </button>
             <button
               onClick={handleToday}
-              className="ml-1 px-2.5 py-1 text-xs font-medium rounded bg-white text-stone-900 shadow-xs hover:bg-stone-50 transition-colors"
+              className="ml-1 px-2.5 py-1 text-xs font-medium rounded bg-surface-container-lowest text-on-surface shadow-xs hover:bg-surface-container-high transition-colors"
             >
               Today
             </button>
           </div>
 
-          <div className="flex items-center bg-stone-100 p-1 rounded-lg shadow-sm text-xs font-medium">
+          <div className="flex items-center bg-surface-container p-1 rounded-lg shadow-sm border border-outline-variant/40 text-xs font-medium">
             <button
               onClick={() => setViewMode('month')}
               className={`px-3 py-1.5 rounded transition-colors ${
-                viewMode === 'month' ? 'bg-white text-stone-900 shadow-xs font-semibold' : 'text-stone-600 hover:text-stone-900'
+                viewMode === 'month' ? 'bg-surface-container-lowest text-on-surface shadow-xs font-semibold' : 'text-on-surface-variant hover:text-on-surface'
               }`}
             >
               Month
@@ -170,7 +170,7 @@ export function ScheduleCalendar({ initialEvents, crewMembers, userRole: _userRo
             <button
               onClick={() => setViewMode('week')}
               className={`px-3 py-1.5 rounded transition-colors ${
-                viewMode === 'week' ? 'bg-white text-stone-900 shadow-xs font-semibold' : 'text-stone-600 hover:text-stone-900'
+                viewMode === 'week' ? 'bg-surface-container-lowest text-on-surface shadow-xs font-semibold' : 'text-on-surface-variant hover:text-on-surface'
               }`}
             >
               Week
@@ -178,7 +178,7 @@ export function ScheduleCalendar({ initialEvents, crewMembers, userRole: _userRo
             <button
               onClick={() => setViewMode('list')}
               className={`px-3 py-1.5 rounded transition-colors ${
-                viewMode === 'list' ? 'bg-white text-stone-900 shadow-xs font-semibold' : 'text-stone-600 hover:text-stone-900'
+                viewMode === 'list' ? 'bg-surface-container-lowest text-on-surface shadow-xs font-semibold' : 'text-on-surface-variant hover:text-on-surface'
               }`}
             >
               List
@@ -188,17 +188,17 @@ export function ScheduleCalendar({ initialEvents, crewMembers, userRole: _userRo
       </div>
 
       {/* Crew Filter Strip */}
-      <div className="bg-white p-3 rounded-lg border border-stone-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-3">
+      <div className="bg-surface-container-lowest p-3 rounded-xl border border-outline-variant/40 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div className="flex items-center gap-2 overflow-x-auto pb-1 text-xs">
-          <span className="uppercase font-semibold text-stone-400 text-[10px] tracking-wider shrink-0">
+          <span className="uppercase font-semibold text-outline text-[10px] tracking-wider shrink-0">
             Filter Crew:
           </span>
           <button
             onClick={() => setSelectedCrewId('all')}
             className={`px-3 py-1 rounded-full whitespace-nowrap transition-colors ${
               selectedCrewId === 'all'
-                ? 'bg-stone-900 text-white font-medium'
-                : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
+                ? 'bg-secondary-container text-on-secondary-container font-medium'
+                : 'bg-surface-container text-on-surface-variant hover:bg-surface-container-high'
             }`}
           >
             All Personnel ({crewMembers.length})
@@ -209,8 +209,8 @@ export function ScheduleCalendar({ initialEvents, crewMembers, userRole: _userRo
               onClick={() => setSelectedCrewId(c.id)}
               className={`px-3 py-1 rounded-full whitespace-nowrap transition-colors flex items-center gap-1.5 ${
                 selectedCrewId === c.id
-                  ? 'bg-stone-900 text-white font-medium'
-                  : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
+                  ? 'bg-secondary-container text-on-secondary-container font-medium'
+                  : 'bg-surface-container text-on-surface-variant hover:bg-surface-container-high'
               }`}
             >
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
@@ -219,29 +219,29 @@ export function ScheduleCalendar({ initialEvents, crewMembers, userRole: _userRo
           ))}
         </div>
 
-        <div className="text-xs text-stone-500 shrink-0">
-          <strong className="text-stone-900">{filteredEvents.length}</strong> event assignments in view
+        <div className="text-xs text-outline shrink-0">
+          <strong className="text-on-surface">{filteredEvents.length}</strong> event assignments in view
         </div>
       </div>
 
       {/* Legend Strip */}
-      <div className="flex items-center gap-3 overflow-x-auto py-2 px-3 bg-stone-50 rounded-lg border border-stone-200 text-xs">
-        <span className="uppercase font-semibold text-stone-400 text-[10px] tracking-wider shrink-0">
+      <div className="flex items-center gap-3 overflow-x-auto py-2 px-3 bg-surface-container-low rounded-xl border border-outline-variant/40 text-xs">
+        <span className="uppercase font-semibold text-outline text-[10px] tracking-wider shrink-0">
           Event Types:
         </span>
         {Object.entries(EVENT_TYPE_COLORS).map(([typeKey, colors]) => (
           <div key={typeKey} className="flex items-center gap-1.5 shrink-0">
             <span className={`w-2.5 h-2.5 rounded-full border ${colors.bg} ${colors.border}`}></span>
-            <span className="capitalize text-stone-700">{typeKey.replace('_', ' ')}</span>
+            <span className="capitalize text-on-surface-variant">{typeKey.replace('_', ' ')}</span>
           </div>
         ))}
       </div>
 
       {/* Main View Display */}
       {viewMode === 'month' && (
-        <div className="bg-white rounded-lg border border-stone-200 shadow-sm overflow-hidden">
+        <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/40 shadow-sm overflow-hidden">
           {/* Days of week header */}
-          <div className="grid grid-cols-7 border-b border-stone-200 bg-stone-50 text-center py-2 text-xs font-semibold text-stone-600">
+          <div className="grid grid-cols-7 border-b border-outline-variant/40 bg-surface-container-low text-center py-2 text-xs font-semibold text-on-surface-variant">
             <div>Sun</div>
             <div>Mon</div>
             <div>Tue</div>
@@ -252,7 +252,7 @@ export function ScheduleCalendar({ initialEvents, crewMembers, userRole: _userRo
           </div>
 
           {/* Month Grid */}
-          <div className="grid grid-cols-7 auto-rows-fr divide-x divide-y divide-stone-200">
+          <div className="grid grid-cols-7 auto-rows-fr divide-x divide-y divide-outline-variant/30">
             {calendarCells.map((cell, idx) => {
               const cellEvents = cell.dateString
                 ? filteredEvents.filter((e) => e.eventDate === cell.dateString)
@@ -264,24 +264,24 @@ export function ScheduleCalendar({ initialEvents, crewMembers, userRole: _userRo
                   key={idx}
                   className={`min-h-[110px] p-2 transition-colors ${
                     !cell.isCurrentMonth
-                      ? 'bg-stone-50/50 text-stone-300'
-                      : 'bg-white hover:bg-stone-50/70'
+                      ? 'bg-surface-container-low/50 text-outline/50'
+                      : 'bg-surface-container-lowest hover:bg-surface-container-low/40'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1">
                     <span
                       className={`text-xs font-semibold ${
                         isToday
-                          ? 'w-6 h-6 rounded-full bg-stone-900 text-white flex items-center justify-center'
+                          ? 'w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center'
                           : cell.isCurrentMonth
-                          ? 'text-stone-800'
-                          : 'text-stone-400'
+                          ? 'text-on-surface'
+                          : 'text-outline/50'
                       }`}
                     >
                       {cell.dateNum}
                     </span>
                     {cellEvents.length > 0 && (
-                      <span className="text-[10px] font-mono text-stone-400">
+                      <span className="text-[10px] font-mono text-outline">
                         {cellEvents.length} shoot{cellEvents.length > 1 ? 's' : ''}
                       </span>
                     )}
@@ -299,7 +299,7 @@ export function ScheduleCalendar({ initialEvents, crewMembers, userRole: _userRo
                           title={`${ev.eventName} (${ev.eventType}) - ${ev.clientName}`}
                         >
                           <div className="font-semibold truncate leading-tight">{ev.eventName}</div>
-                          <div className="text-[10px] text-stone-500 truncate">
+                          <div className="text-[10px] opacity-80 truncate">
                             {ev.startTime ? `${ev.startTime.slice(0, 5)} • ` : ''}
                             {ev.clientName}
                           </div>
@@ -307,7 +307,7 @@ export function ScheduleCalendar({ initialEvents, crewMembers, userRole: _userRo
                       );
                     })}
                     {cellEvents.length > 3 && (
-                      <div className="text-[10px] text-stone-500 font-medium pl-1">
+                      <div className="text-[10px] text-outline font-medium pl-1">
                         +{cellEvents.length - 3} more...
                       </div>
                     )}
@@ -321,9 +321,9 @@ export function ScheduleCalendar({ initialEvents, crewMembers, userRole: _userRo
 
       {/* Week / List View */}
       {(viewMode === 'week' || viewMode === 'list') && (
-        <div className="bg-white rounded-lg border border-stone-200 shadow-sm divide-y divide-stone-100">
+        <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/40 shadow-sm divide-y divide-outline-variant/20">
           {filteredEvents.length === 0 ? (
-            <div className="py-16 text-center text-sm text-stone-500">
+            <div className="py-16 text-center text-sm text-outline">
               No events scheduled for the current selection.
             </div>
           ) : (
@@ -332,20 +332,20 @@ export function ScheduleCalendar({ initialEvents, crewMembers, userRole: _userRo
               return (
                 <div
                   key={idx}
-                  className="p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-stone-50/60 transition-colors"
+                  className="p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-surface-container-low/60 transition-colors"
                 >
                   <div className="flex items-start gap-4">
-                    <div className="text-center px-3 py-2 bg-stone-100 rounded-md border border-stone-200 min-w-[70px]">
-                      <div className="text-xs uppercase font-medium text-stone-500">
+                    <div className="text-center px-3 py-2 bg-surface-container-low rounded-lg border border-outline-variant/40 min-w-[70px]">
+                      <div className="text-xs uppercase font-medium text-outline">
                         {new Date(ev.eventDate).toLocaleDateString('en-US', { month: 'short' })}
                       </div>
-                      <div className="text-xl font-bold font-serif text-stone-900">
+                      <div className="text-xl font-bold text-on-surface">
                         {new Date(ev.eventDate).getDate()}
                       </div>
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <h3 className="font-semibold text-stone-900 text-sm">{ev.eventName}</h3>
+                        <h3 className="font-semibold text-on-surface text-sm">{ev.eventName}</h3>
                         <Badge
                           variant="default"
                           className={`text-[10px] capitalize ${color.bg} ${color.text} ${color.border}`}
@@ -353,8 +353,8 @@ export function ScheduleCalendar({ initialEvents, crewMembers, userRole: _userRo
                           {ev.eventType.replace('_', ' ')}
                         </Badge>
                       </div>
-                      <div className="text-xs text-stone-500 mt-1 space-x-2">
-                        <span>Client: <strong className="text-stone-700">{ev.clientName}</strong></span>
+                      <div className="text-xs text-on-surface-variant mt-1 space-x-2">
+                        <span>Client: <strong className="text-on-surface">{ev.clientName}</strong></span>
                         {ev.startTime && (
                           <span>
                             • Time: {ev.startTime.slice(0, 5)} - {ev.endTime ? ev.endTime.slice(0, 5) : 'Late'}
@@ -384,61 +384,61 @@ export function ScheduleCalendar({ initialEvents, crewMembers, userRole: _userRo
 
       {/* Event Details Drawer/Modal */}
       {selectedEvent && (
-        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg shadow-xl max-w-lg w-full p-6 space-y-4">
-            <div className="flex items-center justify-between border-b pb-3">
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-surface-container-lowest border border-outline-variant/60 rounded-xl shadow-2xl max-w-lg w-full p-6 space-y-4">
+            <div className="flex items-center justify-between border-b border-outline-variant/40 pb-3">
               <div>
-                <span className="text-xs font-mono text-stone-400 uppercase">
+                <span className="text-xs font-mono text-outline uppercase">
                   Booking #{selectedEvent.bookingNumber}
                 </span>
-                <h3 className="text-lg font-serif font-bold text-stone-900">{selectedEvent.eventName}</h3>
+                <h3 className="text-lg font-bold text-on-surface">{selectedEvent.eventName}</h3>
               </div>
               <button
                 onClick={() => setSelectedEvent(null)}
-                className="text-stone-400 hover:text-stone-600 text-lg"
+                className="text-outline hover:text-on-surface text-lg"
               >
                 ✕
               </button>
             </div>
 
             <div className="text-xs space-y-3">
-              <div className="grid grid-cols-2 gap-2 p-3 bg-stone-50 rounded-md border border-stone-200">
+              <div className="grid grid-cols-2 gap-2 p-3 bg-surface-container-low rounded-lg border border-outline-variant/40">
                 <div>
-                  <span className="text-stone-400 block">Date</span>
-                  <span className="font-semibold text-stone-900">{selectedEvent.eventDate}</span>
+                  <span className="text-outline block">Date</span>
+                  <span className="font-semibold text-on-surface">{selectedEvent.eventDate}</span>
                 </div>
                 <div>
-                  <span className="text-stone-400 block">Ceremony Type</span>
-                  <span className="font-semibold text-stone-900 capitalize">
+                  <span className="text-outline block">Ceremony Type</span>
+                  <span className="font-semibold text-on-surface capitalize">
                     {selectedEvent.eventType.replace('_', ' ')}
                   </span>
                 </div>
                 <div>
-                  <span className="text-stone-400 block">Hours</span>
-                  <span className="text-stone-900">
+                  <span className="text-outline block">Hours</span>
+                  <span className="text-on-surface">
                     {selectedEvent.startTime ? `${selectedEvent.startTime.slice(0, 5)} - ${selectedEvent.endTime?.slice(0, 5) || 'Late'}` : 'All Day'}
                   </span>
                 </div>
                 <div>
-                  <span className="text-stone-400 block">Client</span>
-                  <span className="font-semibold text-stone-900">{selectedEvent.clientName}</span>
+                  <span className="text-outline block">Client</span>
+                  <span className="font-semibold text-on-surface">{selectedEvent.clientName}</span>
                 </div>
               </div>
 
               {selectedEvent.venueName && (
                 <div>
-                  <span className="text-stone-400 block">Venue & Location</span>
-                  <p className="text-stone-800 font-medium">{selectedEvent.venueName}</p>
+                  <span className="text-outline block">Venue &amp; Location</span>
+                  <p className="text-on-surface font-medium">{selectedEvent.venueName}</p>
                   {selectedEvent.venueAddress && (
-                    <p className="text-stone-500">{selectedEvent.venueAddress}</p>
+                    <p className="text-on-surface-variant">{selectedEvent.venueAddress}</p>
                   )}
                 </div>
               )}
 
               {selectedEvent.requirements && (
                 <div>
-                  <span className="text-stone-400 block">Shoot Requirements</span>
-                  <p className="p-2.5 bg-stone-50 rounded border border-stone-200 text-stone-700 whitespace-pre-wrap">
+                  <span className="text-outline block">Shoot Requirements</span>
+                  <p className="p-2.5 bg-surface-container-low rounded-lg border border-outline-variant/40 text-on-surface whitespace-pre-wrap">
                     {selectedEvent.requirements}
                   </p>
                 </div>
@@ -446,27 +446,27 @@ export function ScheduleCalendar({ initialEvents, crewMembers, userRole: _userRo
 
               {selectedEvent.equipmentNotes && (
                 <div>
-                  <span className="text-stone-400 block">Equipment Checklist</span>
-                  <p className="p-2.5 bg-stone-50 rounded border border-stone-200 text-stone-700 whitespace-pre-wrap">
+                  <span className="text-outline block">Equipment Checklist</span>
+                  <p className="p-2.5 bg-surface-container-low rounded-lg border border-outline-variant/40 text-on-surface whitespace-pre-wrap">
                     {selectedEvent.equipmentNotes}
                   </p>
                 </div>
               )}
 
-              <div className="p-2.5 bg-emerald-50 rounded border border-emerald-200 text-emerald-800 flex items-center justify-between">
+              <div className="p-2.5 bg-emerald-500/10 rounded-lg border border-emerald-500/30 text-emerald-700 dark:text-emerald-300 flex items-center justify-between">
                 <div>
-                  <span className="text-[10px] uppercase font-semibold text-emerald-600 block">Assigned Role</span>
+                  <span className="text-[10px] uppercase font-semibold opacity-80 block">Assigned Role</span>
                   <span className="font-semibold capitalize">{selectedEvent.assignedRole.replace('_', ' ')}</span>
                 </div>
                 {selectedEvent.confirmedAt && (
-                  <Badge variant="success" className="bg-white text-emerald-700 border-emerald-300">
+                  <Badge variant="success">
                     Confirmed
                   </Badge>
                 )}
               </div>
             </div>
 
-            <div className="flex items-center justify-between pt-3 border-t">
+            <div className="flex items-center justify-between pt-3 border-t border-outline-variant/40">
               <Link href={`/crm/bookings/${selectedEvent.bookingId}`}>
                 <Button variant="primary" size="sm">
                   Open Production Booking →

@@ -7,6 +7,7 @@ import { formatINR } from '@/lib/money';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { CalendarCheck, Plus } from 'lucide-react';
 
 interface BookingsTableProps {
   initialBookings: Array<Booking | BookingOps>;
@@ -56,7 +57,7 @@ export function BookingsTable({ initialBookings, canViewMoney }: BookingsTablePr
         </div>
         <Link href="/crm/bookings/new">
           <Button className="bg-[#4c6452] hover:bg-[#3d5242] text-white">
-            <span className="material-symbols-outlined text-[18px] mr-1">add</span>
+            <Plus className="w-4 h-4 mr-1.5" />
             New Booking
           </Button>
         </Link>
@@ -108,7 +109,7 @@ export function BookingsTable({ initialBookings, canViewMoney }: BookingsTablePr
               <tr>
                 <td colSpan={canViewMoney ? 7 : 6} className="py-12 text-center text-outline">
                   <div className="flex flex-col items-center justify-center gap-2">
-                    <span className="material-symbols-outlined text-4xl text-outline/60">event_available</span>
+                    <CalendarCheck className="w-9 h-9 text-outline/60" />
                     <p>No bookings found matching your filters.</p>
                   </div>
                 </td>

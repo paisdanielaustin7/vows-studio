@@ -184,15 +184,15 @@ export function InvoiceBuilder({ bookings }: InvoiceBuilderProps) {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <div className="flex items-center gap-2 text-sm text-stone-500 mb-1">
+          <div className="flex items-center gap-2 text-sm text-outline mb-1">
             <Link href="/crm/invoices" className="hover:underline">
               Invoices
             </Link>
             <span>/</span>
-            <span className="text-stone-900 font-medium">New Tax Invoice</span>
+            <span className="text-on-surface font-medium">New Tax Invoice</span>
           </div>
-          <h1 className="text-2xl font-serif font-bold text-stone-900">Issue Tax Invoice</h1>
-          <p className="text-sm text-stone-500">
+          <h1 className="text-2xl font-bold text-on-surface">Issue Tax Invoice</h1>
+          <p className="text-sm text-on-surface-variant">
             Generate milestone or advance tax invoice tied to a production booking contract.
           </p>
         </div>
@@ -204,7 +204,7 @@ export function InvoiceBuilder({ bookings }: InvoiceBuilderProps) {
       </div>
 
       {errorMsg && (
-        <div className="p-4 bg-red-50 border border-red-200 text-red-700 rounded-md text-sm">
+        <div className="p-4 bg-error-container border border-error/30 text-on-error-container rounded-lg text-sm">
           {errorMsg}
         </div>
       )}
@@ -212,17 +212,17 @@ export function InvoiceBuilder({ bookings }: InvoiceBuilderProps) {
       <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left Column: Form & Items */}
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white p-6 rounded-lg border border-stone-200 shadow-sm space-y-4">
-            <h2 className="text-base font-semibold text-stone-900">Contract & Entity Reference</h2>
+          <div className="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/40 shadow-sm space-y-4">
+            <h2 className="text-base font-semibold text-on-surface">Contract &amp; Entity Reference</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-medium text-stone-700 mb-1">
-                  Booking Contract <span className="text-red-500">*</span>
+                <label className="block text-xs font-medium text-on-surface-variant mb-1">
+                  Booking Contract <span className="text-error">*</span>
                 </label>
                 <select
                   value={selectedBookingId}
                   onChange={(e) => handleBookingChange(e.target.value)}
-                  className="w-full h-9 rounded-md border border-stone-300 bg-white px-3 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-stone-900"
+                  className="w-full h-9 rounded-lg border border-outline-variant bg-surface-container-low text-on-surface px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                   required
                 >
                   <option value="" disabled>
@@ -237,8 +237,8 @@ export function InvoiceBuilder({ bookings }: InvoiceBuilderProps) {
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-stone-700 mb-1">Billed Client</label>
-                <div className="h-9 flex items-center px-3 bg-stone-100 rounded-md text-sm font-medium text-stone-900">
+                <label className="block text-xs font-medium text-on-surface-variant mb-1">Billed Client</label>
+                <div className="h-9 flex items-center px-3 bg-surface-container rounded-lg text-sm font-medium text-on-surface">
                   {activeBooking?.clientName || 'Select booking to view client'}
                 </div>
               </div>
@@ -246,8 +246,8 @@ export function InvoiceBuilder({ bookings }: InvoiceBuilderProps) {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
               <div>
-                <label className="block text-xs font-medium text-stone-700 mb-1">
-                  Issue Date <span className="text-red-500">*</span>
+                <label className="block text-xs font-medium text-on-surface-variant mb-1">
+                  Issue Date <span className="text-error">*</span>
                 </label>
                 <Input
                   type="date"
@@ -258,8 +258,8 @@ export function InvoiceBuilder({ bookings }: InvoiceBuilderProps) {
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-stone-700 mb-1">
-                  Payment Due Date <span className="text-red-500">*</span>
+                <label className="block text-xs font-medium text-on-surface-variant mb-1">
+                  Payment Due Date <span className="text-error">*</span>
                 </label>
                 <Input
                   type="date"
@@ -272,11 +272,11 @@ export function InvoiceBuilder({ bookings }: InvoiceBuilderProps) {
           </div>
 
           {/* Line Items */}
-          <div className="bg-white p-6 rounded-lg border border-stone-200 shadow-sm space-y-4">
+          <div className="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/40 shadow-sm space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-base font-semibold text-stone-900">Billed Services & Deliverables</h2>
-                <p className="text-xs text-stone-500">
+                <h2 className="text-base font-semibold text-on-surface">Billed Services &amp; Deliverables</h2>
+                <p className="text-xs text-on-surface-variant">
                   Itemised services, deliverables, or milestone payment calls.
                 </p>
               </div>
@@ -289,16 +289,16 @@ export function InvoiceBuilder({ bookings }: InvoiceBuilderProps) {
               {items.map((it, idx) => {
                 const subtotal = (Number(it.quantity) || 1) * (Number(it.unitPriceRupees) || 0);
                 return (
-                  <div key={idx} className="p-4 rounded-md border border-stone-200 bg-stone-50/50 space-y-3">
+                  <div key={idx} className="p-4 rounded-xl border border-outline-variant/40 bg-surface-container-low space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-stone-500 uppercase tracking-wider">
+                      <span className="text-xs font-bold text-outline uppercase tracking-wider">
                         Item #{idx + 1}
                       </span>
                       {items.length > 1 && (
                         <button
                           type="button"
                           onClick={() => handleRemoveItem(idx)}
-                          className="text-xs text-red-600 hover:underline"
+                          className="text-xs text-error hover:underline"
                         >
                           Remove
                         </button>
@@ -314,7 +314,7 @@ export function InvoiceBuilder({ bookings }: InvoiceBuilderProps) {
                     </div>
                     <div className="grid grid-cols-3 gap-3">
                       <div>
-                        <label className="block text-xs text-stone-600 mb-1">Qty</label>
+                        <label className="block text-xs text-on-surface-variant mb-1">Qty</label>
                         <Input
                           type="number"
                           min={1}
@@ -324,7 +324,7 @@ export function InvoiceBuilder({ bookings }: InvoiceBuilderProps) {
                         />
                       </div>
                       <div>
-                        <label className="block text-xs text-stone-600 mb-1">Unit Rate (₹)</label>
+                        <label className="block text-xs text-on-surface-variant mb-1">Unit Rate (₹)</label>
                         <Input
                           type="number"
                           min={0}
@@ -336,8 +336,8 @@ export function InvoiceBuilder({ bookings }: InvoiceBuilderProps) {
                         />
                       </div>
                       <div>
-                        <label className="block text-xs text-stone-600 mb-1">Subtotal (₹)</label>
-                        <div className="h-9 flex items-center px-3 text-sm font-semibold text-stone-800 bg-stone-100 rounded-md">
+                        <label className="block text-xs text-on-surface-variant mb-1">Subtotal (₹)</label>
+                        <div className="h-9 flex items-center px-3 text-sm font-semibold text-on-surface bg-surface-container rounded-lg">
                           ₹{subtotal.toLocaleString('en-IN')}
                         </div>
                       </div>
@@ -349,11 +349,11 @@ export function InvoiceBuilder({ bookings }: InvoiceBuilderProps) {
           </div>
 
           {/* Notes & Terms */}
-          <div className="bg-white p-6 rounded-lg border border-stone-200 shadow-sm space-y-4">
-            <h2 className="text-base font-semibold text-stone-900">Notes & Payment Terms</h2>
+          <div className="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/40 shadow-sm space-y-4">
+            <h2 className="text-base font-semibold text-on-surface">Notes &amp; Payment Terms</h2>
             <div className="space-y-3">
               <div>
-                <label className="block text-xs font-medium text-stone-700 mb-1">Notes to Client</label>
+                <label className="block text-xs font-medium text-on-surface-variant mb-1">Notes to Client</label>
                 <Input
                   value={notesToClient}
                   onChange={(e) => setNotesToClient(e.target.value)}
@@ -361,7 +361,7 @@ export function InvoiceBuilder({ bookings }: InvoiceBuilderProps) {
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-stone-700 mb-1">Payment Instructions</label>
+                <label className="block text-xs font-medium text-on-surface-variant mb-1">Payment Instructions</label>
                 <Input
                   value={paymentTerms}
                   onChange={(e) => setPaymentTerms(e.target.value)}
@@ -374,15 +374,15 @@ export function InvoiceBuilder({ bookings }: InvoiceBuilderProps) {
 
         {/* Right Column: Financial Calculations & Submit */}
         <div className="space-y-6">
-          <div className="bg-white p-6 rounded-lg border border-stone-200 shadow-sm space-y-4">
-            <h2 className="text-base font-semibold text-stone-900">Tax & Discounts</h2>
+          <div className="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/40 shadow-sm space-y-4">
+            <h2 className="text-base font-semibold text-on-surface">Tax &amp; Discounts</h2>
 
             <div>
-              <label className="block text-xs font-medium text-stone-700 mb-1">GST Taxation</label>
+              <label className="block text-xs font-medium text-on-surface-variant mb-1">GST Taxation</label>
               <select
                 value={gstType}
                 onChange={(e) => setGstType(e.target.value as any)}
-                className="w-full h-9 rounded-md border border-stone-300 bg-white px-3 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-stone-900"
+                className="w-full h-9 rounded-lg border border-outline-variant bg-surface-container-low text-on-surface px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
               >
                 <option value="cgst_sgst">Intra-State GST (9% CGST + 9% SGST = 18%)</option>
                 <option value="igst">Inter-State GST (18% IGST)</option>
@@ -391,12 +391,12 @@ export function InvoiceBuilder({ bookings }: InvoiceBuilderProps) {
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-stone-700 mb-1">Discount</label>
+              <label className="block text-xs font-medium text-on-surface-variant mb-1">Discount</label>
               <div className="grid grid-cols-2 gap-2">
                 <select
                   value={discountType}
                   onChange={(e) => setDiscountType(e.target.value as any)}
-                  className="h-9 rounded-md border border-stone-300 bg-white px-2 py-1 text-xs focus:outline-none focus:ring-1 focus:ring-stone-900"
+                  className="h-9 rounded-lg border border-outline-variant bg-surface-container-low text-on-surface px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <option value="none">No Discount</option>
                   <option value="percent">Percentage (%)</option>
@@ -413,42 +413,42 @@ export function InvoiceBuilder({ bookings }: InvoiceBuilderProps) {
               </div>
             </div>
 
-            <div className="divide-y divide-stone-100 text-sm pt-2">
-              <div className="py-2.5 flex justify-between text-stone-600">
+            <div className="divide-y divide-outline-variant/20 text-sm pt-2">
+              <div className="py-2.5 flex justify-between text-on-surface-variant">
                 <span>Subtotal</span>
-                <span className="font-medium text-stone-900">{formatINR(BigInt(subtotalPaise))}</span>
+                <span className="font-medium text-on-surface">{formatINR(BigInt(subtotalPaise))}</span>
               </div>
               {discountPaise > 0 && (
-                <div className="py-2.5 flex justify-between text-stone-600">
+                <div className="py-2.5 flex justify-between text-on-surface-variant">
                   <span>Discount</span>
-                  <span className="font-medium text-red-600">-{formatINR(BigInt(discountPaise))}</span>
+                  <span className="font-medium text-error">-{formatINR(BigInt(discountPaise))}</span>
                 </div>
               )}
-              <div className="py-2.5 flex justify-between text-stone-600">
+              <div className="py-2.5 flex justify-between text-on-surface-variant">
                 <span>Taxable Amount</span>
-                <span className="font-medium text-stone-900">{formatINR(BigInt(taxableAmountPaise))}</span>
+                <span className="font-medium text-on-surface">{formatINR(BigInt(taxableAmountPaise))}</span>
               </div>
               {gstType === 'cgst_sgst' && (
                 <>
-                  <div className="py-2 flex justify-between text-xs text-stone-500">
+                  <div className="py-2 flex justify-between text-xs text-outline">
                     <span>CGST (9%)</span>
                     <span>{formatINR(BigInt(cgstPaise))}</span>
                   </div>
-                  <div className="py-2 flex justify-between text-xs text-stone-500">
+                  <div className="py-2 flex justify-between text-xs text-outline">
                     <span>SGST (9%)</span>
                     <span>{formatINR(BigInt(sgstPaise))}</span>
                   </div>
                 </>
               )}
               {gstType === 'igst' && (
-                <div className="py-2 flex justify-between text-xs text-stone-500">
+                <div className="py-2 flex justify-between text-xs text-outline">
                   <span>IGST (18%)</span>
                   <span>{formatINR(BigInt(igstPaise))}</span>
                 </div>
               )}
-              <div className="py-3 flex justify-between text-base font-bold text-stone-900 border-t border-stone-200">
+              <div className="py-3 flex justify-between text-base font-bold text-on-surface border-t border-outline-variant/40">
                 <span>Total Amount Due</span>
-                <span className="text-stone-950 font-serif text-lg">{formatINR(BigInt(totalPaise))}</span>
+                <span className="text-on-surface text-lg">{formatINR(BigInt(totalPaise))}</span>
               </div>
             </div>
 

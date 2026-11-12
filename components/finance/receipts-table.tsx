@@ -39,8 +39,8 @@ export function ReceiptsTable({ initialReceipts }: ReceiptsTableProps) {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-serif text-stone-900 tracking-tight">Payment Receipts</h1>
-          <p className="text-stone-500 text-sm mt-1">
+          <h1 className="text-2xl sm:text-3xl font-bold text-on-surface tracking-tight">Payment Receipts</h1>
+          <p className="text-on-surface-variant text-sm mt-1">
             System-generated official receipts (RCP) created upon confirmed payment allocation
           </p>
         </div>
@@ -54,11 +54,11 @@ export function ReceiptsTable({ initialReceipts }: ReceiptsTableProps) {
         </div>
       </div>
 
-      <div className="bg-white rounded-lg border border-stone-200 overflow-hidden shadow-xs">
+      <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/40 overflow-hidden shadow-xs">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-stone-200 bg-stone-50 text-[11px] font-semibold text-stone-600 uppercase tracking-wider">
+              <tr className="border-b border-outline-variant/40 bg-surface-container-low text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">
                 <th className="py-3 px-4">Receipt #</th>
                 <th className="py-3 px-4">Date</th>
                 <th className="py-3 px-4">Client</th>
@@ -67,23 +67,23 @@ export function ReceiptsTable({ initialReceipts }: ReceiptsTableProps) {
                 <th className="py-3 px-4 text-center">Receipt Doc</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-stone-100 text-sm text-stone-800">
+            <tbody className="divide-y divide-outline-variant/20 text-sm text-on-surface">
               {filtered.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="text-center py-12 text-stone-400">
+                  <td colSpan={6} className="text-center py-12 text-outline">
                     No payment receipts found.
                   </td>
                 </tr>
               ) : (
                 filtered.map((r) => (
-                  <tr key={r.id} className="hover:bg-stone-50 transition-colors">
-                    <td className="py-3 px-4 font-mono font-medium text-stone-900">
+                  <tr key={r.id} className="hover:bg-surface-container-low/60 transition-colors">
+                    <td className="py-3 px-4 font-mono font-medium text-on-surface">
                       {r.receiptNumber}
                     </td>
-                    <td className="py-3 px-4 text-stone-600 whitespace-nowrap">
+                    <td className="py-3 px-4 text-on-surface-variant whitespace-nowrap">
                       {r.paymentDate || new Date(r.createdAt).toISOString().slice(0, 10)}
                     </td>
-                    <td className="py-3 px-4 font-medium text-stone-900">
+                    <td className="py-3 px-4 font-medium text-on-surface">
                       {r.clientName}
                     </td>
                     <td className="py-3 px-4">
@@ -91,14 +91,14 @@ export function ReceiptsTable({ initialReceipts }: ReceiptsTableProps) {
                         {r.method.replace('_', ' ')}
                       </Badge>
                     </td>
-                    <td className="py-3 px-4 text-right font-medium text-emerald-800 font-mono">
+                    <td className="py-3 px-4 text-right font-medium text-emerald-700 dark:text-emerald-400 font-mono">
                       {formatINR(BigInt(r.amountPaise))}
                     </td>
                     <td className="py-3 px-4 text-center">
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="text-xs text-stone-600 hover:text-stone-900"
+                        className="text-xs text-on-surface-variant hover:text-on-surface"
                         onClick={() => {
                           window.open(`/api/pdf/receipt/${r.id}`, '_blank');
                         }}

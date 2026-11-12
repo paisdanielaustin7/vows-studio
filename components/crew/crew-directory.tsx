@@ -132,8 +132,8 @@ export function CrewDirectory({ initialCrew, canViewMoney, canManage }: CrewDire
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-serif font-bold text-stone-900 tracking-tight">Crew Roster & Talent Directory</h1>
-          <p className="text-sm text-stone-500 mt-1">
+          <h1 className="text-2xl font-bold text-on-surface tracking-tight">Crew Roster &amp; Talent Directory</h1>
+          <p className="text-sm text-on-surface-variant mt-1">
             Manage cinematographers, lead photographers, drone pilots, and editors with conflict detection and encrypted accounts.
           </p>
         </div>
@@ -149,30 +149,30 @@ export function CrewDirectory({ initialCrew, canViewMoney, canManage }: CrewDire
 
       {/* Operational Metrics Strip */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white p-5 rounded-lg border border-stone-200 shadow-sm">
-          <p className="text-xs uppercase font-medium text-stone-500 tracking-wider">Active Roster</p>
-          <p className="text-2xl font-serif font-bold text-stone-900 mt-1">{totalActive}</p>
-          <span className="text-xs text-stone-400">Total qualified specialists</span>
+        <div className="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/40 shadow-sm">
+          <p className="text-xs uppercase font-medium text-outline tracking-wider">Active Roster</p>
+          <p className="text-2xl font-bold text-on-surface mt-1">{totalActive}</p>
+          <span className="text-xs text-outline">Total qualified specialists</span>
         </div>
-        <div className="bg-white p-5 rounded-lg border border-stone-200 shadow-sm">
-          <p className="text-xs uppercase font-medium text-stone-500 tracking-wider">Photographers</p>
-          <p className="text-2xl font-serif font-bold text-stone-900 mt-1">{photographersCount}</p>
-          <span className="text-xs text-stone-400">Candid & traditional stills</span>
+        <div className="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/40 shadow-sm">
+          <p className="text-xs uppercase font-medium text-outline tracking-wider">Photographers</p>
+          <p className="text-2xl font-bold text-on-surface mt-1">{photographersCount}</p>
+          <span className="text-xs text-outline">Candid &amp; traditional stills</span>
         </div>
-        <div className="bg-white p-5 rounded-lg border border-stone-200 shadow-sm">
-          <p className="text-xs uppercase font-medium text-stone-500 tracking-wider">Cinematographers & Drone</p>
-          <p className="text-2xl font-serif font-bold text-stone-900 mt-1">{videographersCount}</p>
-          <span className="text-xs text-stone-400">Cinematic video & aerial</span>
+        <div className="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/40 shadow-sm">
+          <p className="text-xs uppercase font-medium text-outline tracking-wider">Cinematographers &amp; Drone</p>
+          <p className="text-2xl font-bold text-on-surface mt-1">{videographersCount}</p>
+          <span className="text-xs text-outline">Cinematic video &amp; aerial</span>
         </div>
-        <div className="bg-white p-5 rounded-lg border border-stone-200 shadow-sm">
-          <p className="text-xs uppercase font-medium text-stone-500 tracking-wider">Post-Production</p>
-          <p className="text-2xl font-serif font-bold text-stone-900 mt-1">{editorsCount}</p>
-          <span className="text-xs text-stone-400">Colorists & video editors</span>
+        <div className="bg-surface-container-lowest p-5 rounded-xl border border-outline-variant/40 shadow-sm">
+          <p className="text-xs uppercase font-medium text-outline tracking-wider">Post-Production</p>
+          <p className="text-2xl font-bold text-on-surface mt-1">{editorsCount}</p>
+          <span className="text-xs text-outline">Colorists &amp; video editors</span>
         </div>
       </div>
 
       {/* Filter & Search Bar */}
-      <div className="bg-white p-4 rounded-lg border border-stone-200 shadow-sm space-y-3">
+      <div className="bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/40 shadow-sm space-y-3">
         <div className="flex flex-col md:flex-row gap-3 items-center justify-between">
           <div className="w-full md:w-96">
             <Input
@@ -185,10 +185,10 @@ export function CrewDirectory({ initialCrew, canViewMoney, canManage }: CrewDire
           <div className="flex items-center gap-1 overflow-x-auto w-full md:w-auto pb-1">
             <button
               onClick={() => setSelectedRole('all')}
-              className={`px-3 py-1.5 text-xs font-medium rounded-md whitespace-nowrap transition-colors ${
+              className={`px-3 py-1.5 text-xs font-medium rounded-lg whitespace-nowrap transition-colors ${
                 selectedRole === 'all'
-                  ? 'bg-stone-900 text-white'
-                  : 'text-stone-600 hover:bg-stone-100'
+                  ? 'bg-secondary-container text-on-secondary-container'
+                  : 'text-on-surface-variant hover:bg-surface-container-high'
               }`}
             >
               All Disciplines ({crew.length})
@@ -199,10 +199,10 @@ export function CrewDirectory({ initialCrew, canViewMoney, canManage }: CrewDire
                 <button
                   key={roleKey}
                   onClick={() => setSelectedRole(roleKey)}
-                  className={`px-3 py-1.5 text-xs font-medium rounded-md whitespace-nowrap transition-colors ${
+                  className={`px-3 py-1.5 text-xs font-medium rounded-lg whitespace-nowrap transition-colors ${
                     selectedRole === roleKey
-                      ? 'bg-stone-900 text-white'
-                      : 'text-stone-600 hover:bg-stone-100'
+                      ? 'bg-secondary-container text-on-secondary-container'
+                      : 'text-on-surface-variant hover:bg-surface-container-high'
                   }`}
                 >
                   {label} ({count})
@@ -215,26 +215,26 @@ export function CrewDirectory({ initialCrew, canViewMoney, canManage }: CrewDire
 
       {/* Crew Cards Grid */}
       {filteredCrew.length === 0 ? (
-        <div className="text-center py-16 bg-white rounded-lg border border-stone-200">
-          <p className="text-stone-500 text-sm">No crew members found matching your search.</p>
+        <div className="text-center py-16 bg-surface-container-lowest rounded-xl border border-outline-variant/40">
+          <p className="text-outline text-sm">No crew members found matching your search.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {filteredCrew.map((member) => (
             <div
               key={member.id}
-              className="bg-white rounded-lg border border-stone-200 p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between"
+              className="bg-surface-container-lowest rounded-xl border border-outline-variant/40 p-5 shadow-sm hover:border-primary/40 hover:shadow-md transition-all flex flex-col justify-between"
             >
               <div className="space-y-4">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-stone-100 text-stone-700 font-bold flex items-center justify-center text-sm border border-stone-300">
+                    <div className="w-10 h-10 rounded-full bg-surface-container text-on-surface font-bold flex items-center justify-center text-sm border border-outline-variant/50">
                       {member.fullName.slice(0, 2).toUpperCase()}
                     </div>
                     <div>
                       <Link
                         href={`/crm/crew/${member.id}`}
-                        className="font-medium text-stone-900 hover:underline block"
+                        className="font-medium text-on-surface hover:text-primary hover:underline block"
                       >
                         {member.fullName}
                       </Link>
@@ -250,32 +250,32 @@ export function CrewDirectory({ initialCrew, canViewMoney, canManage }: CrewDire
                   </div>
                   <div>
                     {member.isActive ? (
-                      <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                      <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30">
                         Active
                       </span>
                     ) : (
-                      <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-stone-100 text-stone-500">
+                      <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-surface-container text-outline">
                         Inactive
                       </span>
                     )}
                   </div>
                 </div>
 
-                <div className="text-xs text-stone-600 space-y-1.5 pt-2 border-t border-stone-100">
+                <div className="text-xs text-on-surface-variant space-y-1.5 pt-2 border-t border-outline-variant/20">
                   <div className="flex items-center justify-between">
-                    <span className="text-stone-400">Phone:</span>
-                    <span className="font-mono">{member.phone}</span>
+                    <span className="text-outline">Phone:</span>
+                    <span className="font-mono text-on-surface">{member.phone}</span>
                   </div>
                   {member.email && (
                     <div className="flex items-center justify-between">
-                      <span className="text-stone-400">Email:</span>
+                      <span className="text-outline">Email:</span>
                       <span className="truncate max-w-[180px]">{member.email}</span>
                     </div>
                   )}
                   {canViewMoney && member.ratePaise != null && (
                     <div className="flex items-center justify-between">
-                      <span className="text-stone-400">Standard Rate:</span>
-                      <span className="font-semibold text-stone-900">
+                      <span className="text-outline">Standard Rate:</span>
+                      <span className="font-semibold text-on-surface">
                         {formatINR(BigInt(member.ratePaise))} / {member.rateUnit === 'per_event' ? 'event' : 'day'}
                       </span>
                     </div>
@@ -283,19 +283,19 @@ export function CrewDirectory({ initialCrew, canViewMoney, canManage }: CrewDire
                 </div>
               </div>
 
-              <div className="pt-4 mt-4 border-t border-stone-100 flex items-center justify-between">
+              <div className="pt-4 mt-4 border-t border-outline-variant/20 flex items-center justify-between">
                 <Link
                   href={`/crm/crew/${member.id}`}
-                  className="text-xs font-medium text-stone-900 hover:underline"
+                  className="text-xs font-medium text-primary hover:underline"
                 >
-                  View Profile & Schedule →
+                  View Profile &amp; Schedule →
                 </Link>
                 {member.portfolioUrl && (
                   <a
                     href={member.portfolioUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-xs text-stone-400 hover:text-stone-700"
+                    className="text-xs text-outline hover:text-on-surface"
                   >
                     Portfolio ↗
                   </a>
@@ -308,26 +308,26 @@ export function CrewDirectory({ initialCrew, canViewMoney, canManage }: CrewDire
 
       {/* Add Crew Member Modal */}
       {isAddModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full p-6 space-y-5 max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between border-b pb-3">
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-surface-container-lowest border border-outline-variant/60 rounded-xl shadow-2xl max-w-2xl w-full p-6 space-y-5 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between border-b border-outline-variant/40 pb-3">
               <div>
-                <h3 className="text-lg font-serif font-bold text-stone-900">Add Crew Member</h3>
-                <p className="text-xs text-stone-500">
+                <h3 className="text-lg font-bold text-on-surface">Add Crew Member</h3>
+                <p className="text-xs text-on-surface-variant">
                   Register personnel with conflict tracking and encrypted banking records.
                 </p>
               </div>
               <button
                 type="button"
                 onClick={() => setIsAddModalOpen(false)}
-                className="text-stone-400 hover:text-stone-600 text-lg"
+                className="text-outline hover:text-on-surface text-lg"
               >
                 ✕
               </button>
             </div>
 
             {formError && (
-              <div className="p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded">
+              <div className="p-3 bg-error-container border border-error/30 text-on-error-container text-xs rounded-lg">
                 {formError}
               </div>
             )}
@@ -335,8 +335,8 @@ export function CrewDirectory({ initialCrew, canViewMoney, canManage }: CrewDire
             <form onSubmit={handleCreateCrew} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-medium text-stone-700 mb-1">
-                    Full Name <span className="text-red-500">*</span>
+                  <label className="block text-xs font-medium text-on-surface-variant mb-1">
+                    Full Name <span className="text-error">*</span>
                   </label>
                   <Input
                     required
@@ -346,8 +346,8 @@ export function CrewDirectory({ initialCrew, canViewMoney, canManage }: CrewDire
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-stone-700 mb-1">
-                    Phone <span className="text-red-500">*</span>
+                  <label className="block text-xs font-medium text-on-surface-variant mb-1">
+                    Phone <span className="text-error">*</span>
                   </label>
                   <Input
                     required
@@ -360,13 +360,13 @@ export function CrewDirectory({ initialCrew, canViewMoney, canManage }: CrewDire
 
               <div className="grid grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-xs font-medium text-stone-700 mb-1">
-                    Primary Discipline <span className="text-red-500">*</span>
+                  <label className="block text-xs font-medium text-on-surface-variant mb-1">
+                    Primary Discipline <span className="text-error">*</span>
                   </label>
                   <select
                     value={formData.role}
                     onChange={(e) => setFormData({ ...formData, role: e.target.value as CrewRole })}
-                    className="w-full h-9 rounded-md border border-stone-300 bg-white px-3 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-stone-900"
+                    className="w-full h-9 rounded-lg border border-outline-variant bg-surface-container-low text-on-surface px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                   >
                     {Object.entries(ROLE_LABELS).map(([val, label]) => (
                       <option key={val} value={val}>
@@ -376,20 +376,20 @@ export function CrewDirectory({ initialCrew, canViewMoney, canManage }: CrewDire
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-stone-700 mb-1">
-                    Engagement Type <span className="text-red-500">*</span>
+                  <label className="block text-xs font-medium text-on-surface-variant mb-1">
+                    Engagement Type <span className="text-error">*</span>
                   </label>
                   <select
                     value={formData.crewType}
                     onChange={(e) => setFormData({ ...formData, crewType: e.target.value as CrewType })}
-                    className="w-full h-9 rounded-md border border-stone-300 bg-white px-3 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-stone-900"
+                    className="w-full h-9 rounded-lg border border-outline-variant bg-surface-container-low text-on-surface px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                   >
                     <option value="freelancer">Freelancer</option>
                     <option value="employee">In-House Staff</option>
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-stone-700 mb-1">Email</label>
+                  <label className="block text-xs font-medium text-on-surface-variant mb-1">Email</label>
                   <Input
                     type="email"
                     placeholder="arjun@example.com"
@@ -400,11 +400,11 @@ export function CrewDirectory({ initialCrew, canViewMoney, canManage }: CrewDire
               </div>
 
               {canViewMoney && (
-                <div className="p-4 bg-stone-50 rounded-lg border border-stone-200 space-y-3">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-stone-600">Standard Rate & Financials</h4>
+                <div className="p-4 bg-surface-container-low rounded-xl border border-outline-variant/40 space-y-3">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-on-surface-variant">Standard Rate &amp; Financials</h4>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-medium text-stone-700 mb-1">Standard Rate (₹)</label>
+                      <label className="block text-xs font-medium text-on-surface-variant mb-1">Standard Rate (₹)</label>
                       <Input
                         type="number"
                         min={0}
@@ -413,11 +413,11 @@ export function CrewDirectory({ initialCrew, canViewMoney, canManage }: CrewDire
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-stone-700 mb-1">Billing Frequency</label>
+                      <label className="block text-xs font-medium text-on-surface-variant mb-1">Billing Frequency</label>
                       <select
                         value={formData.rateUnit}
                         onChange={(e) => setFormData({ ...formData, rateUnit: e.target.value as 'per_day' | 'per_event' })}
-                        className="w-full h-9 rounded-md border border-stone-300 bg-white px-3 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-stone-900"
+                        className="w-full h-9 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                       >
                         <option value="per_day">Per Day</option>
                         <option value="per_event">Per Event</option>
@@ -425,7 +425,7 @@ export function CrewDirectory({ initialCrew, canViewMoney, canManage }: CrewDire
                     </div>
                   </div>
 
-                  <h5 className="text-[11px] font-semibold text-stone-500 pt-2 border-t border-stone-200">
+                  <h5 className="text-[11px] font-semibold text-outline pt-2 border-t border-outline-variant/40">
                     Encrypted Bank Account (AES-256-GCM Protected)
                   </h5>
                   <div className="grid grid-cols-2 gap-3">
@@ -459,7 +459,7 @@ export function CrewDirectory({ initialCrew, canViewMoney, canManage }: CrewDire
               )}
 
               <div>
-                <label className="block text-xs font-medium text-stone-700 mb-1">Portfolio or Reel URL</label>
+                <label className="block text-xs font-medium text-on-surface-variant mb-1">Portfolio or Reel URL</label>
                 <Input
                   type="url"
                   placeholder="https://instagram.com/... or https://vimeo.com/..."
@@ -469,17 +469,17 @@ export function CrewDirectory({ initialCrew, canViewMoney, canManage }: CrewDire
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-stone-700 mb-1">Internal Notes</label>
+                <label className="block text-xs font-medium text-on-surface-variant mb-1">Internal Notes</label>
                 <textarea
                   rows={2}
                   placeholder="Gear kit owned, camera specs, preferred shooting styles..."
-                  className="w-full rounded-md border border-stone-300 p-2 text-sm focus:outline-none focus:ring-1 focus:ring-stone-900"
+                  className="w-full rounded-lg border border-outline-variant bg-surface-container-low text-on-surface p-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                   value={formData.notes}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                 />
               </div>
 
-              <div className="flex justify-end gap-3 pt-3 border-t">
+              <div className="flex justify-end gap-3 pt-3 border-t border-outline-variant/40">
                 <Button
                   type="button"
                   variant="outline"

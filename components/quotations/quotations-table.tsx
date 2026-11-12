@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { deleteDraftQuotationAction } from '@/server/actions/quotation.actions';
+import { FileText, Plus } from 'lucide-react';
 
 interface QuotationsTableProps {
   initialQuotations: Quotation[];
@@ -81,7 +82,7 @@ export function QuotationsTable({ initialQuotations }: QuotationsTableProps) {
         </div>
         <Link href="/crm/quotations/new">
           <Button className="bg-[#4c6452] hover:bg-[#3d5242] text-white">
-            <span className="material-symbols-outlined text-[18px] mr-1">add</span>
+            <Plus className="w-4 h-4 mr-1.5" />
             New Quotation
           </Button>
         </Link>
@@ -136,7 +137,7 @@ export function QuotationsTable({ initialQuotations }: QuotationsTableProps) {
               <tr>
                 <td colSpan={10} className="py-12 text-center text-outline">
                   <div className="flex flex-col items-center justify-center gap-2">
-                    <span className="material-symbols-outlined text-4xl text-outline/60">receipt_long</span>
+                    <FileText className="w-9 h-9 text-outline/60" />
                     <p>No quotations found matching your filters.</p>
                   </div>
                 </td>

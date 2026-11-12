@@ -7,6 +7,7 @@ import { formatINR } from '@/lib/money';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Plus } from 'lucide-react';
 
 interface InvoicesTableProps {
   initialInvoices: Invoice[];
@@ -58,17 +59,17 @@ export function InvoicesTable({ initialInvoices, canManage }: InvoicesTableProps
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-serif font-bold text-stone-900 tracking-tight">
-            Invoices & Billing Dossier
+          <h1 className="text-2xl font-bold text-on-surface tracking-tight">
+            Invoices &amp; Billing Dossier
           </h1>
-          <p className="text-sm text-stone-500 mt-1">
+          <p className="text-sm text-on-surface-variant mt-1">
             Manage tax invoices, overdue tracking, and automated balance synchronization.
           </p>
         </div>
         {canManage && (
           <Link href="/crm/invoices/new">
-            <Button className="gap-2">
-              <span className="text-base leading-none">+</span>
+            <Button className="gap-1.5">
+              <Plus className="w-4 h-4" />
               Create Invoice
             </Button>
           </Link>
@@ -76,7 +77,7 @@ export function InvoicesTable({ initialInvoices, canManage }: InvoicesTableProps
       </div>
 
       {/* Filter Matrix */}
-      <div className="bg-white p-4 rounded-lg border border-stone-200 shadow-sm space-y-3">
+      <div className="bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/40 shadow-sm space-y-3">
         <div className="flex flex-col md:flex-row gap-3 items-center justify-between">
           <div className="w-full md:w-96">
             <Input
@@ -93,10 +94,10 @@ export function InvoicesTable({ initialInvoices, canManage }: InvoicesTableProps
                 <button
                   key={st}
                   onClick={() => setSelectedStatus(st)}
-                  className={`px-3 py-1.5 rounded-md font-medium whitespace-nowrap capitalize transition-colors ${
+                  className={`px-3 py-1.5 rounded-lg font-medium whitespace-nowrap capitalize transition-colors ${
                     selectedStatus === st
-                      ? 'bg-stone-900 text-white'
-                      : 'text-stone-600 hover:bg-stone-100'
+                      ? 'bg-secondary-container text-on-secondary-container'
+                      : 'text-on-surface-variant hover:bg-surface-container-high'
                   }`}
                 >
                   {st.replace('_', ' ')}
@@ -108,16 +109,16 @@ export function InvoicesTable({ initialInvoices, canManage }: InvoicesTableProps
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-lg border border-stone-200 shadow-sm overflow-hidden">
+      <div className="bg-surface-container-lowest rounded-xl border border-outline-variant/40 shadow-sm overflow-hidden">
         {filtered.length === 0 ? (
-          <div className="py-16 text-center text-sm text-stone-500">
+          <div className="py-16 text-center text-sm text-outline">
             No invoices found matching your criteria.
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse text-xs">
               <thead>
-                <tr className="border-b border-stone-200 bg-stone-50 text-stone-600 font-semibold uppercase tracking-wider text-[11px]">
+                <tr className="border-b border-outline-variant/40 bg-surface-container-low text-on-surface-variant font-semibold uppercase tracking-wider text-[11px]">
                   <th className="py-3 px-4">Invoice #</th>
                   <th className="py-3 px-4">Client</th>
                   <th className="py-3 px-4">Issue Date</th>
@@ -129,27 +130,27 @@ export function InvoicesTable({ initialInvoices, canManage }: InvoicesTableProps
                   <th className="py-3 px-4 text-center">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-stone-100">
+              <tbody className="divide-y divide-outline-variant/20 text-on-surface">
                 {filtered.map((inv) => (
                   <tr
                     key={inv.id}
-                    className={`hover:bg-stone-50/70 transition-colors ${
-                      inv.displayStatus === 'overdue' ? 'bg-amber-50/20' : ''
+                    className={`hover:bg-surface-container-low/60 transition-colors ${
+                      inv.displayStatus === 'overdue' ? 'bg-amber-500/5' : ''
                     }`}
                   >
-                    <td className="py-3 px-4 font-mono font-medium text-stone-900">
+                    <td className="py-3 px-4 font-mono font-medium text-primary">
                       <Link href={`/crm/invoices/${inv.id}`} className="hover:underline">
                         {inv.invoiceNumber}
                       </Link>
                     </td>
-                    <td className="py-3 px-4 font-medium text-stone-900">
+                    <td className="py-3 px-4 font-medium text-on-surface">
                       {inv.clientName || 'Client'}
                     </td>
-                    <td className="py-3 px-4 text-stone-500">{inv.issueDate}</td>
-                    <td className="py-3 px-4 text-stone-500">
+                    <td className="py-3 px-4 text-on-surface-variant">{inv.issueDate}</td>
+                    <td className="py-3 px-4 text-on-surface-variant">
                       <span
                         className={
-                          inv.displayStatus === 'overdue' ? 'text-red-700 font-semibold' : ''
+                          inv.displayStatus === 'overdue' ? 'text-error font-semibold' : ''
                         }
                       >
                         {inv.dueDate}
@@ -158,13 +159,13 @@ export function InvoicesTable({ initialInvoices, canManage }: InvoicesTableProps
                     <td className="py-3 px-4">
                       {getStatusBadge(inv.displayStatus || inv.status)}
                     </td>
-                    <td className="py-3 px-4 text-right font-medium text-stone-900">
+                    <td className="py-3 px-4 text-right font-medium text-on-surface">
                       {formatINR(BigInt(inv.totalPaise))}
                     </td>
-                    <td className="py-3 px-4 text-right text-emerald-700 font-medium">
+                    <td className="py-3 px-4 text-right text-emerald-700 dark:text-emerald-400 font-medium">
                       {formatINR(BigInt(inv.paidPaise))}
                     </td>
-                    <td className="py-3 px-4 text-right font-mono font-bold text-stone-900">
+                    <td className="py-3 px-4 text-right font-mono font-bold text-on-surface">
                       {formatINR(BigInt(inv.balancePaise))}
                     </td>
                     <td className="py-3 px-4 text-center">

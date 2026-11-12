@@ -164,7 +164,7 @@ export function DashboardView({
             <select
               value={selectedFYKey}
               onChange={(e) => setSelectedFYKey(e.target.value)}
-              className="bg-transparent font-medium text-on-surface focus:outline-none cursor-pointer"
+              className="bg-surface-container-lowest font-medium text-on-surface focus:outline-none cursor-pointer rounded px-1 py-0.5"
             >
               {fyOptions.map((fy) => (
                 <option key={fy.key} value={fy.key}>

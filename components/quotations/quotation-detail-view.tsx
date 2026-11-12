@@ -13,6 +13,17 @@ import {
   deleteDraftQuotationAction,
 } from '@/server/actions/quotation.actions';
 import { SendDocumentDialog } from '@/components/common/send-document-dialog';
+import {
+  AlertCircle,
+  ArrowLeft,
+  CheckCircle2,
+  Copy,
+  Download,
+  History,
+  Mail,
+  Send,
+  X,
+} from 'lucide-react';
 
 interface QuotationDetailViewProps {
   quotation: Quotation;
@@ -113,7 +124,7 @@ export function QuotationDetailView({
             href="/crm/quotations"
             className="p-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface-variant transition-colors"
           >
-            <span className="material-symbols-outlined text-[20px]">arrow_back</span>
+            <ArrowLeft className="w-5 h-5" />
           </Link>
           <h1 className="text-2xl font-bold tracking-tight text-on-surface">
             {quotation.quotationNumber}
@@ -123,7 +134,7 @@ export function QuotationDetailView({
             onClick={() => setIsVersionDrawerOpen(true)}
             className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-surface-container hover:bg-surface-container-high text-xs font-medium text-on-surface-variant transition-colors"
           >
-            <span className="material-symbols-outlined text-[16px]">history</span>
+            <History className="w-4 h-4" />
             <span>View {versions.length} version{versions.length > 1 ? 's' : ''}</span>
           </button>
         </div>
@@ -145,7 +156,7 @@ export function QuotationDetailView({
                 onClick={() => handleStatusChange('sent')}
                 className="bg-[#4c6452] hover:bg-[#3d5242] text-white flex items-center gap-1.5"
               >
-                <span className="material-symbols-outlined text-[18px]">send</span>
+                <Send className="w-4 h-4" />
                 Mark as Sent
               </Button>
             </>
@@ -169,7 +180,7 @@ export function QuotationDetailView({
                 onClick={() => handleStatusChange('accepted')}
                 className="bg-[#4c6452] hover:bg-[#3d5242] text-white flex items-center gap-1.5"
               >
-                <span className="material-symbols-outlined text-[18px]">check_circle</span>
+                <CheckCircle2 className="w-4 h-4" />
                 Mark Accepted
               </Button>
             </>
@@ -182,16 +193,16 @@ export function QuotationDetailView({
               onClick={handleCreateNewVersion}
               className="flex items-center gap-1.5"
             >
-              <span className="material-symbols-outlined text-[18px]">content_copy</span>
+              <Copy className="w-4 h-4" />
               New Version
             </Button>
           )}
 
           <Button
             onClick={() => setIsSendEmailOpen(true)}
-            className="bg-[#1c1917] hover:bg-stone-800 text-white flex items-center gap-1.5"
+            className="bg-inverse-surface text-surface hover:opacity-90 flex items-center gap-1.5"
           >
-            <span className="material-symbols-outlined text-[18px]">mail</span>
+            <Mail className="w-4 h-4" />
             Send via Email
           </Button>
 
@@ -200,7 +211,7 @@ export function QuotationDetailView({
             onClick={() => window.open(`/api/pdf/quotation/${quotation.id}`, '_blank')}
             className="flex items-center gap-1.5"
           >
-            <span className="material-symbols-outlined text-[18px]">download</span>
+            <Download className="w-4 h-4" />
             Download PDF
           </Button>
         </div>
@@ -219,7 +230,7 @@ export function QuotationDetailView({
 
       {errorMsg && (
         <div className="p-4 rounded-xl bg-error-container text-on-error-container text-sm flex items-center gap-2">
-          <span className="material-symbols-outlined text-lg">error</span>
+          <AlertCircle className="w-4 h-4 shrink-0" />
           <span>{errorMsg}</span>
         </div>
       )}
@@ -405,7 +416,7 @@ export function QuotationDetailView({
                 onClick={() => setIsVersionDrawerOpen(false)}
                 className="p-1 rounded-lg text-outline hover:text-on-surface"
               >
-                <span className="material-symbols-outlined text-[20px]">close</span>
+                <X className="w-5 h-5" />
               </button>
             </div>
 
