@@ -67,7 +67,7 @@ export async function listEnquiriesAction(filters?: {
     const supabase = await createClient();
     let query = supabase
       .from('enquiries')
-      .select('*, clients(full_name), profiles(full_name)')
+      .select('*, clients(full_name), profiles:profiles!enquiries_assigned_to_fkey(full_name)')
       .is('deleted_at', null);
 
     if (filters?.status) {
@@ -79,9 +79,28 @@ export async function listEnquiriesAction(filters?: {
 
     query = query.order('created_at', { ascending: false });
 
-    const { data, error } = await query;
+    const { data: initialData, error } = await query;
+    let data: any[] | null = initialData;
     if (error) {
-      return { error: { code: 'INTERNAL_ERROR', message: error.message } };
+      // Disambiguation fallback: if profiles!enquiries_assigned_to_fkey fails, fetch without ambiguous embedding
+      console.warn('[listEnquiriesAction] Main query with profile join failed, using fallback:', error.message);
+      let fallback = supabase
+        .from('enquiries')
+        .select('*, clients(full_name)')
+        .is('deleted_at', null);
+
+      if (filters?.status) {
+        fallback = fallback.eq('status', filters.status);
+      }
+      if (filters?.assignedTo) {
+        fallback = fallback.eq('assigned_to', filters.assignedTo);
+      }
+
+      const fallbackRes = await fallback.order('created_at', { ascending: false });
+      if (fallbackRes.error) {
+        return { error: { code: 'INTERNAL_ERROR', message: fallbackRes.error.message } };
+      }
+      data = fallbackRes.data;
     }
 
     const enquiries: Enquiry[] = (data || []).map((row: any) => ({
@@ -141,18 +160,23 @@ export async function createEnquiryAction(rawInput: EnquiryInput): Promise<Actio
 
     // If client is linked, record activity
     if (parsed.data.clientId) {
-      const supabase = await createClient();
-      await supabase.from('activities').insert({
-        client_id: parsed.data.clientId,
-        entity_type: 'enquiry',
-        entity_id: result.id,
-        action: 'enquiry_created',
-        actor_id: user.id,
-        metadata: { event_type: parsed.data.eventType, event_date: parsed.data.eventDate },
-      });
+      try {
+        const supabase = await createClient();
+        await supabase.from('activities').insert({
+          client_id: parsed.data.clientId,
+          entity_type: 'enquiry',
+          entity_id: result.id,
+          action: 'enquiry_created',
+          actor_id: user.id,
+          metadata: { event_type: parsed.data.eventType, event_date: parsed.data.eventDate },
+        });
+      } catch (actErr) {
+        console.warn('[createEnquiryAction] Failed to record client activity:', actErr);
+      }
     }
 
     revalidatePath('/crm/enquiries');
+    revalidatePath('/crm/dashboard');
     return { data: result.id };
   } catch (err: unknown) {
     const actionError = err as { code?: string; message?: string };

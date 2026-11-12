@@ -19,13 +19,23 @@ export default async function EnquiryDetailPage({
 
   const supabase = await createClient();
 
-  const [enqRes, fuRes, clientsRes] = await Promise.all([
-    supabase
+  let enqRes = await supabase
+    .from('enquiries')
+    .select('*, clients(full_name), profiles:profiles!enquiries_assigned_to_fkey(full_name)')
+    .eq('id', id)
+    .is('deleted_at', null)
+    .maybeSingle();
+
+  if (enqRes.error || !enqRes.data) {
+    enqRes = await supabase
       .from('enquiries')
-      .select('*, clients(full_name), profiles(full_name)')
+      .select('*, clients(full_name)')
       .eq('id', id)
       .is('deleted_at', null)
-      .single(),
+      .maybeSingle();
+  }
+
+  const [fuRes, clientsRes] = await Promise.all([
     supabase
       .from('follow_ups')
       .select('*')

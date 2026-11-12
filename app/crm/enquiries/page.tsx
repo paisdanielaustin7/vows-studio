@@ -16,6 +16,10 @@ export default async function EnquiriesPage() {
     listClientsAction('', 100, 0),
   ]);
 
+  if (enqRes.error) {
+    console.error('[EnquiriesPage] Failed to fetch enquiries:', enqRes.error);
+  }
+
   const enquiries = enqRes.data || [];
   const clients = clientsRes.data?.clients || [];
   const canCreate = ['system_admin', 'business_owner', 'manager', 'staff'].includes(user.role);

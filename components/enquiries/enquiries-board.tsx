@@ -83,6 +83,11 @@ export function EnquiriesBoard({
 
   const [saving, setSaving] = React.useState(false);
   const [status, setStatus] = React.useState<{ type: 'success' | 'error'; message: string } | null>(null);
+  const [modalError, setModalError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    setEnquiries(initialEnquiries);
+  }, [initialEnquiries]);
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -90,6 +95,7 @@ export function EnquiriesBoard({
 
     setSaving(true);
     setStatus(null);
+    setModalError(null);
 
     const budgetPaise = form.budgetRupees ? Math.round(Number(form.budgetRupees) * 100) : null;
 
@@ -112,9 +118,48 @@ export function EnquiriesBoard({
 
     setSaving(false);
     if (res.error) {
+      setModalError(res.error.message);
       setStatus({ type: 'error', message: res.error.message });
     } else {
+      const newId = res.data || `temp-${Date.now()}`;
+      const newEnq: Enquiry = {
+        id: newId,
+        clientId: form.clientId || null,
+        clientName: clients.find((c) => c.id === form.clientId)?.fullName || null,
+        guestName: form.guestName || null,
+        guestPhone: form.guestPhone || null,
+        guestEmail: form.guestEmail || null,
+        eventType: form.eventType,
+        eventDate: form.eventDate || null,
+        eventDateIsApprox: form.eventDateIsApprox,
+        venue: form.venue || null,
+        guestCount: form.guestCount ? Number(form.guestCount) : null,
+        budgetPaise,
+        source: form.source,
+        status: 'new',
+        message: form.message || null,
+        notes: form.notes || null,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+      setEnquiries((prev) => [newEnq, ...prev.filter((item) => item.id !== newId)]);
       setIsModalOpen(false);
+      setModalError(null);
+      setForm({
+        clientId: '',
+        guestName: '',
+        guestPhone: '',
+        guestEmail: '',
+        eventType: 'wedding' as EventType,
+        eventDate: '',
+        eventDateIsApprox: true,
+        venue: '',
+        guestCount: '',
+        budgetRupees: '',
+        source: 'instagram' as EnquirySource,
+        message: '',
+        notes: '',
+      });
       setStatus({ type: 'success', message: 'Enquiry created successfully.' });
       router.refresh();
     }
@@ -387,7 +432,10 @@ export function EnquiriesBoard({
               <h3 className="text-base font-semibold text-on-surface">New Wedding Enquiry</h3>
               <button
                 type="button"
-                onClick={() => setIsModalOpen(false)}
+                onClick={() => {
+                  setIsModalOpen(false);
+                  setModalError(null);
+                }}
                 className="p-1 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container"
               >
                 <X className="w-5 h-5" />
@@ -516,8 +564,22 @@ export function EnquiriesBoard({
                 />
               </div>
 
+              {modalError && (
+                <div className="p-3 rounded-lg bg-error-container/60 text-error text-xs flex items-center gap-2 border border-error-container">
+                  <AlertCircle className="w-4 h-4 shrink-0" />
+                  <span>{modalError}</span>
+                </div>
+              )}
+
               <div className="flex justify-end gap-3 pt-3 border-t border-outline-variant/20">
-                <Button type="button" variant="outline" onClick={() => setIsModalOpen(false)}>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => {
+                    setIsModalOpen(false);
+                    setModalError(null);
+                  }}
+                >
                   Cancel
                 </Button>
                 <Button type="submit" disabled={saving}>

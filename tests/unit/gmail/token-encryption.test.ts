@@ -43,7 +43,9 @@ describe('Gmail Token Encryption & Key Rotation (D-27)', () => {
 
     const parts = encrypted.split(':');
     // Tamper with the ciphertext (last part)
-    const tamperedCiphertext = parts.slice(0, 4).join(':') + ':' + parts[4].slice(0, -2) + 'ff';
+    const lastPart = parts[4];
+    const tamperedLast = lastPart.endsWith('ff') ? lastPart.slice(0, -2) + '00' : lastPart.slice(0, -2) + 'ff';
+    const tamperedCiphertext = parts.slice(0, 4).join(':') + ':' + tamperedLast;
 
     expect(() => decryptSecret(tamperedCiphertext, KEY_V1)).toThrow();
 
