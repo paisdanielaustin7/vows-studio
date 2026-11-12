@@ -5,20 +5,20 @@ import { Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 min-h-[44px]',
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-all duration-150 ease-out active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 min-h-[44px]',
   {
     variants: {
       variant: {
         primary:
-          'bg-[var(--primary)] text-[var(--primary-foreground)] shadow hover:opacity-90',
+          'bg-[var(--primary)] text-[var(--primary-foreground)] shadow-xs hover:bg-[var(--primary-dark)] hover:shadow-sm',
         secondary:
-          'bg-[var(--surface-muted)] text-[var(--foreground)] hover:bg-[var(--border)]',
+          'bg-[var(--surface-muted)] text-[var(--foreground)] hover:bg-[var(--surface-container-high)]',
         ghost:
-          'hover:bg-[var(--surface-muted)] text-[var(--foreground)]',
+          'hover:bg-[var(--surface-container-high)] text-[var(--foreground)]',
         destructive:
-          'bg-[var(--danger)] text-white hover:opacity-90',
+          'bg-[var(--danger)] text-white shadow-xs hover:opacity-90 hover:shadow-sm',
         outline:
-          'border border-[var(--border)] bg-[var(--surface)] hover:bg-[var(--surface-muted)] text-[var(--foreground)]',
+          'border border-[var(--border)] bg-[var(--surface-container-lowest)] hover:bg-[var(--surface-container-high)] text-[var(--foreground)] shadow-2xs',
         link:
           'text-[var(--primary)] underline-offset-4 hover:underline min-h-0 h-auto p-0',
       },

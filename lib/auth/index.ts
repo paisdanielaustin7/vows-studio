@@ -1,13 +1,15 @@
+import { cache } from 'react';
 import { createClient } from '@/lib/supabase/server';
 import { getAdminClient } from '@/lib/supabase/admin';
 import { ROLE_PERMISSIONS, UserRole, Permission } from '@/lib/constants/permissions';
 import { AuthenticatedUser, UserProfile, ActionError } from '@/types/auth';
 
 /**
- * Retrieves the currently authenticated user, profile, AAL level, and RBAC permissions.
- * Validates active status and account lockout.
+ * Core per-request user/profile/AAL loader (wrapped with React.cache below
+ * so repeated calls across Layout, Page, and parallel Server Actions in a
+ * single render incur only 1 Supabase Auth + Profile round-trip).
  */
-export async function getAuthenticatedUser(): Promise<AuthenticatedUser | null> {
+async function loadAuthenticatedUser(): Promise<AuthenticatedUser | null> {
   const supabase = await createClient();
 
   const {
@@ -82,6 +84,16 @@ export async function getAuthenticatedUser(): Promise<AuthenticatedUser | null> 
     aal,
     permissions,
   };
+}
+
+const getCachedAuthenticatedUser = cache(loadAuthenticatedUser);
+
+/**
+ * Retrieves the currently authenticated user, profile, AAL level, and RBAC permissions.
+ * Deduplicated per RSC render request via React.cache.
+ */
+export async function getAuthenticatedUser(): Promise<AuthenticatedUser | null> {
+  return getCachedAuthenticatedUser();
 }
 
 /**

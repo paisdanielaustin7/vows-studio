@@ -12,17 +12,16 @@ export default async function ExpensesPage() {
   const user = await getAuthenticatedUser();
   requirePermission(user, 'expenses:view');
 
-  const [expensesRes, supabase] = await Promise.all([
+  const supabase = await createClient();
+  const [expensesRes, { data: catData }] = await Promise.all([
     listExpensesAction(),
-    createClient(),
+    supabase
+      .from('expense_categories')
+      .select('id, code, name')
+      .order('sort', { ascending: true }),
   ]);
 
   const expenses = expensesRes.data || [];
-
-  const { data: catData } = await supabase
-    .from('expense_categories')
-    .select('id, code, name')
-    .order('sort', { ascending: true });
 
   const categories = (catData || []).map((c) => ({
     id: c.id,

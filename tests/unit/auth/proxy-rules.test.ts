@@ -103,7 +103,7 @@ function evaluateProxyRules(
       }
     }
     if (pathname.startsWith('/crm/audit-log')) {
-      if (user.role !== 'business_owner') {
+      if (!['system_admin', 'business_owner'].includes(user.role)) {
         return { action: 'redirect', targetUrl: '/403', statusCode: 403 };
       }
     }

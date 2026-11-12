@@ -7,10 +7,11 @@ import { AuditLogEntry } from '@/types/auth';
 
 export default async function BusinessOwnerAuditLogPage() {
   const user = await getAuthenticatedUser();
-  if (!user || user.role !== 'business_owner') {
+  if (!user || (user.role !== 'system_admin' && user.role !== 'business_owner')) {
     redirect('/403');
   }
 
+  const isScoped = user.role !== 'system_admin';
   const supabase = await createClient();
   const { data } = await supabase
     .from('audit_log')
@@ -36,9 +37,9 @@ export default async function BusinessOwnerAuditLogPage() {
   return (
     <AuditLogViewer
       entries={entries}
-      title="Business Activity Audit Trail"
+      title={isScoped ? 'Business Activity Audit Trail' : 'Complete Studio Audit Trail'}
       description="Chronological log of modifications to clients, quotations, bookings, financial documents, and settings."
-      isScoped={true}
+      isScoped={isScoped}
     />
   );
 }

@@ -194,7 +194,7 @@ const NAV_SECTIONS: { title: string; items: NavItem[] }[] = [
         label: 'Audit Trail',
         href: '/crm/audit-log',
         icon: History,
-        roles: ['business_owner'],
+        roles: ['system_admin', 'business_owner'],
       },
       {
         label: 'Studio Settings',
@@ -220,6 +220,34 @@ export function CrmShell({
   const [notifications, setNotifications] = React.useState<NotificationEntry[]>([]);
   const [isNotificationsOpen, setIsNotificationsOpen] = React.useState(false);
   const [isProfileOpen, setIsProfileOpen] = React.useState(false);
+  const notificationsRef = React.useRef<HTMLDivElement>(null);
+  const profileRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    function handleOutsideClick(event: MouseEvent) {
+      const target = event.target as Node;
+      if (notificationsRef.current && !notificationsRef.current.contains(target)) {
+        setIsNotificationsOpen(false);
+      }
+      if (profileRef.current && !profileRef.current.contains(target)) {
+        setIsProfileOpen(false);
+      }
+    }
+
+    function handleEscape(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        setIsNotificationsOpen(false);
+        setIsProfileOpen(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleOutsideClick);
+    document.addEventListener('keydown', handleEscape);
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, []);
 
   // Poll notifications every 60 seconds
   React.useEffect(() => {
@@ -371,7 +399,7 @@ export function CrmShell({
       {/* Main Wrapper */}
       <div className="flex-1 flex flex-col min-w-0 md:pl-64">
         {/* Topbar */}
-        <header className="fixed top-0 left-0 md:left-64 right-0 h-16 bg-surface/85 backdrop-blur-md border-b border-outline-variant/30 z-30 flex items-center justify-between px-4 sm:px-6">
+        <header className="fixed top-0 left-0 md:left-64 right-0 h-16 bg-surface-container-lowest/95 backdrop-blur-md border-b border-outline-variant/40 z-30 flex items-center justify-between px-4 sm:px-6 shadow-2xs">
           <div className="flex items-center gap-2 text-xs font-medium text-outline">
             <span className="text-on-surface-variant">VOWS Studio</span>
             <span>/</span>
@@ -380,24 +408,28 @@ export function CrmShell({
             </span>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5 sm:gap-3">
             {/* Notification Bell */}
-            <div className="relative">
+            <div className="relative" ref={notificationsRef}>
               <button
                 type="button"
-                onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
-                className="relative p-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"
+                onClick={() => {
+                  setIsProfileOpen(false);
+                  setIsNotificationsOpen((prev) => !prev);
+                }}
+                className="relative p-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all duration-150 cursor-pointer"
                 aria-label="Notifications"
+                aria-expanded={isNotificationsOpen}
               >
                 <Bell className="w-5 h-5" />
                 {unreadCount > 0 && (
-                  <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-error rounded-full ring-2 ring-surface" />
+                  <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-error rounded-full ring-2 ring-surface-container-lowest" />
                 )}
               </button>
 
               {/* Notification Dropdown */}
               {isNotificationsOpen && (
-                <div className="absolute right-0 mt-2 w-80 bg-surface-container-lowest border border-outline-variant/40 rounded-xl shadow-lg p-3 z-50 space-y-2">
+                <div className="vows-popover-enter absolute right-0 mt-2 w-80 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-xl p-3 z-50 space-y-2">
                   <div className="flex items-center justify-between pb-2 border-b border-outline-variant/30">
                     <span className="text-xs font-semibold text-on-surface">Notifications</span>
                     <div className="flex items-center gap-2">
@@ -454,27 +486,32 @@ export function CrmShell({
             </button>
 
             {/* User Dropdown */}
-            <div className="relative">
+            <div className="relative" ref={profileRef}>
               <button
                 type="button"
-                onClick={() => setIsProfileOpen(!isProfileOpen)}
-                className="flex items-center gap-2 p-1.5 rounded-lg hover:bg-surface-container-high transition-colors"
+                onClick={() => {
+                  setIsNotificationsOpen(false);
+                  setIsProfileOpen((prev) => !prev);
+                }}
+                className="flex items-center gap-2 p-1.5 rounded-lg hover:bg-surface-container-high transition-all duration-150 cursor-pointer"
+                aria-label="Account menu"
+                aria-expanded={isProfileOpen}
               >
-                <div className="w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-xs">
+                <div className="w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-xs shadow-xs">
                   {userName.charAt(0).toUpperCase()}
                 </div>
               </button>
 
               {isProfileOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-surface-container-lowest border border-outline-variant/40 rounded-xl shadow-lg p-2 z-50 space-y-1">
-                  <div className="px-2 py-1.5 border-b border-outline-variant/20">
+                <div className="vows-popover-enter absolute right-0 mt-2 w-56 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-xl p-2 z-50 space-y-1">
+                  <div className="px-2.5 py-2 border-b border-outline-variant/40">
                     <p className="text-xs font-semibold text-on-surface truncate">{userName}</p>
-                    <p className="text-[10px] text-outline truncate">{userEmail}</p>
+                    <p className="text-[11px] text-outline truncate">{userEmail}</p>
                   </div>
                   <Link
                     href="/crm/profile"
                     onClick={() => setIsProfileOpen(false)}
-                    className="flex items-center gap-2 px-2 py-1.5 rounded-lg text-xs text-on-surface hover:bg-surface-container transition-colors"
+                    className="flex items-center gap-2 px-2.5 py-2 rounded-lg text-xs font-medium text-on-surface hover:bg-surface-container-high transition-colors"
                   >
                     <User className="w-3.5 h-3.5" />
                     <span>My Profile</span>
@@ -482,7 +519,7 @@ export function CrmShell({
                   <button
                     type="button"
                     onClick={handleLogout}
-                    className="w-full flex items-center gap-2 px-2 py-1.5 rounded-lg text-xs text-error hover:bg-error-container/30 transition-colors text-left"
+                    className="w-full flex items-center gap-2 px-2.5 py-2 rounded-lg text-xs font-medium text-error hover:bg-error-container/60 transition-colors text-left cursor-pointer"
                   >
                     <LogOut className="w-3.5 h-3.5" />
                     <span>Sign Out</span>
@@ -512,7 +549,7 @@ export function CrmShell({
         </main>
 
         {/* Mobile Bottom Navigation Bar (< 768px) */}
-        <nav className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-surface/90 backdrop-blur-lg border-t border-outline-variant/30 flex items-center justify-around px-2 z-40">
+        <nav className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-surface-container-lowest/95 backdrop-blur-lg border-t border-outline-variant/40 flex items-center justify-around px-2 z-40 shadow-lg">
           <Link
             href="/crm/dashboard"
             className={`flex flex-col items-center gap-1 py-1 px-3 text-[10px] font-medium ${

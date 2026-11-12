@@ -62,7 +62,13 @@ describe('Real proxy() JWT claims, profiles RLS fallback, and MFA verification',
       error: null,
     });
 
-    for (const path of ['/admin/dashboard', '/admin/users', '/admin/audit-log', '/crm/dashboard']) {
+    for (const path of [
+      '/admin/dashboard',
+      '/admin/users',
+      '/admin/audit-log',
+      '/crm/dashboard',
+      '/crm/audit-log',
+    ]) {
       const res = await proxy(new NextRequest(`https://vows.test${path}`));
       expect(res.status).toBe(200);
       expect(res.headers.get('location')).toBeNull();

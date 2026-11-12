@@ -7,34 +7,32 @@ import { Button } from '@/components/ui/button';
 export default async function AdminDashboardPage() {
   const admin = getAdminClient();
 
-  // Query counts
-  const { count: totalUsers } = await admin
-    .from('profiles')
-    .select('*', { count: 'exact', head: true });
-
-  const { count: activeUsers } = await admin
-    .from('profiles')
-    .select('*', { count: 'exact', head: true })
-    .eq('is_active', true);
-
-  const { count: pendingInvites } = await admin
-    .from('invitations')
-    .select('*', { count: 'exact', head: true })
-    .is('accepted_at', null)
-    .is('revoked_at', null);
-
-  const { count: lockedAccounts } = await admin
-    .from('profiles')
-    .select('*', { count: 'exact', head: true })
-    .not('locked_until', 'is', null)
-    .gt('locked_until', new Date().toISOString());
-
-  // Recent audit activities
-  const { data: recentAudits } = await admin
-    .from('audit_log')
-    .select('*')
-    .order('created_at', { ascending: false })
-    .limit(5);
+  // Parallel fetch governance counts & recent audits
+  const [
+    { count: totalUsers },
+    { count: activeUsers },
+    { count: pendingInvites },
+    { count: lockedAccounts },
+    { data: recentAudits },
+  ] = await Promise.all([
+    admin.from('profiles').select('*', { count: 'exact', head: true }),
+    admin.from('profiles').select('*', { count: 'exact', head: true }).eq('is_active', true),
+    admin
+      .from('invitations')
+      .select('*', { count: 'exact', head: true })
+      .is('accepted_at', null)
+      .is('revoked_at', null),
+    admin
+      .from('profiles')
+      .select('*', { count: 'exact', head: true })
+      .not('locked_until', 'is', null)
+      .gt('locked_until', new Date().toISOString()),
+    admin
+      .from('audit_log')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .limit(5),
+  ]);
 
   return (
     <div className="space-y-8 max-w-6xl">

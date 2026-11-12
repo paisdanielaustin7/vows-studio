@@ -32,6 +32,35 @@ function decodeJwtPayload(token: string): Record<string, unknown> | null {
   }
 }
 
+// Module-level JWKS cache (10-minute TTL) avoids fetching /.well-known/jwks.json per navigation
+let jwksCache: { url: string; keys: Record<string, unknown>[]; expiresAt: number } | null = null;
+
+async function getCachedJwks(
+  supabaseUrl: string,
+  supabaseKey: string
+): Promise<{ keys: Record<string, unknown>[] } | undefined> {
+  if (process.env.VITEST) return undefined;
+  const now = Date.now();
+  if (jwksCache && jwksCache.url === supabaseUrl && jwksCache.expiresAt > now) {
+    return { keys: jwksCache.keys };
+  }
+  try {
+    const res = await fetch(`${supabaseUrl}/auth/v1/.well-known/jwks.json`, {
+      headers: { apikey: supabaseKey },
+      signal: AbortSignal.timeout(2500),
+    });
+    if (!res.ok) return undefined;
+    const data = (await res.json()) as { keys?: Record<string, unknown>[] };
+    if (Array.isArray(data?.keys) && data.keys.length > 0) {
+      jwksCache = { url: supabaseUrl, keys: data.keys, expiresAt: now + 10 * 60 * 1000 };
+      return { keys: data.keys };
+    }
+  } catch {
+    // Fallback handled by getClaims / getUser
+  }
+  return undefined;
+}
+
 function getRoleLandingPage(role: UserRole): string {
   switch (role) {
     case 'system_admin':
@@ -103,11 +132,33 @@ export async function proxy(request: NextRequest) {
     },
   });
 
+  // Classify route early so purely public pages skip Supabase Auth network latency
+  const isCrmRoute = pathname.startsWith('/crm');
+  const isAdminRoute = pathname.startsWith('/admin');
+  const isMfaRoute = pathname.startsWith('/mfa');
+  const isAuthPage = AUTH_PAGES.some((p) => pathname === p || pathname.startsWith(`${p}/`));
+  const isInvitePage = pathname.startsWith('/invite/');
+  const isPublicRoute = PUBLIC_PREFIXES.some(
+    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`)
+  );
+  const needsSessionCheck =
+    isCrmRoute || isAdminRoute || isMfaRoute || (isAuthPage && !isInvitePage);
+
+  // Apply Security Headers and Cache-Control
+  if (isCrmRoute || isAdminRoute) {
+    response.headers.set('Cache-Control', 'private, no-store, max-age=0, must-revalidate');
+    response.headers.set('Pragma', 'no-cache');
+  }
+
+  if (!needsSessionCheck) {
+    return response;
+  }
+
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
-  // Refresh session via Supabase SSR client
-  let user = null;
+  // Verify session via cryptographic getClaims() first (~1ms with cached JWKS), falling back to getUser()
+  let hasVerifiedUser = false;
   let userRole: UserRole | null = null;
   let aal: 'aal1' | 'aal2' = 'aal1';
   let isDeactivated = false;
@@ -131,104 +182,108 @@ export async function proxy(request: NextRequest) {
       },
     });
 
-    const { data: authData } = await supabase.auth.getUser();
-    user = authData?.user || null;
+    let claimRole: UserRole | null = null;
+    let claimUserId: string | null = null;
 
-    if (user) {
-      // 1. Read top-level user_role and aal claims injected by app.custom_access_token_hook via getClaims()
-      let claimRole: UserRole | null = null;
-      try {
-        const { data: claimsData } = await supabase.auth.getClaims();
-        const claims = claimsData?.claims as Record<string, unknown> | undefined;
-        if (isValidUserRole(claims?.user_role)) {
+    try {
+      const jwks = await getCachedJwks(supabaseUrl, supabaseKey);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data: claimsData } = await (supabase.auth as any).getClaims(
+        undefined,
+        jwks ? { jwks } : undefined
+      );
+      const claims = claimsData?.claims as Record<string, unknown> | undefined;
+      if (claims) {
+        if (typeof claims.sub === 'string' && claims.sub) {
+          claimUserId = claims.sub;
+        }
+        if (isValidUserRole(claims.user_role)) {
           claimRole = claims.user_role;
         }
-        if (claims?.aal === 'aal2') {
+        if (claims.aal === 'aal2') {
           aal = 'aal2';
         }
-      } catch {
-        // Fallback handled below
       }
+    } catch {
+      // Fallback handled below
+    }
 
-      // 2. If getClaims() missed JWKS fetch or claims were unavailable, decode the session access token
-      //    (safe because getUser() above already authenticated the session with Supabase Auth)
-      if (!claimRole || aal !== 'aal2') {
-        try {
-          const { data: sessionData } = await supabase.auth.getSession();
-          const accessToken = sessionData?.session?.access_token;
-          if (accessToken) {
-            const payload = decodeJwtPayload(accessToken);
-            if (!claimRole && isValidUserRole(payload?.user_role)) {
-              claimRole = payload.user_role;
+    // Fast path: asymmetric JWT verified cryptographically with cached JWKS & user_role claim present
+    if (claimUserId && claimRole && !isAuthPage) {
+      hasVerifiedUser = true;
+      userRole = claimRole;
+    } else {
+      const { data: authData } = await supabase.auth.getUser();
+      const user = authData?.user || null;
+
+      if (user) {
+        hasVerifiedUser = true;
+
+        // Decode session access token payload if getClaims() missed JWKS or claims were unavailable
+        if (!claimRole || aal !== 'aal2') {
+          try {
+            const { data: sessionData } = await supabase.auth.getSession();
+            const accessToken = sessionData?.session?.access_token;
+            if (accessToken) {
+              const payload = decodeJwtPayload(accessToken);
+              if (!claimRole && isValidUserRole(payload?.user_role)) {
+                claimRole = payload.user_role;
+              }
+              if (payload?.aal === 'aal2') {
+                aal = 'aal2';
+              }
             }
-            if (payload?.aal === 'aal2') {
+          } catch {
+            // Fallback handled below
+          }
+        }
+
+        // Check MFA assurance level via getAuthenticatorAssuranceLevel if still needed
+        if (aal !== 'aal2') {
+          try {
+            const { data: aalData } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+            if (aalData?.currentLevel === 'aal2') {
               aal = 'aal2';
             }
+          } catch {
+            aal = 'aal1';
           }
-        } catch {
-          // Fallback handled below
         }
-      }
 
-      // 3. Check MFA assurance level via getAuthenticatorAssuranceLevel if still needed
-      if (aal !== 'aal2') {
-        try {
-          const { data: aalData } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
-          if (aalData?.currentLevel === 'aal2') {
-            aal = 'aal2';
-          }
-        } catch {
-          aal = 'aal1';
-        }
-      }
+        // Authoritative DB fallback via user-scoped RLS (profiles__select__self) if JWT claim absent
+        if (!claimRole) {
+          try {
+            const { data: profileRow } = await supabase
+              .from('profiles')
+              .select('role, is_active')
+              .eq('id', user.id)
+              .maybeSingle();
 
-      // 4. Authoritative DB fallback via user-scoped RLS (profiles__select__self) if JWT claim absent
-      if (!claimRole) {
-        try {
-          const { data: profileRow } = await supabase
-            .from('profiles')
-            .select('role, is_active')
-            .eq('id', user.id)
-            .maybeSingle();
-
-          if (profileRow) {
-            if (profileRow.is_active === false) {
-              isDeactivated = true;
-            } else if (isValidUserRole(profileRow.role)) {
-              claimRole = profileRow.role;
+            if (profileRow) {
+              if (profileRow.is_active === false) {
+                isDeactivated = true;
+              } else if (isValidUserRole(profileRow.role)) {
+                claimRole = profileRow.role;
+              }
             }
+          } catch {
+            // Fallback handled below
           }
-        } catch {
-          // Fallback handled below
         }
+
+        const appMetaRole = isValidUserRole(user.app_metadata?.user_role)
+          ? user.app_metadata.user_role
+          : null;
+        const userMetaRole = isValidUserRole(user.user_metadata?.role)
+          ? user.user_metadata.role
+          : null;
+
+        userRole = claimRole || appMetaRole || userMetaRole;
       }
-
-      const appMetaRole = isValidUserRole(user.app_metadata?.user_role)
-        ? user.app_metadata.user_role
-        : null;
-      const userMetaRole = isValidUserRole(user.user_metadata?.role)
-        ? user.user_metadata.role
-        : null;
-
-      userRole = claimRole || appMetaRole || userMetaRole;
     }
   }
 
-  // Apply Security Headers and Cache-Control
-  if (pathname.startsWith('/crm') || pathname.startsWith('/admin')) {
-    response.headers.set('Cache-Control', 'private, no-store, max-age=0, must-revalidate');
-    response.headers.set('Pragma', 'no-cache');
-  }
-
-  // 1. Signed-out or deactivated users accessing protected routes
-  const isCrmRoute = pathname.startsWith('/crm');
-  const isAdminRoute = pathname.startsWith('/admin');
-  const isMfaRoute = pathname.startsWith('/mfa');
-  const isPublicRoute = PUBLIC_PREFIXES.some(
-    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`)
-  );
-
-  if (!user || isDeactivated) {
+  if (!hasVerifiedUser || isDeactivated) {
     if (isCrmRoute || isAdminRoute || isMfaRoute) {
       const loginUrl = new URL('/login', request.url);
       if (isDeactivated) {
@@ -238,7 +293,6 @@ export async function proxy(request: NextRequest) {
       }
       return NextResponse.redirect(loginUrl);
     }
-    // Allow public or auth page
     if (isPublicRoute) {
       return response;
     }
@@ -254,10 +308,6 @@ export async function proxy(request: NextRequest) {
     }
     return response;
   }
-
-  // 2. Signed-in users accessing auth pages (/login, /forgot-password, /reset-password)
-  const isAuthPage = AUTH_PAGES.some((p) => pathname === p || pathname.startsWith(`${p}/`));
-  const isInvitePage = pathname.startsWith('/invite/');
 
   const isMfaMandatory = userRole === 'system_admin' || userRole === 'business_owner';
   const mfaSatisfied = aal === 'aal2' || isDemoModeVerified();
@@ -354,9 +404,9 @@ export async function proxy(request: NextRequest) {
       }
     }
 
-    // Business Owner scoped audit log: BO only
+    // Audit log: SA and BO
     if (pathname.startsWith('/crm/audit-log')) {
-      if (userRole !== 'business_owner') {
+      if (!['system_admin', 'business_owner'].includes(userRole || '')) {
         return NextResponse.redirect(new URL('/403', request.url));
       }
     }

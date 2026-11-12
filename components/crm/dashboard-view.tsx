@@ -30,6 +30,8 @@ import {
   Truck,
   ChevronRight,
   ShieldAlert,
+  Info,
+  IndianRupee,
 } from 'lucide-react';
 
 interface DashboardViewProps {
@@ -121,7 +123,7 @@ export function DashboardView({
       {/* Top Banner Notice */}
       <div className="flex flex-col sm:flex-row items-center justify-between p-4 rounded-xl bg-secondary-container text-on-secondary-container text-xs sm:text-sm gap-2">
         <div className="flex items-center gap-2">
-          <span className="material-symbols-outlined text-[20px]">info</span>
+          <Info className="w-4 h-4 shrink-0" />
           <span>
             <strong>Studio Node: Active</strong> — Production Engine v2.4 running
             with real-time ledger verification.
@@ -203,9 +205,7 @@ export function DashboardView({
               <span className="text-xs font-semibold uppercase tracking-wider">
                 Accepted Value
               </span>
-              <span className="material-symbols-outlined text-primary text-[20px]">
-                payments
-              </span>
+              <IndianRupee className="w-5 h-5 text-primary" />
             </div>
             <div className="text-2xl font-bold text-on-surface">
               {formatINR(metrics.acceptedRevenuePaise ?? 0n)}

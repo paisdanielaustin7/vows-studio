@@ -88,12 +88,12 @@ export default async function AdminLayout({
         <div className="p-4 border-t border-outline-variant/20 space-y-2">
           <Link
             href="/crm/dashboard"
-            className="flex items-center gap-2 text-xs font-medium text-primary hover:underline"
+            className="flex items-center justify-center gap-2 w-full px-3 py-2 rounded-lg bg-primary text-on-primary text-xs font-semibold shadow-xs hover:bg-primary-dark transition-all"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Return to Studio CRM</span>
+            <span>Open Studio CRM</span>
           </Link>
-          <div className="text-[11px] text-outline">
+          <div className="text-[11px] text-outline pt-1">
             SuperAdmin: {user.profile.fullName || user.email}
           </div>
         </div>
@@ -101,19 +101,26 @@ export default async function AdminLayout({
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="h-16 bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 flex items-center justify-between px-6">
+        <header className="h-16 bg-surface-container-lowest/95 backdrop-blur-md border-b border-outline-variant/30 flex items-center justify-between px-4 sm:px-6 sticky top-0 z-30">
           <div className="flex items-center gap-2 text-xs font-medium text-outline">
             <span className="text-error font-semibold uppercase tracking-wider">
               System Admin Console
             </span>
-            <span>/</span>
-            <span className="text-on-surface">Zero-Trust Governance</span>
+            <span className="hidden sm:inline">/</span>
+            <span className="text-on-surface hidden sm:inline">Full Governance &amp; Access</span>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            <Link
+              href="/crm/dashboard"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary text-on-primary text-xs font-semibold hover:bg-primary-dark shadow-xs transition-all"
+            >
+              <Activity className="w-3.5 h-3.5" />
+              <span>Studio CRM</span>
+            </Link>
             <Link
               href="/admin/profile"
-              className="text-xs font-medium text-on-surface hover:text-primary transition-colors"
+              className="px-2.5 py-1.5 rounded-lg text-xs font-medium text-on-surface hover:bg-surface-container-high hover:text-primary transition-colors"
             >
               Profile &amp; Security
             </Link>
