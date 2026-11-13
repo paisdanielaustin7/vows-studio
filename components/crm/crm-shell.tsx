@@ -202,6 +202,12 @@ const NAV_SECTIONS: { title: string; items: NavItem[] }[] = [
         icon: Settings,
         roles: ['system_admin', 'business_owner'],
       },
+      {
+        label: 'User Management',
+        href: '/admin/users',
+        icon: Users,
+        roles: ['system_admin'],
+      },
     ],
   },
 ];

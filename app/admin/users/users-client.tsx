@@ -54,6 +54,14 @@ export function UsersClient({
   const [users, setUsers] = React.useState<UserProfile[]>(initialUsers);
   const [invitations, setInvitations] = React.useState<Invitation[]>(initialInvitations);
 
+  React.useEffect(() => {
+    setUsers(initialUsers);
+  }, [initialUsers]);
+
+  React.useEffect(() => {
+    setInvitations(initialInvitations);
+  }, [initialInvitations]);
+
   const [isInviteOpen, setIsInviteOpen] = React.useState(false);
   const [inviteEmail, setInviteEmail] = React.useState('');
   const [inviteFullName, setInviteFullName] = React.useState('');

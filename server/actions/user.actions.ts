@@ -126,22 +126,30 @@ export async function updateUserRoleAction(
     };
   }
 
-  // Last business owner guard
+  // Last business owner guard (permitted if an active System Administrator exists)
   if (targetProfile.role === 'business_owner' && newRole !== 'business_owner') {
-    const { count } = await admin
+    const { count: boCount } = await admin
       .from('profiles')
       .select('*', { count: 'exact', head: true })
       .eq('role', 'business_owner')
       .eq('is_active', true)
       .neq('id', targetUserId);
 
-    if (!count || count < 1) {
-      return {
-        error: {
-          code: 'FORBIDDEN',
-          message: 'Cannot demote the last active Business Owner.',
-        },
-      };
+    if (!boCount || boCount < 1) {
+      const { count: saCount } = await admin
+        .from('profiles')
+        .select('*', { count: 'exact', head: true })
+        .eq('role', 'system_admin')
+        .eq('is_active', true);
+
+      if (!saCount || saCount < 1) {
+        return {
+          error: {
+            code: 'FORBIDDEN',
+            message: 'Cannot demote the last active Business Owner when no active System Administrator exists.',
+          },
+        };
+      }
     }
   }
 
@@ -234,20 +242,29 @@ export async function toggleUserActiveAction(
     }
 
     if (targetProfile.role === 'business_owner') {
-      const { count } = await admin
+      const { count: boCount } = await admin
         .from('profiles')
         .select('*', { count: 'exact', head: true })
         .eq('role', 'business_owner')
         .eq('is_active', true)
         .neq('id', targetUserId);
 
-      if (!count || count < 1) {
-        return {
-          error: {
-            code: 'FORBIDDEN',
-            message: 'Cannot deactivate the last active Business Owner.',
-          },
-        };
+      // Permitted if an active System Administrator exists to govern the studio
+      if (!boCount || boCount < 1) {
+        const { count: saCount } = await admin
+          .from('profiles')
+          .select('*', { count: 'exact', head: true })
+          .eq('role', 'system_admin')
+          .eq('is_active', true);
+
+        if (!saCount || saCount < 1) {
+          return {
+            error: {
+              code: 'FORBIDDEN',
+              message: 'Cannot deactivate the last active Business Owner when no active System Administrator exists.',
+            },
+          };
+        }
       }
     }
   }
