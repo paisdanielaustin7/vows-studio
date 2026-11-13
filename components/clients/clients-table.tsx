@@ -41,6 +41,10 @@ export function ClientsTable({
 }) {
   const router = useRouter();
   const [clients, setClients] = React.useState<Client[]>(initialClients);
+
+  React.useEffect(() => {
+    setClients(initialClients);
+  }, [initialClients]);
   const [search, setSearch] = React.useState('');
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [exporting, setExporting] = React.useState(false);

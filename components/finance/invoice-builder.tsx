@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { createInvoiceAction } from '@/server/actions/finance.actions';
@@ -34,6 +34,12 @@ export function InvoiceBuilder({ bookings }: InvoiceBuilderProps) {
   const router = useRouter();
 
   const [selectedBookingId, setSelectedBookingId] = useState(bookings[0]?.id || '');
+
+  useEffect(() => {
+    if (!selectedBookingId && bookings.length > 0) {
+      setSelectedBookingId(bookings[0].id);
+    }
+  }, [bookings, selectedBookingId]);
   const activeBooking = bookings.find((b) => b.id === selectedBookingId);
 
   const [issueDate, setIssueDate] = useState(new Date().toISOString().slice(0, 10));

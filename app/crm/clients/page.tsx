@@ -10,7 +10,7 @@ export default async function ClientsPage() {
     redirect('/login');
   }
 
-  const res = await listClientsAction('', 100, 0);
+  const res = await listClientsAction('', 500, 0);
   const clients = res.data?.clients || [];
 
   const canCreate = ['system_admin', 'business_owner', 'manager'].includes(user.role);

@@ -41,7 +41,7 @@ export default async function EnquiryDetailPage({
       .select('*')
       .eq('enquiry_id', id)
       .order('due_at', { ascending: true }),
-    listClientsAction('', 100, 0),
+    listClientsAction('', 500, 0),
   ]);
 
   if (enqRes.error || !enqRes.data) {

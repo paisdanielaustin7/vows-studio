@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Expense, PaymentMethod } from '@/types/finance';
@@ -25,6 +25,10 @@ interface ExpensesManagerProps {
 export function ExpensesManager({ initialExpenses, categories, canManage }: ExpensesManagerProps) {
   const router = useRouter();
   const [expenses, setExpenses] = useState<Expense[]>(initialExpenses);
+
+  useEffect(() => {
+    setExpenses(initialExpenses);
+  }, [initialExpenses]);
   const [search, setSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
 

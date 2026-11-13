@@ -11,7 +11,7 @@ export default async function NewBookingPage() {
   const user = await getAuthenticatedUser();
   requirePermission(user, 'bookings:create');
 
-  const clientsRes = await listClientsAction();
+  const clientsRes = await listClientsAction('', 500, 0);
   const clientsList = clientsRes.data?.clients || [];
   const clients = clientsList.map((c) => ({
     id: c.id,

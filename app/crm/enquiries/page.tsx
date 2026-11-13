@@ -13,7 +13,7 @@ export default async function EnquiriesPage() {
 
   const [enqRes, clientsRes] = await Promise.all([
     listEnquiriesAction(),
-    listClientsAction('', 100, 0),
+    listClientsAction('', 500, 0),
   ]);
 
   if (enqRes.error) {

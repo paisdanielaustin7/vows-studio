@@ -60,6 +60,14 @@ export function RecordPaymentDialog({
     }
   }, [preselectedInvoiceId, invoices]);
 
+  useEffect(() => {
+    if (preselectedClientId) {
+      setClientId(preselectedClientId);
+    } else if (!clientId && clients.length > 0) {
+      setClientId(clients[0].id);
+    }
+  }, [preselectedClientId, clients, clientId]);
+
   // Update allocation handler
   const handleAllocationChange = (invoiceId: string, valRupees: number) => {
     setAllocations({

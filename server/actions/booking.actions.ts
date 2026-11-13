@@ -393,6 +393,11 @@ export async function createBookingAction(rawInput: BookingInput): Promise<Actio
     });
 
     revalidatePath('/crm/bookings');
+    revalidatePath('/crm/schedule');
+    revalidatePath('/crm/dashboard');
+    revalidatePath(`/crm/clients/${input.clientId}`);
+    revalidatePath('/crm/clients');
+    revalidatePath('/crm/quotations');
     return { data: b.id };
   } catch (err: unknown) {
     const actionError = err as { code?: string; message?: string };
@@ -428,6 +433,10 @@ export async function convertEnquiryToBookingAction(
 
     revalidatePath('/crm/bookings');
     revalidatePath('/crm/enquiries');
+    revalidatePath('/crm/schedule');
+    revalidatePath('/crm/dashboard');
+    revalidatePath('/crm/clients');
+    revalidatePath('/crm/quotations');
     return { data: bookingId };
   } catch (err: unknown) {
     const actionError = err as { code?: string; message?: string };
@@ -465,6 +474,11 @@ export async function createBookingFromQuotationAction(
 
     revalidatePath('/crm/bookings');
     revalidatePath(`/crm/quotations/${quotationId}`);
+    revalidatePath('/crm/quotations');
+    revalidatePath('/crm/schedule');
+    revalidatePath('/crm/dashboard');
+    revalidatePath('/crm/clients');
+    revalidatePath('/crm/invoices');
     return { data: bookingId };
   } catch (err: unknown) {
     const actionError = err as { code?: string; message?: string };
@@ -519,6 +533,9 @@ export async function cancelBookingAction(rawInput: BookingCancelInput): Promise
 
     revalidatePath(`/crm/bookings/${bookingId}`);
     revalidatePath('/crm/bookings');
+    revalidatePath('/crm/schedule');
+    revalidatePath('/crm/dashboard');
+    revalidatePath('/crm/clients');
     return {};
   } catch (err: unknown) {
     const actionError = err as { code?: string; message?: string };
@@ -560,6 +577,9 @@ export async function updateBookingStatusAction(
 
     revalidatePath(`/crm/bookings/${id}`);
     revalidatePath('/crm/bookings');
+    revalidatePath('/crm/schedule');
+    revalidatePath('/crm/dashboard');
+    revalidatePath('/crm/clients');
     return {};
   } catch (err: unknown) {
     const actionError = err as { code?: string; message?: string };

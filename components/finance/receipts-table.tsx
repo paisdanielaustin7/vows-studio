@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { formatINR } from '@/lib/money';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -23,7 +23,11 @@ interface ReceiptsTableProps {
 }
 
 export function ReceiptsTable({ initialReceipts }: ReceiptsTableProps) {
-  const [receipts] = useState<ReceiptRow[]>(initialReceipts);
+  const [receipts, setReceipts] = useState<ReceiptRow[]>(initialReceipts);
+
+  useEffect(() => {
+    setReceipts(initialReceipts);
+  }, [initialReceipts]);
   const [search, setSearch] = useState('');
 
   const filtered = receipts.filter((r) => {

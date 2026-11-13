@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Payment } from '@/types/finance';
 import { formatINR } from '@/lib/money';
@@ -24,7 +24,11 @@ interface PaymentsTableProps {
 
 export function PaymentsTable({ initialPayments, allClients, allInvoices }: PaymentsTableProps) {
   const router = useRouter();
-  const [payments] = useState<Payment[]>(initialPayments);
+  const [payments, setPayments] = useState<Payment[]>(initialPayments);
+
+  useEffect(() => {
+    setPayments(initialPayments);
+  }, [initialPayments]);
   const [search, setSearch] = useState('');
   const [isRecordPaymentOpen, setIsRecordPaymentOpen] = useState(false);
 

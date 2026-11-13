@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { Booking, BookingOps } from '@/types/bookings';
 import { formatINR } from '@/lib/money';
@@ -15,7 +15,11 @@ interface BookingsTableProps {
 }
 
 export function BookingsTable({ initialBookings, canViewMoney }: BookingsTableProps) {
-  const [bookings] = useState<Array<Booking | BookingOps>>(initialBookings);
+  const [bookings, setBookings] = useState<Array<Booking | BookingOps>>(initialBookings);
+
+  useEffect(() => {
+    setBookings(initialBookings);
+  }, [initialBookings]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedStatus, setSelectedStatus] = useState<string>('all');
 

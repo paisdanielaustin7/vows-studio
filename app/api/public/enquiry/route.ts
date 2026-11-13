@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getAdminClient } from '@/lib/supabase/admin';
+import { insertSharedEnquiry } from '@/server/actions/enquiry.actions';
 import { publicEnquirySchema } from '@/lib/validations/public-enquiry.schema';
 import { checkRateLimit, verifyTurnstileToken } from '@/lib/ratelimit';
 
@@ -95,30 +95,26 @@ export async function POST(request: NextRequest) {
       source,
     } = parsed.data;
 
-    // 7. Insert Enquiry into Database (Enquiry ONLY, no client created per D-11, D-33, CLI-05)
-    const adminClient = getAdminClient();
-    const { data: enquiry, error: insertError } = await adminClient
-      .from('enquiries')
-      .insert({
-        guest_name: guestName,
-        guest_phone: guestPhone,
-        guest_email: guestEmail,
-        event_type: eventType,
-        event_date: eventDate || null,
+    // 7. Insert Enquiry into Database (auto-syncs to client and links enquiry)
+    let enquiryId: string;
+    try {
+      const enquiry = await insertSharedEnquiry({
+        guestName,
+        guestPhone,
+        guestEmail,
+        eventType,
+        eventDate: eventDate || null,
         venue: venue || null,
-        guest_count: guestCount || null,
-        services_interested: servicesInterested,
+        guestCount: guestCount || null,
+        servicesInterested,
         message: message || null,
         source: source || 'website',
         status: 'new',
-        consent_given_at: new Date().toISOString(),
-      })
-      .select('id')
-      .single();
-
-    if (insertError || !enquiry) {
+      });
+      enquiryId = enquiry.id;
+    } catch (insertError: any) {
       return NextResponse.json(
-        { error: 'Failed to record enquiry. Please contact studio concierge directly.' },
+        { error: insertError?.message || 'Failed to record enquiry. Please contact studio concierge directly.' },
         { status: 500 }
       );
     }
@@ -126,7 +122,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         success: true,
-        enquiryId: enquiry.id,
+        enquiryId,
         message: 'Your enquiry has been received. Our studio will be in touch within 24-48 hours.',
       },
       { status: 201 }

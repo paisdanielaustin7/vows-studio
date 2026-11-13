@@ -1,6 +1,7 @@
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
+import { getAdminClient } from '@/lib/supabase/admin';
 import { getAuthenticatedUser, requirePermission } from '@/lib/auth';
 import { clientSchema, ClientInput } from '@/lib/validations/sales.schema';
 import { Client, ClientDuplicateMatch } from '@/types/sales';
@@ -21,16 +22,119 @@ function escapeCsvFormula(value: string | null | undefined): string {
 }
 
 /**
+ * Synchronizes any orphaned enquiries (where client_id is null and guest_name is present)
+ * by finding or creating their client record. Runs non-blockingly so client directory is always complete.
+ */
+async function syncOrphanedEnquiries(): Promise<void> {
+  try {
+    const admin = getAdminClient();
+    const { data: orphaned } = await admin
+      .from('enquiries')
+      .select('id, guest_name, guest_phone, guest_email, venue, source, notes, created_by')
+      .is('client_id', null)
+      .is('deleted_at', null)
+      .not('guest_name', 'is', null);
+
+    if (!orphaned || orphaned.length === 0) return;
+
+    for (const enq of orphaned) {
+      const name = enq.guest_name?.trim();
+      if (!name || name.length < 2) continue;
+
+      let clientId: string | null = null;
+      let cleanPhone: string | null = null;
+      let isIntl = false;
+
+      if (enq.guest_phone && enq.guest_phone.trim().length > 0) {
+        let p = enq.guest_phone.trim().replace(/[\s\-()]/g, '');
+        if (!p.startsWith('+')) {
+          p = /^[6-9]\d{9}$/.test(p) ? '+91' + p : '+' + p;
+        }
+        cleanPhone = p;
+        isIntl = !/^\+91[6-9]\d{9}$/.test(p);
+
+        const { data: phoneMatch } = await admin
+          .from('client_phones')
+          .select('client_id')
+          .eq('phone_e164', cleanPhone)
+          .limit(1)
+          .maybeSingle();
+
+        if (phoneMatch?.client_id) {
+          clientId = phoneMatch.client_id;
+        }
+      }
+
+      if (!clientId && enq.guest_email && enq.guest_email.trim().length > 0) {
+        const em = enq.guest_email.trim().toLowerCase();
+        const { data: emailMatch } = await admin
+          .from('client_emails')
+          .select('client_id')
+          .ilike('email', em)
+          .limit(1)
+          .maybeSingle();
+
+        if (emailMatch?.client_id) {
+          clientId = emailMatch.client_id;
+        }
+      }
+
+      if (!clientId) {
+        const { data: newC } = await admin
+          .from('clients')
+          .insert({
+            full_name: name,
+            city: enq.venue || null,
+            referral_source: enq.source || 'other',
+            notes: enq.notes || null,
+            created_by: enq.created_by || null,
+          })
+          .select('id')
+          .single();
+
+        if (newC?.id) {
+          clientId = newC.id;
+          if (cleanPhone) {
+            await admin.from('client_phones').insert({
+              client_id: newC.id,
+              phone_e164: cleanPhone,
+              is_primary: true,
+              is_international: isIntl,
+              label: 'Mobile',
+            });
+          }
+          if (enq.guest_email) {
+            await admin.from('client_emails').insert({
+              client_id: newC.id,
+              email: enq.guest_email.trim().toLowerCase(),
+              is_primary: true,
+            });
+          }
+        }
+      }
+
+      if (clientId) {
+        await admin.from('enquiries').update({ client_id: clientId }).eq('id', enq.id);
+      }
+    }
+  } catch (err) {
+    console.warn('[syncOrphanedEnquiries] Non-blocking sync warning:', err);
+  }
+}
+
+/**
  * Lists clients with optional text search and pagination.
  */
 export async function listClientsAction(
   searchQuery?: string,
-  limit = 50,
+  limit = 500,
   offset = 0
 ): Promise<ActionResult<{ clients: Client[]; totalCount: number }>> {
   try {
     const user = await getAuthenticatedUser();
     requirePermission(user, 'clients:view');
+
+    await syncOrphanedEnquiries();
 
     const supabase = await createClient();
     let query = supabase

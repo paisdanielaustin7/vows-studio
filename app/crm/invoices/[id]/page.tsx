@@ -22,7 +22,7 @@ export default async function InvoiceDetailPage({ params }: InvoiceDetailPagePro
 
   const [invRes, clientsRes] = await Promise.all([
     getInvoiceAction(id),
-    listClientsAction(),
+    listClientsAction('', 500, 0),
   ]);
 
   if (invRes.error || !invRes.data) {

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { LedgerEntry, ProfitAndLossReport, PaymentMethod } from '@/types/finance';
 import { formatINR, toPaise } from '@/lib/money';
@@ -26,8 +26,13 @@ export function LedgerView({
   endDate: initEndDate,
 }: LedgerViewProps) {
   const router = useRouter();
-  const [entries] = useState<LedgerEntry[]>(initialEntries);
-  const [report] = useState<ProfitAndLossReport>(initialReport);
+  const [entries, setEntries] = useState<LedgerEntry[]>(initialEntries);
+  const [report, setReport] = useState<ProfitAndLossReport>(initialReport);
+
+  useEffect(() => {
+    setEntries(initialEntries);
+    setReport(initialReport);
+  }, [initialEntries, initialReport]);
   const [startDate, setStartDate] = useState(initStartDate);
   const [endDate, setEndDate] = useState(initEndDate);
   const [search, setSearch] = useState('');

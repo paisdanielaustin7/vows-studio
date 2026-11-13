@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Client, Service, Package, BusinessSettings } from '@/types/sales';
 import { formatINR, applyDiscount, apportionDiscount, computeGst, fromRupees } from '@/lib/money';
@@ -47,6 +47,18 @@ export function QuotationBuilder({
   const [clientId, setClientId] = useState<string>(initialClientId || (clients[0]?.id ?? ''));
   const [enquiryId] = useState<string>(initialEnquiryId || '');
   const [eventDate, setEventDate] = useState<string>(initialEventDate || '');
+
+  useEffect(() => {
+    if (initialClientId) {
+      setClientId(initialClientId);
+    }
+  }, [initialClientId]);
+
+  useEffect(() => {
+    if (initialEventDate) {
+      setEventDate(initialEventDate);
+    }
+  }, [initialEventDate]);
   
   // Default validUntil: 14 days from today
   const defaultValidDate = useMemo(() => {

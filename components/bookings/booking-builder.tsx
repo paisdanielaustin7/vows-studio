@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { createBookingAction } from '@/server/actions/booking.actions';
@@ -30,6 +30,12 @@ export function BookingBuilder({ clients }: BookingBuilderProps) {
   const [clientId, setClientId] = useState(clients[0]?.id || '');
   const [targetDeliveryDate, setTargetDeliveryDate] = useState('');
   const [notes, setNotes] = useState('');
+
+  useEffect(() => {
+    if (!clientId && clients.length > 0) {
+      setClientId(clients[0].id);
+    }
+  }, [clients, clientId]);
 
   const [lines, setLines] = useState<LineItemDraft[]>([
     { description: 'Full Wedding Coverage (Photography & Cinematography)', quantity: 1, unitPriceRupees: 150000 },

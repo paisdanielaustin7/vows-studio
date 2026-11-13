@@ -1,4 +1,5 @@
 import React from 'react';
+import { createClient } from '@/lib/supabase/server';
 import { listClientsAction } from '@/server/actions/client.actions';
 import { listServicesAction, listPackagesAction } from '@/server/actions/catalogue.actions';
 import { getBusinessSettingsAction } from '@/server/actions/settings.actions';
@@ -19,7 +20,7 @@ interface NewQuotationPageProps {
 export default async function NewQuotationPage({ searchParams }: NewQuotationPageProps) {
   const resolvedSearchParams = await searchParams;
   const [clientsRes, servicesRes, packagesRes, settingsRes] = await Promise.all([
-    listClientsAction(),
+    listClientsAction('', 500, 0),
     listServicesAction(),
     listPackagesAction(),
     getBusinessSettingsAction(),
@@ -30,6 +31,32 @@ export default async function NewQuotationPage({ searchParams }: NewQuotationPag
   const packages = packagesRes.data || [];
   const settings = settingsRes.data || null;
 
+  let initialClientId = resolvedSearchParams?.clientId;
+  let initialEventDate = resolvedSearchParams?.eventDate;
+
+  // If enquiryId was provided, resolve linked client and event details
+  if (resolvedSearchParams?.enquiryId) {
+    try {
+      const supabase = await createClient();
+      const { data: enq } = await supabase
+        .from('enquiries')
+        .select('client_id, event_date')
+        .eq('id', resolvedSearchParams.enquiryId)
+        .maybeSingle();
+
+      if (enq) {
+        if (!initialClientId && enq.client_id) {
+          initialClientId = enq.client_id;
+        }
+        if (!initialEventDate && enq.event_date) {
+          initialEventDate = enq.event_date;
+        }
+      }
+    } catch (err) {
+      console.warn('[NewQuotationPage] Failed to fetch enquiry context:', err);
+    }
+  }
+
   return (
     <div className="p-8 max-w-7xl mx-auto">
       <QuotationBuilder
@@ -37,9 +64,9 @@ export default async function NewQuotationPage({ searchParams }: NewQuotationPag
         services={services}
         packages={packages}
         settings={settings}
-        initialClientId={resolvedSearchParams?.clientId}
+        initialClientId={initialClientId}
         initialEnquiryId={resolvedSearchParams?.enquiryId}
-        initialEventDate={resolvedSearchParams?.eventDate}
+        initialEventDate={initialEventDate}
       />
     </div>
   );

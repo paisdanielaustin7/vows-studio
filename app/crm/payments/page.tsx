@@ -15,7 +15,7 @@ export default async function PaymentsPage() {
 
   const [paymentsRes, clientsRes] = await Promise.all([
     listPaymentsAction(),
-    listClientsAction(),
+    listClientsAction('', 500, 0),
   ]);
 
   const payments = paymentsRes.data || [];

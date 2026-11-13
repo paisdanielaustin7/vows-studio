@@ -384,6 +384,11 @@ export async function createInvoiceAction(rawInput: InvoiceInput): Promise<Actio
 
     revalidatePath('/crm/invoices');
     revalidatePath(`/crm/bookings/${input.bookingId}`);
+    revalidatePath('/crm/bookings');
+    revalidatePath('/crm/ledger');
+    revalidatePath('/crm/dashboard');
+    revalidatePath(`/crm/clients/${input.clientId}`);
+    revalidatePath('/crm/clients');
     return { data: inv.id };
   } catch (err: unknown) {
     const actionError = err as { code?: string; message?: string };
@@ -423,6 +428,7 @@ export async function updateInvoiceStatusAction(
 
     revalidatePath(`/crm/invoices/${id}`);
     revalidatePath('/crm/invoices');
+    revalidatePath('/crm/dashboard');
     return {};
   } catch (err: unknown) {
     const actionError = err as { code?: string; message?: string };
@@ -464,6 +470,10 @@ export async function cancelInvoiceAction(rawInput: CancelInvoiceInput): Promise
 
     revalidatePath(`/crm/invoices/${input.invoiceId}`);
     revalidatePath('/crm/invoices');
+    revalidatePath('/crm/bookings');
+    revalidatePath('/crm/ledger');
+    revalidatePath('/crm/dashboard');
+    revalidatePath('/crm/clients');
     return {};
   } catch (err: unknown) {
     const actionError = err as { code?: string; message?: string };
@@ -527,7 +537,15 @@ export async function recordPaymentAction(rawInput: RecordPaymentInput): Promise
 
     revalidatePath('/crm/payments');
     revalidatePath('/crm/invoices');
+    revalidatePath('/crm/receipts');
     revalidatePath('/crm/ledger');
+    revalidatePath('/crm/dashboard');
+    revalidatePath(`/crm/clients/${input.clientId}`);
+    revalidatePath('/crm/clients');
+    revalidatePath('/crm/bookings');
+    for (const alloc of input.allocations) {
+      revalidatePath(`/crm/invoices/${alloc.invoiceId}`);
+    }
     return {
       data: {
         paymentId: (data as any).payment_id,
@@ -575,7 +593,11 @@ export async function voidPaymentAction(rawInput: VoidPaymentInput): Promise<Act
 
     revalidatePath('/crm/payments');
     revalidatePath('/crm/invoices');
+    revalidatePath('/crm/receipts');
     revalidatePath('/crm/ledger');
+    revalidatePath('/crm/dashboard');
+    revalidatePath('/crm/clients');
+    revalidatePath('/crm/bookings');
     return {};
   } catch (err: unknown) {
     const actionError = err as { code?: string; message?: string };
@@ -705,7 +727,11 @@ export async function issueCreditNoteAction(rawInput: IssueCreditNoteInput): Pro
     }
 
     revalidatePath(`/crm/invoices/${input.invoiceId}`);
+    revalidatePath('/crm/invoices');
     revalidatePath('/crm/credit-notes');
+    revalidatePath('/crm/ledger');
+    revalidatePath('/crm/dashboard');
+    revalidatePath('/crm/clients');
     return {
       data: {
         creditNoteId: (data as any).credit_note_id,
@@ -970,6 +996,7 @@ export async function createExpenseAction(rawInput: ExpenseInput): Promise<Actio
 
     revalidatePath('/crm/expenses');
     revalidatePath('/crm/ledger');
+    revalidatePath('/crm/dashboard');
     return { data: data.id };
   } catch (err: unknown) {
     const actionError = err as { code?: string; message?: string };
@@ -1002,6 +1029,7 @@ export async function deleteExpenseAction(id: string): Promise<ActionResult<void
 
     revalidatePath('/crm/expenses');
     revalidatePath('/crm/ledger');
+    revalidatePath('/crm/dashboard');
     return {};
   } catch (err: unknown) {
     const actionError = err as { code?: string; message?: string };
@@ -1141,6 +1169,7 @@ export async function recordCrewPaymentAction(rawInput: RecordCrewPaymentInput):
     revalidatePath('/crm/crew');
     revalidatePath('/crm/expenses');
     revalidatePath('/crm/ledger');
+    revalidatePath('/crm/dashboard');
     return {};
   } catch (err: unknown) {
     const actionError = err as { code?: string; message?: string };

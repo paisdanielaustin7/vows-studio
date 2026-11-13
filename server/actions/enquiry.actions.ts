@@ -14,17 +14,133 @@ import { ActionResult } from '@/types/auth';
 import { revalidatePath } from 'next/cache';
 
 /**
+ * Helper to ensure an enquiry always maps to a client in public.clients.
+ * If input.clientId is provided, uses it.
+ * If not, attempts to match an existing client by phone or email, or creates a new client.
+ */
+async function ensureClientForEnquiry(
+  admin: ReturnType<typeof getAdminClient>,
+  input: EnquiryInput,
+  createdByUserId?: string | null
+): Promise<string | null> {
+  if (input.clientId) {
+    return input.clientId;
+  }
+
+  const guestName = input.guestName?.trim();
+  if (!guestName || guestName.length < 2) {
+    return null;
+  }
+
+  try {
+    const rawPhone = input.guestPhone?.trim();
+    let normalizedPhone: string | null = null;
+    let isIntl = false;
+
+    if (rawPhone && rawPhone.length > 0) {
+      let cleaned = rawPhone.replace(/[\s\-()]/g, '');
+      if (!cleaned.startsWith('+')) {
+        cleaned = /^[6-9]\d{9}$/.test(cleaned) ? '+91' + cleaned : '+' + cleaned;
+      }
+      normalizedPhone = cleaned;
+      isIntl = !/^\+91[6-9]\d{9}$/.test(cleaned);
+
+      const { data: phoneMatch } = await admin
+        .from('client_phones')
+        .select('client_id')
+        .eq('phone_e164', normalizedPhone)
+        .limit(1)
+        .maybeSingle();
+
+      if (phoneMatch?.client_id) {
+        return phoneMatch.client_id;
+      }
+    }
+
+    const rawEmail = input.guestEmail?.trim().toLowerCase();
+    if (rawEmail && rawEmail.length > 0) {
+      const { data: emailMatch } = await admin
+        .from('client_emails')
+        .select('client_id')
+        .ilike('email', rawEmail)
+        .limit(1)
+        .maybeSingle();
+
+      if (emailMatch?.client_id) {
+        return emailMatch.client_id;
+      }
+    }
+
+    // Create new client record
+    const { data: newClient, error: clientErr } = await admin
+      .from('clients')
+      .insert({
+        full_name: guestName,
+        city: input.venue || null,
+        referral_source: input.source || 'other',
+        notes: input.notes || null,
+        created_by: createdByUserId || null,
+      })
+      .select('id')
+      .single();
+
+    if (clientErr || !newClient) {
+      console.warn('[ensureClientForEnquiry] Failed to auto-create client:', clientErr?.message);
+      return null;
+    }
+
+    if (normalizedPhone) {
+      await admin.from('client_phones').insert({
+        client_id: newClient.id,
+        phone_e164: normalizedPhone,
+        is_primary: true,
+        is_international: isIntl,
+        label: 'Mobile',
+      });
+    }
+
+    if (rawEmail) {
+      await admin.from('client_emails').insert({
+        client_id: newClient.id,
+        email: rawEmail,
+        is_primary: true,
+      });
+    }
+
+    try {
+      await admin.from('activities').insert({
+        client_id: newClient.id,
+        entity_type: 'client',
+        entity_id: newClient.id,
+        action: 'client_created',
+        actor_id: createdByUserId || null,
+        metadata: { full_name: guestName, source: input.source },
+      });
+    } catch (actErr) {
+      console.warn('[ensureClientForEnquiry] Failed to log activity:', actErr);
+    }
+
+    return newClient.id;
+  } catch (err) {
+    console.warn('[ensureClientForEnquiry] Skipped client sync:', err);
+    return null;
+  }
+}
+
+/**
  * Shared enquiry insert routine used by both CRM manual creation and public website form.
  */
 export async function insertSharedEnquiry(
   input: EnquiryInput,
   createdByUserId?: string | null
-): Promise<{ id: string }> {
+): Promise<{ id: string; clientId: string | null }> {
   const admin = getAdminClient();
+  const linkedClientId = await ensureClientForEnquiry(admin, input, createdByUserId);
+
   const { data, error } = await admin
     .from('enquiries')
     .insert({
-      client_id: input.clientId || null,
+      client_id: linkedClientId || input.clientId || null,
       guest_name: input.guestName || null,
       guest_phone: input.guestPhone || null,
       guest_email: input.guestEmail || null,
@@ -50,7 +166,7 @@ export async function insertSharedEnquiry(
     throw new Error(error?.message || 'Failed to insert enquiry');
   }
 
-  return { id: data.id };
+  return { id: data.id, clientId: linkedClientId };
 }
 
 /**
@@ -158,12 +274,13 @@ export async function createEnquiryAction(rawInput: EnquiryInput): Promise<Actio
 
     const result = await insertSharedEnquiry(parsed.data, user.id);
 
-    // If client is linked, record activity
-    if (parsed.data.clientId) {
+    // If client is linked (either explicitly or auto-created), record activity
+    const effectiveClientId = result.clientId || parsed.data.clientId;
+    if (effectiveClientId) {
       try {
         const supabase = await createClient();
         await supabase.from('activities').insert({
-          client_id: parsed.data.clientId,
+          client_id: effectiveClientId,
           entity_type: 'enquiry',
           entity_id: result.id,
           action: 'enquiry_created',
@@ -176,6 +293,11 @@ export async function createEnquiryAction(rawInput: EnquiryInput): Promise<Actio
     }
 
     revalidatePath('/crm/enquiries');
+    revalidatePath('/crm/clients');
+    revalidatePath('/crm/quotations/new');
+    revalidatePath('/crm/quotations');
+    revalidatePath('/crm/bookings/new');
+    revalidatePath('/crm/invoices/new');
     revalidatePath('/crm/dashboard');
     return { data: result.id };
   } catch (err: unknown) {

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { Quotation } from '@/types/sales';
 import { formatINR } from '@/lib/money';
@@ -16,6 +16,10 @@ interface QuotationsTableProps {
 
 export function QuotationsTable({ initialQuotations }: QuotationsTableProps) {
   const [quotations, setQuotations] = useState<Quotation[]>(initialQuotations);
+
+  useEffect(() => {
+    setQuotations(initialQuotations);
+  }, [initialQuotations]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedStatus, setSelectedStatus] = useState<string>('all');
   const [isDeleting, setIsDeleting] = useState<string | null>(null);

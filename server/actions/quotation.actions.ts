@@ -299,6 +299,10 @@ export async function createQuotationAction(rawInput: QuotationInput): Promise<A
     });
 
     revalidatePath('/crm/quotations');
+    revalidatePath('/crm/dashboard');
+    revalidatePath(`/crm/clients/${input.clientId}`);
+    revalidatePath('/crm/clients');
+    revalidatePath('/crm/enquiries');
     return { data: newQid };
   } catch (err: unknown) {
     const actionError = err as { code?: string; message?: string };
@@ -415,6 +419,10 @@ export async function createQuotationVersionAction(
 
     revalidatePath(`/crm/quotations/${newQid}`);
     revalidatePath('/crm/quotations');
+    revalidatePath('/crm/dashboard');
+    revalidatePath(`/crm/clients/${input.clientId}`);
+    revalidatePath('/crm/clients');
+    revalidatePath('/crm/enquiries');
     return { data: newQid };
   } catch (err: unknown) {
     const actionError = err as { code?: string; message?: string };
@@ -477,6 +485,10 @@ export async function updateQuotationStatusAction(
 
     revalidatePath(`/crm/quotations/${id}`);
     revalidatePath('/crm/quotations');
+    revalidatePath('/crm/dashboard');
+    revalidatePath(`/crm/clients/${q.client_id}`);
+    revalidatePath('/crm/clients');
+    revalidatePath('/crm/bookings');
     return {};
   } catch (err: unknown) {
     const actionError = err as { code?: string; message?: string };
@@ -526,6 +538,8 @@ export async function deleteDraftQuotationAction(id: string): Promise<ActionResu
     }
 
     revalidatePath('/crm/quotations');
+    revalidatePath('/crm/dashboard');
+    revalidatePath('/crm/clients');
     return {};
   } catch (err: unknown) {
     const actionError = err as { code?: string; message?: string };

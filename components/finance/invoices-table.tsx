@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Invoice, InvoiceDisplayStatus } from '@/types/finance';
 import { formatINR } from '@/lib/money';
@@ -15,7 +15,11 @@ interface InvoicesTableProps {
 }
 
 export function InvoicesTable({ initialInvoices, canManage }: InvoicesTableProps) {
-  const [invoices] = useState<Invoice[]>(initialInvoices);
+  const [invoices, setInvoices] = useState<Invoice[]>(initialInvoices);
+
+  useEffect(() => {
+    setInvoices(initialInvoices);
+  }, [initialInvoices]);
   const [search, setSearch] = useState('');
   const [selectedStatus, setSelectedStatus] = useState<string>('all');
 

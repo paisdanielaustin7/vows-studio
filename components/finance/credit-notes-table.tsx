@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { CreditNote } from '@/types/finance';
 import { formatINR } from '@/lib/money';
@@ -12,7 +12,11 @@ interface CreditNotesTableProps {
 }
 
 export function CreditNotesTable({ initialCreditNotes }: CreditNotesTableProps) {
-  const [creditNotes] = useState<CreditNote[]>(initialCreditNotes);
+  const [creditNotes, setCreditNotes] = useState<CreditNote[]>(initialCreditNotes);
+
+  useEffect(() => {
+    setCreditNotes(initialCreditNotes);
+  }, [initialCreditNotes]);
   const [search, setSearch] = useState('');
 
   const filtered = creditNotes.filter((cn) => {
