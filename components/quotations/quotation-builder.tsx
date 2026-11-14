@@ -51,8 +51,10 @@ export function QuotationBuilder({
   useEffect(() => {
     if (initialClientId) {
       setClientId(initialClientId);
+    } else if (!clientId && clients.length > 0) {
+      setClientId(clients[0].id);
     }
-  }, [initialClientId]);
+  }, [initialClientId, clients, clientId]);
 
   useEffect(() => {
     if (initialEventDate) {

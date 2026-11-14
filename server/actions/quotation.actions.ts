@@ -6,6 +6,7 @@ import { quotationSchema, QuotationInput } from '@/lib/validations/sales.schema'
 import { Quotation, QuotationItem, QuotationStatus } from '@/types/sales';
 import { ActionResult } from '@/types/auth';
 import { recalculateQuotation } from '@/lib/money/quotation-calculator';
+import { formatQuotationRpcPayload } from '@/lib/quotations/quotation-payload';
 import { revalidatePath } from 'next/cache';
 
 
@@ -238,6 +239,7 @@ export async function getQuotationAction(id: string): Promise<
   }
 }
 
+
 /**
  * Creates a quotation atomically via Postgres function `public.create_quotation`.
  * Recomputes and verifies all sums against lib/money before writing.
@@ -272,10 +274,7 @@ export async function createQuotationAction(rawInput: QuotationInput): Promise<A
       };
     }
 
-    const payload = {
-      ...input,
-      ...recalculated,
-    };
+    const payload = formatQuotationRpcPayload(input, recalculated);
 
     const supabase = await createClient();
     const { data: newQid, error: rpcErr } = await supabase.rpc('create_quotation', {
@@ -391,10 +390,7 @@ export async function createQuotationVersionAction(
     const input = parsed.data;
     const recalculated = recalculateQuotation(input);
 
-    const payload = {
-      ...input,
-      ...recalculated,
-    };
+    const payload = formatQuotationRpcPayload(input, recalculated);
 
     const supabase = await createClient();
     const { data: newQid, error: rpcErr } = await supabase.rpc('create_quotation_version', {

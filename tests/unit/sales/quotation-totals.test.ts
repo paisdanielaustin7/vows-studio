@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { recalculateQuotation } from '@/lib/money/quotation-calculator';
+import { formatQuotationRpcPayload } from '@/lib/quotations/quotation-payload';
 import { QuotationInput } from '@/lib/validations/sales.schema';
 import { computeGst, apportionDiscount, applyDiscount } from '@/lib/money';
 
@@ -207,5 +208,58 @@ describe('Quotation Calculation & Deferred Sum Verification (QT-03, D-16, D-17)'
       items: [{ description: 'Item', quantity: 1, unitPricePaise: 1000000, lineTotalPaise: 1000000 }],
     };
     expect(recalculateQuotation(inputFixed).discountPaise).toBe(0);
+  });
+
+  it('correctly maps camelCase QuotationInput to both snake_case and camelCase RPC payload', () => {
+    const input: QuotationInput = {
+      clientId: '22222222-2222-2222-2222-222222222222',
+      enquiryId: '33333333-3333-3333-3333-333333333333',
+      eventDate: '2026-11-20',
+      validUntil: '2026-12-05',
+      subtotalPaise: 5000000,
+      discountType: 'fixed',
+      discountFixedPaise: 500000,
+      taxablePaise: 4500000,
+      cgstPaise: 405000,
+      sgstPaise: 405000,
+      taxPaise: 810000,
+      totalPaise: 5310000,
+      gstApplied: true,
+      taxType: 'cgst_sgst',
+      items: [
+        {
+          description: 'Photography Package',
+          quantity: 1,
+          unitPricePaise: 5000000,
+          lineTotalPaise: 5000000,
+          cgstBps: 900,
+          sgstBps: 900,
+        },
+      ],
+    };
+
+    const recalculated = recalculateQuotation(input);
+    const rpcPayload = formatQuotationRpcPayload(input, recalculated);
+
+    // Verify snake_case keys expected by Postgres
+    expect(rpcPayload.client_id).toBe('22222222-2222-2222-2222-222222222222');
+    expect(rpcPayload.enquiry_id).toBe('33333333-3333-3333-3333-333333333333');
+    expect(rpcPayload.event_date).toBe('2026-11-20');
+    expect(rpcPayload.valid_until).toBe('2026-12-05');
+    expect(rpcPayload.subtotal_paise).toBe(5000000);
+    expect(rpcPayload.discount_paise).toBe(500000);
+    expect(rpcPayload.taxable_paise).toBe(4500000);
+    expect(rpcPayload.total_paise).toBe(5310000);
+
+    // Verify line item snake_case keys
+    expect(rpcPayload.items[0].unit_price_paise).toBe(5000000);
+    expect(rpcPayload.items[0].line_total_paise).toBe(5000000);
+    expect(rpcPayload.items[0].line_taxable_paise).toBe(4500000);
+    expect(rpcPayload.items[0].cgst_paise).toBe(405000);
+    expect(rpcPayload.items[0].sgst_paise).toBe(405000);
+
+    // Verify camelCase fallback keys are also preserved
+    expect(rpcPayload.clientId).toBe('22222222-2222-2222-2222-222222222222');
+    expect(rpcPayload.totalPaise).toBe(5310000);
   });
 });
