@@ -24,6 +24,16 @@ describe('Gmail OAuth Flow & State Validation (D-03 / D-27)', () => {
   it('computes correct redirect URI based on app environment', () => {
     const redirect = getRedirectUri();
     expect(redirect).toMatch(/\/api\/auth\/gmail\/callback$/);
+
+    const customRedirect = getRedirectUri('https://vows-studio-one.vercel.app');
+    expect(customRedirect).toBe('https://vows-studio-one.vercel.app/api/auth/gmail/callback');
+  });
+
+  it('constructs auth URL with dynamic customBase', () => {
+    const state = 'custom-base-nonce-999';
+    const authUrl = buildAuthUrl(state, 'https://vows-studio-one.vercel.app');
+    const url = new URL(authUrl);
+    expect(url.searchParams.get('redirect_uri')).toBe('https://vows-studio-one.vercel.app/api/auth/gmail/callback');
   });
 
   it('validates state parameter against CSRF attacks in callback logic', () => {

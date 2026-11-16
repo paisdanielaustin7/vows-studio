@@ -10,7 +10,11 @@ export async function GET(request: NextRequest) {
   const state = url.searchParams.get('state');
   const error = url.searchParams.get('error');
 
-  const settingsUrl = new URL('/crm/settings', request.url);
+  const host = request.headers.get('x-forwarded-host') || request.nextUrl.host;
+  const proto = request.headers.get('x-forwarded-proto') || (host.startsWith('localhost') ? 'http' : 'https');
+  const appBaseUrl = process.env.NEXT_PUBLIC_APP_URL || `${proto}://${host}`;
+
+  const settingsUrl = new URL('/crm/settings/gmail', appBaseUrl);
 
   if (error) {
     settingsUrl.searchParams.set('error', `google_oauth_${error}`);
@@ -38,7 +42,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.redirect(settingsUrl);
     }
 
-    const { accessToken, refreshToken, expiresIn, email } = await exchangeCodeForTokens(code);
+    const { accessToken, refreshToken, expiresIn, email } = await exchangeCodeForTokens(code, appBaseUrl);
 
     await saveGmailTokens({
       googleEmail: email,
@@ -49,7 +53,6 @@ export async function GET(request: NextRequest) {
       keyId: 'k1',
     });
 
-    settingsUrl.searchParams.set('tab', 'email');
     settingsUrl.searchParams.set('gmail_connected', 'true');
 
     const res = NextResponse.redirect(settingsUrl);

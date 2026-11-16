@@ -15,17 +15,17 @@ export const GMAIL_SCOPES = [
   'https://www.googleapis.com/auth/userinfo.email',
 ];
 
-export function getRedirectUri(): string {
-  const base = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+export function getRedirectUri(customBase?: string): string {
+  const base = process.env.NEXT_PUBLIC_APP_URL || customBase || 'http://localhost:3000';
   return `${base.replace(/\/$/, '')}/api/auth/gmail/callback`;
 }
 
 /**
  * Builds the Google OAuth authorization URL.
  */
-export function buildAuthUrl(state: string): string {
+export function buildAuthUrl(state: string, customBase?: string): string {
   const clientId = process.env.GOOGLE_CLIENT_ID || 'mock-client-id';
-  const redirectUri = getRedirectUri();
+  const redirectUri = getRedirectUri(customBase);
 
   const params = new URLSearchParams({
     client_id: clientId,
@@ -43,7 +43,7 @@ export function buildAuthUrl(state: string): string {
 /**
  * Exchanges authorization code for tokens.
  */
-export async function exchangeCodeForTokens(code: string): Promise<{
+export async function exchangeCodeForTokens(code: string, customBase?: string): Promise<{
   accessToken: string;
   refreshToken: string;
   expiresIn: number;
@@ -51,7 +51,7 @@ export async function exchangeCodeForTokens(code: string): Promise<{
 }> {
   const clientId = process.env.GOOGLE_CLIENT_ID || '';
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET || '';
-  const redirectUri = getRedirectUri();
+  const redirectUri = getRedirectUri(customBase);
 
   const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
     method: 'POST',
