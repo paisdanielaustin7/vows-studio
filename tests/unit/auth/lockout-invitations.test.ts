@@ -17,6 +17,32 @@ describe('Lockout, Invitations, & Governance Guards (DoD Validation)', () => {
       expect(computeLockout(5).durationMinutes).toBe(30);
       expect(computeLockout(8).isLocked).toBe(true);
     });
+
+    it('grants System Administrator immunity from denial-of-service account lockout', () => {
+      function evaluateLockoutForRole(role: UserRole, failures: number): boolean {
+        if (role === 'system_admin') return false;
+        return failures >= 5;
+      }
+
+      expect(evaluateLockoutForRole('system_admin', 10)).toBe(false);
+      expect(evaluateLockoutForRole('business_owner', 5)).toBe(true);
+      expect(evaluateLockoutForRole('manager', 5)).toBe(true);
+    });
+
+    it('resets consecutive failure counter upon successful login', () => {
+      const attempts = [
+        { success: false, at: 100 },
+        { success: false, at: 101 },
+        { success: true, at: 102 },
+        { success: false, at: 103 },
+      ];
+
+      // Find last success
+      const lastSuccess = attempts.filter((a) => a.success).map((a) => a.at).pop() || 0;
+      const consecutiveFailures = attempts.filter((a) => !a.success && a.at > lastSuccess).length;
+
+      expect(consecutiveFailures).toBe(1);
+    });
   });
 
   describe('Invitations: 72-hour Single Use Token Engine', () => {

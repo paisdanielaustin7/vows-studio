@@ -2,7 +2,7 @@
 
 import { getAdminClient } from '@/lib/supabase/admin';
 import { createClient } from '@/lib/supabase/server';
-import { getAuthenticatedUser, requirePermission, revokeUserSessions } from '@/lib/auth';
+import { getAuthenticatedUser, requirePermission, revokeUserSessions, recordAuthAttempt } from '@/lib/auth';
 import { UserRole } from '@/lib/constants/permissions';
 import { ActionResult, UserProfile, Invitation } from '@/types/auth';
 import { changePasswordSchema, ChangePasswordInput } from '@/lib/validations/auth.schema';
@@ -432,9 +432,9 @@ export async function changePasswordAction(
 
   const supabase = await createClient();
 
-  // Verify current password by signing in
+  // Verify current password by signing in with normalized email
   const { error: verifyError } = await supabase.auth.signInWithPassword({
-    email: user.email,
+    email: user.email.trim().toLowerCase(),
     password: parsed.data.currentPassword,
   });
 
@@ -447,8 +447,9 @@ export async function changePasswordAction(
     };
   }
 
-  // Update password
-  const { error: updateError } = await supabase.auth.updateUser({
+  // Update password authoritatively via Admin API directly in auth.users
+  const admin = getAdminClient();
+  const { error: updateError } = await admin.auth.admin.updateUserById(user.id, {
     password: parsed.data.newPassword,
   });
 
@@ -461,10 +462,12 @@ export async function changePasswordAction(
     };
   }
 
+  // Clear any failed attempts and reset locked_until
+  await recordAuthAttempt(user.email, null, true);
+
   // Revoke sessions and audit
   await revokeUserSessions(user.id);
 
-  const admin = getAdminClient();
   await admin.from('audit_log').insert({
     actor_user_id: user.id,
     actor_role: user.role,

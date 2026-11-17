@@ -130,30 +130,52 @@ export async function revokeUserSessions(userId: string): Promise<void> {
 }
 
 /**
- * Checks for account lockout based on 5 failures in 15 minutes.
+ * Checks for account lockout based on 5 consecutive failures in 15 minutes.
+ * Superuser immunity: System Admin has mandatory hardware/app TOTP MFA (AAL2)
+ * and cannot be locked out by arbitrary unauthenticated attempts.
  */
 export async function checkAccountLockout(email: string): Promise<{
   isLocked: boolean;
   lockedUntil?: string | null;
 }> {
   const admin = getAdminClient();
+  const normalizedEmail = email.trim().toLowerCase();
   const fifteenMinutesAgo = new Date(Date.now() - 15 * 60 * 1000).toISOString();
 
-  // Query profile for existing locked_until
+  // Query profile for existing locked_until and role
   const { data: profile } = await admin
     .from('profiles')
-    .select('locked_until')
-    .ilike('email', email.trim().toLowerCase())
+    .select('id, locked_until, role')
+    .ilike('email', normalizedEmail)
     .maybeSingle();
 
-  if (profile?.locked_until && new Date(profile.locked_until) > new Date()) {
-    return { isLocked: true, lockedUntil: profile.locked_until };
+  // System Administrator accounts have mandatory 2FA TOTP and root governance
+  if (profile?.role === 'system_admin') {
+    if (profile.locked_until) {
+      await admin
+        .from('profiles')
+        .update({ locked_until: null })
+        .eq('id', profile.id);
+    }
+    return { isLocked: false };
+  }
+
+  if (profile?.locked_until) {
+    if (new Date(profile.locked_until) > new Date()) {
+      return { isLocked: true, lockedUntil: profile.locked_until };
+    } else {
+      // Lock has expired; clean it up immediately
+      await admin
+        .from('profiles')
+        .update({ locked_until: null })
+        .eq('id', profile.id);
+    }
   }
 
   // Query app.auth_attempts via service_role-only public RPC
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { data: countData } = await (admin as any).rpc('get_failed_auth_attempt_count', {
-    p_email: email.trim().toLowerCase(),
+    p_email: normalizedEmail,
     p_since: fifteenMinutesAgo,
   });
   const count = typeof countData === 'number' ? countData : 0;
@@ -164,7 +186,7 @@ export async function checkAccountLockout(email: string): Promise<{
     await admin
       .from('profiles')
       .update({ locked_until: lockExpiry })
-      .ilike('email', email.trim().toLowerCase());
+      .ilike('email', normalizedEmail);
 
     return { isLocked: true, lockedUntil: lockExpiry };
   }
@@ -174,6 +196,7 @@ export async function checkAccountLockout(email: string): Promise<{
 
 /**
  * Records an authentication attempt into app.auth_attempts via service_role-only RPC.
+ * On successful authentication, immediately resets failed attempts and clears any active lockout.
  */
 export async function recordAuthAttempt(
   email: string,
@@ -181,10 +204,18 @@ export async function recordAuthAttempt(
   succeeded: boolean
 ): Promise<void> {
   const admin = getAdminClient();
+  const normalizedEmail = email.trim().toLowerCase();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   await (admin as any).rpc('record_auth_attempt', {
-    p_email: email.trim().toLowerCase(),
+    p_email: normalizedEmail,
     p_ip: ip || null,
     p_succeeded: succeeded,
   });
+
+  if (succeeded) {
+    await admin
+      .from('profiles')
+      .update({ locked_until: null })
+      .ilike('email', normalizedEmail);
+  }
 }

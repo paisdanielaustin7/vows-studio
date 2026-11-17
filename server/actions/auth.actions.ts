@@ -2,6 +2,7 @@
 
 import { createClient } from '@/lib/supabase/server';
 import { getAdminClient } from '@/lib/supabase/admin';
+import { headers } from 'next/headers';
 import {
   getAuthenticatedUser,
   requirePermission,
@@ -28,6 +29,26 @@ import {
 import { ActionResult } from '@/types/auth';
 import { UserRole } from '@/lib/constants/permissions';
 
+async function resolveClientIp(explicitIp?: string): Promise<string> {
+  if (explicitIp && explicitIp !== '127.0.0.1') {
+    return explicitIp;
+  }
+  try {
+    const h = await headers();
+    const forwarded = h.get('x-forwarded-for');
+    if (forwarded) {
+      return forwarded.split(',')[0].trim();
+    }
+    const realIp = h.get('x-real-ip');
+    if (realIp) {
+      return realIp.trim();
+    }
+  } catch {
+    // In test or non-request contexts
+  }
+  return explicitIp || '127.0.0.1';
+}
+
 function getRoleLandingPage(role: UserRole): string {
   switch (role) {
     case 'system_admin':
@@ -50,7 +71,7 @@ function getRoleLandingPage(role: UserRole): string {
  */
 export async function loginAction(
   input: LoginInput,
-  clientIp = '127.0.0.1'
+  clientIp?: string
 ): Promise<ActionResult<{ redirectTo: string; needsMfa: boolean }>> {
   const parsed = loginSchema.safeParse(input);
   if (!parsed.success) {
@@ -64,51 +85,56 @@ export async function loginAction(
   }
 
   const { email, password } = parsed.data;
+  const normalizedEmail = email.trim().toLowerCase();
+  const ip = await resolveClientIp(clientIp);
 
   // Rate limiting: 10 per 15 min per IP
-  const rateLimit = await checkRateLimit('login', clientIp);
+  const rateLimit = await checkRateLimit('login', ip);
   if (!rateLimit.success) {
     return {
       error: {
         code: 'RATE_LIMITED',
-        message: 'Too many login attempts. Please try again in 15 minutes.',
+        message: 'Too many login attempts from this network. Please try again in 15 minutes.',
       },
     };
   }
 
   // Check lockout
-  const lockout = await checkAccountLockout(email);
+  const lockout = await checkAccountLockout(normalizedEmail);
   if (lockout.isLocked) {
+    const remainingMin = lockout.lockedUntil
+      ? Math.max(1, Math.ceil((new Date(lockout.lockedUntil).getTime() - Date.now()) / 60000))
+      : 30;
     return {
       error: {
         code: 'UNAUTHORIZED',
-        message: 'Account is temporarily locked due to excessive failed attempts. Please try again later or contact an administrator.',
+        message: `Account is temporarily locked due to excessive failed attempts. Please try again in ${remainingMin} minutes or reset your password.`,
       },
     };
   }
 
   const supabase = await createClient();
   const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-    email,
+    email: normalizedEmail,
     password,
   });
 
   if (authError || !authData.user) {
-    await recordAuthAttempt(email, clientIp, false);
+    await recordAuthAttempt(normalizedEmail, ip, false);
 
     // Audit failed login
     const admin = getAdminClient();
     await admin.from('audit_log').insert({
       action: 'login_failure',
       table_name: 'auth',
-      ip_address: clientIp,
-      metadata: { email, reason: authError?.message || 'Invalid credentials' },
+      ip_address: ip,
+      metadata: { email: normalizedEmail, reason: authError?.message || 'Invalid credentials' },
     });
 
     return {
       error: {
         code: 'UNAUTHORIZED',
-        message: 'Invalid email or password.',
+        message: 'Invalid email or password. Please verify your credentials and try again.',
       },
     };
   }
@@ -131,7 +157,7 @@ export async function loginAction(
     };
   }
 
-  await recordAuthAttempt(email, clientIp, true);
+  await recordAuthAttempt(normalizedEmail, ip, true);
 
   // Audit successful login
   await admin.from('audit_log').insert({
@@ -140,7 +166,7 @@ export async function loginAction(
     action: 'login_success',
     table_name: 'auth',
     record_id: authData.user.id,
-    ip_address: clientIp,
+    ip_address: ip,
   });
 
   const role = profile.role as UserRole;
@@ -177,7 +203,7 @@ export async function logoutAction(): Promise<ActionResult<{ redirectTo: string 
  */
 export async function forgotPasswordAction(
   input: ForgotPasswordInput,
-  clientIp = '127.0.0.1'
+  clientIp?: string
 ): Promise<ActionResult<{ message: string; manualLink?: string }>> {
   const parsed = forgotPasswordSchema.safeParse(input);
   if (!parsed.success) {
@@ -189,10 +215,11 @@ export async function forgotPasswordAction(
     };
   }
 
-  const { email } = parsed.data;
+  const normalizedEmail = parsed.data.email.trim().toLowerCase();
+  const ip = await resolveClientIp(clientIp);
 
   // Rate limit: 5 per hour per IP/email
-  const rateLimit = await checkRateLimit('password_reset', `${clientIp}:${email}`);
+  const rateLimit = await checkRateLimit('password_reset', `${ip}:${normalizedEmail}`);
   if (!rateLimit.success) {
     return {
       error: {
@@ -206,7 +233,7 @@ export async function forgotPasswordAction(
   const { data: profile } = await admin
     .from('profiles')
     .select('id, email, is_active')
-    .ilike('email', email)
+    .ilike('email', normalizedEmail)
     .maybeSingle();
 
   if (profile && profile.is_active) {
@@ -219,7 +246,7 @@ export async function forgotPasswordAction(
       actor_user_id: profile.id,
       action: 'password_reset',
       table_name: 'auth',
-      ip_address: clientIp,
+      ip_address: ip,
       metadata: { reason: 'Password recovery requested' },
     });
 
@@ -246,11 +273,11 @@ export async function forgotPasswordAction(
 
           await sendEmailService(
             {
-              to: email,
+              to: normalizedEmail,
               subject: 'VOWS Studio — Password Reset Link',
               htmlBody,
               documentType: 'password_reset',
-              idempotencyKey: `pwd-reset-${Date.now()}-${email}`,
+              idempotencyKey: `pwd-reset-${Date.now()}-${normalizedEmail}`,
             },
             '00000000-0000-0000-0000-000000000000'
           );
@@ -308,7 +335,9 @@ export async function resetPasswordAction(
     };
   }
 
-  const { error: updateError } = await supabase.auth.updateUser({
+  // Authoritative password update directly in Supabase Auth auth.users via admin client
+  const admin = getAdminClient();
+  const { error: updateError } = await admin.auth.admin.updateUserById(user.id, {
     password: parsed.data.password,
   });
 
@@ -321,10 +350,14 @@ export async function resetPasswordAction(
     };
   }
 
+  // Clear any failed attempts and lockout upon successful password reset
+  if (user.email) {
+    await recordAuthAttempt(user.email, null, true);
+  }
+
   // Revoke all existing sessions globally
   await revokeUserSessions(user.id);
 
-  const admin = getAdminClient();
   await admin.from('audit_log').insert({
     actor_user_id: user.id,
     action: 'password_reset',
@@ -579,9 +612,11 @@ export async function acceptInvitationAction(
     };
   }
 
-  // Create auth user via admin API
+  const normalizedEmail = invitation.email.trim().toLowerCase();
+
+  // Create auth user via admin API with normalized email
   const { data: authUser, error: authError } = await admin.auth.admin.createUser({
-    email: invitation.email,
+    email: normalizedEmail,
     password,
     email_confirm: true,
     user_metadata: { full_name: fullName },
@@ -599,7 +634,7 @@ export async function acceptInvitationAction(
   // Insert profile record
   const { error: profileError } = await admin.from('profiles').insert({
     id: authUser.user.id,
-    email: invitation.email,
+    email: normalizedEmail,
     full_name: fullName,
     role: invitation.role,
     is_active: true,
@@ -624,7 +659,7 @@ export async function acceptInvitationAction(
   // Sign in newly created user
   const supabase = await createClient();
   await supabase.auth.signInWithPassword({
-    email: invitation.email,
+    email: normalizedEmail,
     password,
   });
 
