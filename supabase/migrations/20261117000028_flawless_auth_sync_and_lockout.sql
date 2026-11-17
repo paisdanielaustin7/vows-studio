@@ -1,10 +1,14 @@
 -- Migration 028: Flawless auth attempt tracking, reset on success, and System Admin lockout immunity
 
--- 1. Update public.record_auth_attempt to clean up failed attempts and unlock profile on successful login
+-- 1. Drop existing function to avoid parameter default mismatch (PostgreSQL error 42P13)
+DROP FUNCTION IF EXISTS public.record_auth_attempt(text, text, boolean);
+DROP FUNCTION IF EXISTS public.get_failed_auth_attempt_count(text, timestamptz);
+
+-- 2. Update public.record_auth_attempt with defaults, cleanup on success, and instant profile unlock
 CREATE OR REPLACE FUNCTION public.record_auth_attempt(
   p_email text,
-  p_ip text,
-  p_succeeded boolean
+  p_ip text DEFAULT NULL,
+  p_succeeded boolean DEFAULT false
 )
 RETURNS void
 LANGUAGE plpgsql
@@ -12,7 +16,7 @@ SECURITY DEFINER
 SET search_path = public, app
 AS $$
 DECLARE
-  v_ip inet;
+  v_ip inet := NULL;
   v_norm_email text;
 BEGIN
   IF (auth.jwt() ->> 'role') IS DISTINCT FROM 'service_role' THEN
@@ -21,11 +25,13 @@ BEGIN
 
   v_norm_email := lower(trim(p_email));
 
-  BEGIN
-    v_ip := p_ip::inet;
-  EXCEPTION WHEN OTHERS THEN
-    v_ip := NULL;
-  END;
+  IF p_ip IS NOT NULL AND trim(p_ip) <> '' THEN
+    BEGIN
+      v_ip := trim(p_ip)::inet;
+    EXCEPTION WHEN OTHERS THEN
+      v_ip := NULL;
+    END;
+  END IF;
 
   -- On successful authentication:
   -- 1) Delete prior failed attempts for this email (resets consecutive failure counter)
@@ -47,7 +53,7 @@ BEGIN
 END;
 $$;
 
--- 2. Update public.get_failed_auth_attempt_count to only count consecutive failures SINCE the last successful login
+-- 3. Update public.get_failed_auth_attempt_count to only count consecutive failures SINCE the last successful login
 CREATE OR REPLACE FUNCTION public.get_failed_auth_attempt_count(
   p_email text,
   p_since timestamptz
@@ -88,13 +94,13 @@ BEGIN
 END;
 $$;
 
--- 3. Grants
+-- 4. Secure Grants (service_role only)
 REVOKE ALL ON FUNCTION public.record_auth_attempt(text, text, boolean) FROM PUBLIC, anon, authenticated;
 GRANT EXECUTE ON FUNCTION public.record_auth_attempt(text, text, boolean) TO service_role;
 
 REVOKE ALL ON FUNCTION public.get_failed_auth_attempt_count(text, timestamptz) FROM PUBLIC, anon, authenticated;
 GRANT EXECUTE ON FUNCTION public.get_failed_auth_attempt_count(text, timestamptz) TO service_role;
 
--- 4. Immediately clear all active lockouts across all profiles and flush stale failed attempts
+-- 5. Immediately clear all active lockouts across all profiles and flush stale failed attempts
 UPDATE public.profiles SET locked_until = NULL WHERE locked_until IS NOT NULL;
 DELETE FROM app.auth_attempts WHERE succeeded = false;
