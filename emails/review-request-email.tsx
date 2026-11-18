@@ -19,7 +19,7 @@ interface ReviewRequestEmailProps {
 export function ReviewRequestEmail({
   clientName,
   reviewUrl,
-  studioName = 'VOWS Studio',
+  studioName = 'VOWS',
 }: ReviewRequestEmailProps) {
   return (
     <Html>

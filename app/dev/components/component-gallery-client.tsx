@@ -70,7 +70,7 @@ export function ComponentGalleryClient() {
           <div>
             <h1 className="text-3xl font-bold tracking-tight">Design System & Component Gallery</h1>
             <p className="text-sm opacity-70 mt-1">
-              Internal development reference for VOWS Studio "Serene Editorial" UI tokens & base components.
+              Internal development reference for VOWS "Serene Editorial" UI tokens & base components.
             </p>
           </div>
           <Button variant="outline" onClick={() => setIsDark(!isDark)}>

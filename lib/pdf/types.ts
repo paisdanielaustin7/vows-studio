@@ -1,5 +1,6 @@
 export interface BusinessProfilePdf {
   businessName: string;
+  logoUrl?: string | null;
   legalName?: string;
   gstin?: string | null;
   pan?: string | null;

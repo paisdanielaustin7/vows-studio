@@ -6,7 +6,7 @@ import { ShieldCheck, Lock, EyeOff } from 'lucide-react';
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getPublicPageSeo(
     '/privacy',
-    'Privacy Policy & DPDP Compliance — VOWS Studio',
+    'Privacy Policy & DPDP Compliance — VOWS',
     'Our strict commitments to client confidentiality, image publishing consent governance, and DPDP data security.'
   );
 
@@ -20,7 +20,7 @@ export default async function PrivacyPage() {
   const privacyData = await getPublicSiteContent('privacy_policy', {
     lastUpdated: 'November 2026',
     content:
-      'VOWS Studio operates with the highest standard of client privacy. We strictly honor client image publishing consent. No wedding images or videos are published to our portfolio without explicit, recorded consent. Personal information submitted via our enquiry portal is never sold or shared with third parties.',
+      'VOWS operates with the highest standard of client privacy. We strictly honor client image publishing consent. No wedding images or videos are published to our portfolio without explicit, recorded consent. Personal information submitted via our enquiry portal is never sold or shared with third parties.',
   });
 
   return (
@@ -37,7 +37,7 @@ export default async function PrivacyPage() {
             Privacy Policy &amp; Data Governance
           </h1>
           <p className="text-sm sm:text-base text-[var(--muted-foreground)] leading-relaxed">
-            How VOWS Studio collects, safeguards, and handles your personal information and wedding media under the Digital Personal Data Protection Act (DPDP Act, 2023).
+            How VOWS collects, safeguards, and handles your personal information and wedding media under the Digital Personal Data Protection Act (DPDP Act, 2023).
           </p>
         </div>
 

@@ -4,7 +4,7 @@ import { getLedgerReportAction } from '@/server/actions/finance.actions';
 import { LedgerView } from '@/components/finance/ledger-view';
 
 export const metadata = {
-  title: 'General Ledger & P&L | VOWS Studio CRM',
+  title: 'General Ledger & P&L | VOWS CRM',
 };
 
 export default async function LedgerPage(props: {

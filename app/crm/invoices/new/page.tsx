@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/server';
 import { InvoiceBuilder } from '@/components/finance/invoice-builder';
 
 export const metadata = {
-  title: 'New Invoice | VOWS Studio CRM',
+  title: 'New Invoice | VOWS CRM',
 };
 
 export default async function NewInvoicePage() {

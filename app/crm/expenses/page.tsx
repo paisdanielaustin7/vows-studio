@@ -5,7 +5,7 @@ import { listExpensesAction } from '@/server/actions/finance.actions';
 import { ExpensesManager } from '@/components/finance/expenses-manager';
 
 export const metadata = {
-  title: 'Expenses | VOWS Studio CRM',
+  title: 'Expenses | VOWS CRM',
 };
 
 export default async function ExpensesPage() {

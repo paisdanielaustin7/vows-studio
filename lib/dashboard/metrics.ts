@@ -1,5 +1,5 @@
 /**
- * VOWS Studio — Dashboard Metrics & Role-Based Filtering
+ * VOWS — Dashboard Metrics & Role-Based Filtering
  * Reference: RBAC R3 ruling ("Manager has no access to financial metrics/amounts"),
  * DECISION_LOG D-32, BUSINESS_WORKFLOWS §3.2
  */

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# VOWS Studio — Automated Quarterly Restore Drill Script
+# VOWS — Automated Quarterly Restore Drill Script
 # Reference: docs/RUNBOOK_RESTORE.md & SECURITY_PLAN.md §11
 # Usage:
 #   RESTORE_DB_URL="postgresql://..." BACKUP_SQL_FILE="./latest.sql" ./scripts/restore-drill.sh
@@ -11,7 +11,7 @@ if [ -z "${RESTORE_DB_URL:-}" ]; then
   exit 1
 fi
 
-echo "=== VOWS Studio Restore Drill ==="
+echo "=== VOWS Restore Drill ==="
 echo "[1/4] Applying version-controlled Supabase migrations to scratch instance..."
 npx supabase db push --db-url "$RESTORE_DB_URL"
 

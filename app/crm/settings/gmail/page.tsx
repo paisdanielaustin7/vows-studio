@@ -4,7 +4,7 @@ import { getGmailStatusAction } from '@/server/actions/gmail.actions';
 import { GmailSettingsCard } from '@/components/settings/gmail-settings-card';
 
 export const metadata = {
-  title: 'Gmail Integration | VOWS Studio CRM',
+  title: 'Gmail Integration | VOWS CRM',
 };
 
 interface SettingsGmailPageProps {

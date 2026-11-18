@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export function PublicFooter() {
   const currentYear = new Date().getFullYear();
@@ -10,13 +11,21 @@ export function PublicFooter() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 mb-16">
           {/* Col 1: Studio Monograph Brand (5 cols) */}
           <div className="lg:col-span-5 space-y-4">
-            <Link href="/" className="inline-block group">
-              <span className="font-[family-name:var(--font-cormorant)] text-2xl font-bold tracking-[0.2em] text-[var(--foreground)] uppercase leading-none block">
-                VOWS STUDIO
-              </span>
-              <span className="text-[10px] tracking-[0.25em] text-[var(--muted-foreground)] uppercase font-medium mt-1 block">
-                Wedding Cinematic &amp; Stills
-              </span>
+            <Link href="/" className="inline-block group py-1" aria-label="VOWS Home">
+              <Image
+                src="/images/logo-light.png"
+                alt="VOWS"
+                width={160}
+                height={56}
+                className="h-12 w-auto object-contain dark:hidden"
+              />
+              <Image
+                src="/images/logo-dark.png"
+                alt="VOWS"
+                width={160}
+                height={56}
+                className="h-12 w-auto object-contain hidden dark:block"
+              />
             </Link>
             <p className="text-sm text-[var(--muted-foreground)] leading-relaxed max-w-sm">
               Understated cinematic documentation and heirloom analog stills capturing sacred Christian nuptials across heritage cathedral arches, coastal solemnizations, and family gatherings.
@@ -103,7 +112,7 @@ export function PublicFooter() {
         {/* Bottom Bar: Copyright & Compliance Guarantee */}
         <div className="border-t border-[var(--border)] pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[var(--muted-foreground)]">
           <div>
-            &copy; {currentYear} VOWS Studio. All rights reserved.
+            &copy; {currentYear} VOWS. All rights reserved.
           </div>
           <div className="text-center sm:text-right">
             100% Client Consent Release Verified. Archival preservation SLA 99.98%.

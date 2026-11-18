@@ -18,7 +18,7 @@ interface LocalBusinessJsonLdProps {
 }
 
 export function LocalBusinessJsonLd({
-  studioName = 'VOWS Studio',
+  studioName = 'VOWS',
   telephone = '+919820044521',
   email = 'studio@vowsstudio.com',
   address = {

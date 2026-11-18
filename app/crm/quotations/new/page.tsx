@@ -6,7 +6,7 @@ import { getBusinessSettingsAction } from '@/server/actions/settings.actions';
 import { QuotationBuilder } from '@/components/quotations/quotation-builder';
 
 export const metadata = {
-  title: 'New Quotation | VOWS Studio CRM',
+  title: 'New Quotation | VOWS CRM',
 };
 
 interface NewQuotationPageProps {

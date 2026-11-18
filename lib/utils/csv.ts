@@ -1,5 +1,5 @@
 /**
- * VOWS Studio — CSV Sanitization and Formula Injection Guard
+ * VOWS — CSV Sanitization and Formula Injection Guard
  * Reference: SECURITY_PLAN §15 ("CSV injection export"), OWASP CSV Injection Guidelines
  * Escapes characters (=, +, -, @, \t, \r) that spreadsheet applications (Excel, Calc)
  * evaluate as formula commands.

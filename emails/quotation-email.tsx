@@ -25,7 +25,7 @@ export function QuotationEmail({
   quotationNumber,
   totalAmountFormatted,
   validUntil,
-  studioName = 'VOWS Studio',
+  studioName = 'VOWS',
   viewUrl,
   customMessage,
 }: QuotationEmailProps) {

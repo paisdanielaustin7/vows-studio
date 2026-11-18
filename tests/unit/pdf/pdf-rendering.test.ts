@@ -40,7 +40,7 @@ function extractTextFromPdfBuffer(buffer: Buffer): string {
 }
 
 const mockBusiness: BusinessProfilePdf = {
-  businessName: 'VOWS Studio',
+  businessName: 'VOWS',
   legalName: 'VOWS Photography & Cinema Private Limited',
   gstin: '29ABCDE1234F1Z5',
   pan: 'ABCDE1234F',

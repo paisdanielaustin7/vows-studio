@@ -8,7 +8,7 @@ import { Film, Compass, HeartHandshake } from 'lucide-react';
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getPublicPageSeo(
     '/about',
-    'Our Philosophy & Atelier Heritage — VOWS Studio',
+    'Our Philosophy & Atelier Heritage — VOWS',
     'Founded by Reuben Serrao. Dedicated to quiet reverence, natural light, and authentic emotional legacy in Christian wedding cinematography.'
   );
 
@@ -23,7 +23,7 @@ export default async function AboutPage() {
     founderName: 'Reuben Serrao',
     founderRole: 'Founder & Principal Cinematographer',
     heritageStory:
-      'Founded in Light House Hill, Mangalore, VOWS Studio was born from a desire to return to reverence. In an era of hurried wedding trends and loud spectacles, we stand for quiet, enduring beauty.',
+      'Founded in Light House Hill, Mangalore, VOWS was born from a desire to return to reverence. In an era of hurried wedding trends and loud spectacles, we stand for quiet, enduring beauty.',
     artisticPhilosophy:
       'We honor natural light, chemical film stock, and unchoreographed honesty. Our team documents sacred vows with the unobtrusive respect of a church guest rather than an intrusive production crew.',
     equipmentPhilosophy:

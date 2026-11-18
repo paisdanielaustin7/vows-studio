@@ -4,7 +4,7 @@ import { getQuotationAction } from '@/server/actions/quotation.actions';
 import { QuotationDetailView } from '@/components/quotations/quotation-detail-view';
 
 export const metadata = {
-  title: 'Quotation Detail | VOWS Studio CRM',
+  title: 'Quotation Detail | VOWS CRM',
 };
 
 interface QuotationDetailPageProps {

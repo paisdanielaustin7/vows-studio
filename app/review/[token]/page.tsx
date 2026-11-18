@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Lock, ArrowLeft, Mail } from 'lucide-react';
 import { getReviewRequestByTokenAction } from '@/server/actions/reviews.actions';
 import { PublicReviewForm } from '@/components/reviews/public-review-form';
@@ -13,7 +14,7 @@ interface ReviewPageProps {
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: 'Client Reflection & Review Verification — VOWS Studio',
+    title: 'Client Reflection & Review Verification — VOWS',
     description: 'Private, authenticated client portal to submit your wedding reflection and testimonial.',
     robots: {
       index: false,
@@ -85,13 +86,23 @@ export default async function ReviewSubmissionPage({ params }: ReviewPageProps) 
   return (
     <div className="min-h-screen bg-surface flex flex-col justify-between">
       <header className="w-full py-6 flex justify-center items-center border-b border-outline-variant/30 bg-surface-container-lowest/80 backdrop-blur-md">
-        <Link href="/" className="flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded bg-primary flex items-center justify-center text-on-primary font-bold text-sm">
-            V
-          </div>
-          <span className="font-semibold tracking-tight text-on-surface uppercase text-sm font-sans">
-            VOWS Studio
-          </span>
+        <Link href="/" aria-label="VOWS Home" className="transition-opacity hover:opacity-85 py-1">
+          <Image
+            src="/images/logo-light.png"
+            alt="VOWS"
+            width={140}
+            height={45}
+            className="h-8 w-auto object-contain dark:hidden"
+            priority
+          />
+          <Image
+            src="/images/logo-dark.png"
+            alt="VOWS"
+            width={140}
+            height={45}
+            className="h-8 w-auto object-contain hidden dark:block"
+            priority
+          />
         </Link>
       </header>
 
@@ -100,7 +111,7 @@ export default async function ReviewSubmissionPage({ params }: ReviewPageProps) 
       </main>
 
       <footer className="w-full py-6 text-center text-xs text-tertiary border-t border-outline-variant/20">
-        &copy; {new Date().getFullYear()} VOWS Studio. Private &amp; Confidential Verification Protocol.
+        &copy; {new Date().getFullYear()} VOWS. Private &amp; Confidential Verification Protocol.
       </footer>
     </div>
   );

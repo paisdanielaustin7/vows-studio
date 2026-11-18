@@ -1,5 +1,5 @@
 /**
- * VOWS Studio — Core Utilities & Cryptographic Helpers (lib/utils)
+ * VOWS — Core Utilities & Cryptographic Helpers (lib/utils)
  * 
  * Includes:
  * - IST date & time helpers (Asia/Kolkata)

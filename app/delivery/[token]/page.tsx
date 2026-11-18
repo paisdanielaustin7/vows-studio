@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { getPublicDeliveryAction } from '@/server/actions/delivery.actions';
 import {
   Download,
@@ -22,10 +23,10 @@ export async function generateMetadata({ params }: PublicDeliveryPageProps) {
   const { token } = await params;
   const res = await getPublicDeliveryAction(token);
   if (!res.data) {
-    return { title: 'Delivery Portal | VOWS Studio' };
+    return { title: 'Delivery Portal | VOWS' };
   }
   return {
-    title: `${res.data.clientName} — Delivery Portal | VOWS Studio`,
+    title: `${res.data.clientName} — Delivery Portal | VOWS`,
     description: `Private wedding photography and cinematography deliverables for ${res.data.clientName}.`,
   };
 }
@@ -48,7 +49,7 @@ export default async function PublicDeliveryPage({ params }: PublicDeliveryPageP
               Delivery Portal Unavailable
             </h1>
             <p className="text-xs text-[#6B6672] leading-relaxed">
-              This delivery link is invalid, expired, or has been revoked. If you believe this is an error, please reach out to the VOWS Studio team.
+              This delivery link is invalid, expired, or has been revoked. If you believe this is an error, please reach out to the VOWS team.
             </p>
           </div>
 
@@ -57,7 +58,7 @@ export default async function PublicDeliveryPage({ params }: PublicDeliveryPageP
               href="/"
               className="inline-block px-5 py-2.5 rounded-lg bg-[#2B2A33] text-white text-xs font-semibold hover:bg-[#1E1B22] transition-colors"
             >
-              Return to VOWS Studio
+              Return to VOWS
             </Link>
           </div>
         </div>
@@ -82,15 +83,19 @@ export default async function PublicDeliveryPage({ params }: PublicDeliveryPageP
       <div className="w-full max-w-5xl mx-auto px-6 py-12 space-y-12">
         {/* Top Identity Ribbon */}
         <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-8 border-b border-[#E4DED5]">
-          <div className="flex items-center space-x-3">
-            <div className="w-9 h-9 rounded-full bg-[#2B2A33] text-white flex items-center justify-center font-serif font-bold text-lg shadow-sm">
-              V
-            </div>
-            <div>
-              <span className="text-[10px] tracking-widest uppercase font-semibold text-[#6B6672] block">
-                VOWS STUDIO
-              </span>
-              <span className="text-xs font-medium text-[#1E1B22]">Client Delivery Portal</span>
+          <div className="flex items-center space-x-4">
+            <Link href="/" aria-label="VOWS Home" className="transition-opacity hover:opacity-85 py-1">
+              <Image
+                src="/images/logo-light.png"
+                alt="VOWS"
+                width={130}
+                height={42}
+                className="h-8 w-auto object-contain"
+                priority
+              />
+            </Link>
+            <div className="border-l border-[#E4DED5] pl-4">
+              <span className="text-xs font-medium text-[#1E1B22] block">Client Delivery Portal</span>
             </div>
           </div>
 
@@ -245,7 +250,7 @@ export default async function PublicDeliveryPage({ params }: PublicDeliveryPageP
 
         {/* Footer */}
         <footer className="pt-8 border-t border-[#E4DED5] flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs text-[#6B6672]">
-          <p>© {new Date().getFullYear()} VOWS Studio. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} VOWS. All rights reserved.</p>
           <p className="italic">Crafted with passion in Goa & Karnataka, India.</p>
         </footer>
       </div>

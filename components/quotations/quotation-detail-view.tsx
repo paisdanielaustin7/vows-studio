@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Quotation, QuotationItem, QuotationStatus } from '@/types/sales';
 import { formatINR } from '@/lib/money';
@@ -224,7 +225,7 @@ export function QuotationDetailView({
         documentId={quotation.id}
         documentNumber={quotation.quotationNumber}
         defaultRecipientEmail=""
-        defaultSubject={`Quotation ${quotation.quotationNumber} from VOWS Studio`}
+        defaultSubject={`Quotation ${quotation.quotationNumber} from VOWS`}
         pdfDownloadUrl={`/api/pdf/quotation/${quotation.id}`}
       />
 
@@ -239,6 +240,41 @@ export function QuotationDetailView({
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Left Column (Canvas) */}
         <div className="lg:col-span-8 space-y-6">
+          {/* Document Atelier Header with Logo */}
+          <div className="bg-surface-container-lowest rounded-xl p-6 shadow-sm border border-outline-variant/40 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <div className="py-1">
+                <Image
+                  src="/images/logo-light.png"
+                  alt="VOWS"
+                  width={150}
+                  height={50}
+                  className="h-9 w-auto object-contain dark:hidden"
+                  priority
+                />
+                <Image
+                  src="/images/logo-dark.png"
+                  alt="VOWS"
+                  width={150}
+                  height={50}
+                  className="h-9 w-auto object-contain hidden dark:block"
+                  priority
+                />
+              </div>
+              <p className="text-xs uppercase tracking-widest text-outline mt-1 font-medium">
+                Wedding Cinematic &amp; Stills
+              </p>
+            </div>
+            <div className="sm:text-right">
+              <span className="text-xs uppercase tracking-wider text-outline block font-medium">
+                Official Quotation
+              </span>
+              <span className="font-mono text-lg font-bold text-on-surface">
+                {quotation.quotationNumber}
+              </span>
+            </div>
+          </div>
+
           {/* Metadata Card */}
           <div className="bg-surface-container-lowest rounded-xl p-6 shadow-sm border border-outline-variant/40">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

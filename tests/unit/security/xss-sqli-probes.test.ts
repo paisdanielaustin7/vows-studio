@@ -87,7 +87,7 @@ describe('Security Audit — XSS & SQLi Probes across Input Schemas (SECURITY_PL
       communicationRating: 5,
       qualityRating: 5,
       punctualityRating: 5,
-      body: "VOWS Studio's work was breathtaking! We couldn't have asked for better cinematography. <3",
+      body: "VOWS' work was breathtaking! We couldn't have asked for better cinematography. <3",
       reviewerName: "Sneha & Rohan",
       showcaseConsent: true,
     });

@@ -3,7 +3,7 @@ import { listQuotationsAction } from '@/server/actions/quotation.actions';
 import { QuotationsTable } from '@/components/quotations/quotations-table';
 
 export const metadata = {
-  title: 'Quotations | VOWS Studio CRM',
+  title: 'Quotations | VOWS CRM',
 };
 
 export default async function QuotationsPage() {

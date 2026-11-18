@@ -26,7 +26,7 @@ export function InvoiceEmail({
   totalAmountFormatted,
   balanceDueFormatted,
   dueDate,
-  studioName = 'VOWS Studio',
+  studioName = 'VOWS',
   viewUrl,
 }: InvoiceEmailProps) {
   return (

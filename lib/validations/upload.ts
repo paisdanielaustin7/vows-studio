@@ -1,5 +1,5 @@
 /**
- * VOWS Studio — File Upload Safety & Anti-Abuse Validator
+ * VOWS — File Upload Safety & Anti-Abuse Validator
  * Reference: SECURITY_PLAN §8 ("Storage security"), §15 ("Upload abuse")
  */
 

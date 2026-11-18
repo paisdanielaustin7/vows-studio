@@ -104,7 +104,7 @@ export function StudioProfileForm({
               value={formData.tagline}
               onChange={(e) => setFormData({ ...formData, tagline: e.target.value })}
               disabled={!canEdit || saving}
-              placeholder="Cinema & Stills"
+              placeholder="Wedding Cinematic & Stills"
             />
           </div>
 
@@ -267,7 +267,7 @@ export function StudioProfileForm({
               value={formData.emailSignature}
               onChange={(e) => setFormData({ ...formData, emailSignature: e.target.value })}
               disabled={!canEdit || saving}
-              placeholder="Warm regards,&#10;VOWS Studio Team"
+              placeholder="Warm regards,&#10;Reuben &amp; the VOWS Team"
             />
           </div>
         </div>

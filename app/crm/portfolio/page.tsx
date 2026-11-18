@@ -6,7 +6,7 @@ import { listPortfolioItemsAction } from '@/server/actions/portfolio.actions';
 import { PortfolioClient } from './portfolio-client';
 
 export const metadata: Metadata = {
-  title: 'Portfolio & Showcase Manager — VOWS Studio CRM',
+  title: 'Portfolio & Showcase Manager — VOWS CRM',
 };
 
 export default async function CrmPortfolioPage() {

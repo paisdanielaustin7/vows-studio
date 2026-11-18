@@ -480,7 +480,7 @@ function getFallbackFaqItems(): FaqItem[] {
       id: 'faq-05',
       question: 'Can we include 35mm chemical film coverage?',
       answer:
-        'Yes, authentic 35mm analog film and 120 medium format coverage are signature elements of VOWS Studio, processed in dedicated archival labs.',
+        'Yes, authentic 35mm analog film and 120 medium format coverage are signature elements of VOWS, processed in dedicated archival labs.',
       sort: 5,
       isPublished: true,
       createdAt: new Date().toISOString(),

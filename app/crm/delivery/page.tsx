@@ -14,7 +14,7 @@ import {
 import { DELIVERY_STAGE_CONFIG, DeliveryStageCode } from '@/types/delivery';
 
 export const metadata = {
-  title: 'Delivery Pipelines | VOWS Studio CRM',
+  title: 'Delivery Pipelines | VOWS CRM',
 };
 
 export default async function DeliveryPipelinesPage() {

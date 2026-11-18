@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import React from 'react';
+import path from 'node:path';
+import fs from 'node:fs';
 import { getAuthenticatedUser, requirePermission } from '@/lib/auth';
 import { createClient } from '@/lib/supabase/server';
 import { checkRateLimit } from '@/lib/ratelimit';
@@ -50,8 +52,12 @@ export async function GET(
       .limit(1)
       .maybeSingle();
 
+    const logoFile = path.join(process.cwd(), 'public/images/logo-light.png');
+    const logoUrl = fs.existsSync(logoFile) ? logoFile : undefined;
+
     const business: BusinessProfilePdf = {
-      businessName: businessSettings?.studio_name || 'VOWS Studio',
+      businessName: businessSettings?.studio_name || 'VOWS',
+      logoUrl,
       legalName: businessSettings?.studio_name || 'VOWS Photography & Cinema Private Limited',
       gstin: businessSettings?.gstin || null,
       pan: businessSettings?.pan || null,

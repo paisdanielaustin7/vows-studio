@@ -165,18 +165,18 @@ export async function generateReviewRequestAction(
           .eq('code', 'review_request')
           .maybeSingle();
 
-        let subject = template?.subject || 'Reflection & Testimonial Request — VOWS Studio';
+        let subject = template?.subject || 'Reflection & Testimonial Request — VOWS';
         let bodyHtml = template?.body_html || `
           <div style="font-family: serif; color: #171d19; max-width: 600px; margin: 0 auto; line-height: 1.6;">
             <p>Dear {{client_name}},</p>
-            <p>Thank you for entrusting VOWS Studio with documenting your celebration. As your cinematic film and archival still collection enter completion, we would be deeply honored by your personal reflections on our atelier's work.</p>
+            <p>Thank you for entrusting VOWS with documenting your celebration. As your cinematic film and archival still collection enter completion, we would be deeply honored by your personal reflections on our atelier's work.</p>
             <p style="margin: 28px 0;">
               <a href="{{review_link}}" style="background-color: #4c6452; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 4px; font-weight: 500; display: inline-block;">
                 Submit Your Official Reflection
               </a>
             </p>
             <p style="font-size: 13px; color: #737972;">This private access link will remain active for 30 days: <br><a href="{{review_link}}" style="color: #4c6452;">{{review_link}}</a></p>
-            <p style="margin-top: 32px; font-size: 14px; color: #5a605b;">With profound gratitude,<br><strong>VOWS Studio Atelier</strong></p>
+            <p style="margin-top: 32px; font-size: 14px; color: #5a605b;">With profound gratitude,<br><strong>Reuben &amp; the VOWS Atelier</strong></p>
           </div>
         `;
 

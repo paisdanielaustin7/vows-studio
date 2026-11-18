@@ -78,7 +78,7 @@ export function QuotationBuilder({
   const [discountFixedRupees, setDiscountFixedRupees] = useState<number>(0);
 
   const [notesToClient, setNotesToClient] = useState<string>(
-    'Thank you for considering VOWS Studio to capture your celebration. We are honored to tell your story.'
+    'Thank you for considering VOWS to capture your celebration. We are honored to tell your story.'
   );
   const [internalNotes, setInternalNotes] = useState<string>('');
   const [terms, setTerms] = useState<string>(

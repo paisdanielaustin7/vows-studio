@@ -262,10 +262,10 @@ export function GmailSettingsCard({
                     >
                       Google Cloud Console <ExternalLink className="w-3 h-3 inline" />
                     </a>
-                    , create or select a project (e.g. <code>VOWS-Studio-CRM</code>), and enable the <strong>Gmail API</strong> under <strong>APIs & Services &gt; Library</strong>.
+                    , create or select a project (e.g. <code>VOWS-CRM</code>), and enable the <strong>Gmail API</strong> under <strong>APIs & Services &gt; Library</strong>.
                   </li>
                   <li>
-                    In <strong>OAuth consent screen</strong>, select <strong>External</strong>, set the App Name to <code>VOWS Studio CRM</code>, and add scopes:{' '}
+                    In <strong>OAuth consent screen</strong>, select <strong>External</strong>, set the App Name to <code>VOWS CRM</code>, and add scopes:{' '}
                     <code>gmail.send</code>, <code>openid</code>, and <code>email</code>. (Publish status: <strong>In Production</strong>).
                   </li>
                   <li>
@@ -371,7 +371,7 @@ export function GmailSettingsCard({
                 Sender Display Name
               </label>
               <Input
-                placeholder="e.g. VOWS Studio by Reuben"
+                placeholder="e.g. VOWS by Reuben"
                 value={fromName}
                 onChange={(e) => setFromName(e.target.value)}
                 disabled={!canManage}

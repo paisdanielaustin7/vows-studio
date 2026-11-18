@@ -6,7 +6,7 @@ import { listClientsAction } from '@/server/actions/client.actions';
 import { PaymentsTable } from '@/components/finance/payments-table';
 
 export const metadata = {
-  title: 'Payments & Receipts | VOWS Studio CRM',
+  title: 'Payments & Receipts | VOWS CRM',
 };
 
 export default async function PaymentsPage() {

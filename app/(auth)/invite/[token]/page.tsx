@@ -56,7 +56,7 @@ export default function AcceptInvitePage() {
       <div className="space-y-1">
         <h2 className="text-xl font-semibold text-on-surface">Accept Team Invitation</h2>
         <p className="text-sm text-on-surface-variant">
-          Complete your profile and set a password to join the VOWS Studio workspace.
+          Complete your profile and set a password to join the VOWS CRM workspace.
         </p>
       </div>
 

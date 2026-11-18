@@ -11,7 +11,7 @@ interface BookingDetailPageProps {
 
 export async function generateMetadata({ params: _params }: BookingDetailPageProps) {
   return {
-    title: `Booking Detail | VOWS Studio CRM`,
+    title: `Booking Detail | VOWS CRM`,
   };
 }
 

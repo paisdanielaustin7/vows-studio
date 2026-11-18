@@ -4,7 +4,7 @@ import { getAuthenticatedUser } from '@/lib/auth';
 import { BookingsTable } from '@/components/bookings/bookings-table';
 
 export const metadata = {
-  title: 'Bookings | VOWS Studio CRM',
+  title: 'Bookings | VOWS CRM',
 };
 
 export default async function BookingsPage() {

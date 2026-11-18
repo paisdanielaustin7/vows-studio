@@ -6,7 +6,7 @@ import { listReviewsAction } from '@/server/actions/reviews.actions';
 import { ReviewModerationView } from '@/components/reviews/review-moderation-view';
 
 export const metadata: Metadata = {
-  title: 'Client Reviews Moderation — VOWS Studio CRM',
+  title: 'Client Reviews Moderation — VOWS CRM',
   description: 'Curate verified client feedback and moderate public showcase visibility.',
 };
 

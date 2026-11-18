@@ -45,7 +45,7 @@ export default function ResetPasswordPage() {
       <div className="space-y-1">
         <h2 className="text-xl font-semibold text-on-surface">Set New Password</h2>
         <p className="text-sm text-on-surface-variant">
-          Create a secure password for your VOWS Studio account.
+          Create a secure password for your VOWS account.
         </p>
       </div>
 

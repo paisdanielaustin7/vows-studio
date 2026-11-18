@@ -1,4 +1,4 @@
-# VOWS Studio — Implementation Progress
+# VOWS — Implementation Progress
 
 > **Last Updated:** 2026-11-11  
 > **Target:** Google Antigravity with Gemini 3.8  

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { CheckCircle2, ArrowRight } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Inscription Received — VOWS Studio',
+  title: 'Inscription Received — VOWS',
   description: 'Thank you for your enquiry. We will review atelier availability and respond within 24 hours.',
 };
 

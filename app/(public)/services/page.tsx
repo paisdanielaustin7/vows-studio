@@ -8,7 +8,7 @@ import { CheckCircle2, ShieldCheck, Sparkles, Clock, Video, Camera, BookOpen } f
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getPublicPageSeo(
     '/services',
-    'Services & Investment Rate Card — VOWS Studio',
+    'Services & Investment Rate Card — VOWS',
     'Transparent wedding cinematography and heirloom photography pricing for Goa, Mangalore, and destination celebrations.'
   );
 

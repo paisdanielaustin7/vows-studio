@@ -193,7 +193,7 @@ export function PublicReviewForm({ token, details }: PublicReviewFormProps) {
               href="/"
               className="w-full sm:w-auto px-6 py-3 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface text-sm font-semibold transition-colors"
             >
-              Return to VOWS Studio
+              Return to VOWS
             </Link>
             <Link
               href="/reviews"
@@ -499,7 +499,7 @@ export function PublicReviewForm({ token, details }: PublicReviewFormProps) {
               rows={5}
               value={body}
               onChange={(e) => setBody(e.target.value)}
-              placeholder="Share your reflection on how VOWS Studio captured your sacred day (e.g. the quietness of the crew in the chapel, the emotional reaction to your film)..."
+              placeholder="Share your reflection on how VOWS captured your sacred day (e.g. the quietness of the crew in the chapel, the emotional reaction to your film)..."
               className="w-full bg-surface-container-low p-4 rounded-xl text-sm text-on-surface placeholder:text-tertiary focus:outline-none focus:ring-2 focus:ring-primary/40 border border-outline-variant/40 transition-all resize-y leading-relaxed"
             />
           </div>
@@ -517,7 +517,7 @@ export function PublicReviewForm({ token, details }: PublicReviewFormProps) {
               htmlFor="showcase-consent"
               className="text-xs sm:text-sm text-on-surface-variant leading-relaxed cursor-pointer"
             >
-              I grant VOWS Studio permission to feature this reflection and testimonial excerpt within their curated print monograph and public digital portfolio showcase.
+              I grant VOWS permission to feature this reflection and testimonial excerpt within their curated print monograph and public digital portfolio showcase.
             </label>
           </div>
         </div>

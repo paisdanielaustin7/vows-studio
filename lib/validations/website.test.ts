@@ -201,11 +201,11 @@ describe('Public Website & Portfolio Validations (Phase 7)', () => {
     it('validates SEO meta payload', () => {
       const parsed = updateSitePageSeoSchema.parse({
         pageKey: 'home',
-        metaTitle: 'VOWS Studio — Wedding Cinematic & Stills',
+        metaTitle: 'VOWS — Wedding Cinematic & Stills',
         metaDescription: 'Documentary wedding cinema and 35mm photography.',
         ogImagePath: '/og-home.jpg',
       });
-      expect(parsed.metaTitle).toBe('VOWS Studio — Wedding Cinematic & Stills');
+      expect(parsed.metaTitle).toBe('VOWS — Wedding Cinematic & Stills');
     });
 
     it('validates FAQ item payload', () => {

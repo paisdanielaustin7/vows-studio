@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
 
@@ -23,15 +24,25 @@ export function PublicHeader() {
         {/* Brand Logo */}
         <Link
           href="/"
-          className="flex flex-col group select-none transition-opacity hover:opacity-80"
-          aria-label="VOWS Studio Home"
+          className="flex items-center group select-none transition-opacity hover:opacity-85 py-1"
+          aria-label="VOWS Home"
         >
-          <span className="font-[family-name:var(--font-cormorant)] text-2xl font-bold tracking-[0.2em] text-[var(--foreground)] uppercase leading-none">
-            VOWS STUDIO
-          </span>
-          <span className="text-[10px] tracking-[0.25em] text-[var(--muted-foreground)] uppercase font-medium mt-1">
-            Wedding Cinematic &amp; Stills
-          </span>
+          <Image
+            src="/images/logo-light.png"
+            alt="VOWS"
+            width={160}
+            height={56}
+            className="h-10 sm:h-12 w-auto object-contain dark:hidden"
+            priority
+          />
+          <Image
+            src="/images/logo-dark.png"
+            alt="VOWS"
+            width={160}
+            height={56}
+            className="h-10 sm:h-12 w-auto object-contain hidden dark:block"
+            priority
+          />
         </Link>
 
         {/* Desktop Navigation */}

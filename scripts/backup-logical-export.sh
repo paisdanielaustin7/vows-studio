@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# VOWS Studio — Nightly Logical Export Script
+# VOWS — Nightly Logical Export Script
 # Reference: docs/RUNBOOK_RESTORE.md & SECURITY_PLAN.md §11
 # Usage:
 #   DATABASE_URL="postgresql://..." DR_MASTER_KEY="..." BACKUP_TARGET_S3_URI="s3://vows-studio-backups/prod" ./scripts/backup-logical-export.sh
@@ -19,7 +19,7 @@ PLAIN_FILE="$BACKUP_DIR/vows_logical_${TIMESTAMP}.sql"
 GZ_FILE="${PLAIN_FILE}.gz"
 ENC_FILE="${GZ_FILE}.enc"
 
-echo "[1/4] Exporting VOWS Studio critical schemas and tables..."
+echo "[1/4] Exporting VOWS critical schemas and tables..."
 pg_dump "$DATABASE_URL" \
   --schema=public \
   --no-owner \

@@ -56,7 +56,7 @@ describe('Reviews Validation Schemas (Phase 8)', () => {
       communicationRating: 5,
       qualityRating: 5,
       punctualityRating: 4,
-      body: 'VOWS Studio captured our Goan sunset nuptials with profound reverence and beauty.',
+      body: 'VOWS captured our Goan sunset nuptials with profound reverence and beauty.',
       reviewerName: 'Samantha & Derick D’Souza',
       showcaseConsent: true,
     };

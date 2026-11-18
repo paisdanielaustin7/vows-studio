@@ -46,7 +46,7 @@ export function WebsiteSettingsClient({
 
   // Home state
   const [homeData, setHomeData] = useState({
-    heroTitle: String(initialHome.heroTitle || 'VOWS STUDIO'),
+    heroTitle: String(initialHome.heroTitle || 'VOWS'),
     heroSubtitle: String(initialHome.heroSubtitle || 'Wedding Cinematic & Stills'),
     heroDescription: String(
       initialHome.heroDescription ||
@@ -64,7 +64,7 @@ export function WebsiteSettingsClient({
     founderRole: String(initialAbout.founderRole || 'Founder & Principal Cinematographer'),
     heritageStory: String(
       initialAbout.heritageStory ||
-        'Founded in Light House Hill, Mangalore, VOWS Studio was born from a desire to return to reverence. In an era of hurried wedding trends and loud spectacles, we stand for quiet, enduring beauty.'
+        'Founded in Light House Hill, Mangalore, VOWS was born from a desire to return to reverence. In an era of hurried wedding trends and loud spectacles, we stand for quiet, enduring beauty.'
     ),
     artisticPhilosophy: String(
       initialAbout.artisticPhilosophy ||
@@ -90,13 +90,13 @@ export function WebsiteSettingsClient({
   const [privacyContent, setPrivacyContent] = useState(
     String(
       initialPrivacy.content ||
-        'VOWS Studio operates with the highest standard of client privacy. We strictly honor client image publishing consent.'
+        'VOWS operates with the highest standard of client privacy. We strictly honor client image publishing consent.'
     )
   );
   const [termsContent, setTermsContent] = useState(
     String(
       initialTerms.content ||
-        'All engagements with VOWS Studio are subject to our formal booking agreement.'
+        'All engagements with VOWS are subject to our formal booking agreement.'
     )
   );
 

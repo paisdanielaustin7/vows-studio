@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
+import NextImage from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { UserRole } from '@/lib/constants/permissions';
 import { logoutAction } from '@/server/actions/auth.actions';
@@ -21,7 +22,7 @@ import {
   Truck,
   Sparkles,
   Package,
-  Image,
+  Image as ImageIcon,
   Receipt,
   CreditCard,
   FileCheck,
@@ -135,7 +136,7 @@ const NAV_SECTIONS: { title: string; items: NavItem[] }[] = [
       {
         label: 'Portfolio',
         href: '/crm/portfolio',
-        icon: Image,
+        icon: ImageIcon,
         roles: ['system_admin', 'business_owner', 'manager'],
       },
     ],
@@ -320,18 +321,23 @@ export function CrmShell({
         <div className="flex flex-col h-full overflow-hidden">
           {/* Logo Header */}
           <div className="h-16 px-5 border-b border-outline-variant/20 flex items-center justify-between shrink-0">
-            <Link href="/crm/dashboard" className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-primary text-on-primary flex items-center justify-center font-serif font-bold text-lg shadow-sm">
-                V
-              </div>
-              <div className="flex flex-col">
-                <span className="font-serif text-sm font-semibold tracking-wider text-on-surface uppercase">
-                  VOWS STUDIO
-                </span>
-                <span className="text-[10px] tracking-widest text-outline uppercase">
-                  Cinema &amp; Stills
-                </span>
-              </div>
+            <Link href="/crm/dashboard" className="flex items-center gap-3 transition-opacity hover:opacity-85 py-1" aria-label="VOWS Dashboard">
+              <NextImage
+                src="/images/logo-light.png"
+                alt="VOWS"
+                width={130}
+                height={45}
+                className="h-8 w-auto object-contain dark:hidden"
+                priority
+              />
+              <NextImage
+                src="/images/logo-dark.png"
+                alt="VOWS"
+                width={130}
+                height={45}
+                className="h-8 w-auto object-contain hidden dark:block"
+                priority
+              />
             </Link>
           </div>
 
@@ -407,7 +413,7 @@ export function CrmShell({
         {/* Topbar */}
         <header className="fixed top-0 left-0 md:left-64 right-0 h-16 bg-surface-container-lowest/95 backdrop-blur-md border-b border-outline-variant/40 z-30 flex items-center justify-between px-4 sm:px-6 shadow-2xs">
           <div className="flex items-center gap-2 text-xs font-medium text-outline">
-            <span className="text-on-surface-variant">VOWS Studio</span>
+            <span className="text-on-surface-variant">VOWS CRM</span>
             <span>/</span>
             <span className="text-on-surface capitalize">
               {pathname.split('/')[2] || 'Portal'}

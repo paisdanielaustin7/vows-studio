@@ -24,7 +24,7 @@ export function ReceiptEmail({
   amountReceivedFormatted,
   paymentDate,
   paymentMethod,
-  studioName = 'VOWS Studio',
+  studioName = 'VOWS',
 }: ReceiptEmailProps) {
   return (
     <Html>

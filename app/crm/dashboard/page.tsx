@@ -11,7 +11,7 @@ import { listDeliveryPipelinesAction } from '@/server/actions/delivery.actions';
 import { DashboardView } from '@/components/crm/dashboard-view';
 
 export const metadata = {
-  title: 'Dashboard | VOWS Studio CRM',
+  title: 'Dashboard | VOWS CRM',
 };
 
 export default async function DashboardPage() {

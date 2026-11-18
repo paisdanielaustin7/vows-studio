@@ -7,7 +7,7 @@ import { MapPin, Phone, Mail, Clock, Calendar, ShieldCheck } from 'lucide-react'
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getPublicPageSeo(
     '/contact',
-    'Enquire for Your Wedding Date — VOWS Studio',
+    'Enquire for Your Wedding Date — VOWS',
     'Initiate a bespoke wedding film enquiry. Limited to 18 commissions per season across Goa, Mangalore, and worldwide destinations.'
   );
 
@@ -63,7 +63,7 @@ export default function ContactPage() {
                   <span>Physical Atelier</span>
                 </div>
                 <div className="font-medium text-sm text-[var(--foreground)]">
-                  VOWS Studio Residence
+                  VOWS Atelier Residence
                 </div>
                 <div className="text-xs text-[var(--muted-foreground)] leading-relaxed">
                   Atelier 4B, Heritage Square<br />

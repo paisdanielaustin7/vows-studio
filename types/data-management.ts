@@ -1,5 +1,5 @@
 /**
- * VOWS Studio — Data Management & Setup Mode Types
+ * VOWS — Data Management & Setup Mode Types
  * Reference: DECISION_LOG D-43, DATABASE_SCHEMA §12, SECURITY_PLAN §12.5
  */
 

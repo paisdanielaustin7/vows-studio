@@ -1,4 +1,6 @@
 import * as React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
 
 export default function AuthLayout({
   children,
@@ -8,15 +10,27 @@ export default function AuthLayout({
   return (
     <div className="min-h-screen bg-surface flex flex-col justify-center items-center p-4 sm:p-6 lg:p-8">
       <div className="w-full max-w-md space-y-6">
-        <div className="text-center space-y-2">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary text-on-primary shadow-sm mb-2">
-            <span className="font-serif text-2xl font-bold tracking-widest">V</span>
-          </div>
-          <h1 className="font-serif text-3xl font-medium tracking-tight text-on-surface">
-            VOWS STUDIO
-          </h1>
-          <p className="text-xs uppercase tracking-widest text-outline">
-            Cinema &amp; Stills CRM
+        <div className="flex flex-col items-center justify-center text-center space-y-2 mb-2">
+          <Link href="/" aria-label="VOWS Home" className="transition-opacity hover:opacity-85 py-1">
+            <Image
+              src="/images/logo-light.png"
+              alt="VOWS"
+              width={180}
+              height={60}
+              className="h-12 sm:h-14 w-auto object-contain dark:hidden"
+              priority
+            />
+            <Image
+              src="/images/logo-dark.png"
+              alt="VOWS"
+              width={180}
+              height={60}
+              className="h-12 sm:h-14 w-auto object-contain hidden dark:block"
+              priority
+            />
+          </Link>
+          <p className="text-[11px] uppercase tracking-widest text-outline font-medium">
+            VOWS Portal &bull; Authorized Access
           </p>
         </div>
 
@@ -25,7 +39,7 @@ export default function AuthLayout({
         </div>
 
         <div className="text-center text-xs text-outline">
-          &copy; {new Date().getFullYear()} VOWS Studio. Authorized access only.
+          &copy; {new Date().getFullYear()} VOWS. Authorized access only.
         </div>
       </div>
     </div>

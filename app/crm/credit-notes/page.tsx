@@ -4,7 +4,7 @@ import { listCreditNotesAction } from '@/server/actions/finance.actions';
 import { CreditNotesTable } from '@/components/finance/credit-notes-table';
 
 export const metadata = {
-  title: 'Credit Notes | VOWS Studio CRM',
+  title: 'Credit Notes | VOWS CRM',
 };
 
 export default async function CreditNotesPage() {

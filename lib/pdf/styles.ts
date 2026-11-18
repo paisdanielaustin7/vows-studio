@@ -45,6 +45,12 @@ export const pdfStyles = StyleSheet.create({
     paddingBottom: 16,
     marginBottom: 20,
   },
+  brandLogo: {
+    width: 140,
+    height: 48,
+    objectFit: 'contain',
+    marginBottom: 6,
+  },
   brandTitle: {
     fontSize: 20,
     fontWeight: 'bold',

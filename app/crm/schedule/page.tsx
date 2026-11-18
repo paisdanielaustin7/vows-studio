@@ -4,7 +4,7 @@ import { listScheduleEventsAction, listCrewMembersAction } from '@/server/action
 import { ScheduleCalendar } from '@/components/schedule/schedule-calendar';
 
 export const metadata = {
-  title: 'Production Schedule & Calendar | VOWS Studio CRM',
+  title: 'Production Schedule & Calendar | VOWS CRM',
 };
 
 export default async function SchedulePage() {

@@ -4,7 +4,7 @@ import { listCrewMembersAction } from '@/server/actions/crew.actions';
 import { CrewDirectory } from '@/components/crew/crew-directory';
 
 export const metadata = {
-  title: 'Crew Directory | VOWS Studio CRM',
+  title: 'Crew Directory | VOWS CRM',
 };
 
 export default async function CrewDirectoryPage() {

@@ -1,6 +1,8 @@
 'use server';
 
 import React from 'react';
+import path from 'node:path';
+import fs from 'node:fs';
 import { revalidatePath } from 'next/cache';
 import { getAuthenticatedUser, requirePermission } from '@/lib/auth';
 import { createClient } from '@/lib/supabase/server';
@@ -105,7 +107,7 @@ export async function testSendEmailAction(toEmail: string): Promise<ActionResult
       title: 'Gmail Integration Test',
       bodyContent: `
         <p>Hello,</p>
-        <p>This is a test email sent from <strong>VOWS Studio CRM</strong> via your connected Google account.</p>
+        <p>This is a test email sent from <strong>VOWS CRM</strong> via your connected Google account.</p>
         <p>If you received this message, your Gmail OAuth integration, MIME encoding, and transmission pipeline are fully verified and operational.</p>
       `,
     });
@@ -113,7 +115,7 @@ export async function testSendEmailAction(toEmail: string): Promise<ActionResult
     const result = await sendEmailService(
       {
         to: toEmail,
-        subject: 'VOWS Studio — Gmail Integration Verified',
+        subject: 'VOWS — Gmail Integration Verified',
         htmlBody,
         idempotencyKey: `test-${Date.now()}-${user.id}`,
       },
@@ -165,8 +167,12 @@ export async function sendDocumentEmailAction(params: {
       .limit(1)
       .maybeSingle();
 
+    const logoFile = path.join(process.cwd(), 'public/images/logo-light.png');
+    const logoUrl = fs.existsSync(logoFile) ? logoFile : undefined;
+
     const business = {
-      businessName: businessSettings?.studio_name || 'VOWS Studio',
+      businessName: businessSettings?.studio_name || 'VOWS',
+      logoUrl,
       legalName: businessSettings?.studio_name || 'VOWS Photography & Cinema Private Limited',
       gstin: businessSettings?.gstin || null,
       pan: businessSettings?.pan || null,

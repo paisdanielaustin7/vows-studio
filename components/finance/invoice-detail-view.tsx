@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Invoice, InvoiceItem } from '@/types/finance';
 import { formatINR, toPaise } from '@/lib/money';
@@ -230,11 +231,26 @@ export function InvoiceDetailView({
           {/* Header Monogram & Atelier Info */}
           <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 pb-6 border-b border-outline-variant/40">
             <div>
-              <h2 className="text-2xl font-bold text-on-surface tracking-tight">
-                VOWS STUDIO
-              </h2>
-              <p className="text-xs uppercase tracking-widest text-outline mt-0.5">
-                Cinematic &amp; Stills Atelier
+              <div className="py-1">
+                <Image
+                  src="/images/logo-light.png"
+                  alt="VOWS"
+                  width={160}
+                  height={55}
+                  className="h-10 w-auto object-contain dark:hidden"
+                  priority
+                />
+                <Image
+                  src="/images/logo-dark.png"
+                  alt="VOWS"
+                  width={160}
+                  height={55}
+                  className="h-10 w-auto object-contain hidden dark:block"
+                  priority
+                />
+              </div>
+              <p className="text-xs uppercase tracking-widest text-outline mt-1 font-medium">
+                Wedding Cinematic &amp; Stills
               </p>
               <div className="text-xs text-on-surface-variant mt-2 space-y-0.5">
                 <p>Mangalore Studio, Karnataka</p>
@@ -537,7 +553,7 @@ export function InvoiceDetailView({
         documentId={invoice.id}
         documentNumber={invoice.invoiceNumber}
         defaultRecipientEmail=""
-        defaultSubject={`Tax Invoice ${invoice.invoiceNumber} from VOWS Studio`}
+        defaultSubject={`Tax Invoice ${invoice.invoiceNumber} from VOWS`}
         pdfDownloadUrl={`/api/pdf/invoice/${invoice.id}`}
       />
 

@@ -4,7 +4,7 @@ import { listClientsAction } from '@/server/actions/client.actions';
 import { BookingBuilder } from '@/components/bookings/booking-builder';
 
 export const metadata = {
-  title: 'New Booking | VOWS Studio CRM',
+  title: 'New Booking | VOWS CRM',
 };
 
 export default async function NewBookingPage() {

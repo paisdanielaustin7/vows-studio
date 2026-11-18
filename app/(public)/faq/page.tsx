@@ -7,7 +7,7 @@ import { ArrowRight } from 'lucide-react';
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getPublicPageSeo(
     '/faq',
-    'Frequently Asked Questions & Protocols — VOWS Studio',
+    'Frequently Asked Questions & Protocols — VOWS',
     'Answers regarding delivery turnaround, 35mm analog film processing, destination wedding travel, and booking retainers.'
   );
 

@@ -6,7 +6,7 @@ import { PortfolioView } from '@/components/public/portfolio-view';
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getPublicPageSeo(
     '/portfolio',
-    'Curated Wedding Portfolio & Monographs — VOWS Studio',
+    'Curated Wedding Portfolio & Monographs — VOWS',
     'Explore curated wedding monographs, chapel solemnizations, and 35mm analog stills across Goa and Mangalore.'
   );
 

@@ -1,6 +1,6 @@
-# VOWS Studio — CRM & Website
+# VOWS — CRM & Website
 
-Single-business custom CRM and public monograph website for **VOWS Studio**, a premier wedding photography and cinematics team based in Karnataka, India.
+Single-business custom CRM and public monograph website for **VOWS**, a premier wedding photography and cinematics team based in Karnataka, India.
 
 ---
 

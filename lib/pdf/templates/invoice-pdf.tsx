@@ -1,5 +1,5 @@
 import React from 'react';
-import { Document, Page, Text, View } from '@react-pdf/renderer';
+import { Document, Page, Text, View, Image } from '@react-pdf/renderer';
 import { InvoicePdfData } from '../types';
 import { pdfStyles } from '../styles';
 import { formatINR } from '@/lib/money';
@@ -43,7 +43,11 @@ export function InvoicePdf({ data }: { data: InvoicePdfData }) {
         {/* Header */}
         <View style={pdfStyles.header}>
           <View>
-            <Text style={pdfStyles.brandTitle}>{business.businessName || 'VOWS STUDIO'}</Text>
+            {business.logoUrl ? (
+              <Image src={business.logoUrl} style={pdfStyles.brandLogo} />
+            ) : (
+              <Text style={pdfStyles.brandTitle}>{business.businessName || 'VOWS'}</Text>
+            )}
             {business.legalName && (
               <Text style={pdfStyles.brandSubtitle}>{business.legalName}</Text>
             )}

@@ -5,7 +5,7 @@ import { getPublicPageSeo, getPublicSiteContent } from '@/server/queries/website
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getPublicPageSeo(
     '/terms',
-    'Terms of Service & Engagement Standards — VOWS Studio',
+    'Terms of Service & Engagement Standards — VOWS',
     'Legal terms governing photography commissions, retainer schedules, copyright, and delivery specifications.'
   );
 
@@ -19,7 +19,7 @@ export default async function TermsPage() {
   const termsData = await getPublicSiteContent('terms_of_service', {
     lastUpdated: 'November 2026',
     content:
-      'All engagements with VOWS Studio are subject to our formal booking agreement. Dates are secured exclusively upon receipt of the advance retainer and digital counter-signature. Copyright of all captured media remains with VOWS Studio, granting the client a perpetual personal reproduction and display license.',
+      'All engagements with VOWS are subject to our formal booking agreement. Dates are secured exclusively upon receipt of the advance retainer and digital counter-signature. Copyright of all captured media remains with VOWS, granting the client a perpetual personal reproduction and display license.',
   });
 
   return (

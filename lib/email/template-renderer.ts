@@ -19,7 +19,7 @@ export function substituteMergeTags(
 }
 
 /**
- * Wraps content in a standardized responsive HTML email container matching VOWS Studio branding.
+ * Wraps content in a standardized responsive HTML email container matching VOWS branding.
  */
 export function wrapInBrandedEmailLayout(params: {
   title: string;
@@ -30,7 +30,7 @@ export function wrapInBrandedEmailLayout(params: {
     url: string;
   };
 }): string {
-  const studioName = params.studioName || 'VOWS Studio';
+  const studioName = params.studioName || 'VOWS';
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -42,7 +42,7 @@ export function wrapInBrandedEmailLayout(params: {
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f7f6f4; margin: 0; padding: 0; color: #1c1917; }
     .wrapper { width: 100%; max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; margin-top: 40px; margin-bottom: 40px; border: 1px solid #e7e5e4; }
     .header { padding: 32px 32px 24px 32px; border-bottom: 1px solid #f5f5f4; text-align: center; }
-    .brand { font-size: 22px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #1c1917; margin: 0; }
+    .logo-img { display: block; margin: 0 auto; max-height: 48px; width: auto; }
     .content { padding: 32px; font-size: 15px; line-height: 1.6; color: #44403c; }
     .content p { margin-top: 0; margin-bottom: 16px; }
     .button-container { text-align: center; margin: 28px 0; }
@@ -53,7 +53,7 @@ export function wrapInBrandedEmailLayout(params: {
 <body>
   <div class="wrapper">
     <div class="header">
-      <h1 class="brand">${studioName}</h1>
+      <img src="https://vows-studio-one.vercel.app/images/logo-light.png" alt="${studioName}" width="140" class="logo-img" />
     </div>
     <div class="content">
       ${params.bodyContent}

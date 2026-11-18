@@ -24,7 +24,7 @@ import {
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getPublicPageSeo(
     '/',
-    'VOWS Studio — Wedding Cinematic & Stills | Goa & Mangalore',
+    'VOWS — Wedding Cinematic & Stills | Goa & Mangalore',
     'Understated cinematic documentation and heirloom analog stills capturing sacred Christian nuptials across heritage chapels and coastal weddings.'
   );
 
@@ -76,7 +76,7 @@ export default async function HomePage() {
               Sacred Vows. Timeless Light.
             </h1>
             <p className="font-[family-name:var(--font-cormorant)] text-xl sm:text-2xl text-[var(--accent)] tracking-wide uppercase font-semibold mb-6">
-              VOWS STUDIO &bull; Reuben Serrao
+              VOWS &bull; Reuben Serrao
             </p>
             <p className="text-base sm:text-lg text-[var(--muted-foreground)] max-w-2xl leading-relaxed mb-10">
               Understated cinematic documentation and heirloom analog stills capturing sacred vows across heritage cathedral arches, coastal solemnizations, and intimate family gatherings with reverent stillness.

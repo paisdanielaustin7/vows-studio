@@ -6,8 +6,8 @@ import { Star, ShieldCheck } from 'lucide-react';
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getPublicPageSeo(
     '/reviews',
-    'Client Words & Verified Testimonials — VOWS Studio',
-    'Read reflections from couples who celebrated their sacred nuptials with VOWS Studio in Goa, Mangalore, and beyond.'
+    'Client Words & Verified Testimonials — VOWS',
+    'Read reflections from couples who celebrated their sacred nuptials with VOWS in Goa, Mangalore, and beyond.'
   );
 
   return {
@@ -22,7 +22,7 @@ export default async function ReviewsPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
-    name: 'VOWS Studio',
+    name: 'VOWS',
     url: 'https://vowsstudio.com',
     aggregateRating: {
       '@type': 'AggregateRating',
@@ -68,7 +68,7 @@ export default async function ReviewsPage() {
               Words From Our Couples
             </h1>
             <p className="text-sm sm:text-base text-[var(--muted-foreground)] leading-relaxed max-w-2xl">
-              Every review below is authored by a couple whose wedding was documented by VOWS Studio, submitted via private verified link following portal delivery.
+              Every review below is authored by a couple whose wedding was documented by VOWS, submitted via private verified link following portal delivery.
             </p>
           </div>
 

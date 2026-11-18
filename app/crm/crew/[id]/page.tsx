@@ -11,7 +11,7 @@ interface CrewProfilePageProps {
 
 export async function generateMetadata({ params: _params }: CrewProfilePageProps) {
   return {
-    title: `Crew Profile | VOWS Studio CRM`,
+    title: `Crew Profile | VOWS CRM`,
   };
 }
 

@@ -14,8 +14,8 @@ export async function generateMetadata({
   const formatted = category.replace('_', ' ').replace('-', ' ');
   const seo = await getPublicPageSeo(
     `/portfolio/${category}`,
-    `${formatted.toUpperCase()} Portfolio — VOWS Studio`,
-    `Curated ${formatted} wedding photography and cinema monographs by VOWS Studio.`
+    `${formatted.toUpperCase()} Portfolio — VOWS`,
+    `Curated ${formatted} wedding photography and cinema monographs by VOWS.`
   );
 
   return {

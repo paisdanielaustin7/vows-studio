@@ -1,5 +1,5 @@
 /**
- * VOWS Studio — Review & Testimonial Types
+ * VOWS — Review & Testimonial Types
  * Reference: DATABASE_SCHEMA §10, §11, BUSINESS_WORKFLOWS §2.8, §3.10, DECISION_LOG D-37
  */
 

@@ -11,7 +11,7 @@ interface InvoiceDetailPageProps {
 
 export async function generateMetadata({ params: _params }: InvoiceDetailPageProps) {
   return {
-    title: `Invoice Detail | VOWS Studio CRM`,
+    title: `Invoice Detail | VOWS CRM`,
   };
 }
 

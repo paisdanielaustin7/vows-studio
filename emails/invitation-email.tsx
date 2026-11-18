@@ -23,7 +23,7 @@ export function InvitationEmail({
   roleName,
   inviteUrl,
   expiresInHours = 72,
-  studioName = 'VOWS Studio',
+  studioName = 'VOWS',
 }: InvitationEmailProps) {
   return (
     <Html>

@@ -1,5 +1,5 @@
 /**
- * VOWS Studio — Role-Based Access Control Permissions Map
+ * VOWS — Role-Based Access Control Permissions Map
  * Generated from RBAC_PERMISSIONS.md §3 and §3.5 Rulings R1-R7
  */
 

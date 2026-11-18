@@ -262,7 +262,7 @@ export async function forgotPasswordAction(
             title: 'Reset Your Password',
             bodyContent: `
               <p>Hello,</p>
-              <p>You requested a password reset for your VOWS Studio account. Click the button below to set a new password:</p>
+              <p>You requested a password reset for your VOWS account. Click the button below to set a new password:</p>
               <p>This link is valid for 1 hour.</p>
             `,
             actionButton: {
@@ -274,7 +274,7 @@ export async function forgotPasswordAction(
           await sendEmailService(
             {
               to: normalizedEmail,
-              subject: 'VOWS Studio — Password Reset Link',
+              subject: 'VOWS — Password Reset Link',
               htmlBody,
               documentType: 'password_reset',
               idempotencyKey: `pwd-reset-${Date.now()}-${normalizedEmail}`,
@@ -474,10 +474,10 @@ export async function inviteUserAction(
       const { sendEmailService } = await import('@/server/services/email.service');
       const { wrapInBrandedEmailLayout } = await import('@/lib/email/template-renderer');
       const htmlBody = wrapInBrandedEmailLayout({
-        title: 'VOWS Studio CRM Team Invitation',
+        title: 'VOWS CRM Team Invitation',
         bodyContent: `
           <p>Hello ${fullName},</p>
-          <p>You have been invited to join <strong>VOWS Studio CRM</strong> as a <strong>${role.replace('_', ' ')}</strong>.</p>
+          <p>You have been invited to join <strong>VOWS CRM</strong> as a <strong>${role.replace('_', ' ')}</strong>.</p>
           <p>This invitation link is valid for 72 hours.</p>
         `,
         actionButton: {
@@ -489,7 +489,7 @@ export async function inviteUserAction(
       await sendEmailService(
         {
           to: email,
-          subject: 'You have been invited to VOWS Studio CRM',
+          subject: 'You have been invited to VOWS CRM',
           htmlBody,
           documentType: 'invitation',
           idempotencyKey: `invite-${invitation.id}`,
@@ -704,7 +704,7 @@ export async function enrollMfaAction(): Promise<
 
   const { data: enrollData, error: enrollError } = await supabase.auth.mfa.enroll({
     factorType: 'totp',
-    issuer: 'VOWS Studio',
+    issuer: 'VOWS',
   });
 
   if (enrollError || !enrollData) {

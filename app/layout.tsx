@@ -9,8 +9,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'VOWS Studio — Wedding Cinematic & Stills',
-  description: 'Single-business CRM and public monograph for VOWS Studio.',
+  title: 'VOWS — Wedding Cinematic & Stills',
+  description: 'Single-business CRM and public monograph for VOWS.',
 };
 
 export default function RootLayout({

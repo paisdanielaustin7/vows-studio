@@ -395,7 +395,7 @@ export function PortfolioClient({ initialItems, canManage }: PortfolioClientProp
             </div>
 
             <p className="text-xs sm:text-sm text-[var(--muted-foreground)] leading-relaxed">
-              Before making imagery public on the VOWS Studio website, verify that the couple has executed a Studio Media &amp; Public Display Release under our DPDP standards.
+              Before making imagery public on the VOWS website, verify that the couple has executed a Studio Media &amp; Public Display Release under our DPDP standards.
             </p>
 
             {/* Commission reference card */}

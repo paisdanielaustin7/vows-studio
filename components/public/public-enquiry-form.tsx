@@ -260,7 +260,7 @@ export function PublicEnquiryForm() {
             className="w-4 h-4 rounded border-[var(--border)] text-[var(--primary)] focus:ring-[var(--accent)] mt-0.5 accent-[var(--primary)] cursor-pointer"
           />
           <span className="text-xs text-[var(--muted-foreground)] group-hover:text-[var(--foreground)] transition-colors leading-relaxed">
-            I explicitly confirm that VOWS Studio may securely store my contact details to prepare proposals and correspond regarding our wedding commission, in strict compliance with DPDP standards. <span className="text-[var(--danger)]">*</span>
+            I explicitly confirm that VOWS may securely store my contact details to prepare proposals and correspond regarding our wedding commission, in strict compliance with DPDP standards. <span className="text-[var(--danger)]">*</span>
           </span>
         </label>
       </div>

@@ -7,7 +7,7 @@ import { WebsiteSettingsClient } from './website-settings-client';
 import { FaqItem, SitePageSeo } from '@/types/portfolio';
 
 export const metadata: Metadata = {
-  title: 'Website & SEO Settings — VOWS Studio CRM',
+  title: 'Website & SEO Settings — VOWS CRM',
 };
 
 const SEO_PAGES = [

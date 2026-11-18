@@ -237,7 +237,7 @@ describe('Review Token Security & Single Submission Flow (Phase 8, D-37, REV-10)
       token,
       {
         overallRating: 5,
-        body: 'VOWS Studio documented our wedding with profound quietness.',
+        body: 'VOWS documented our wedding with profound quietness.',
         reviewerName: 'Samantha & Derick',
       },
       requests,

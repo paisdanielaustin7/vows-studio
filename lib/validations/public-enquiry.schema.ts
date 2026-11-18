@@ -26,7 +26,7 @@ export const publicEnquirySchema = z
     message: z.string().trim().max(2000, 'Message is too long').optional().nullable().or(z.literal('')),
     source: enquirySourceEnum.default('website'),
     consent: z.boolean().refine((val) => val === true, {
-      message: 'You must consent to being contacted by VOWS Studio to submit an enquiry',
+      message: 'You must consent to being contacted by VOWS to submit an enquiry',
     }),
     honeypot: z.string().optional().nullable().or(z.literal('')),
     turnstileToken: z.string().optional().nullable().or(z.literal('')),

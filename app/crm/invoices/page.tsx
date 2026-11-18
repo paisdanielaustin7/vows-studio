@@ -4,7 +4,7 @@ import { listInvoicesAction } from '@/server/actions/finance.actions';
 import { InvoicesTable } from '@/components/finance/invoices-table';
 
 export const metadata = {
-  title: 'Invoices | VOWS Studio CRM',
+  title: 'Invoices | VOWS CRM',
 };
 
 export default async function InvoicesPage() {

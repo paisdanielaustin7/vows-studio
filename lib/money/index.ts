@@ -1,5 +1,5 @@
 /**
- * VOWS Studio — Monetary Arithmetic Engine (lib/money)
+ * VOWS — Monetary Arithmetic Engine (lib/money)
  * 
  * Non-negotiable rules per DECISION_LOG.md (D-16, D-17):
  * - All monetary amounts are integer paise (BigInt).

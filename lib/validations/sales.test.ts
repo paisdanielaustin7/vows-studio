@@ -19,8 +19,8 @@ describe('Sales Validation Schemas', () => {
   describe('businessSettingsSchema', () => {
     it('accepts valid business settings', () => {
       const valid = businessSettingsSchema.safeParse({
-        studioName: 'VOWS Studio',
-        tagline: 'Cinema & Stills',
+        studioName: 'VOWS',
+        tagline: 'Wedding Cinematic & Stills',
         phone: '+919840012345',
         email: 'info@vowsstudio.com',
         website: 'https://vowsstudio.com',
@@ -33,7 +33,7 @@ describe('Sales Validation Schemas', () => {
         gstin: '33AAAAA0000A1Z5',
         pan: 'AAAAA0000A',
         bankName: 'HDFC Bank',
-        bankAccountHolder: 'VOWS Studio',
+        bankAccountHolder: 'VOWS',
         bankAccountNumber: '50200012345678',
         bankIfsc: 'HDFC0001234',
         upiId: 'vows@hdfcbank',

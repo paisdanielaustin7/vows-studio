@@ -45,7 +45,7 @@ export function BillingGstForm({
     setStatus(null);
 
     const res = await updateBusinessSettingsAction({
-      studioName: initialSettings?.studioName || 'VOWS Studio',
+      studioName: initialSettings?.studioName || 'VOWS',
       letterheadLayout: initialSettings?.letterheadLayout || 'classic',
       phone: initialSettings?.phone || null,
       email: initialSettings?.email || null,
@@ -211,7 +211,7 @@ export function BillingGstForm({
               value={formData.bankAccountHolder}
               onChange={(e) => setFormData({ ...formData, bankAccountHolder: e.target.value })}
               disabled={!canEdit || saving}
-              placeholder="VOWS Studio LLP"
+              placeholder="VOWS LLP"
             />
           </div>
 

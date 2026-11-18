@@ -24,7 +24,7 @@ export function PaymentReminderEmail({
   invoiceNumber,
   balanceDueFormatted,
   dueDate,
-  studioName = 'VOWS Studio',
+  studioName = 'VOWS',
   viewUrl,
 }: PaymentReminderEmailProps) {
   return (

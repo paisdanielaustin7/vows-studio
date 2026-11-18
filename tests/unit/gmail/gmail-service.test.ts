@@ -6,7 +6,7 @@ const mockSendLogs: any[] = [];
 let mockCredentials: any = {
   id: 1,
   google_email: 'vowsbyreuben@gmail.com',
-  from_name: 'VOWS Studio by Reuben',
+  from_name: 'VOWS by Reuben',
   reply_to: 'contact@vowsstudio.com',
   access_token_enc: 'v1:k1:mock_encrypted_access_token',
   refresh_token_enc: 'v1:k1:mock_encrypted_refresh_token',
@@ -97,7 +97,7 @@ describe('Gmail Transmission Service & RFC 2822 MIME (Phase 5)', () => {
     const pdfBytes = Buffer.from('%PDF-1.4 sample pdf content');
     const mime = buildMimeMessage({
       from: 'vowsbyreuben@gmail.com',
-      fromName: 'VOWS Studio by Reuben',
+      fromName: 'VOWS by Reuben',
       to: 'client@example.com',
       replyTo: 'contact@vowsstudio.com',
       subject: 'Quotation QT-2026-000001 ₹ 1,50,000',
@@ -109,7 +109,7 @@ describe('Gmail Transmission Service & RFC 2822 MIME (Phase 5)', () => {
       },
     });
 
-    expect(mime).toContain('From: "VOWS Studio by Reuben" <vowsbyreuben@gmail.com>');
+    expect(mime).toContain('From: "VOWS by Reuben" <vowsbyreuben@gmail.com>');
     expect(mime).toContain('To: client@example.com');
     expect(mime).toContain('Reply-To: contact@vowsstudio.com');
     expect(mime).toContain('multipart/mixed');

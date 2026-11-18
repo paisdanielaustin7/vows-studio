@@ -19,7 +19,7 @@ interface PasswordResetEmailProps {
 export function PasswordResetEmail({
   resetUrl,
   expiresInMinutes = 60,
-  studioName = 'VOWS Studio',
+  studioName = 'VOWS',
 }: PasswordResetEmailProps) {
   return (
     <Html>

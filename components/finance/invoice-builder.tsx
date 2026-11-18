@@ -363,7 +363,7 @@ export function InvoiceBuilder({ bookings }: InvoiceBuilderProps) {
                 <Input
                   value={notesToClient}
                   onChange={(e) => setNotesToClient(e.target.value)}
-                  placeholder="Thank you for choosing VOWS Studio..."
+                  placeholder="Thank you for choosing VOWS..."
                 />
               </div>
               <div>
