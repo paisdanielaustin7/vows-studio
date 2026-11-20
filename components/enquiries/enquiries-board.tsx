@@ -64,8 +64,8 @@ export function EnquiriesBoard({
   const [activeStatusFilter, setActiveStatusFilter] = React.useState<string>('all');
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
-  // Form state
-  const [form, setForm] = React.useState({
+  // Initial form template with multi-event support
+  const initialFormState = {
     clientId: '',
     guestName: '',
     guestPhone: '',
@@ -79,7 +79,22 @@ export function EnquiriesBoard({
     source: 'instagram' as EnquirySource,
     message: '',
     notes: '',
-  });
+    events: [
+      {
+        name: 'Wedding Ceremony',
+        eventType: 'wedding' as EventType,
+        eventDate: '',
+        venue: '',
+      },
+    ],
+  };
+
+  const [form, setForm] = React.useState(initialFormState);
+
+  const resetForm = React.useCallback(() => {
+    setForm(initialFormState);
+    setModalError(null);
+  }, []);
 
   const [saving, setSaving] = React.useState(false);
   const [status, setStatus] = React.useState<{ type: 'success' | 'error'; message: string } | null>(null);
@@ -98,22 +113,27 @@ export function EnquiriesBoard({
     setModalError(null);
 
     const budgetPaise = form.budgetRupees ? Math.round(Number(form.budgetRupees) * 100) : null;
+    const primaryEvent = form.events && form.events.length > 0 ? form.events[0] : null;
+    const effectiveEventType = primaryEvent?.eventType || form.eventType;
+    const effectiveEventDate = primaryEvent?.eventDate || form.eventDate || null;
+    const effectiveVenue = primaryEvent?.venue || form.venue || null;
 
     const res = await createEnquiryAction({
       clientId: form.clientId ? form.clientId : null,
       guestName: form.guestName || null,
       guestPhone: form.guestPhone || null,
       guestEmail: form.guestEmail || null,
-      eventType: form.eventType,
-      eventDate: form.eventDate || null,
+      eventType: effectiveEventType,
+      eventDate: effectiveEventDate,
       eventDateIsApprox: form.eventDateIsApprox,
-      venue: form.venue || null,
+      venue: effectiveVenue,
       guestCount: form.guestCount ? Number(form.guestCount) : null,
       budgetPaise,
       source: form.source,
       status: 'new',
       message: form.message || null,
       notes: form.notes || null,
+      events: form.events,
     });
 
     setSaving(false);
@@ -129,37 +149,23 @@ export function EnquiriesBoard({
         guestName: form.guestName || null,
         guestPhone: form.guestPhone || null,
         guestEmail: form.guestEmail || null,
-        eventType: form.eventType,
-        eventDate: form.eventDate || null,
+        eventType: effectiveEventType,
+        eventDate: effectiveEventDate,
         eventDateIsApprox: form.eventDateIsApprox,
-        venue: form.venue || null,
+        venue: effectiveVenue,
         guestCount: form.guestCount ? Number(form.guestCount) : null,
         budgetPaise,
         source: form.source,
         status: 'new',
         message: form.message || null,
         notes: form.notes || null,
+        events: form.events,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       };
       setEnquiries((prev) => [newEnq, ...prev.filter((item) => item.id !== newId)]);
+      resetForm();
       setIsModalOpen(false);
-      setModalError(null);
-      setForm({
-        clientId: '',
-        guestName: '',
-        guestPhone: '',
-        guestEmail: '',
-        eventType: 'wedding' as EventType,
-        eventDate: '',
-        eventDateIsApprox: true,
-        venue: '',
-        guestCount: '',
-        budgetRupees: '',
-        source: 'instagram' as EnquirySource,
-        message: '',
-        notes: '',
-      });
       setStatus({ type: 'success', message: 'Enquiry created successfully.' });
       router.refresh();
     }
@@ -285,7 +291,14 @@ export function EnquiriesBoard({
           </div>
 
           {canCreate && (
-            <Button size="sm" onClick={() => setIsModalOpen(true)} className="text-xs">
+            <Button
+              size="sm"
+              onClick={() => {
+                resetForm();
+                setIsModalOpen(true);
+              }}
+              className="text-xs"
+            >
               <Plus className="w-3.5 h-3.5 mr-1" />
               New Enquiry
             </Button>
@@ -347,6 +360,14 @@ export function EnquiriesBoard({
                           </div>
                         )}
 
+                        {enq.events && enq.events.length > 1 && (
+                          <div className="flex flex-wrap gap-1 mt-0.5">
+                            <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-primary/15 text-primary">
+                              {enq.events.length} Events: {enq.events.map((e) => e.name).join(' + ')}
+                            </span>
+                          </div>
+                        )}
+
                         <div className="flex items-center justify-between pt-1 border-t border-outline-variant/20 text-[10px] text-outline">
                           <span className="capitalize">{enq.source}</span>
                           <select
@@ -398,7 +419,14 @@ export function EnquiriesBoard({
                       </Link>
                     </td>
                     <td className="py-3 px-4 text-xs capitalize text-on-surface-variant">
-                      {enq.eventType.replace('_', ' ')}
+                      <div className="flex items-center gap-1.5">
+                        <span>{enq.eventType.replace('_', ' ')}</span>
+                        {enq.events && enq.events.length > 1 && (
+                          <span className="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-primary/15 text-primary">
+                            {enq.events.length} Events
+                          </span>
+                        )}
+                      </div>
                     </td>
                     <td className="py-3 px-4 font-mono text-xs text-outline">{enq.eventDate || '—'}</td>
                     <td className="py-3 px-4 text-xs text-on-surface-variant">{enq.venue || '—'}</td>
@@ -433,8 +461,8 @@ export function EnquiriesBoard({
               <button
                 type="button"
                 onClick={() => {
+                  resetForm();
                   setIsModalOpen(false);
-                  setModalError(null);
                 }}
                 className="p-1 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container"
               >
@@ -491,39 +519,135 @@ export function EnquiriesBoard({
                 </div>
               )}
 
-              <div className="grid grid-cols-2 gap-3">
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-medium text-on-surface">Event Type *</label>
-                  <select
-                    value={form.eventType}
-                    onChange={(e) => setForm({ ...form, eventType: e.target.value as EventType })}
-                    className="h-9 px-3 bg-surface-container-lowest border border-outline-variant/40 rounded-lg text-xs capitalize text-on-surface"
+              {/* Multi-Event Entry Section */}
+              <div className="flex flex-col gap-3 p-3.5 bg-surface-container-low rounded-xl border border-outline-variant/30">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span className="text-xs font-semibold text-on-surface">Events Covered</span>
+                    <p className="text-[11px] text-outline">Enter multiple events for this enquiry (e.g. Roce + Wedding).</p>
+                  </div>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() =>
+                      setForm((prev) => ({
+                        ...prev,
+                        events: [
+                          ...prev.events,
+                          {
+                            name: prev.events.length === 1 ? 'Nuptials / Wedding' : `Event #${prev.events.length + 1}`,
+                            eventType: 'wedding' as EventType,
+                            eventDate: '',
+                            venue: '',
+                          },
+                        ],
+                      }))
+                    }
+                    className="text-xs h-7"
                   >
-                    {EVENT_TYPES.map((t) => (
-                      <option key={t} value={t}>
-                        {t.replace('_', ' ')}
-                      </option>
-                    ))}
-                  </select>
+                    + Add Event
+                  </Button>
                 </div>
 
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-medium text-on-surface">Event Date</label>
-                  <Input
-                    type="date"
-                    value={form.eventDate}
-                    onChange={(e) => setForm({ ...form, eventDate: e.target.value })}
-                  />
+                <div className="space-y-3">
+                  {form.events.map((ev, idx) => (
+                    <div key={idx} className="p-3 bg-surface-container-lowest rounded-lg border border-outline-variant/30 space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[10px] font-bold text-outline uppercase tracking-wider">
+                          Event #{idx + 1}
+                        </span>
+                        {form.events.length > 1 && (
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setForm((prev) => ({
+                                ...prev,
+                                events: prev.events.filter((_, i) => i !== idx),
+                              }))
+                            }
+                            className="text-[11px] text-error hover:underline cursor-pointer"
+                          >
+                            Remove
+                          </button>
+                        )}
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <div>
+                          <label className="text-[10px] text-outline font-medium block mb-0.5">Event Name</label>
+                          <Input
+                            value={ev.name}
+                            onChange={(e) => {
+                              const updated = [...form.events];
+                              updated[idx] = { ...ev, name: e.target.value };
+                              setForm({ ...form, events: updated });
+                            }}
+                            placeholder="e.g. Roce / Nuptials / Sangeet"
+                            required
+                            className="h-8 text-xs"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-[10px] text-outline font-medium block mb-0.5">Event Type</label>
+                          <select
+                            value={ev.eventType}
+                            onChange={(e) => {
+                              const updated = [...form.events];
+                              updated[idx] = { ...ev, eventType: e.target.value as EventType };
+                              setForm({ ...form, events: updated });
+                            }}
+                            className="h-8 px-2 w-full bg-surface-container-lowest border border-outline-variant/40 rounded-lg text-xs capitalize text-on-surface"
+                          >
+                            {EVENT_TYPES.map((t) => (
+                              <option key={t} value={t}>
+                                {t.replace('_', ' ')}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <div>
+                          <label className="text-[10px] text-outline font-medium block mb-0.5">Event Date</label>
+                          <Input
+                            type="date"
+                            value={ev.eventDate || ''}
+                            onChange={(e) => {
+                              const updated = [...form.events];
+                              updated[idx] = { ...ev, eventDate: e.target.value };
+                              setForm({ ...form, events: updated });
+                            }}
+                            className="h-8 text-xs"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-[10px] text-outline font-medium block mb-0.5">Venue / City</label>
+                          <Input
+                            value={ev.venue || ''}
+                            onChange={(e) => {
+                              const updated = [...form.events];
+                              updated[idx] = { ...ev, venue: e.target.value };
+                              setForm({ ...form, events: updated });
+                            }}
+                            placeholder="e.g. Milagres Hall / ITC Grand"
+                            className="h-8 text-xs"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-medium text-on-surface">Venue / City</label>
+                  <label className="text-xs font-medium text-on-surface">Primary Venue Note</label>
                   <Input
                     value={form.venue}
                     onChange={(e) => setForm({ ...form, venue: e.target.value })}
-                    placeholder="e.g. ITC Grand Chola"
+                    placeholder="e.g. Goa &amp; Mangalore"
                   />
                 </div>
 
@@ -531,9 +655,10 @@ export function EnquiriesBoard({
                   <label className="text-xs font-medium text-on-surface">Estimated Budget (₹)</label>
                   <Input
                     type="number"
-                    value={form.budgetRupees}
+                    value={form.budgetRupees === '0' || !form.budgetRupees ? '' : form.budgetRupees}
+                    placeholder="0"
+                    onFocus={(e) => e.target.select()}
                     onChange={(e) => setForm({ ...form, budgetRupees: e.target.value })}
-                    placeholder="250000"
                   />
                 </div>
               </div>
@@ -576,8 +701,8 @@ export function EnquiriesBoard({
                   type="button"
                   variant="outline"
                   onClick={() => {
+                    resetForm();
                     setIsModalOpen(false);
-                    setModalError(null);
                   }}
                 >
                   Cancel

@@ -426,9 +426,10 @@ export function ServicesManager({
                   <Input
                     type="number"
                     step="0.01"
-                    value={formData.priceRupees}
+                    value={formData.priceRupees === '0' || !formData.priceRupees ? '' : formData.priceRupees}
+                    onFocus={(e) => e.target.select()}
                     onChange={(e) => setFormData({ ...formData, priceRupees: e.target.value })}
-                    placeholder="50000"
+                    placeholder="0"
                     required
                   />
                 </div>

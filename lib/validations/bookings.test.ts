@@ -27,6 +27,20 @@ describe('Bookings & Crew Validation Schemas (100% Coverage)', () => {
             lineTotalPaise: 15000000,
           },
         ],
+        events: [
+          {
+            name: 'Roce',
+            eventType: 'wedding',
+            eventDate: '2026-12-10',
+            venueName: 'Milagres Hall',
+          },
+          {
+            name: 'Wedding Nuptials',
+            eventType: 'wedding',
+            eventDate: '2026-12-12',
+            venueName: 'Cathedral',
+          },
+        ],
       };
       const parsed = bookingSchema.safeParse(valid);
       expect(parsed.success).toBe(true);

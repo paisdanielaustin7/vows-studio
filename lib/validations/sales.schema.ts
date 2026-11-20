@@ -213,6 +213,19 @@ export const enquiryStatusEnum = z.enum([
   'junk',
 ]);
 
+export const enquiryEventItemSchema = z.object({
+  id: z.string().optional(),
+  name: z.string().trim().min(1, 'Event name is required'),
+  eventType: eventTypeEnum,
+  eventDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Date must be YYYY-MM-DD').optional().nullable().or(z.literal('')),
+  venue: z.string().trim().optional().nullable(),
+  guestCount: z.number().int().positive().optional().nullable(),
+  startTime: z.string().optional().nullable(),
+  endTime: z.string().optional().nullable(),
+});
+
+export type EnquiryEventItemInput = z.infer<typeof enquiryEventItemSchema>;
+
 export const enquirySchema = z.object({
   id: z.string().uuid().optional(),
   clientId: z.string().uuid().optional().nullable(),
@@ -233,6 +246,7 @@ export const enquirySchema = z.object({
   notes: z.string().trim().optional().nullable(),
   lostReason: z.string().trim().optional().nullable(),
   consentGivenAt: z.string().optional().nullable(),
+  events: z.array(enquiryEventItemSchema).default([]),
 }).refine(
   (data) => Boolean(data.clientId || (data.guestName && data.guestName.length >= 2)),
   { message: 'Either an existing client or guest name is required', path: ['guestName'] }

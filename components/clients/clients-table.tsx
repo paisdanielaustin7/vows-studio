@@ -51,8 +51,8 @@ export function ClientsTable({
   const [deletingId, setDeletingId] = React.useState<string | null>(null);
   const [status, setStatus] = React.useState<{ type: 'success' | 'error'; message: string } | null>(null);
 
-  // New client form state
-  const [form, setForm] = React.useState({
+  // Initial form template
+  const initialFormState = {
     fullName: '',
     phone: '',
     email: '',
@@ -63,7 +63,15 @@ export function ClientsTable({
     gstin: '',
     referralSource: 'other' as const,
     notes: '',
-  });
+  };
+
+  // New client form state
+  const [form, setForm] = React.useState(initialFormState);
+
+  const resetForm = React.useCallback(() => {
+    setForm(initialFormState);
+    setDuplicates([]);
+  }, []);
 
   const [saving, setSaving] = React.useState(false);
   const [duplicates, setDuplicates] = React.useState<ClientDuplicateMatch[]>([]);
@@ -130,6 +138,42 @@ export function ClientsTable({
     if (res.error) {
       setStatus({ type: 'error', message: res.error.message });
     } else {
+      const newId = res.data || `temp-${Date.now()}`;
+      const newClientObj: Client = {
+        id: newId,
+        fullName: form.fullName,
+        addressLine1: null,
+        addressLine2: null,
+        city: form.city || null,
+        state: form.state || null,
+        stateCode: form.stateCode || null,
+        pincode: form.pincode || null,
+        gstin: form.gstin || null,
+        referralSource: form.referralSource,
+        notes: form.notes || null,
+        phones: form.phone
+          ? [
+              {
+                phoneE164: form.phone,
+                label: 'Mobile',
+                isPrimary: true,
+                isInternational: false,
+              },
+            ]
+          : [],
+        emails: form.email
+          ? [
+              {
+                email: form.email,
+                isPrimary: true,
+              },
+            ]
+          : [],
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+      setClients((prev) => [newClientObj, ...prev.filter((c) => c.id !== newId)]);
+      resetForm();
       setIsModalOpen(false);
       setStatus({ type: 'success', message: 'Client created successfully.' });
       router.refresh();
@@ -231,7 +275,14 @@ export function ClientsTable({
           )}
 
           {canCreate && (
-            <Button size="sm" onClick={() => setIsModalOpen(true)} className="text-xs">
+            <Button
+              size="sm"
+              onClick={() => {
+                resetForm();
+                setIsModalOpen(true);
+              }}
+              className="text-xs"
+            >
               <Plus className="w-3.5 h-3.5 mr-1.5" />
               Add Client
             </Button>
@@ -333,7 +384,10 @@ export function ClientsTable({
               <h3 className="text-base font-semibold text-on-surface">Add New Client</h3>
               <button
                 type="button"
-                onClick={() => setIsModalOpen(false)}
+                onClick={() => {
+                  resetForm();
+                  setIsModalOpen(false);
+                }}
                 className="p-1 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container"
               >
                 <X className="w-5 h-5" />
@@ -458,7 +512,14 @@ export function ClientsTable({
               </div>
 
               <div className="flex justify-end gap-3 pt-3 border-t border-outline-variant/20">
-                <Button type="button" variant="outline" onClick={() => setIsModalOpen(false)}>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => {
+                    resetForm();
+                    setIsModalOpen(false);
+                  }}
+                >
                   Cancel
                 </Button>
                 <Button type="submit" disabled={saving}>

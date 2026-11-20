@@ -340,6 +340,28 @@ export function EnquiryDetailView({
               </div>
             </div>
 
+            {enquiry.events && enquiry.events.length > 0 && (
+              <div className="pt-3 border-t border-outline-variant/20 flex flex-col gap-2">
+                <span className="text-xs text-outline font-semibold uppercase tracking-wider">
+                  Events Included ({enquiry.events.length})
+                </span>
+                <div className="space-y-2">
+                  {enquiry.events.map((ev, idx) => (
+                    <div
+                      key={idx}
+                      className="p-2.5 rounded-lg bg-surface-container/50 border border-outline-variant/30 flex items-center justify-between text-xs"
+                    >
+                      <div className="flex flex-col gap-0.5">
+                        <span className="font-semibold text-on-surface">{ev.name}</span>
+                        <span className="text-[11px] text-outline capitalize">{ev.eventType.replace('_', ' ')} {ev.venue ? `• ${ev.venue}` : ''}</span>
+                      </div>
+                      <span className="font-mono text-outline text-[11px]">{ev.eventDate || 'Date TBD'}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {enquiry.message && (
               <div className="pt-3 border-t border-outline-variant/20">
                 <span className="text-xs text-outline font-medium">Customer Message:</span>

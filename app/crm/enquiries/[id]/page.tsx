@@ -71,6 +71,7 @@ export default async function EnquiryDetailPage({
     notes: row.notes,
     lostReason: row.lost_reason,
     convertedBookingId: row.converted_booking_id,
+    events: Array.isArray(row.events) ? row.events : [],
     createdAt: row.created_at,
     updatedAt: row.updated_at,
   };

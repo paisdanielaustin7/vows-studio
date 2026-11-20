@@ -354,6 +354,22 @@ export async function createBookingAction(rawInput: BookingInput): Promise<Actio
       await supabase.from('booking_line_items').insert(lineRows);
     }
 
+    // Insert events if provided
+    if (input.events && input.events.length > 0) {
+      const eventRows = input.events.map((ev, idx) => ({
+        booking_id: b.id,
+        sort: idx + 1,
+        name: ev.name,
+        event_type: ev.eventType,
+        event_date: ev.eventDate,
+        venue_name: ev.venueName || 'Main Venue',
+        venue_address: ev.venueAddress || null,
+        start_time: ev.startTime || null,
+        end_time: ev.endTime || null,
+      }));
+      await supabase.from('events').insert(eventRows);
+    }
+
     // Initialize 9 delivery stages
     const { data: pipe } = await supabase
       .from('delivery_pipelines')
@@ -429,6 +445,43 @@ export async function convertEnquiryToBookingAction(
 
     if (error || !bookingId) {
       return { error: { code: 'INTERNAL_ERROR', message: error?.message || 'Failed to convert enquiry to booking' } };
+    }
+
+    // Resilience check: ensure all multi-events from enquiry are reflected in public.events
+    try {
+      const { data: enq } = await supabase
+        .from('enquiries')
+        .select('events')
+        .eq('id', enquiryId)
+        .maybeSingle();
+
+      if (enq?.events && Array.isArray(enq.events) && enq.events.length > 0) {
+        const { data: existingEvents } = await supabase
+          .from('events')
+          .select('name, event_date')
+          .eq('booking_id', bookingId);
+
+        const existingKeys = new Set(
+          (existingEvents || []).map((e) => `${e.name}__${e.event_date}`)
+        );
+
+        const toInsert = enq.events
+          .filter((ev: any) => ev.eventDate && !existingKeys.has(`${ev.name || 'Event'}__${ev.eventDate}`))
+          .map((ev: any, idx: number) => ({
+            booking_id: bookingId,
+            sort: idx + 1,
+            name: ev.name || 'Celebration Event',
+            event_type: ev.eventType || 'wedding',
+            event_date: ev.eventDate,
+            venue_name: ev.venue || 'Main Venue',
+          }));
+
+        if (toInsert.length > 0) {
+          await supabase.from('events').insert(toInsert);
+        }
+      }
+    } catch (evErr) {
+      console.warn('[convertEnquiryToBookingAction] Multi-event sync resilience:', evErr);
     }
 
     revalidatePath('/crm/bookings');

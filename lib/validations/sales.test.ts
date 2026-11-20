@@ -229,6 +229,10 @@ describe('Sales Validation Schemas', () => {
         eventType: 'wedding',
         eventDate: '2026-12-15',
         source: 'instagram',
+        events: [
+          { name: 'Roce Ceremony', eventType: 'wedding', eventDate: '2026-12-14', venue: 'Milagres Hall' },
+          { name: 'Nuptials', eventType: 'wedding', eventDate: '2026-12-15', venue: 'Cathedral' },
+        ],
       });
       expect(validGuest.success).toBe(true);
 

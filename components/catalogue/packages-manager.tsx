@@ -373,9 +373,10 @@ export function PackagesManager({
                   <Input
                     type="number"
                     step="0.01"
-                    value={formData.priceRupees}
+                    value={formData.priceRupees === '0' || !formData.priceRupees ? '' : formData.priceRupees}
+                    onFocus={(e) => e.target.select()}
                     onChange={(e) => setFormData({ ...formData, priceRupees: e.target.value })}
-                    placeholder="250000"
+                    placeholder="0"
                     required
                   />
                 </div>
@@ -433,10 +434,12 @@ export function PackagesManager({
                       <Input
                         type="number"
                         min={1}
-                        value={item.quantity}
+                        value={item.quantity === 0 ? '' : item.quantity}
+                        placeholder="1"
+                        onFocus={(e) => e.target.select()}
                         onChange={(e) => {
                           const updated = [...formData.items];
-                          updated[idx] = { ...item, quantity: Math.max(1, Number(e.target.value)) };
+                          updated[idx] = { ...item, quantity: e.target.value === '' ? 1 : Math.max(1, Number(e.target.value)) };
                           setFormData({ ...formData, items: updated });
                         }}
                         className="w-16 h-8 text-center text-xs"

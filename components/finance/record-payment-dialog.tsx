@@ -227,9 +227,10 @@ export function RecordPaymentDialog({
                 type="number"
                 min={1}
                 required
-                value={amountRupees || ''}
-                placeholder="e.g. 50000"
-                onChange={(e) => setAmountRupees(parseFloat(e.target.value) || 0)}
+                value={amountRupees === 0 ? '' : amountRupees}
+                placeholder="0"
+                onFocus={(e) => e.target.select()}
+                onChange={(e) => setAmountRupees(e.target.value === '' ? 0 : parseFloat(e.target.value) || 0)}
               />
             </div>
 

@@ -39,6 +39,19 @@ export const bookingLineItemSchema = z.object({
 
 export type BookingLineItemInput = z.input<typeof bookingLineItemSchema>;
 
+export const bookingEventInputSchema = z.object({
+  id: z.string().uuid().optional(),
+  name: z.string().trim().min(1, 'Event name required'),
+  eventType: eventTypeEnum,
+  eventDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Date must be YYYY-MM-DD'),
+  venueName: z.string().trim().optional().nullable(),
+  venueAddress: z.string().trim().optional().nullable(),
+  startTime: z.string().optional().nullable(),
+  endTime: z.string().optional().nullable(),
+});
+
+export type BookingEventInput = z.infer<typeof bookingEventInputSchema>;
+
 // 2. Booking Schema
 export const bookingSchema = z.object({
   id: z.string().uuid().optional(),
@@ -49,6 +62,7 @@ export const bookingSchema = z.object({
   notes: z.string().trim().optional().nullable(),
   targetDeliveryDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Date must be YYYY-MM-DD').optional().nullable(),
   lines: z.array(bookingLineItemSchema).min(1, 'At least one line item required'),
+  events: z.array(bookingEventInputSchema).default([]),
 });
 
 export type BookingInput = z.input<typeof bookingSchema>;

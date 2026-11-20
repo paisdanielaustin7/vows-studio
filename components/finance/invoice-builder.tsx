@@ -324,8 +324,10 @@ export function InvoiceBuilder({ bookings }: InvoiceBuilderProps) {
                         <Input
                           type="number"
                           min={1}
-                          value={it.quantity}
-                          onChange={(e) => handleItemChange(idx, 'quantity', parseInt(e.target.value) || 1)}
+                          value={it.quantity === 0 ? '' : it.quantity}
+                          placeholder="1"
+                          onFocus={(e) => e.target.select()}
+                          onChange={(e) => handleItemChange(idx, 'quantity', e.target.value === '' ? 1 : parseInt(e.target.value) || 1)}
                           required
                         />
                       </div>
@@ -334,9 +336,11 @@ export function InvoiceBuilder({ bookings }: InvoiceBuilderProps) {
                         <Input
                           type="number"
                           min={0}
-                          value={it.unitPriceRupees}
+                          value={it.unitPriceRupees === 0 ? '' : it.unitPriceRupees}
+                          placeholder="0"
+                          onFocus={(e) => e.target.select()}
                           onChange={(e) =>
-                            handleItemChange(idx, 'unitPriceRupees', parseFloat(e.target.value) || 0)
+                            handleItemChange(idx, 'unitPriceRupees', e.target.value === '' ? 0 : parseFloat(e.target.value) || 0)
                           }
                           required
                         />
@@ -412,9 +416,10 @@ export function InvoiceBuilder({ bookings }: InvoiceBuilderProps) {
                   type="number"
                   min={0}
                   disabled={discountType === 'none'}
-                  value={discountValue}
-                  onChange={(e) => setDiscountValue(parseFloat(e.target.value) || 0)}
-                  placeholder={discountType === 'percent' ? 'e.g. 10' : 'e.g. 5000'}
+                  value={discountValue === 0 ? '' : discountValue}
+                  onFocus={(e) => e.target.select()}
+                  onChange={(e) => setDiscountValue(e.target.value === '' ? 0 : parseFloat(e.target.value) || 0)}
+                  placeholder="0"
                 />
               </div>
             </div>

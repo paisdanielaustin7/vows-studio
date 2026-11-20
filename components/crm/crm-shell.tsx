@@ -38,6 +38,8 @@ import {
   LogOut,
   User,
   LayoutDashboard,
+  Menu,
+  X,
 } from 'lucide-react';
 
 interface CrmShellProps {
@@ -223,12 +225,18 @@ export function CrmShell({
   const router = useRouter();
 
   const [isDark, setIsDark] = React.useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [unreadCount, setUnreadCount] = React.useState(0);
   const [notifications, setNotifications] = React.useState<NotificationEntry[]>([]);
   const [isNotificationsOpen, setIsNotificationsOpen] = React.useState(false);
   const [isProfileOpen, setIsProfileOpen] = React.useState(false);
   const notificationsRef = React.useRef<HTMLDivElement>(null);
   const profileRef = React.useRef<HTMLDivElement>(null);
+
+  // Sync theme with DOM on mount
+  React.useEffect(() => {
+    setIsDark(document.documentElement.classList.contains('dark'));
+  }, []);
 
   React.useEffect(() => {
     function handleOutsideClick(event: MouseEvent) {
@@ -280,8 +288,16 @@ export function CrmShell({
     setIsDark(nextDark);
     if (nextDark) {
       document.documentElement.classList.add('dark');
+      try {
+        localStorage.setItem('vows_theme', 'dark');
+        document.cookie = 'vows_theme=dark; path=/; max-age=31536000; SameSite=Lax';
+      } catch {}
     } else {
       document.documentElement.classList.remove('dark');
+      try {
+        localStorage.setItem('vows_theme', 'light');
+        document.cookie = 'vows_theme=light; path=/; max-age=31536000; SameSite=Lax';
+      } catch {}
     }
   };
 
@@ -347,6 +363,7 @@ export function CrmShell({
               <div className="px-2 pb-2">
                 <Link
                   href="/admin/dashboard"
+                  prefetch={true}
                   className="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-error-container/40 text-error font-medium text-xs hover:bg-error-container/70 transition-colors"
                 >
                   <ShieldAlert className="w-4 h-4" />
@@ -373,6 +390,7 @@ export function CrmShell({
                       <Link
                         key={item.href}
                         href={item.href}
+                        prefetch={true}
                         className={`flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium transition-colors ${
                           isActive
                             ? 'bg-secondary-container text-on-secondary-container font-semibold shadow-xs'
@@ -413,9 +431,30 @@ export function CrmShell({
         {/* Topbar */}
         <header className="fixed top-0 left-0 md:left-64 right-0 h-16 bg-surface-container-lowest/95 backdrop-blur-md border-b border-outline-variant/40 z-30 flex items-center justify-between px-4 sm:px-6 shadow-2xs">
           <div className="flex items-center gap-2 text-xs font-medium text-outline">
-            <span className="text-on-surface-variant">VOWS CRM</span>
-            <span>/</span>
-            <span className="text-on-surface capitalize">
+            {/* Mobile Adaptive Logo */}
+            <div className="md:hidden flex items-center mr-2">
+              <Link href="/crm/dashboard" prefetch={true} className="flex items-center" aria-label="VOWS Home">
+                <NextImage
+                  src="/images/logo-light.png"
+                  alt="VOWS"
+                  width={90}
+                  height={32}
+                  className="h-6 w-auto object-contain dark:hidden"
+                  priority
+                />
+                <NextImage
+                  src="/images/logo-dark.png"
+                  alt="VOWS"
+                  width={90}
+                  height={32}
+                  className="h-6 w-auto object-contain hidden dark:block"
+                  priority
+                />
+              </Link>
+            </div>
+            <span className="hidden sm:inline text-on-surface-variant">VOWS CRM</span>
+            <span className="hidden sm:inline">/</span>
+            <span className="text-on-surface capitalize font-semibold">
               {pathname.split('/')[2] || 'Portal'}
             </span>
           </div>
@@ -560,53 +599,180 @@ export function CrmShell({
           {children}
         </main>
 
+        {/* Mobile Navigation Drawer Sheet (< 768px) */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden fixed inset-0 z-50 flex flex-col justify-end bg-black/60 backdrop-blur-xs">
+            <div className="fixed inset-0" onClick={() => setIsMobileMenuOpen(false)} />
+            <div className="relative bg-surface-container-lowest border-t border-outline-variant rounded-t-2xl max-h-[82vh] overflow-y-auto p-4 space-y-4 shadow-2xl z-10">
+              <div className="flex items-center justify-between pb-3 border-b border-outline-variant/30">
+                <div className="flex items-center gap-2">
+                  <NextImage
+                    src="/images/logo-light.png"
+                    alt="VOWS"
+                    width={90}
+                    height={30}
+                    className="h-6 w-auto object-contain dark:hidden"
+                  />
+                  <NextImage
+                    src="/images/logo-dark.png"
+                    alt="VOWS"
+                    width={90}
+                    height={30}
+                    className="h-6 w-auto object-contain hidden dark:block"
+                  />
+                  <span className="text-xs font-bold text-on-surface">Menu</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="p-1.5 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container-high transition-colors"
+                  aria-label="Close menu"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Quick Actions */}
+              <div className="grid grid-cols-2 gap-2">
+                <Link
+                  href="/crm/quotations/new"
+                  prefetch={true}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center gap-2 p-2.5 rounded-xl bg-primary/10 border border-primary/20 text-primary hover:bg-primary/20 text-xs font-semibold transition-colors"
+                >
+                  <FileText className="w-4 h-4 shrink-0" />
+                  <span>+ New Quote</span>
+                </Link>
+                <Link
+                  href="/crm/invoices/new"
+                  prefetch={true}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center gap-2 p-2.5 rounded-xl bg-secondary/10 border border-secondary/20 text-secondary hover:bg-secondary/20 text-xs font-semibold transition-colors"
+                >
+                  <Receipt className="w-4 h-4 shrink-0" />
+                  <span>+ New Invoice</span>
+                </Link>
+              </div>
+
+              {/* Navigation Sections */}
+              <div className="space-y-4 pt-1">
+                {NAV_SECTIONS.map((section) => {
+                  const visibleItems = section.items.filter((item) =>
+                    item.roles.includes(userRole)
+                  );
+                  if (visibleItems.length === 0) return null;
+
+                  return (
+                    <div key={section.title} className="space-y-1">
+                      <div className="text-[10px] uppercase font-bold text-outline tracking-wider px-2">
+                        {section.title}
+                      </div>
+                      <div className="grid grid-cols-2 gap-1.5">
+                        {visibleItems.map((item) => {
+                          const Icon = item.icon;
+                          const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
+                          return (
+                            <Link
+                              key={item.href}
+                              href={item.href}
+                              prefetch={true}
+                              onClick={() => setIsMobileMenuOpen(false)}
+                              className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-medium transition-colors ${
+                                isActive
+                                  ? 'bg-secondary-container text-on-secondary-container font-semibold shadow-xs'
+                                  : 'text-on-surface-variant bg-surface-container-low hover:bg-surface-container-high hover:text-on-surface'
+                              }`}
+                            >
+                              <Icon className="w-4 h-4 shrink-0" />
+                              <span className="truncate">{item.label}</span>
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Bottom Profile and Signout in drawer */}
+              <div className="pt-3 border-t border-outline-variant/30 flex items-center justify-between">
+                <Link
+                  href="/crm/profile"
+                  prefetch={true}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center gap-2 text-xs font-medium text-on-surface hover:text-primary transition-colors"
+                >
+                  <div className="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-[10px]">
+                    {userName.charAt(0).toUpperCase()}
+                  </div>
+                  <span className="truncate max-w-[120px]">{userName}</span>
+                </Link>
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="flex items-center gap-1.5 text-xs font-semibold text-error hover:underline cursor-pointer"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                  <span>Sign Out</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Mobile Bottom Navigation Bar (< 768px) */}
-        <nav className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-surface-container-lowest/95 backdrop-blur-lg border-t border-outline-variant/40 flex items-center justify-around px-2 z-40 shadow-lg">
+        <nav className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-surface-container-lowest/95 backdrop-blur-lg border-t border-outline-variant/40 flex items-center justify-around px-1 z-40 shadow-lg">
           <Link
             href="/crm/dashboard"
-            className={`flex flex-col items-center gap-1 py-1 px-3 text-[10px] font-medium ${
-              pathname === '/crm/dashboard' ? 'text-primary font-bold' : 'text-outline'
+            prefetch={true}
+            className={`flex flex-col items-center justify-center gap-0.5 py-1 px-2 min-w-[56px] text-[10px] font-medium transition-all active:scale-95 touch-manipulation ${
+              pathname === '/crm/dashboard' ? 'text-primary font-bold' : 'text-outline hover:text-on-surface'
             }`}
           >
             <LayoutDashboard className="w-5 h-5" />
-            <span>Dashboard</span>
+            <span className="truncate">Dashboard</span>
           </Link>
           <Link
-            href="/crm/schedule"
-            className={`flex flex-col items-center gap-1 py-1 px-3 text-[10px] font-medium ${
-              pathname.startsWith('/crm/schedule') ? 'text-primary font-bold' : 'text-outline'
+            href="/crm/quotations/new"
+            prefetch={true}
+            className={`flex flex-col items-center justify-center gap-0.5 py-1 px-2 min-w-[56px] text-[10px] font-medium transition-all active:scale-95 touch-manipulation ${
+              pathname === '/crm/quotations/new' ? 'text-primary font-bold' : 'text-outline hover:text-on-surface'
             }`}
           >
-            <Calendar className="w-5 h-5" />
-            <span>Schedule</span>
+            <FileText className="w-5 h-5" />
+            <span className="truncate">Quotes</span>
           </Link>
           <Link
-            href="/crm/bookings"
-            className={`flex flex-col items-center gap-1 py-1 px-3 text-[10px] font-medium ${
-              pathname.startsWith('/crm/bookings') ? 'text-primary font-bold' : 'text-outline'
+            href="/crm/invoices/new"
+            prefetch={true}
+            className={`flex flex-col items-center justify-center gap-0.5 py-1 px-2 min-w-[56px] text-[10px] font-medium transition-all active:scale-95 touch-manipulation ${
+              pathname === '/crm/invoices/new' ? 'text-primary font-bold' : 'text-outline hover:text-on-surface'
             }`}
           >
-            <CalendarDays className="w-5 h-5" />
-            <span>Bookings</span>
+            <Receipt className="w-5 h-5" />
+            <span className="truncate">Invoices</span>
           </Link>
           <Link
-            href="/crm/enquiries"
-            className={`flex flex-col items-center gap-1 py-1 px-3 text-[10px] font-medium ${
-              pathname.startsWith('/crm/enquiries') ? 'text-primary font-bold' : 'text-outline'
+            href="/crm/ledger"
+            prefetch={true}
+            className={`flex flex-col items-center justify-center gap-0.5 py-1 px-2 min-w-[56px] text-[10px] font-medium transition-all active:scale-95 touch-manipulation ${
+              pathname.startsWith('/crm/ledger') ? 'text-primary font-bold' : 'text-outline hover:text-on-surface'
             }`}
           >
-            <Inbox className="w-5 h-5" />
-            <span>Enquiries</span>
+            <BookOpen className="w-5 h-5" />
+            <span className="truncate">Ledger</span>
           </Link>
-          <Link
-            href="/crm/profile"
-            className={`flex flex-col items-center gap-1 py-1 px-3 text-[10px] font-medium ${
-              pathname === '/crm/profile' ? 'text-primary font-bold' : 'text-outline'
+          <button
+            type="button"
+            onClick={() => setIsMobileMenuOpen(true)}
+            className={`flex flex-col items-center justify-center gap-0.5 py-1 px-2 min-w-[56px] text-[10px] font-medium transition-all active:scale-95 touch-manipulation cursor-pointer ${
+              isMobileMenuOpen ? 'text-primary font-bold' : 'text-outline hover:text-on-surface'
             }`}
+            aria-label="Open navigation menu"
           >
-            <User className="w-5 h-5" />
-            <span>Profile</span>
-          </Link>
+            <Menu className="w-5 h-5" />
+            <span className="truncate">Menu</span>
+          </button>
         </nav>
       </div>
     </div>

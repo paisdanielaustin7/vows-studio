@@ -689,6 +689,7 @@ export interface Database {
           notes: string | null;
           lost_reason: string | null;
           converted_booking_id: string | null;
+          events: Json | null;
           consent_given_at: string | null;
           created_by: string | null;
           created_at: string;
@@ -716,6 +717,7 @@ export interface Database {
           notes?: string | null;
           lost_reason?: string | null;
           converted_booking_id?: string | null;
+          events?: Json | null;
           consent_given_at?: string | null;
           created_by?: string | null;
           created_at?: string;
@@ -742,6 +744,7 @@ export interface Database {
           notes?: string | null;
           lost_reason?: string | null;
           converted_booking_id?: string | null;
+          events?: Json | null;
           consent_given_at?: string | null;
           created_by?: string | null;
           created_at?: string;
@@ -1013,6 +1016,7 @@ export interface Database {
           internal_notes: string | null;
           terms: string | null;
           pdf_path: string | null;
+          events: Json | null;
           pdf_generated_at: string | null;
           sent_at: string | null;
           accepted_at: string | null;
@@ -1054,6 +1058,7 @@ export interface Database {
           internal_notes?: string | null;
           terms?: string | null;
           pdf_path?: string | null;
+          events?: Json | null;
           pdf_generated_at?: string | null;
           sent_at?: string | null;
           accepted_at?: string | null;
@@ -1094,6 +1099,7 @@ export interface Database {
           internal_notes?: string | null;
           terms?: string | null;
           pdf_path?: string | null;
+          events?: Json | null;
           pdf_generated_at?: string | null;
           sent_at?: string | null;
           accepted_at?: string | null;
@@ -2456,6 +2462,7 @@ export interface Database {
           internal_notes: string | null;
           terms: string | null;
           pdf_path: string | null;
+          events: Json | null;
           pdf_generated_at: string | null;
           sent_at: string | null;
           accepted_at: string | null;

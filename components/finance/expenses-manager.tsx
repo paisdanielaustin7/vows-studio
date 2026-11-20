@@ -324,9 +324,10 @@ export function ExpensesManager({ initialExpenses, categories, canManage }: Expe
                     type="number"
                     min={1}
                     required
-                    placeholder="e.g. 18500"
-                    value={formAmountRupees || ''}
-                    onChange={(e) => setFormAmountRupees(parseFloat(e.target.value) || 0)}
+                    placeholder="0"
+                    value={formAmountRupees === 0 ? '' : formAmountRupees}
+                    onFocus={(e) => e.target.select()}
+                    onChange={(e) => setFormAmountRupees(e.target.value === '' ? 0 : parseFloat(e.target.value) || 0)}
                   />
                 </div>
                 <div>

@@ -161,6 +161,17 @@ export interface ClientDuplicateMatch {
   matchValue: string;
 }
 
+export interface EnquiryEventItem {
+  id?: string;
+  name: string;
+  eventType: EventType;
+  eventDate?: string | null;
+  venue?: string | null;
+  guestCount?: number | null;
+  startTime?: string | null;
+  endTime?: string | null;
+}
+
 export interface Enquiry {
   id: string;
   clientId?: string | null;
@@ -183,6 +194,7 @@ export interface Enquiry {
   notes?: string | null;
   lostReason?: string | null;
   convertedBookingId?: string | null;
+  events?: EnquiryEventItem[];
   createdAt: string;
   updatedAt: string;
 }

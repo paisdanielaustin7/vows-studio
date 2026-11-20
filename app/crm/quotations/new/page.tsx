@@ -33,6 +33,7 @@ export default async function NewQuotationPage({ searchParams }: NewQuotationPag
 
   let initialClientId = resolvedSearchParams?.clientId;
   let initialEventDate = resolvedSearchParams?.eventDate;
+  let initialEvents: any[] = [];
 
   // If enquiryId was provided, resolve linked client and event details
   if (resolvedSearchParams?.enquiryId) {
@@ -40,7 +41,7 @@ export default async function NewQuotationPage({ searchParams }: NewQuotationPag
       const supabase = await createClient();
       const { data: enq } = await supabase
         .from('enquiries')
-        .select('client_id, event_date')
+        .select('client_id, event_date, events')
         .eq('id', resolvedSearchParams.enquiryId)
         .maybeSingle();
 
@@ -50,6 +51,9 @@ export default async function NewQuotationPage({ searchParams }: NewQuotationPag
         }
         if (!initialEventDate && enq.event_date) {
           initialEventDate = enq.event_date;
+        }
+        if (enq.events && Array.isArray(enq.events)) {
+          initialEvents = enq.events;
         }
       }
     } catch (err) {
@@ -67,6 +71,7 @@ export default async function NewQuotationPage({ searchParams }: NewQuotationPag
         initialClientId={initialClientId}
         initialEnquiryId={resolvedSearchParams?.enquiryId}
         initialEventDate={initialEventDate}
+        initialEvents={initialEvents}
       />
     </div>
   );

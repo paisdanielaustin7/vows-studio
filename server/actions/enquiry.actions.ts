@@ -137,28 +137,39 @@ export async function insertSharedEnquiry(
   const admin = getAdminClient();
   const linkedClientId = await ensureClientForEnquiry(admin, input, createdByUserId);
 
+  const primaryEvent = input.events && input.events.length > 0 ? input.events[0] : null;
+  const eventType = primaryEvent?.eventType || input.eventType;
+  const eventDate = (primaryEvent?.eventDate ? primaryEvent.eventDate : null) || input.eventDate || null;
+  const venue = primaryEvent?.venue || input.venue || null;
+
+  const insertPayload: Record<string, any> = {
+    client_id: linkedClientId || input.clientId || null,
+    guest_name: input.guestName || null,
+    guest_phone: input.guestPhone || null,
+    guest_email: input.guestEmail || null,
+    event_type: eventType,
+    event_date: eventDate,
+    event_date_is_approx: input.eventDateIsApprox ?? true,
+    venue: venue,
+    guest_count: input.guestCount || null,
+    services_interested: input.servicesInterested || [],
+    budget_paise: input.budgetPaise ? Number(input.budgetPaise) : null,
+    source: input.source,
+    status: input.status || 'new',
+    assigned_to: input.assignedTo || null,
+    message: input.message || null,
+    notes: input.notes || null,
+    consent_given_at: input.consentGivenAt || new Date().toISOString(),
+    created_by: createdByUserId || null,
+  };
+
+  if (input.events && input.events.length > 0) {
+    insertPayload.events = input.events;
+  }
+
   const { data, error } = await admin
     .from('enquiries')
-    .insert({
-      client_id: linkedClientId || input.clientId || null,
-      guest_name: input.guestName || null,
-      guest_phone: input.guestPhone || null,
-      guest_email: input.guestEmail || null,
-      event_type: input.eventType,
-      event_date: input.eventDate || null,
-      event_date_is_approx: input.eventDateIsApprox ?? true,
-      venue: input.venue || null,
-      guest_count: input.guestCount || null,
-      services_interested: input.servicesInterested || [],
-      budget_paise: input.budgetPaise ? Number(input.budgetPaise) : null,
-      source: input.source,
-      status: input.status || 'new',
-      assigned_to: input.assignedTo || null,
-      message: input.message || null,
-      notes: input.notes || null,
-      consent_given_at: input.consentGivenAt || new Date().toISOString(),
-      created_by: createdByUserId || null,
-    })
+    .insert(insertPayload)
     .select('id')
     .single();
 
@@ -241,6 +252,7 @@ export async function listEnquiriesAction(filters?: {
       notes: row.notes,
       lostReason: row.lost_reason,
       convertedBookingId: row.converted_booking_id,
+      events: Array.isArray(row.events) ? row.events : [],
       createdAt: row.created_at,
       updatedAt: row.updated_at,
     }));

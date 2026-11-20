@@ -134,7 +134,10 @@ export async function listClientsAction(
     const user = await getAuthenticatedUser();
     requirePermission(user, 'clients:view');
 
-    await syncOrphanedEnquiries();
+    // Non-blocking sync for orphaned enquiries
+    syncOrphanedEnquiries().catch((err) =>
+      console.warn('[getClientsAction] Non-blocking sync warning:', err)
+    );
 
     const supabase = await createClient();
     let query = supabase

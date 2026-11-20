@@ -17,6 +17,7 @@ interface QuotationBuilderProps {
   initialClientId?: string;
   initialEnquiryId?: string;
   initialEventDate?: string;
+  initialEvents?: any[];
 }
 
 interface BuilderLineItem {
@@ -40,6 +41,7 @@ export function QuotationBuilder({
   initialClientId,
   initialEnquiryId,
   initialEventDate,
+  initialEvents,
 }: QuotationBuilderProps) {
   const router = useRouter();
 
@@ -376,7 +378,34 @@ export function QuotationBuilder({
         <div className="lg:col-span-8 space-y-6">
           {/* Client & Booking Context */}
           <section className="bg-surface-container-lowest rounded-xl p-6 shadow-sm border border-outline-variant/40 space-y-4">
-            <h2 className="text-base font-semibold text-on-surface">Client & Event Context</h2>
+            <div className="flex items-center justify-between">
+              <h2 className="text-base font-semibold text-on-surface">Client & Event Context</h2>
+              {initialEvents && initialEvents.length > 1 && (
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-primary/15 text-primary">
+                  {initialEvents.length} Events Combined
+                </span>
+              )}
+            </div>
+
+            {initialEvents && initialEvents.length > 0 && (
+              <div className="p-3 bg-secondary-container/30 border border-secondary-container/60 rounded-xl space-y-1.5 text-xs">
+                <span className="font-semibold text-on-secondary-container block">
+                  Enquiry Events Included in this Master Quotation:
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  {initialEvents.map((ev: any, idx: number) => (
+                    <div
+                      key={idx}
+                      className="px-2.5 py-1 rounded-lg bg-surface-container-lowest border border-outline-variant/40 flex items-center gap-1.5 font-medium"
+                    >
+                      <span className="text-on-surface font-semibold">{ev.name}</span>
+                      <span className="text-outline font-mono text-[11px]">({ev.eventDate || 'Date TBD'})</span>
+                      {ev.venue && <span className="text-outline text-[11px]">• {ev.venue}</span>}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
                 <label className="block text-xs font-medium text-outline uppercase mb-1">Client</label>
@@ -500,9 +529,11 @@ export function QuotationBuilder({
                         <Input
                           type="number"
                           min={1}
-                          value={item.quantity}
+                          value={item.quantity === 0 ? '' : item.quantity}
+                          placeholder="1"
+                          onFocus={(e) => e.target.select()}
                           onChange={(e) =>
-                            handleUpdateItem(item.id, { quantity: Math.max(1, parseInt(e.target.value) || 1) })
+                            handleUpdateItem(item.id, { quantity: e.target.value === '' ? 1 : Math.max(1, parseInt(e.target.value) || 1) })
                           }
                           className="h-9 text-sm text-center"
                         />
@@ -512,9 +543,11 @@ export function QuotationBuilder({
                         <Input
                           type="number"
                           min={0}
-                          value={item.unitPricePaise / 100}
+                          value={item.unitPricePaise === 0 ? '' : item.unitPricePaise / 100}
+                          placeholder="0"
+                          onFocus={(e) => e.target.select()}
                           onChange={(e) => {
-                            const val = parseFloat(e.target.value) || 0;
+                            const val = e.target.value === '' ? 0 : parseFloat(e.target.value) || 0;
                             handleUpdateItem(item.id, { unitPricePaise: Math.round(val * 100) });
                           }}
                           className="h-9 text-sm text-right"
@@ -637,9 +670,10 @@ export function QuotationBuilder({
                     type="number"
                     min={0}
                     max={100}
-                    value={discountPercent}
-                    onChange={(e) => setDiscountPercent(parseFloat(e.target.value) || 0)}
-                    placeholder="Discount %"
+                    value={discountPercent === 0 ? '' : discountPercent}
+                    onFocus={(e) => e.target.select()}
+                    onChange={(e) => setDiscountPercent(e.target.value === '' ? 0 : parseFloat(e.target.value) || 0)}
+                    placeholder="0"
                     className="h-8 text-sm"
                   />
                   <span className="text-xs text-outline">%</span>
@@ -652,9 +686,10 @@ export function QuotationBuilder({
                   <Input
                     type="number"
                     min={0}
-                    value={discountFixedRupees}
-                    onChange={(e) => setDiscountFixedRupees(parseFloat(e.target.value) || 0)}
-                    placeholder="Discount in Rupees"
+                    value={discountFixedRupees === 0 ? '' : discountFixedRupees}
+                    onFocus={(e) => e.target.select()}
+                    onChange={(e) => setDiscountFixedRupees(e.target.value === '' ? 0 : parseFloat(e.target.value) || 0)}
+                    placeholder="0"
                     className="h-8 text-sm"
                   />
                 </div>

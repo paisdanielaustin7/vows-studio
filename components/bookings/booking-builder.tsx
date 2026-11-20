@@ -20,6 +20,15 @@ interface LineItemDraft {
   unitPriceRupees: number;
 }
 
+interface EventDraft {
+  name: string;
+  eventType: 'wedding' | 'pre_wedding' | 'engagement' | 'reception' | 'birthday' | 'corporate' | 'other';
+  eventDate: string;
+  venueName: string;
+  startTime?: string;
+  endTime?: string;
+}
+
 interface BookingBuilderProps {
   clients: ClientOption[];
 }
@@ -30,6 +39,15 @@ export function BookingBuilder({ clients }: BookingBuilderProps) {
   const [clientId, setClientId] = useState(clients[0]?.id || '');
   const [targetDeliveryDate, setTargetDeliveryDate] = useState('');
   const [notes, setNotes] = useState('');
+
+  const [events, setEvents] = useState<EventDraft[]>([
+    {
+      name: 'Wedding Ceremony',
+      eventType: 'wedding',
+      eventDate: '',
+      venueName: '',
+    },
+  ]);
 
   useEffect(() => {
     if (!clientId && clients.length > 0) {
@@ -58,6 +76,30 @@ export function BookingBuilder({ clients }: BookingBuilderProps) {
     const updated = [...lines];
     updated[index] = { ...updated[index], [field]: value };
     setLines(updated);
+  };
+
+  // Event handlers
+  const handleAddEvent = () => {
+    setEvents([
+      ...events,
+      {
+        name: events.length === 1 ? 'Roce / Reception' : `Event #${events.length + 1}`,
+        eventType: 'wedding',
+        eventDate: '',
+        venueName: '',
+      },
+    ]);
+  };
+
+  const handleRemoveEvent = (index: number) => {
+    if (events.length === 1) return;
+    setEvents(events.filter((_, i) => i !== index));
+  };
+
+  const handleEventChange = (index: number, field: keyof EventDraft, value: any) => {
+    const updated = [...events];
+    updated[index] = { ...updated[index], [field]: value };
+    setEvents(updated);
   };
 
   // Financial computations
@@ -89,12 +131,24 @@ export function BookingBuilder({ clients }: BookingBuilderProps) {
     setIsSubmitting(true);
     setErrorMsg(null);
 
+    const validEvents = events
+      .filter((ev) => ev.eventDate.trim())
+      .map((ev) => ({
+        name: ev.name.trim() || 'Celebration Event',
+        eventType: ev.eventType,
+        eventDate: ev.eventDate,
+        venueName: ev.venueName.trim() || 'Main Venue',
+        startTime: ev.startTime || null,
+        endTime: ev.endTime || null,
+      }));
+
     const res = await createBookingAction({
       clientId,
       targetDeliveryDate: targetDeliveryDate || null,
       notes: notes || null,
       contractTotalPaise,
       lines: calculatedLines,
+      events: validEvents,
     });
 
     if (res.error) {
@@ -186,6 +240,86 @@ export function BookingBuilder({ clients }: BookingBuilderProps) {
             </div>
           </div>
 
+          {/* Events Covered (Schedule & Production) */}
+          <div className="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/40 shadow-sm space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-base font-semibold text-on-surface">Events Covered ({events.length})</h2>
+                <p className="text-xs text-on-surface-variant">Multiple events covered under this single contract (e.g. Roce, Nuptials, Reception).</p>
+              </div>
+              <Button type="button" variant="outline" size="sm" onClick={handleAddEvent}>
+                + Add Event
+              </Button>
+            </div>
+
+            <div className="space-y-3">
+              {events.map((ev, idx) => (
+                <div key={idx} className="p-4 rounded-xl border border-outline-variant/40 bg-surface-container-low space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-outline uppercase tracking-wider">Event #{idx + 1}</span>
+                    {events.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveEvent(idx)}
+                        className="text-xs text-error hover:underline cursor-pointer"
+                      >
+                        Remove
+                      </button>
+                    )}
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs text-on-surface-variant mb-1">Event Name *</label>
+                      <Input
+                        placeholder="e.g. Roce / Nuptials / Reception"
+                        value={ev.name}
+                        onChange={(e) => handleEventChange(idx, 'name', e.target.value)}
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs text-on-surface-variant mb-1">Event Type *</label>
+                      <select
+                        value={ev.eventType}
+                        onChange={(e) => handleEventChange(idx, 'eventType', e.target.value)}
+                        className="w-full h-9 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary capitalize"
+                      >
+                        <option value="wedding">Wedding</option>
+                        <option value="pre_wedding">Pre-Wedding</option>
+                        <option value="engagement">Engagement</option>
+                        <option value="reception">Reception</option>
+                        <option value="birthday">Birthday</option>
+                        <option value="corporate">Corporate</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs text-on-surface-variant mb-1">Event Date *</label>
+                      <Input
+                        type="date"
+                        value={ev.eventDate}
+                        onChange={(e) => handleEventChange(idx, 'eventDate', e.target.value)}
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs text-on-surface-variant mb-1">Venue / City</label>
+                      <Input
+                        placeholder="e.g. Milagres Church / ITC Grand"
+                        value={ev.venueName}
+                        onChange={(e) => handleEventChange(idx, 'venueName', e.target.value)}
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
           {/* Line Items */}
           <div className="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/40 shadow-sm space-y-4">
             <div className="flex items-center justify-between">
@@ -229,8 +363,10 @@ export function BookingBuilder({ clients }: BookingBuilderProps) {
                         <Input
                           type="number"
                           min={1}
-                          value={l.quantity}
-                          onChange={(e) => handleLineChange(idx, 'quantity', parseInt(e.target.value) || 1)}
+                          value={l.quantity === 0 ? '' : l.quantity}
+                          placeholder="1"
+                          onFocus={(e) => e.target.select()}
+                          onChange={(e) => handleLineChange(idx, 'quantity', e.target.value === '' ? 1 : parseInt(e.target.value) || 1)}
                           required
                         />
                       </div>
@@ -239,8 +375,10 @@ export function BookingBuilder({ clients }: BookingBuilderProps) {
                         <Input
                           type="number"
                           min={0}
-                          value={l.unitPriceRupees}
-                          onChange={(e) => handleLineChange(idx, 'unitPriceRupees', parseFloat(e.target.value) || 0)}
+                          value={l.unitPriceRupees === 0 ? '' : l.unitPriceRupees}
+                          placeholder="0"
+                          onFocus={(e) => e.target.select()}
+                          onChange={(e) => handleLineChange(idx, 'unitPriceRupees', e.target.value === '' ? 0 : parseFloat(e.target.value) || 0)}
                           required
                         />
                       </div>
