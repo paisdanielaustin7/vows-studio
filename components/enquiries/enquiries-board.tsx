@@ -499,7 +499,7 @@ export function EnquiriesBoard({
                       required={!form.clientId}
                     />
                   </div>
-                  <div className="flex flex-col gap-1.5 sm:col-span-2">
+                  <div className="flex flex-col gap-1.5 sm:col-span-1">
                     <label className="text-xs font-medium text-on-surface">Phone (+91...)</label>
                     <Input
                       value={form.guestPhone}
@@ -507,8 +507,8 @@ export function EnquiriesBoard({
                       placeholder="+919840011111"
                     />
                   </div>
-                  <div className="flex flex-col gap-1.5 sm:col-span-1">
-                    <label className="text-xs font-medium text-on-surface">Email</label>
+                  <div className="flex flex-col gap-1.5 sm:col-span-2">
+                    <label className="text-xs font-medium text-on-surface">Email Address</label>
                     <Input
                       type="email"
                       value={form.guestEmail}

@@ -107,7 +107,7 @@ export function PublicEnquiryForm() {
         </div>
       )}
 
-      {/* Row 1: Name and Phone */}
+      {/* Row 1: Name and Celebration Type */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div className="space-y-1.5">
           <label className="text-xs font-semibold uppercase tracking-wider text-[var(--foreground)] block">
@@ -119,37 +119,6 @@ export function PublicEnquiryForm() {
             placeholder="e.g. Derick D'Souza"
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            className="w-full px-4 py-2.5 rounded-lg border border-[var(--border)] bg-[var(--background)] text-sm text-[var(--foreground)] placeholder:text-[var(--muted-foreground)]/60 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
-          />
-        </div>
-
-        <div className="space-y-1.5">
-          <label className="text-xs font-semibold uppercase tracking-wider text-[var(--foreground)] block">
-            Mobile Number (+91 E.164) <span className="text-[var(--danger)]">*</span>
-          </label>
-          <input
-            type="tel"
-            required
-            placeholder="+91 98200 44521"
-            value={formData.phone}
-            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-            className="w-full px-4 py-2.5 rounded-lg border border-[var(--border)] bg-[var(--background)] text-sm text-[var(--foreground)] placeholder:text-[var(--muted-foreground)]/60 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
-          />
-        </div>
-      </div>
-
-      {/* Row 2: Email and Event Type */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <div className="space-y-1.5">
-          <label className="text-xs font-semibold uppercase tracking-wider text-[var(--foreground)] block">
-            Email Address <span className="text-[var(--danger)]">*</span>
-          </label>
-          <input
-            type="email"
-            required
-            placeholder="you@domain.com"
-            value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             className="w-full px-4 py-2.5 rounded-lg border border-[var(--border)] bg-[var(--background)] text-sm text-[var(--foreground)] placeholder:text-[var(--muted-foreground)]/60 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
           />
         </div>
@@ -170,6 +139,37 @@ export function PublicEnquiryForm() {
             <option value="engagement">Solemn Engagement</option>
             <option value="other">Other Intimate Commission</option>
           </select>
+        </div>
+      </div>
+
+      {/* Row 2: Phone (Compact 1-col) and Email (Spacious 2-col) */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div className="space-y-1.5 sm:col-span-1">
+          <label className="text-xs font-semibold uppercase tracking-wider text-[var(--foreground)] block">
+            Mobile (+91) <span className="text-[var(--danger)]">*</span>
+          </label>
+          <input
+            type="tel"
+            required
+            placeholder="+91 98200 44521"
+            value={formData.phone}
+            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+            className="w-full px-4 py-2.5 rounded-lg border border-[var(--border)] bg-[var(--background)] text-sm text-[var(--foreground)] placeholder:text-[var(--muted-foreground)]/60 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+          />
+        </div>
+
+        <div className="space-y-1.5 sm:col-span-2">
+          <label className="text-xs font-semibold uppercase tracking-wider text-[var(--foreground)] block">
+            Email Address <span className="text-[var(--danger)]">*</span>
+          </label>
+          <input
+            type="email"
+            required
+            placeholder="you@domain.com"
+            value={formData.email}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            className="w-full px-4 py-2.5 rounded-lg border border-[var(--border)] bg-[var(--background)] text-sm text-[var(--foreground)] placeholder:text-[var(--muted-foreground)]/60 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+          />
         </div>
       </div>
 

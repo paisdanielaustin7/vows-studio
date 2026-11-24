@@ -107,8 +107,10 @@ export function StudioProfileForm({
               placeholder="Wedding Cinematic & Stills"
             />
           </div>
+        </div>
 
-          <div className="flex flex-col gap-1.5">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="flex flex-col gap-1.5 md:col-span-1">
             <label className="text-xs font-medium text-on-surface">Studio Phone</label>
             <Input
               value={formData.phone}
@@ -118,7 +120,7 @@ export function StudioProfileForm({
             />
           </div>
 
-          <div className="flex flex-col gap-1.5">
+          <div className="flex flex-col gap-1.5 md:col-span-2">
             <label className="text-xs font-medium text-on-surface">Studio Email</label>
             <Input
               type="email"
@@ -128,17 +130,17 @@ export function StudioProfileForm({
               placeholder="hello@vowsstudio.com"
             />
           </div>
+        </div>
 
-          <div className="flex flex-col gap-1.5 md:col-span-2">
-            <label className="text-xs font-medium text-on-surface">Official Website</label>
-            <Input
-              type="url"
-              value={formData.website}
-              onChange={(e) => setFormData({ ...formData, website: e.target.value })}
-              disabled={!canEdit || saving}
-              placeholder="https://vowsstudio.com"
-            />
-          </div>
+        <div className="flex flex-col gap-1.5">
+          <label className="text-xs font-medium text-on-surface">Official Website</label>
+          <Input
+            type="url"
+            value={formData.website}
+            onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+            disabled={!canEdit || saving}
+            placeholder="https://vowsstudio.com"
+          />
         </div>
       </div>
 

@@ -333,19 +333,20 @@ export function CrewDirectory({ initialCrew, canViewMoney, canManage }: CrewDire
             )}
 
             <form onSubmit={handleCreateCrew} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-medium text-on-surface-variant mb-1">
-                    Full Name <span className="text-error">*</span>
-                  </label>
-                  <Input
-                    required
-                    placeholder="e.g. Arjun Sharma"
-                    value={formData.fullName}
-                    onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                  />
-                </div>
-                <div>
+              <div>
+                <label className="block text-xs font-medium text-on-surface-variant mb-1">
+                  Full Name <span className="text-error">*</span>
+                </label>
+                <Input
+                  required
+                  placeholder="e.g. Arjun Sharma"
+                  value={formData.fullName}
+                  onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="sm:col-span-1">
                   <label className="block text-xs font-medium text-on-surface-variant mb-1">
                     Phone <span className="text-error">*</span>
                   </label>
@@ -356,9 +357,18 @@ export function CrewDirectory({ initialCrew, canViewMoney, canManage }: CrewDire
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   />
                 </div>
+                <div className="sm:col-span-2">
+                  <label className="block text-xs font-medium text-on-surface-variant mb-1">Email</label>
+                  <Input
+                    type="email"
+                    placeholder="arjun@example.com"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  />
+                </div>
               </div>
 
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-medium text-on-surface-variant mb-1">
                     Primary Discipline <span className="text-error">*</span>
@@ -387,15 +397,6 @@ export function CrewDirectory({ initialCrew, canViewMoney, canManage }: CrewDire
                     <option value="freelancer">Freelancer</option>
                     <option value="employee">In-House Staff</option>
                   </select>
-                </div>
-                <div>
-                  <label className="block text-xs font-medium text-on-surface-variant mb-1">Email</label>
-                  <Input
-                    type="email"
-                    placeholder="arjun@example.com"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  />
                 </div>
               </div>
 

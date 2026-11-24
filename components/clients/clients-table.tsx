@@ -430,8 +430,8 @@ export function ClientsTable({
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                <div className="flex flex-col gap-1.5">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div className="flex flex-col gap-1.5 sm:col-span-1">
                   <label className="text-xs font-medium text-on-surface">Primary Phone (+91...) *</label>
                   <Input
                     value={form.phone}
@@ -441,7 +441,7 @@ export function ClientsTable({
                   />
                 </div>
 
-                <div className="flex flex-col gap-1.5">
+                <div className="flex flex-col gap-1.5 sm:col-span-2">
                   <label className="text-xs font-medium text-on-surface">Email Address</label>
                   <Input
                     type="email"

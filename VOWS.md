@@ -184,3 +184,15 @@ The project maintains dual Git remotes:
   2. `lib/sales/enquiry-events.ts`: Added `extractEventsFromEnquiryRow` and `cleanNotesForDisplay` utilities to seamlessly reconstruct multi-event arrays whether saved in `events` jsonb column, embedded in `notes`, or synthesized from legacy single-event fields.
   3. `app/crm/quotations/new/page.tsx` & `server/actions/booking.actions.ts`: Added schema-cache safe query fallbacks so quote and booking conversion never fail even if PostgREST cache has not updated.
   4. `supabase/migrations/20261120000030_enquiry_multiple_events.sql`: Added `NOTIFY pgrst, 'reload schema';` command to immediately flush and reload PostgREST schema cache upon execution.
+
+---
+
+## 10. Phone & Email Input Container Proportions (Universal UX Rule)
+- **Problem:** Phone containers (typically holding ~10-13 digits) previously took up 2 columns (`sm:col-span-2`), while Email Address containers (often holding 25-35+ characters) took up only 1 column (`sm:col-span-1`), causing emails to be horizontally clipped or unreadable.
+- **Universal Fix Applied Across All System Entry Containers:**
+  1. `components/enquiries/enquiries-board.tsx`: Phone (`sm:col-span-1`, 33%) and Email (`sm:col-span-2`, 67%).
+  2. `components/clients/clients-table.tsx`: Primary Phone (`sm:col-span-1`, 33%) and Email Address (`sm:col-span-2`, 67%).
+  3. `components/crew/crew-directory.tsx`: Phone (`sm:col-span-1`, 33%) and Email (`sm:col-span-2`, 67%).
+  4. `components/settings/studio-profile-form.tsx`: Studio Phone (`md:col-span-1`, 33%) and Studio Email (`md:col-span-2`, 67%).
+  5. `components/public/public-enquiry-form.tsx`: Mobile (`sm:col-span-1`, 33%) and Email Address (`sm:col-span-2`, 67%).
+- **Result:** Email IDs are completely visible across all screens and forms without truncation.
