@@ -341,3 +341,6 @@ $$;
 -- 4. Schema grants
 GRANT ALL ON ALL TABLES IN SCHEMA public TO postgres, authenticated, service_role;
 GRANT ALL ON ALL FUNCTIONS IN SCHEMA public TO postgres, authenticated, service_role;
+
+-- 5. Force PostgREST to reload schema cache immediately
+NOTIFY pgrst, 'reload schema';

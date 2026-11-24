@@ -11,6 +11,7 @@ import {
 } from '@/lib/validations/sales.schema';
 import { Enquiry, EnquiryStatus, EventType, EnquirySource } from '@/types/sales';
 import { ActionResult } from '@/types/auth';
+import { extractEventsFromEnquiryRow, cleanNotesForDisplay } from '@/lib/sales/enquiry-events';
 import { revalidatePath } from 'next/cache';
 
 /**
@@ -167,11 +168,48 @@ export async function insertSharedEnquiry(
     insertPayload.events = input.events;
   }
 
-  const { data, error } = await admin
+  let { data, error } = await admin
     .from('enquiries')
     .insert(insertPayload)
     .select('id')
     .single();
+
+  // Resilience Fallback: If PostgREST schema cache does not have the 'events' column yet
+  if (
+    error &&
+    (error.code === 'PGRST204' ||
+      error.message?.toLowerCase().includes('events') ||
+      error.message?.toLowerCase().includes('schema cache'))
+  ) {
+    console.warn(
+      '[insertSharedEnquiry] PostgREST schema cache missing "events" column, falling back to schema-safe payload with events stored in notes:',
+      error.message
+    );
+    const fallbackPayload = { ...insertPayload };
+    delete fallbackPayload.events;
+
+    if (input.events && input.events.length > 0) {
+      const eventsSummary = input.events
+        .map(
+          (ev, i) =>
+            `• Event ${i + 1}: ${ev.name || ev.eventType} | Date: ${ev.eventDate || 'TBD'} | Venue: ${ev.venue || 'TBD'}`
+        )
+        .join('\n');
+      const eventsMarker = `<!-- EVENTS_DATA:${JSON.stringify(input.events)} -->`;
+      fallbackPayload.notes = fallbackPayload.notes
+        ? `${fallbackPayload.notes}\n\nSchedule:\n${eventsSummary}\n${eventsMarker}`
+        : `Schedule:\n${eventsSummary}\n${eventsMarker}`;
+    }
+
+    const retry = await admin
+      .from('enquiries')
+      .insert(fallbackPayload)
+      .select('id')
+      .single();
+
+    data = retry.data;
+    error = retry.error;
+  }
 
   if (error || !data) {
     throw new Error(error?.message || 'Failed to insert enquiry');
@@ -249,10 +287,10 @@ export async function listEnquiriesAction(filters?: {
       assignedTo: row.assigned_to,
       assigneeName: row.profiles?.full_name || null,
       message: row.message,
-      notes: row.notes,
+      notes: cleanNotesForDisplay(row.notes),
       lostReason: row.lost_reason,
       convertedBookingId: row.converted_booking_id,
-      events: Array.isArray(row.events) ? row.events : [],
+      events: extractEventsFromEnquiryRow(row),
       createdAt: row.created_at,
       updatedAt: row.updated_at,
     }));

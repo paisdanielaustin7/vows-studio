@@ -3,6 +3,7 @@ import { notFound, redirect } from 'next/navigation';
 import { getAuthenticatedUser } from '@/lib/auth';
 import { createClient } from '@/lib/supabase/server';
 import { listClientsAction } from '@/server/actions/client.actions';
+import { extractEventsFromEnquiryRow, cleanNotesForDisplay } from '@/lib/sales/enquiry-events';
 import { EnquiryDetailView } from '@/components/enquiries/enquiry-detail-view';
 import { Enquiry, EventType, EnquirySource, EnquiryStatus } from '@/types/sales';
 
@@ -68,10 +69,10 @@ export default async function EnquiryDetailPage({
     assignedTo: row.assigned_to,
     assigneeName: row.profiles?.full_name || null,
     message: row.message,
-    notes: row.notes,
+    notes: cleanNotesForDisplay(row.notes),
     lostReason: row.lost_reason,
     convertedBookingId: row.converted_booking_id,
-    events: Array.isArray(row.events) ? row.events : [],
+    events: extractEventsFromEnquiryRow(row),
     createdAt: row.created_at,
     updatedAt: row.updated_at,
   };

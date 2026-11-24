@@ -5,6 +5,7 @@ import { getAuthenticatedUser, requirePermission } from '@/lib/auth';
 import { bookingSchema, bookingCancelSchema, BookingInput, BookingCancelInput } from '@/lib/validations/bookings.schema';
 import { Booking, BookingOps, BookingLineItem, StudioEvent, BookingStatus } from '@/types/bookings';
 import { ActionResult } from '@/types/auth';
+import { extractEventsFromEnquiryRow } from '@/lib/sales/enquiry-events';
 import { revalidatePath } from 'next/cache';
 
 /**
@@ -449,13 +450,26 @@ export async function convertEnquiryToBookingAction(
 
     // Resilience check: ensure all multi-events from enquiry are reflected in public.events
     try {
-      const { data: enq } = await supabase
+      let enq: any = null;
+      const firstRes = await supabase
         .from('enquiries')
-        .select('events')
+        .select('events, notes, event_date, event_type, venue')
         .eq('id', enquiryId)
         .maybeSingle();
 
-      if (enq?.events && Array.isArray(enq.events) && enq.events.length > 0) {
+      if (firstRes.error) {
+        const fallbackRes = await supabase
+          .from('enquiries')
+          .select('notes, event_date, event_type, venue')
+          .eq('id', enquiryId)
+          .maybeSingle();
+        enq = fallbackRes.data;
+      } else {
+        enq = firstRes.data;
+      }
+
+      const enqEvents = extractEventsFromEnquiryRow(enq);
+      if (enqEvents.length > 0) {
         const { data: existingEvents } = await supabase
           .from('events')
           .select('name, event_date')
@@ -465,7 +479,7 @@ export async function convertEnquiryToBookingAction(
           (existingEvents || []).map((e) => `${e.name}__${e.event_date}`)
         );
 
-        const toInsert = enq.events
+        const toInsert = enqEvents
           .filter((ev: any) => ev.eventDate && !existingKeys.has(`${ev.name || 'Event'}__${ev.eventDate}`))
           .map((ev: any, idx: number) => ({
             booking_id: bookingId,

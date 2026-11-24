@@ -174,3 +174,13 @@ The project maintains dual Git remotes:
 2. `npm run typecheck`: Must complete with zero TypeScript compilation errors.
 3. `npm run lint`: Zero ESLint errors.
 4. `npm run build`: Production Next.js build must compile cleanly.
+
+---
+
+## 9. Recent Updates: Schema Cache Resilience for Multi-Event Enquiries
+- **Issue:** Inserting a new enquiry threw PostgREST error PGRST204: `"Could not find the 'events' column of 'enquiries' in the schema cache"` when remote database schema cache had not reloaded migration 030 (`20261120000030_enquiry_multiple_events.sql`).
+- **Fix Implemented:**
+  1. `server/actions/enquiry.actions.ts`: Added automatic PostgREST schema cache missing column detection. If PostgREST fails due to missing `events` column, it automatically falls back to standard columns without crashing, safely serializing the event list into `notes` (`<!-- EVENTS_DATA:... -->` + human-readable schedule).
+  2. `lib/sales/enquiry-events.ts`: Added `extractEventsFromEnquiryRow` and `cleanNotesForDisplay` utilities to seamlessly reconstruct multi-event arrays whether saved in `events` jsonb column, embedded in `notes`, or synthesized from legacy single-event fields.
+  3. `app/crm/quotations/new/page.tsx` & `server/actions/booking.actions.ts`: Added schema-cache safe query fallbacks so quote and booking conversion never fail even if PostgREST cache has not updated.
+  4. `supabase/migrations/20261120000030_enquiry_multiple_events.sql`: Added `NOTIFY pgrst, 'reload schema';` command to immediately flush and reload PostgREST schema cache upon execution.

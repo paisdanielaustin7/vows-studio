@@ -3,6 +3,7 @@ import { createClient } from '@/lib/supabase/server';
 import { listClientsAction } from '@/server/actions/client.actions';
 import { listServicesAction, listPackagesAction } from '@/server/actions/catalogue.actions';
 import { getBusinessSettingsAction } from '@/server/actions/settings.actions';
+import { extractEventsFromEnquiryRow } from '@/lib/sales/enquiry-events';
 import { QuotationBuilder } from '@/components/quotations/quotation-builder';
 
 export const metadata = {
@@ -39,11 +40,26 @@ export default async function NewQuotationPage({ searchParams }: NewQuotationPag
   if (resolvedSearchParams?.enquiryId) {
     try {
       const supabase = await createClient();
-      const { data: enq } = await supabase
+      let enq: any = null;
+
+      // Primary query with events column
+      const firstRes = await supabase
         .from('enquiries')
-        .select('client_id, event_date, events')
+        .select('client_id, event_date, event_type, venue, notes, events')
         .eq('id', resolvedSearchParams.enquiryId)
         .maybeSingle();
+
+      if (firstRes.error) {
+        // Schema cache fallback without events column in case migration/cache is pending
+        const fallbackRes = await supabase
+          .from('enquiries')
+          .select('client_id, event_date, event_type, venue, notes')
+          .eq('id', resolvedSearchParams.enquiryId)
+          .maybeSingle();
+        enq = fallbackRes.data;
+      } else {
+        enq = firstRes.data;
+      }
 
       if (enq) {
         if (!initialClientId && enq.client_id) {
@@ -52,9 +68,7 @@ export default async function NewQuotationPage({ searchParams }: NewQuotationPag
         if (!initialEventDate && enq.event_date) {
           initialEventDate = enq.event_date;
         }
-        if (enq.events && Array.isArray(enq.events)) {
-          initialEvents = enq.events;
-        }
+        initialEvents = extractEventsFromEnquiryRow(enq);
       }
     } catch (err) {
       console.warn('[NewQuotationPage] Failed to fetch enquiry context:', err);
